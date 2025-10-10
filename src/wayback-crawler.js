@@ -1,7 +1,7 @@
 import { PlaywrightCrawler, Dataset } from "crawlee";
 import { URL } from "url";
 import fs from "fs/promises";
-import { createWriteStream } from "fs";
+import { createReadStream, createWriteStream } from "fs";
 import path from "path";
 import mime from "mime-types";
 import iconv from "iconv-lite";
@@ -366,7 +366,8 @@ async function handleHtmlEncoding(content, contentType, log) {
     );
 }
 
-async function crawlWaybackMachine(startUrl, dirBound) {
+async function crawlWaybackMachine(startUrl, dirBound, oneCrawl = false) {
+    if (oneCrawl) console.log('processing only one url: ', startUrl);
     const parsedUrl = parseWaybackUrl(startUrl);
     if (!parsedUrl) {
         console.error("Could not parse Wayback URL");
@@ -381,12 +382,15 @@ async function crawlWaybackMachine(startUrl, dirBound) {
     const { domain, originalUrl } = parsedUrl;
     domainDir = domain;
 
+    const maxRequests = oneCrawl ? 1 : 1000000000;
+
     // Create base download directory
     const baseDir = path.join(process.cwd(), "scraped-sites");
     //await ensureDir(baseDir);
 
     // Initialize the crawler
     const crawler = new PlaywrightCrawler({
+        maxRequestsPerCrawl: maxRequests,
         // Configure browser pool
         browserPoolOptions: {
             useFingerprints: true,
@@ -545,7 +549,15 @@ async function crawlWaybackMachine(startUrl, dirBound) {
     await crawler.run([startUrl]);
 }
 
-function writeToFile() {
+function generatePageListFile() {
+    // don't add urls if one crawl
+    if (oneCrawl) {
+      console.log('no file generated for single page crawl');
+      return;
+    }
+
+    console.log('generating page list file');
+
     let file = createWriteStream(`scraped-sites/${domainDir}/page-list.json`);
     file.on("error", function (err) {
         /* error handling */
@@ -555,6 +567,7 @@ function writeToFile() {
     file.write(JSON.stringify(crawledPages));
     // crawledPages.forEach((element) => file.write(element + "\n"));
     file.end();
+    console.log('page list file generated');
 }
 
 async function processCrawledImages(crawledImages) {
@@ -614,9 +627,23 @@ async function downloadCrawledImages(crawledImages) {
     return;
 }
 
+async function processWaybackPageLinks() {
+  let pageList = await fs.readFile(`scraped-sites/${waybackDir}/page-list.json`);
+  let parsedPages = JSON.parse(pageList);
+
+  for (let file of parsedPages) {
+    let noHttpPrefixFile = file.split('http://')[1];
+    let fileExists = await fsExists(`scraped-sites/${noHttpPrefixFile}`);
+    console.log(`file ${noHttpPrefixFile} exists: ${fileExists}`);
+  }
+
+  return;
+}
+
 // Example usage
 const waybackUrl = process.argv[2];
 const waybackDir = process.argv[3];
+const oneCrawl = process.argv[4];
 if (!waybackUrl) {
     console.error("Please provide a Wayback Machine URL as an argument");
     process.exit(1);
@@ -629,12 +656,14 @@ if (!waybackDir) {
     process.exit(1);
 }
 
-crawlWaybackMachine(waybackUrl, waybackDir)
+// await processWaybackPageLinks();
+
+crawlWaybackMachine(waybackUrl, waybackDir, oneCrawl)
     .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
-    .then(() => writeToFile())
-    .then(() => console.log("urls written to file"))
+    .then(() => generatePageListFile())
     .then(() => console.log("crawled images:", crawledImages))
     .then(() => processCrawledImages(crawledImages))
     .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
+    .then(() => processWaybackPageLinks())
     //TODO: Auto process link changes and images here
     .catch((error) => console.error("Crawling failed:", error));
