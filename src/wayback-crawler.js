@@ -1,6 +1,7 @@
 import { PlaywrightCrawler, Dataset } from "crawlee";
 import { URL } from "url";
-import fs from "fs/promises";
+// import fs from "fs/promises";
+import fs from 'fs';
 import { createWriteStream } from "fs";
 import path from "path";
 import mime from "mime-types";
@@ -9,15 +10,253 @@ import { detect } from "jschardet";
 import fsExists from "fs.promises.exists";
 import * as https from 'https';
 import * as http from 'http';
+import puppeteer from 'puppeteer';
 // import processHtmlFiles from './wb-url-replace.js'
+const testImageUrls = [
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020821165006im_/http://www.jericho-city.org/images/OPENING-.JPG',
+    originalUrl: 'www.jericho-city.org/images/OPENING-.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020821165006im_/http://fastcounter.linkexchange.com/fastcounter?770332+1540671',
+    originalUrl: 'fastcounter.linkexchange.com/fastcounter?770332+1540671'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020803062633im_/http://jericho-city.org/images/sub_screen2.jpg',
+    originalUrl: 'jericho-city.org/images/sub_screen2.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020206055344im_/http://jericho-city.org/images/Crstlbal.gif',
+    originalUrl: 'jericho-city.org/images/Crstlbal.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20021208220758im_/http://jericho-city.org/images/colorbar.gif',
+    originalUrl: 'jericho-city.org/images/colorbar.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20000106035157im_/http://www.jericho-city.org/images/sub_screen2.jpg',
+    originalUrl: 'www.jericho-city.org/images/sub_screen2.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020609205836im_/http://www.jericho-city.org/images/EMAIL.GIF',
+    originalUrl: 'www.jericho-city.org/images/EMAIL.GIF'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20021208220758im_/http://jericho-city.org/images/CHICKDAN.GIF',
+    originalUrl: 'jericho-city.org/images/CHICKDAN.GIF'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020609233050im_/http://www.jericho-city.org/images/LOG.GIF',
+    originalUrl: 'www.jericho-city.org/images/LOG.GIF'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020609233050im_/http://www.jericho-city.org/images/COOL.GIF',
+    originalUrl: 'www.jericho-city.org/images/COOL.GIF'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic1-1.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic1-1.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic2-2.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic2-2.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic7-7.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic7-7.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic5-5.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic5-5.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic11-11.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic11-11.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic9-9.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic9-9.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic10-10.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic10-10.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic8-8.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic8-8.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic12-12.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic12-12.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic3-3.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic3-3.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic4-4.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic4-4.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013084620im_/http://www.jericho-city.org/images/pic6-6.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic6-6.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020822215109im_/http://jericho-city.org/Corel/Crstlbal.gif',
+    originalUrl: 'jericho-city.org/Corel/Crstlbal.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013113215im_/http://www.jericho-city.org/Corel/Crstlbal.gif',
+    originalUrl: 'www.jericho-city.org/Corel/Crstlbal.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020822220705im_/http://jericho-city.org/images/opening-image.jpg',
+    originalUrl: 'jericho-city.org/images/opening-image.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20021106214012im_/http://jericho-city.org/images/ag_back.gif',
+    originalUrl: 'jericho-city.org/images/ag_back.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020629061239im_/http://www.jericho-city.org/images/Crstlbal.gif',
+    originalUrl: 'www.jericho-city.org/images/Crstlbal.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020629061239im_/http://www.jericho-city.org/images/colorbar.gif',
+    originalUrl: 'www.jericho-city.org/images/colorbar.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020625222123im_/http://www.jericho-city.org/images/pic2.jpg',
+    originalUrl: 'www.jericho-city.org/images/pic2.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020625222123im_/http://www.jericho-city.org/images/previous.gif',
+    originalUrl: 'www.jericho-city.org/images/previous.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020625222123im_/http://www.jericho-city.org/images/pic1.h1.gif',
+    originalUrl: 'www.jericho-city.org/images/pic1.h1.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020625222123im_/http://www.jericho-city.org/images/next.gif',
+    originalUrl: 'www.jericho-city.org/images/next.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020624202956im_/http://www.jericho-city.org/images/pic1.jpg',
+    originalUrl: 'www.jericho-city.org/images/pic1.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020629045326im_/http://www.jericho-city.org/images/pic7.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic7.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020629045843im_/http://www.jericho-city.org/images/pic9.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic9.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020625221130im_/http://www.jericho-city.org/images/pic11.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic11.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020627030516im_/http://www.jericho-city.org/images/pic5.jpg',
+    originalUrl: 'www.jericho-city.org/images/pic5.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020629045334im_/http://www.jericho-city.org/images/pic8.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic8.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020625221358im_/http://www.jericho-city.org/images/pic10.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic10.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020627032756im_/http://www.jericho-city.org/images/pic3.jpg',
+    originalUrl: 'www.jericho-city.org/images/pic3.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825034907im_/http://jericho-city.org/images/pic12.JPG',
+    originalUrl: 'jericho-city.org/images/pic12.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825034444im_/http://jericho-city.org/images/previous.gif',
+    originalUrl: 'jericho-city.org/images/previous.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825034444im_/http://jericho-city.org/images/pic1.h1.gif',
+    originalUrl: 'jericho-city.org/images/pic1.h1.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825034444im_/http://jericho-city.org/images/next.gif',
+    originalUrl: 'jericho-city.org/images/next.gif'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020627032907im_/http://www.jericho-city.org/images/pic4.jpg',
+    originalUrl: 'www.jericho-city.org/images/pic4.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020627031405im_/http://www.jericho-city.org/images/pic6.JPG',
+    originalUrl: 'www.jericho-city.org/images/pic6.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20001013141352im_/http://www.jericho-city.org/images/opening-image.jpg',
+    originalUrl: 'www.jericho-city.org/images/opening-image.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20030315052608im_/http://www.jericho-city.org/CHICKDAN.GIF',
+    originalUrl: 'www.jericho-city.org/CHICKDAN.GIF'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020822220701im_/http://jericho-city.org/images/pic11.JPG',
+    originalUrl: 'jericho-city.org/images/pic11.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020822221522im_/http://jericho-city.org/images/pic1.jpg',
+    originalUrl: 'jericho-city.org/images/pic1.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020822221744im_/http://jericho-city.org/images/pic10.JPG',
+    originalUrl: 'jericho-city.org/images/pic10.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020826021620im_/http://jericho-city.org/images/pic9.JPG',
+    originalUrl: 'jericho-city.org/images/pic9.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020826020543im_/http://jericho-city.org/images/pic8.JPG',
+    originalUrl: 'jericho-city.org/images/pic8.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020826015136im_/http://jericho-city.org/images/pic7.JPG',
+    originalUrl: 'jericho-city.org/images/pic7.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020826015205im_/http://jericho-city.org/images/pic6.JPG',
+    originalUrl: 'jericho-city.org/images/pic6.JPG'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825035436im_/http://jericho-city.org/images/pic5.jpg',
+    originalUrl: 'jericho-city.org/images/pic5.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825034150im_/http://jericho-city.org/images/pic4.jpg',
+    originalUrl: 'jericho-city.org/images/pic4.jpg'
+  },
+  {
+    webArchiveFullUrl: 'https://web.archive.org/web/20020825034444im_/http://jericho-city.org/images/pic3.jpg',
+    originalUrl: 'jericho-city.org/images/pic3.jpg'
+  }
+]
+
+const waybackImageUrl = /\/web\/\d{14}im_/;
+const waybackPageUrl = /\/web\/[0-9]+\/(https?:\/\/.[^/]+)(.*)/i;
 
 let crawledPages = [];
+let crawledImages = [];
 let domainDir = "";
 
 // Helper function to extract the original domain and URL from a Wayback URL
 function parseWaybackUrl(waybackUrl) {
-    const match = waybackUrl.match(/\/web\/[0-9]+\/(https?:\/\/.[^/]+)(.*)/i);
-    console.log("match!", match);
+    const match = waybackUrl.match(waybackPageUrl);
 
     return match
         ? {
@@ -134,11 +373,13 @@ async function crawlWaybackMachine(startUrl, dirBound) {
         return;
     }
 
+    // ok keep separate urls (eg www/ no www), bc not sure if links will be different as well.
+    // BUT consolidate list(s) if need be.
+    // in config, encapsulate both domains
+    // OR if both domains are on one list just use that 
+
     const { domain, originalUrl } = parsedUrl;
-    console.log("PARSED URL", parsedUrl);
     domainDir = domain;
-    // console.log(`Original domain: ${domain}`);
-    // console.log(`Original URL: ${originalUrl}`);
 
     // Create base download directory
     const baseDir = path.join(process.cwd(), "scraped-sites");
@@ -189,52 +430,23 @@ async function crawlWaybackMachine(startUrl, dirBound) {
                         "Upgrade-Insecure-Requests": "1",
                     });
 
-                    // Extract all image URLs from the page
-                    const images = await page.evaluate(() => {
-                        const imgElements = document.querySelectorAll("img");
-                        const bgImages = [];
-
-                        // Get all elements with background images
-                        document.querySelectorAll("*").forEach((el) => {
-                            const bg = window.getComputedStyle(el).backgroundImage;
-                            if (bg && bg !== "none") {
-                                const match = bg.match(/url\(['"]?([^'"]+)['"]?\)/);
-                                if (match) bgImages.push(match[1]);
-                            }
-                        });
-
-                        return {
-                            imgSrc: Array.from(imgElements).map((img) => ({
-                                src: img.src,
-                                alt: img.alt || "",
-                                width: img.naturalWidth,
-                                height: img.naturalHeight,
-                            })),
-                            backgroundImages: bgImages,
-                        };
-                    });
-
-                    console.log("IMAGES 🔥", images);
-
-                    // Combine all image URLs
-                    const allImageUrls = [
-                        ...images.imgSrc.map(img => img.src),
-                        ...images.backgroundImages
-                    ];
-
-                    // Remove duplicates
-                    const uniqueUrls = [...new Set(allImageUrls)];
-
-                    log.info(`Found ${uniqueUrls.length} unique images on ${request.url}`);
-
-                    // Download each image
-                    for (const imgUrl of uniqueUrls) {
-                        try {
-                            await downloadImage(imgUrl, baseDir, log);
-                        } catch (err) {
-                            log.warning(`Failed to download ${imgUrl}: ${err.message}`);
-                        }
+                    const href = await page.evaluate(() => document.location.href);
+                    const title = await page.evaluate(() => document.title);
+                    if (title === 'Wayback Machine') {
+                        console.log('⚠️ Wayback Machine Dead Link, not downloading');
+                        return;
                     }
+
+                    const imgElements = await page.evaluate(() => document.querySelectorAll("img"));
+                    // imgs.forEach(img => console.log('📸', title, img.src));
+                    console.log('🚨', href, title);
+
+                    const imgSrcs = await page.$$eval('img', imgs => imgs.map(img => img.src));
+
+                    imgSrcs.forEach((imgSrc) => {
+                        crawledImages.push(imgSrc);
+                    })
+
                     // Add random delay for HTML pages
                     await new Promise((r) => setTimeout(r, Math.random() * 200 + 100));
 
@@ -253,6 +465,7 @@ async function crawlWaybackMachine(startUrl, dirBound) {
 
                 // Parse the original URL from the Wayback URL
                 const parsedUrl = parseWaybackUrl(request.url);
+
                 if (!parsedUrl) {
                     log.error(`Could not parse URL: ${request.url}`);
                     return;
@@ -294,23 +507,28 @@ async function crawlWaybackMachine(startUrl, dirBound) {
                 if (contentType.includes("text/html")) {
                     // Extract and enqueue links from the same domain
                     await enqueueLinks({
-                        globs: [`**/${dirBound}/**`],
+                        globs: [`**/${dirBound}/**`, `**/www.${dirBound}/**`],
+                        selector: 'a[href], area[href]',
                         transformRequestFunction: (req) => {
                             // Ensure we're only crawling Wayback Machine URLs
-                            // TODO: also check here if url is already downloaded
-                            // TODO: check here if url is image
-                            if (parseWaybackUrl(req.url)) {
+                            let waybackUrl = parseWaybackUrl(req.url);
+                            // remove anchor links resulting in redundant page results
+                            // TODO: split erroring in some cases catch why (though not breaking)
+                            waybackUrl.originalUrl = waybackUrl.originalUrl.split('#')[0];
+                            if (waybackUrl) {
                                 if (
+                                    // check if url is already crawled 
                                     crawledPages.includes(
-                                        parseWaybackUrl(req.url).originalUrl.replace(/#.*$/, "")
+                                        waybackUrl.originalUrl.replace(/#.*$/, "")
                                     ) ||
+                                    // check here if url is image
                                     !req.url.includes(dirBound)
                                 ) {
                                     return false;
                                 }
                             }
-                            if (parseWaybackUrl(req.url))
-                                crawledPages.push(parseWaybackUrl(req.url).originalUrl);
+                            if (waybackUrl)
+                                crawledPages.push(waybackUrl.originalUrl);
                             console.log("🐞", crawledPages);
                             return req;
                         },
@@ -331,88 +549,71 @@ async function crawlWaybackMachine(startUrl, dirBound) {
     await crawler.run([startUrl]);
 }
 
-// Helper function to download images
-async function downloadImage(url, baseDir, log) {
-    return new Promise((resolve, reject) => {
-        try {
-            // Extract the original URL from Web Archive format
-            let targetUrl = url;
-            let filePath;
-
-            // Check if it's a Web Archive URL
-            const archiveMatch = url.match(
-                /https?:\/\/web\.archive\.org\/web\/\d+im_\/(https?:\/\/.+)/
-            );
-
-            if (archiveMatch) {
-                // Extract the original URL
-                targetUrl = archiveMatch[1];
-            }
-
-            // Parse the target URL to get path structure
-            const urlObj = new URL(targetUrl);
-            const hostname = urlObj.hostname;
-            const pathname = urlObj.pathname;
-
-            // Create directory structure: scraped-sites/hostname/path
-            const dirPath = path.join(baseDir, hostname, path.dirname(pathname));
-            const filename = path.basename(pathname) || "index.html";
-            filePath = path.join(baseDir, hostname, pathname);
-
-            // Ensure directory exists
-            fs.mkdir(dirPath, { recursive: true })
-                .then(() => {
-                    // Choose http or https based on original archive URL
-                    const client = url.startsWith("https") ? https : http;
-
-                    client
-                        .get(url, (response) => {
-                            // Handle redirects
-                            if (response.statusCode === 301 || response.statusCode === 302) {
-                                const redirectUrl = response.headers.location;
-                                log.info(`Redirected to: ${redirectUrl}`);
-                                downloadImage(redirectUrl, baseDir, log)
-                                    .then(resolve)
-                                    .catch(reject);
-                                return;
-                            }
-
-                            if (response.statusCode !== 200) {
-                                reject(new Error(`Status ${response.statusCode}`));
-                                return;
-                            }
-
-                            const fileStream = createWriteStream(filePath);
-                            response.pipe(fileStream);
-
-                            fileStream.on("finish", () => {
-                                fileStream.close();
-                                log.info(`Downloaded: ${filePath}`);
-                                resolve(filePath);
-                            });
-
-                            fileStream.on("error", (err) => {
-                                fs.unlink(filePath).catch(() => { });
-                                reject(err);
-                            });
-                        })
-                        .on("error", reject);
-                })
-                .catch(reject);
-        } catch (err) {
-            reject(err);
-        }
-    });
-}
-
 function writeToFile() {
-    let file = createWriteStream(`scraped-sites/${domainDir}/page-list.txt`);
+    let file = createWriteStream(`scraped-sites/${domainDir}/page-list.json`);
     file.on("error", function (err) {
         /* error handling */
     });
     crawledPages = crawledPages.sort();
-    crawledPages.forEach((element) => file.write(element + "\n"));
+    file.write(JSON.stringify(crawledPages));
+    // crawledPages.forEach((element) => file.write(element + "\n"));
     file.end();
+}
+
+async function processCrawledImages(crawledImages) {
+    let crawledImageUrlPairs = crawledImages.map((image) => {
+        // get original url paths without web archive prefix
+        let originalUrl = image.split('http://')[1];
+        return { webArchiveFullUrl: image, originalUrl: originalUrl}
+    })
+
+    // let noDuplicateCrawledImagePairs = crawledImageUrlPairs()
+    let noDuplicateCrawledImagePairs = Array.from(
+        new Map(crawledImageUrlPairs.map(img => [img.originalUrl, img])).values()
+    );
+
+    console.log('📸 crawled image pairs', noDuplicateCrawledImagePairs);
+    return noDuplicateCrawledImagePairs
+}
+
+async function downloadCrawledImages(crawledImages) {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    for (const img of crawledImages) {
+            const lastSlashIndex = img.originalUrl.lastIndexOf('/');
+            const dirPath = img.originalUrl.slice(0, lastSlashIndex);
+            const filePath = img.originalUrl.slice(lastSlashIndex + 1);
+
+        try {
+            await page.goto(img.webArchiveFullUrl, { waitUntil: 'networkidle2' });
+
+            // Get the image source (assuming the image is in an <img> tag)
+            const imageSrc = await page.evaluate(() => {
+                const img = document.querySelector('img');
+                return img ? img.src : null;
+            });
+
+            if (imageSrc) {           
+                // Create directories if they don't exist
+                fs.mkdirSync(path.dirname(img.originalUrl), { recursive: true });
+
+                const viewSource = await page.goto(imageSrc);
+                fs.writeFileSync(img.originalUrl, await viewSource.buffer());
+                console.log(`Downloaded: ${img.webArchiveFullUrl} to ${img.originalUrl}`);
+            } else {
+                console.error(`No image found at ${img.webArchiveFullUrl}`);
+            }
+            // Random delay to avoid rate limiting
+            const randomDelay = Math.floor(Math.random() * (200 - 50 + 1)) + 50;
+            await new Promise(resolve => setTimeout(resolve, randomDelay));
+        } catch (error) {
+            console.error(`Failed to download ${img.webArchiveFullUrl} to ${img.originalUrl}:`, error.message);
+        }
+    }
+
+    await browser.close();
+    console.log('All images processed.');
 }
 
 // Example usage
@@ -430,9 +631,14 @@ if (!waybackDir) {
     process.exit(1);
 }
 
-crawlWaybackMachine(waybackUrl, waybackDir)
-    .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
-    .then(() => writeToFile())
-    .then(() => console.log("urls written to file"))
-    //TODO: Auto process link changes and images here
-    .catch((error) => console.error("Crawling failed:", error));
+// crawlWaybackMachine(waybackUrl, waybackDir)
+//     .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
+//     .then(() => console.log("crawled images:", crawledImages))
+//     .then(() => processCrawledImages(crawledImages))
+//     .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
+//     .then(() => writeToFile())
+//     .then(() => console.log("urls written to file"))
+//     //TODO: Auto process link changes and images here
+//     .catch((error) => console.error("Crawling failed:", error));
+
+await downloadCrawledImages(testImageUrls);
