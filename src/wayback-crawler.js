@@ -1,7 +1,6 @@
 import { PlaywrightCrawler, Dataset } from "crawlee";
 import { URL } from "url";
-// import fs from "fs/promises";
-import fs from 'fs';
+import fs from "fs/promises";
 import { createWriteStream } from "fs";
 import path from "path";
 import mime from "mime-types";
@@ -343,6 +342,7 @@ async function handleHtmlEncoding(content, contentType, log) {
     }
 
     // Clean up the HTML content
+    // TODO add wayback athena scripts to remove from html
     return (
         htmlContent
             // Update charset meta tag to UTF-8
@@ -383,7 +383,7 @@ async function crawlWaybackMachine(startUrl, dirBound) {
 
     // Create base download directory
     const baseDir = path.join(process.cwd(), "scraped-sites");
-    await ensureDir(baseDir);
+    //await ensureDir(baseDir);
 
     // Initialize the crawler
     const crawler = new PlaywrightCrawler({
@@ -438,9 +438,9 @@ async function crawlWaybackMachine(startUrl, dirBound) {
                     }
 
                     const imgElements = await page.evaluate(() => document.querySelectorAll("img"));
-                    // imgs.forEach(img => console.log('📸', title, img.src));
-                    console.log('🚨', href, title);
-
+                    // TODO get background images and <background> images
+                    // TODO don't add images if width or height === 0
+                    // TODO enqueue frame/iframes too
                     const imgSrcs = await page.$$eval('img', imgs => imgs.map(img => img.src));
 
                     imgSrcs.forEach((imgSrc) => {
@@ -487,7 +487,7 @@ async function crawlWaybackMachine(startUrl, dirBound) {
                     contentType.startsWith("image/") ||
                     (!contentType.includes("text/html") && Buffer.isBuffer(content))
                 ) {
-                    await fs.writeFileSync(localPath, content);
+                    await fs.writeFile(localPath, content);
                 } else if (contentType.includes("text/html")) {
                     // For HTML content, always save as UTF-8
                     if (!fileExists) {
@@ -496,10 +496,6 @@ async function crawlWaybackMachine(startUrl, dirBound) {
                         console.log(localPath, "already exists 📂");
                     }
                 }
-                // else {
-                //     // For other text-based content
-                //     await fs.writeFile(localPath, content);
-                // }
 
                 log.info(`Saved to ${localPath}`);
 
@@ -555,6 +551,7 @@ function writeToFile() {
         /* error handling */
     });
     crawledPages = crawledPages.sort();
+    // TODO remove http:// prefix from crawledPages
     file.write(JSON.stringify(crawledPages));
     // crawledPages.forEach((element) => file.write(element + "\n"));
     file.end();
@@ -596,10 +593,10 @@ async function downloadCrawledImages(crawledImages) {
 
             if (imageSrc) {           
                 // Create directories if they don't exist
-                fs.mkdirSync(path.dirname(img.originalUrl), { recursive: true });
+                fs.mkdir(path.dirname(img.originalUrl), { recursive: true });
 
                 const viewSource = await page.goto(imageSrc);
-                fs.writeFileSync(img.originalUrl, await viewSource.buffer());
+                fs.writeFile(img.originalUrl, await viewSource.buffer());
                 console.log(`Downloaded: ${img.webArchiveFullUrl} to ${img.originalUrl}`);
             } else {
                 console.error(`No image found at ${img.webArchiveFullUrl}`);
@@ -614,6 +611,7 @@ async function downloadCrawledImages(crawledImages) {
 
     await browser.close();
     console.log('All images processed.');
+    return;
 }
 
 // Example usage
@@ -631,14 +629,12 @@ if (!waybackDir) {
     process.exit(1);
 }
 
-// crawlWaybackMachine(waybackUrl, waybackDir)
-//     .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
-//     .then(() => console.log("crawled images:", crawledImages))
-//     .then(() => processCrawledImages(crawledImages))
-//     .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
-//     .then(() => writeToFile())
-//     .then(() => console.log("urls written to file"))
-//     //TODO: Auto process link changes and images here
-//     .catch((error) => console.error("Crawling failed:", error));
-
-await downloadCrawledImages(testImageUrls);
+crawlWaybackMachine(waybackUrl, waybackDir)
+    .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
+    .then(() => writeToFile())
+    .then(() => console.log("urls written to file"))
+    .then(() => console.log("crawled images:", crawledImages))
+    .then(() => processCrawledImages(crawledImages))
+    .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
+    //TODO: Auto process link changes and images here
+    .catch((error) => console.error("Crawling failed:", error));
