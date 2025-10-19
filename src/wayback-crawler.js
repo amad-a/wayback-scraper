@@ -7,10 +7,8 @@ import mime from "mime-types";
 import iconv from "iconv-lite";
 import { detect } from "jschardet";
 import fsExists from "fs.promises.exists";
-import * as https from 'https';
-import * as http from 'http';
 import puppeteer from 'puppeteer';
-// import processHtmlFiles from './wb-url-replace.js'
+// import { DOMParser } from 'xmldom';
 const testImageUrls = [
   {
     webArchiveFullUrl: 'https://web.archive.org/web/20020821165006im_/http://www.jericho-city.org/images/OPENING-.JPG',
@@ -631,10 +629,46 @@ async function processWaybackPageLinks() {
   let pageList = await fs.readFile(`scraped-sites/${waybackDir}/page-list.json`);
   let parsedPages = JSON.parse(pageList);
 
+  const hrefPattern = /href=["']([^"']+)["']/gi;
+  const srcPattern = /src=["']([^"']+)["']/gi;
+  const imageExtensions = /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
+
+  // TODO keep original wayback links as well
+
   for (let file of parsedPages) {
     let noHttpPrefixFile = file.split('http://')[1];
     let fileExists = await fsExists(`scraped-sites/${noHttpPrefixFile}`);
-    console.log(`file ${noHttpPrefixFile} exists: ${fileExists}`);
+    // console.log(`file ${noHttpPrefixFile} exists: ${fileExists}`);
+    if (fileExists && (noHttpPrefixFile.endsWith('html') || noHttpPrefixFile.endsWith('htm'))) {
+      let htmlPageBuffer = await fs.readFile(`scraped-sites/${noHttpPrefixFile}`);
+      let htmlString = htmlPageBuffer.toString();
+
+      const hrefMatchData = [...htmlString.matchAll(hrefPattern)];
+      const hrefMatches = hrefMatchData.map(match => match[1]);
+
+      // console.log('HREF MATCHES', hrefMatches);
+      const hrefMatchesSanitized = hrefMatches.map((match) => {
+        let sanitizedMatch = match.match(waybackPageUrl);
+        if (sanitizedMatch === null) return null;
+        return '/sites/' + match.split('http://')[1];
+      });
+      // console.log('HREF PATTERN MATCHES', hrefMatchesSanitized);
+
+      const srcMatches = [...htmlString.matchAll(srcPattern)];
+
+      let srcMatchesFiltered = srcMatches.map(match => match[1]).filter(src => imageExtensions.test(src));
+
+      const srcMatchesSanitized = srcMatchesFiltered.map((match) => {
+        let sanitizedMatch = match.match(waybackImageUrl);
+        if (sanitizedMatch === null) return null;
+        return '/sites/' + match.split('http://')[1];
+      });
+
+      console.log('SRC MATCHES', srcMatchesFiltered);
+      console.log('SRC PATTERN MATCHES', srcMatchesSanitized);
+
+
+    }
   }
 
   return;
@@ -656,14 +690,18 @@ if (!waybackDir) {
     process.exit(1);
 }
 
-// await processWaybackPageLinks();
+await processWaybackPageLinks();
 
-crawlWaybackMachine(waybackUrl, waybackDir, oneCrawl)
-    .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
-    .then(() => generatePageListFile())
-    .then(() => console.log("crawled images:", crawledImages))
-    .then(() => processCrawledImages(crawledImages))
-    .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
-    .then(() => processWaybackPageLinks())
-    //TODO: Auto process link changes and images here
-    .catch((error) => console.error("Crawling failed:", error));
+
+
+// TODO: start at/ stop at args in the program chain
+
+// crawlWaybackMachine(waybackUrl, waybackDir, oneCrawl)
+//     .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
+//     .then(() => generatePageListFile())
+//     .then(() => console.log("crawled images:", crawledImages))
+//     .then(() => processCrawledImages(crawledImages))
+//     .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
+//     .then(() => processWaybackPageLinks())
+//     //TODO: Auto process link changes and images here
+//     .catch((error) => console.error("Crawling failed:", error));
