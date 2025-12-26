@@ -1,0 +1,576 @@
+<script src="//archive.org/includes/athena.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app204.us.archive.org';v.server_ms=254;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=HxkREWBo" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=txqj7nKC" charset="utf-8"></script>
+ <p align="center">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0453469628529091";
+/* Khayma Banner Leaderboard */
+google_ad_slot = "2452071927";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20240703083705js_/http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html dir="RTL">
+<head>
+	<title>إتش.بي بالعربية - الدرس الثامن</title>
+	<meta charset="utf-8">
+	<meta name="keywords" content="html,html,html,html,psp,psp,psp,psp,arabic,arabic,arabic,arabic,paint shop pro,paint shop pro,paint shop pro,paint shop pro,webpage design,webpage design,webpage design,webpage design ">
+	<meta name="description" content="Html and Paint Shop Pro tutorials in Arabic,learning web page design in Arabic">
+	<meta name="author" content="Yahya Al-Sharif">
+	<meta name="copyright" content="Copyright 1998 Yahya Al-Sharif">
+</head>
+<body bgcolor="#FFFFFF" background="/web/20240703083705im_/http://www.khayma.com/hpinarabic/images/bg.jpg">
+<basefont size="4" face="Arabic Transparent" color="#000000">
+<center>
+<img src="/web/20240703083705im_/http://www.khayma.com/hpinarabic/images/inbanner.gif" width="500" height="80" border="0" usemap="#map2" alt="">
+</center>
+<p align="CENTER" dir="RTL">
+<font face="Arabic Transparent" size="6" color="#FF0000">
+<strong>
+الدرس الثامن<br>
+الجداول (2)<br>
+</strong></font></p>
+&nbsp;<br><center>
+<p align="center" dir="RTL"><font size="2">
+<a href="htutor01.html">[الأساسيات]</a>
+<a href="htutor02.html">[الألوان]</a>
+<a href="htutor03.html">[الخطوط]</a>
+<a href="htutor04.html">[الفقرات والقوائم]</a>
+<a href="htutor05.html">[الصور والرسومات]</a>
+<a href="htutor06.html">[الوصلات التشعبية]</a><br>
+<a href="htutor07.html">[الجداول1]</a>
+<a href="htutor08.html">[الجداول2]</a>
+<a href="htutor09.html">[الإطارات1]</a>
+<a href="htutor10.html">[الإطارات2]</a>
+<a href="htutor11.html">[الإطارات3]</a>
+<a href="htutor12.html">[وسوم من هنا وهناك]</a><br>
+<a href="htutor13.html">[الخرائط الصورية]</a>
+<a href="htutor14.html">[النماذج1]</a>
+<a href="htutor15.html">[النماذج2]</a>
+<a href="htutor16.html">[الوسوم الخاصة]</a>
+<a href="htutor17.html">[الويب واللغة العربية]</a>
+<a href="htutor18.html">[وسوم Meta]</a>
+</font></p>
+</center><br>
+<center><img src="/web/20240703083705im_/http://www.khayma.com/hpinarabic/images/top_bar.gif" width="600" height="30" border="0" alt=""></center>
+<br>&nbsp;<br>
+<blockquote>
+<p align="RIGHT" dir="RTL">
+أهلاً وسهلاً بك إلى الدرس الثامن من دروس
+<font face="Times New Roman" size="4">HTML.</font>
+نتابع معاً في هذا الدرس الحديث عن الجداول. وأنا أفترض أنك قد أنهيت الدرس السابق بنجاح،  وأن لديك الآن فكرة جيدة جداً عن الجداول وكيفية إنشائها والتعامل مع خصائصها ومع الصفوف وخصائصها. ونكمل الآن من حيث توقفنا، أي مع خصائص الخلايا.
+</p>
+<p align="RIGHT" dir="RTL">
+هل تذكر ما قلناه عن عدد الخلايا في الصف الواحد؟ إن عدد الخلايا المطلوب يتحدد من خلال كتابة الوسوم 
+<font face="Times New Roman" size="4">&lt;TD&gt; ... &lt;‎/TD&gt;</font>
+مرات بنفس العدد المطلوب. ومن الممكن أن تحتوي الخلية على أي عنصر من عناصر لغة 
+<font face="Times New Roman" size="4">HTML</font>
+: نصوص، رسوم، قوائم، وصلات تشعبية، بل وحتى جداول. (نعم، تستطيع إدراج جدول داخل جدول آخر)<br>&nbsp;<br>
+لنسترجع معا المثال الذي قمنا بالتدرب عليه في الدرس السابق، فسوف نكمل هذا الدرس معه. وهو جدول صغير مكون من ثلاثة صفوف وعمودين (أي خليتين في كل صف).
+</p>
+<font face="Arial" size="2">
+<p align="LEFT" dir="LTR">&lt;TABLE&gt;</p>
+<blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;TR&gt;</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt;
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt; 
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;‎/TR&gt;</p>
+	</font>
+</blockquote>
+<p align="LEFT" dir="LTR">&lt;‎/TABLE&gt;</p>
+</font>
+&nbsp;<br>
+<p align="RIGHT" dir="RTL">أما الخصائص المستخدمة مع الخلايا، فهذا جدول بها:
+</p>
+<table cellpadding="10" cellspacing="1" width="80%" border="1" align="CENTER" bgcolor="#FFFFFF">
+<tr>
+	<td><font face="Times New Roman" size="4">ALIGN</font></td>
+	<td>
+<font size="4"><p align="RIGHT" dir="RTL">
+تحدد محاذاة النص الموجود في الخلية أفقياً، والقيم المستخدمة هي
+<font face="Times New Roman" size="4">Left, Center, Right</font>
+</p></font>	 </td>
+</tr>
+<tr>
+	<td><font face="Times New Roman" size="4">VALIGN</font></td>
+	<td><font size="4">
+<p align="RIGHT" dir="RTL">
+تحدد المحاذاة العمودية للنص، وهو يأخذ القيم
+	<font face="Times New Roman" size="4">Top, Middle, Bottom, Baseline</font>
+</p>
+</font>
+	 </td>
+</tr>
+<tr>
+	<td><font face="Times New Roman" size="4">WIDTH</font></td>
+	<td><p align="RIGHT" dir="RTL"><font size="4">
+تحدد عرض الخلية، وذلك بكتابة القيمة المباشرة للعرض المطلوب بالبيكسل، أو بكتابة رقم يمثل النسبة المئوية. ويكفي تحديد العرض  للخلايا في أحد الصفوف لكي يتم تطبيقه على كل الخلايا في كل الصفوف.
+	</font></p>
+	   </td>
+</tr>
+<tr>
+	<td><font face="Times New Roman" size="4">HEIGHT</font></td>
+	<td><p align="RIGHT" dir="RTL"><font size="4">
+تحدد الإرتفاع المطلوب للخلية في الصف، وذلك بالطرق المباشرة أو النسبية. وقيامك بتحديد ارتفاع إحدى الخلايا في الصف يؤدي إلى تطبيقه على كل الخلايا فيه.
+	</font></p> </td>
+</tr>
+<tr>
+	<td><font face="Times New Roman" size="4">BGCOLOR</font></td>
+	<td><p align="RIGHT" dir="RTL"><font size="4">
+تحدد لون خلفية الخلية
+	</font></p> </td>
+</tr>
+<tr>
+	<td><font face="Times New Roman" size="4">COLSPAN</font></td>
+	<td><p align="RIGHT" dir="RTL"><font size="4">
+يقوم بدمج الخلية الحالية مع العدد المطلوب من الخلايا التي تليها أفقياً
+	</font></p>
+<p align="LEFT" dir="LTR"><font face="Arial" size="2">
+‎&lt;TD COLSPAN=&quot;n&quot;&gt;‎</font>
+</p>
+<p align="RIGHT" dir="RTL">
+<font size="4">حيث 
+n
+هو عدد الخلايا التي سيتم دمجها
+</font>
+</p>
+	  </td>
+</tr>
+<tr>
+	<td><font face="Times New Roman" size="4">ROWSPAN</font></td>
+	<td><p align="RIGHT" dir="RTL"><font size="4">
+يقوم بدمج الخلية الحالية مع العدد المطلوب من الخلايا التي تليها عمودياً (أي أسفلها).
+	</font></p>
+<p align="LEFT" dir="LTR"><font face="Arial" size="2">
+‎&lt;TD ROWSPAN=&quot;n&quot;&gt;‎</font>
+</p>
+<p align="RIGHT" dir="RTL">
+<font size="4">وبالطبع 
+n
+هو عدد الخلايا التي سيتم دمجها
+</font>
+</p>
+	</td>
+</tr>
+</table><br clear="ALL">
+&nbsp;<br>
+<p align="RIGHT" dir="RTL">
+وقبل أن نستمر،  يبدو لي أن هناك بعض الملاحظات المهمة التي ينبغي ذكرها:
+</p>
+<ul>
+<li><p align="right" dir="RTL"> كما تلاحظ هناك خصائص تتكرر مع جميع الوسوم. خذ مثلاً الخاصية
+<font face="Times New Roman" size="4">BGCOLOR.</font>
+كيف يتم التعامل معها إذا كررت مع جميع الوسوم؟
+بكل بساطة يتم تطبيق اللون المحدد مع وسم الخلية، فإذا لم يكن محدداً يطبق اللون المحدد مع  وسم الصف، فإذا لم يوجد يطبق اللون المحدد مع وسم الجدول. وإذا لم يكن هذا محدداً بدوره يتم إعتماد لون خلفية الصفحة المحدد في الوسم  
+<font face="Times New Roman" size="4">&lt;BODY&gt;.</font>
+</p>
+<li><p align="right" dir="RTL">
+الملاحظة الثانية تتعلق بالخصائص 
+<font face="Times New Roman" size="4">WIDTH, HEIGHT.</font>
+يختلف أسلوب التعامل مع هذه الخصائص من متصفح لآخر، بل وتختلف أيضاً  طريقة تفسير القيم المحددة معها وخصوصاً فيما يتعلق بالنسب المئوية. (راجع الموضوع:
+<a href="htutor16.html"> الوسوم الخاصة والمتصفحات</a>
+).<br>
+وبدون الخوض في تفاصيل هذه الإختلافات التي لن تؤدي إلا إلى المزيد من الإشكالات لديك... وبعد التجربة يبدو أن أفضل طريقة للتعامل مع هذه الخصائص هي قيامك بتحديد العرض (وكذلك الإرتفاع إذا أردت ذلك) للجدول ككل من خلال الوسم
+<font face="Times New Roman" size="4">&lt;TABLE&gt;.</font>
+ثم استخدام هذه الخصائص في وسوم الخلايا وتحديد العرض المطلوب لكل خلية على حده في الصف الأول، والارتفاع المطلوب لكل صف في الجدول.<br>
+وهذه برأيي أفضل طريقة تضمن بها أفضل مشاهدة للجدول لجميع زوار موقعك.</p>
+<li><p align="right" dir="RTL">
+إذا أردت أن تحتوي بعض الصفوف في الجدول على عدد من الخلايا أقل من باقي الصفوف، فلا يكفي أن تقوم بحذف وسوم الخلايا منها.
+(كما ترى في الشيفرة التالية:)</p>
+<font face="Arial" size="2">
+<p align="LEFT" dir="LTR">&lt;TABLE BORDER=&quot;5&quot;&gt;</p>
+<blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;TR&gt;</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt;
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt; 
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;‎/TR&gt;</p>
+	</font>
+</blockquote>
+<p align="LEFT" dir="LTR">&lt;‎/TABLE&gt;</p>
+</font>
+<p>
+<p align="right" dir="RTL">لأن هذا ما ستحصل عليه:
+</p>
+<center><table border="5"><tr>
+<td> Data </td>
+</tr><tr> 
+<td> Data </td>
+<td> Data </td> 
+</tr><tr> 
+<td> Data </td>
+</tr></table></center><br clear="ALL">
+<p align="right" dir="RTL">
+لقد بقي مكان الخلايا المحذوفة محجوزاً كما لو أنها لم تحذف. أما الخلايا الباقية فظلت محتفظة بنفس خصائصها، أي أننا لم نستفد من عملية الحذف. والحقيقة أن الطريقة المثلى لذلك هي أن تقوم 
+<u><strong><i>بدمج</i></strong></u>
+الخلايا معاً وذلك باستخدام الخصائص 
+<font face="Times New Roman" size="4">COLSPAN, ROWSPAN.</font>
+</p>
+</ul>
+</p>
+<hr align="CENTER" width="40%" size="4"><p>
+<p align="RIGHT" dir="RTL">إذن لنقم بإعادة كتابة شيفرة الجدول مع استخدام هذه الخصائص:
+</p>
+<font face="Arial" size="2">
+<p align="LEFT" dir="LTR">
+‎&lt;TABLE BORDER=&quot;5&quot;&gt;‎</p>
+<blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;TR&gt;</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD COLSPAN=&quot;2&quot;&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt;
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt; 
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD COLSPAN=&quot;2&quot;&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;‎/TR&gt;</p>
+	</font>
+</blockquote>
+<p align="LEFT" dir="LTR">&lt;‎/TABLE&gt;</p>
+</font>
+<center><table border="5">
+<tr><td colspan="2"> Data </td>
+</tr><tr> 
+<td> Data </td>
+<td> Data </td> 
+</tr><tr> 
+<td colspan="2"> Data </td>
+</tr>
+</table>
+</center><br clear="ALL">
+<p align="RIGHT" dir="RTL">
+لاحظ أن العدد 2 هو عدد الخلايا التي قمنا بدمجها. ولاحظ أيضاً انني لم أقم بإعادة وسوم الخلايا المحذوفة لأننا أصلاً لا نحتاج لها بعد أن قمنا بالدمج.
+<strong>
+وكقاعدة أساسية: كل خلية يتم دمجها يجب بالمقابل حذف وسوم التعريف الخاصة بها. ما عدا تعريف الخلية الأساسية بالطبع.
+</strong></p>
+<p align="RIGHT" dir="RTL">
+ مثال آخر: لنقم بدمج الخلايا الموجودة في العمود الأول
+</p>
+<font face="Arial" size="2">
+<p align="LEFT" dir="LTR">
+‎&lt;TABLE BORDER=&quot;5&quot;&gt;‎</p>
+<blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;TR&gt;</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD ROWSPAN=&quot;3&quot;&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt;
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt; 
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;‎/TR&gt;</p>
+	</font>
+</blockquote>
+<p align="LEFT" dir="LTR">&lt;‎/TABLE&gt;</p>
+</font>
+<p align="RIGHT" dir="RTL">ومرة أخرى بعد تعريف خاصية الدمج العمودي، قمت بحذف تعريف الخلايا المدموجة من الصف الثاني والثالث. وهذا هو الجدول الناتج.
+</p>
+<center><table border="5">
+<tr>
+<td rowspan="3"> Data </td><td> Data </td>
+</tr><tr> 
+<td> Data </td>
+</tr><tr> 
+<td> Data </td>
+</tr></table>
+</center><br clear="ALL">
+<hr align="CENTER" width="80%" size="4"><p>
+<p align="RIGHT" dir="RTL">هناك نوع خاص من الخلايا التي يتم تعريفها باستخدام الوسوم
+<font face="Times New Roman" size="4">&lt;TH&gt; ... &lt;‎/TH&gt;</font>
+وهي اختصار 
+<font face="Times New Roman" size="4">Table Header</font>
+أي ترويسة الجدول.<br>
+والفرق الوحيد بينها وبين 
+<font face="Times New Roman" size="4">&lt;TD&gt; ... &lt;‎/TD&gt;</font>
+هو أن النص الذي تحتويه يظهر بخط أسود عريض ومحاذاته في منتصف الخلية بصورة إفتراضية. (ليس بالشيء المهم، كما أعتقد)، خاصة وأن الخصائص المستخدمة معها هي نفس خصائص 
+<font face="Times New Roman" size="4">&lt;TD&gt;</font>
+وبنفس التفاصيل التي ذكرت.
+</p>
+<hr align="CENTER" width="80%" size="4"><p>
+<p align="RIGHT" dir="RTL">الوسوم الأخيرة المستخدمة في الجداول هي
+<font face="Times New Roman" size="4">
+&lt;CAPTION&gt; ... &lt;‎/CAPTION&gt;
+</font>
+وهي تختص بإضافة عنوان رئيسي للجدول ككل. لذلك فهي عندما تكتب  يتم وضعها مباشرة بعد الوسم 
+<font face="Times New Roman" size="4">&lt;TABLE&gt;</font>
+وبصورة مستقلة وليس ضمن وسوم الصفوف أو الخلايا.
+</p>
+<font face="Arial" size="2">
+<p align="LEFT" dir="LTR">‎&lt;TABLE BORDER=&quot;5&quot;&gt;‎<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;CAPTION&gt; Table Caption &lt;‎/CAPTION&gt;
+</p>
+<blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;TR&gt;</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt;
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">
+	&lt;‎/TR&gt;<br><br>
+	&lt;TR&gt; 
+	</p>
+	</font>
+		<blockquote>
+		<font color="#008000">
+		<p align="LEFT" dir="LTR">
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;<br>
+		&lt;TD&gt; <i>Data</i> &lt;‎/TD&gt;
+		</p>
+		</font>
+		</blockquote>
+	<font color="#FF0000">
+	<p align="LEFT" dir="LTR">&lt;‎/TR&gt;</p>
+	</font>
+</blockquote>
+<p align="LEFT" dir="LTR">&lt;‎/TABLE&gt;</p>
+</font>
+<center><table border="5">
+<caption> Table Caption </caption> 
+<tr>
+<td> Data </td><td> Data </td>
+</tr>
+<tr> 
+<td> Data </td><td> Data </td> 
+</tr>
+<tr> 
+<td> Data </td><td> Data </td> 
+</tr>
+</table>
+</center><br clear="ALL">
+<hr align="CENTER" width="80%" size="4"><p>
+<p align="RIGHT" dir="RTL">
+وأخيراً... وصلنا إلى نهاية هذه الدرس. وما بقي لدي هو أن أحثـك على تطبيق ما قمت بشرحه فيه وفي الدرس السابق وباقي الدروس، وتجربة جميع الاحتمالات الواردة للخصائص والقيم.  ومن ناحيتي إليك
+<a href="tablexam.html"> هذه الصفحة
+</a>  التي تحتوي على عدة طرق وأمثلة تطبيقية لاستخدام الجداول. أو إذا كنت واثقاً من قوة فهمك للجداول قم بالنقر<a href="htutor09.html"> هنا </a>
+للإنتقال مباشرة إلى الدرس التالي.
+</p></blockquote>
+<p>
+&nbsp;<br>
+<center>
+<a href="htutor09.html"><img src="/web/20240703083705im_/http://www.khayma.com/hpinarabic/images/next.gif" width="90" height="50" border="0" alt="Next Lesson"></a>
+<br>
+&nbsp;<br>&nbsp;<br>
+<img src="/web/20240703083705im_/http://www.khayma.com/hpinarabic/images/divbar.gif" width="600" height="24" border="0" alt=" "><br>
+<table border="0" align="CENTER" width="80%">
+<tr>
+	<td align="CENTER" width="25%"><font size="-1">إتش.بي بالعربية<br>
+&copy; 1998-1999
+	<br><a href="https://web.archive.org/web/20240703083705/mailto:yahya@palnet.com"> يحيى الشريف</a>
+	</font></td>
+<td><center><img src="/web/20240703083705im_/http://www.khayma.com/hpinarabic/images/hpbutton.gif" width="128" height="47" border="0" alt="H.P in Arabic Button"></center></td>
+	<td align="CENTER" width="25%"><font size="-1">H.P in arabic<br>
+	&copy; 1998-1999 <br><a href="https://web.archive.org/web/20240703083705/mailto:yahya@palnet.com">Yahya Al-Sharif</a>
+	</font></td>
+</tr>
+</table>
+<map name="map2">
+<area shape="RECT" coords="120,5,180,25" href="sitemap.html" alt=" ">
+<area shape="RECT" coords="185,5,245,25" href="whatsnew.html" alt=" ">
+<area shape="RECT" coords="250,5,310,25" href="thissite.html" alt=" ">
+<area shape="RECT" coords="315,5,375,25" href="index.html" alt=" ">
+<area shape="RECT" coords="120,30,245,50" href="pspintro.html" alt=" ">
+<area shape="RECT" coords="250,30,375,50" href="htmintro.html" alt=" ">
+<area shape="RECT" coords="120,55,180,75" href="search.html" alt=" ">
+<area shape="RECT" coords="185,55,245,75" href="https://web.archive.org/web/20240703083705/mailto:yahya@palnet.com" alt=" ">
+<area shape="RECT" coords="250,55,310,75" href="links.html" alt=" ">
+<area shape="RECT" coords="315,55,375,75" href="https://web.archive.org/web/20240703083705/http://216.169.97.147/hpinarabic/gbook.html" alt=" ">
+</map>
+</center>
+</body>
+</html>
+</p></div></table></p></div></table></p></div></table><p align="center">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0453469628529091";
+/* Khayma Banner Leaderboard */
+google_ad_slot = "3534219084";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript" src="https://web.archive.org/web/20240703083705js_/http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+<br>
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-28247864-1']);
+_gaq.push(['_setDomainName', 'khayma.com']);
+_gaq.push(['_setAllowLinker', true]);
+_gaq.push(['_trackPageview']);
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://web.archive.org/web/20240703083705/https://ssl' : 'https://web.archive.org/web/20240703083705/http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+<!--
+     FILE ARCHIVED ON 08:37:05 Jul 03, 2024 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 05:31:36 Nov 28, 2024.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 0.602
+  exclusion.robots: 0.028
+  exclusion.robots.policy: 0.018
+  esindex: 0.011
+  cdx.remote: 5.771
+  LoadShardBlock: 51.504 (3)
+  PetaboxLoader3.datanode: 105.88 (5)
+  load_resource: 158.957
+  PetaboxLoader3.resolve: 56.043
+  loaddict: 80.937
+-->

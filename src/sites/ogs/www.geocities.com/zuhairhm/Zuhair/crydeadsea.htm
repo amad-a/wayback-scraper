@@ -1,0 +1,307 @@
+<html><head><script src="//archive.org/includes/athena.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app200.us.archive.org';v.server_ms=268;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="/_static/js/bundle-playback.js?v=HxkREWBo" charset="utf-8"></script>
+<script type="text/javascript" src="/_static/js/wombat.js?v=txqj7nKC" charset="utf-8"></script>
+<meta charset="utf-8">
+<title>Slideshow</title>
+<style type="text/css">
+    div#how_to_embed { display: none; z-index: 1; margin: 2px;
+      position: absolute; width: 90%; height: 20%; top: 40%; left: 5% }
+    table#embedded { background-color: #ffffc0;
+        border: thin solid black; vertical-align: middle }
+    table#embedded tr td { padding: 6px }
+    div#code { background-color: #ccc;
+              margin:2ex 2em 2ex 2em; overflow:auto; }
+    div#noplayer { width: 50%; height: 90%; margin: 12px; overflow: auto; }
+    div#noplayer p { margin-top: 1ex; }
+    * { margin: 0; padding: 0; }
+    </style>
+<script type="text/javascript">
+        /**
+ * @license SWFObject v1.5: Flash Player detection and embed -
+ * http://blog.deconcept.com/swfobject/
+ *
+ * SWFObject is (c) 2007 Geoff Stearns and is released under the MIT License:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ */
+var deconcept;
+if(typeof deconcept == "undefined") deconcept = new Object();
+if(typeof deconcept.util == "undefined") deconcept.util = new Object();
+if(typeof deconcept.SWFObjectUtil == "undefined") deconcept.SWFObjectUtil = new Object();
+/** @constructor */
+deconcept.SWFObject = function(swf, id, w, h, ver, c, quality, xiRedirectUrl, redirectUrl, detectKey) {
+	if (!document.getElementById) { return; }
+	this.DETECT_KEY = detectKey ? detectKey : 'detectflash';
+	this.skipDetect = deconcept.util.getRequestParameter(this.DETECT_KEY);
+	this.params = new Object();
+	this.variables = new Object();
+	this.attributes = new Array();
+	if(swf) { this.setAttribute('swf', swf); }
+	if(id) { this.setAttribute('id', id); }
+	if(w) { this.setAttribute('width', w); }
+	if(h) { this.setAttribute('height', h); }
+	if(ver) { this.setAttribute('version', new deconcept.PlayerVersion(ver.toString().split("."))); }
+	this.installedVer = deconcept.SWFObjectUtil.getPlayerVersion();
+	if (!window.opera && document.all && this.installedVer.major > 7) {
+		// only add the onunload cleanup if the Flash Player version supports External Interface and we are in IE
+		deconcept.SWFObject.doPrepUnload = true;
+	}
+	if(c) { this.addParam('bgcolor', c); }
+	var q = quality ? quality : 'high';
+	this.addParam('quality', q);
+	this.setAttribute('useExpressInstall', false);
+	this.setAttribute('doExpressInstall', false);
+	var xir = (xiRedirectUrl) ? xiRedirectUrl : window.location;
+	this.setAttribute('xiRedirectUrl', xir);
+	this.setAttribute('redirectUrl', '');
+	if(redirectUrl) { this.setAttribute('redirectUrl', redirectUrl); }
+}
+deconcept.SWFObject.prototype = {
+	useExpressInstall: function(path) {
+		this.xiSWFPath = !path ? "expressinstall.swf" : path;
+		this.setAttribute('useExpressInstall', true);
+	},
+	setAttribute: function(name, value){
+		this.attributes[name] = value;
+	},
+	getAttribute: function(name){
+		return this.attributes[name];
+	},
+	addParam: function(name, value){
+		this.params[name] = value;
+	},
+	getParams: function(){
+		return this.params;
+	},
+	addVariable: function(name, value){
+		this.variables[name] = value;
+	},
+	getVariable: function(name){
+		return this.variables[name];
+	},
+	getVariables: function(){
+		return this.variables;
+	},
+	getVariablePairs: function(){
+		var variablePairs = new Array();
+		var key;
+		var variables = this.getVariables();
+		for(key in variables){
+			variablePairs[variablePairs.length] = key +"="+ variables[key];
+		}
+		return variablePairs;
+	},
+	getSWFHTML: function() {
+		var swfNode = "";
+		if (navigator.plugins && navigator.mimeTypes && navigator.mimeTypes.length) { // netscape plugin architecture
+			if (this.getAttribute("doExpressInstall")) {
+				this.addVariable("MMplayerType", "PlugIn");
+				this.setAttribute('swf', this.xiSWFPath);
+			}
+			swfNode = '<embed type="application/x-shockwave-flash" src="'+ this.getAttribute('swf') +'" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ this.getAttribute('style') +'"';
+			swfNode += ' id="'+ this.getAttribute('id') +'" name="'+ this.getAttribute('id') +'" ';
+			var params = this.getParams();
+			 for(var key in params){ swfNode += [key] +'="'+ params[key] +'" '; }
+			var pairs = this.getVariablePairs().join("&");
+			 if (pairs.length > 0){ swfNode += 'flashvars="'+ pairs +'"'; }
+			swfNode += '/>';
+		} else { // PC IE
+			if (this.getAttribute("doExpressInstall")) {
+				this.addVariable("MMplayerType", "ActiveX");
+				this.setAttribute('swf', this.xiSWFPath);
+			}
+			swfNode = '<object id="'+ this.getAttribute('id') +'" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="'+ this.getAttribute('width') +'" height="'+ this.getAttribute('height') +'" style="'+ this.getAttribute('style') +'">';
+			swfNode += '<param name="movie" value="'+ this.getAttribute('swf') +'" />';
+			var params = this.getParams();
+			for(var key in params) {
+			 swfNode += '<param name="'+ key +'" value="'+ params[key] +'" />';
+			}
+			var pairs = this.getVariablePairs().join("&");
+			if(pairs.length > 0) {swfNode += '<param name="flashvars" value="'+ pairs +'" />';}
+			swfNode += "</object>";
+		}
+		return swfNode;
+	},
+	write: function(elementId){
+		if(this.getAttribute('useExpressInstall')) {
+			// check to see if we need to do an express install
+			var expressInstallReqVer = new deconcept.PlayerVersion([6,0,65]);
+			if (this.installedVer.versionIsValid(expressInstallReqVer) && !this.installedVer.versionIsValid(this.getAttribute('version'))) {
+				this.setAttribute('doExpressInstall', true);
+				this.addVariable("MMredirectURL", escape(this.getAttribute('xiRedirectUrl')));
+				document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+				this.addVariable("MMdoctitle", document.title);
+			}
+		}
+		if(this.skipDetect || this.getAttribute('doExpressInstall') || this.installedVer.versionIsValid(this.getAttribute('version'))){
+			var n = (typeof elementId == 'string') ? document.getElementById(elementId) : elementId;
+			n.innerHTML = this.getSWFHTML();
+			return true;
+		}else{
+			if(this.getAttribute('redirectUrl') != "") {
+				document.location.replace(this.getAttribute('redirectUrl'));
+			}
+		}
+		return false;
+	}
+}
+/* ---- detection functions ---- */
+deconcept.SWFObjectUtil.getPlayerVersion = function(){
+	var PlayerVersion = new deconcept.PlayerVersion([0,0,0]);
+	if(navigator.plugins && navigator.mimeTypes.length){
+		var x = navigator.plugins["Shockwave Flash"];
+		if(x && x.description) {
+			PlayerVersion = new deconcept.PlayerVersion(x.description.replace(/([a-zA-Z]|\s)+/, "").replace(/(\s+r|\s+b[0-9]+)/, ".").split("."));
+		}
+	}else if (navigator.userAgent && navigator.userAgent.indexOf("Windows CE") >= 0){ // if Windows CE
+		var axo = 1;
+		var counter = 3;
+		while(axo) {
+			try {
+				counter++;
+				axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash."+ counter);
+//				document.write("player v: "+ counter);
+				PlayerVersion = new deconcept.PlayerVersion([counter,0,0]);
+			} catch (e) {
+				axo = null;
+			}
+		}
+	} else { // Win IE (non mobile)
+		// do minor version lookup in IE, but avoid fp6 crashing issues
+		// see http://blog.deconcept.com/2006/01/11/getvariable-setvariable-crash-internet-explorer-flash-6/
+		var axo = null;
+		try{
+			axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+		}catch(e){
+			try {
+				axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
+				PlayerVersion = new deconcept.PlayerVersion([6,0,21]);
+				axo.AllowScriptAccess = "always"; // error if player version < 6.0.47 (thanks to Michael Williams @ Adobe for this code)
+			} catch(e) {
+				if (PlayerVersion.major == 6) {
+					return PlayerVersion;
+				}
+			}
+			try {
+				axo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash");
+			} catch(e) {}
+		}
+		if (/** @type {?ActiveXObjec} */(axo) != null) {
+			PlayerVersion = new deconcept.PlayerVersion(axo.GetVariable("$version").split(" ")[1].split(","));
+		}
+	}
+	return PlayerVersion;
+}
+/** @constructor */
+deconcept.PlayerVersion = function(arrVersion){
+	this.major = arrVersion[0] != null ? parseInt(arrVersion[0], 10) : 0;
+	this.minor = arrVersion[1] != null ? parseInt(arrVersion[1], 10) : 0;
+	this.rev = arrVersion[2] != null ? parseInt(arrVersion[2], 10) : 0;
+}
+deconcept.PlayerVersion.prototype.versionIsValid = function(fv){
+	if(this.major < fv.major) return false;
+	if(this.major > fv.major) return true;
+	if(this.minor < fv.minor) return false;
+	if(this.minor > fv.minor) return true;
+	if(this.rev < fv.rev) return false;
+	return true;
+}
+/* ---- get value of query string param ---- */
+deconcept.util = {
+	getRequestParameter: function(param) {
+		var q = document.location.search || document.location.hash;
+		if (param == null) { return q; }
+		if(q) {
+			var pairs = q.substring(1).split("&");
+			for (var i=0; i < pairs.length; i++) {
+				if (pairs[i].substring(0, pairs[i].indexOf("=")) == param) {
+					return pairs[i].substring((pairs[i].indexOf("=")+1));
+				}
+			}
+		}
+		return "";
+	}
+}
+/* fix for video streaming bug */
+deconcept.SWFObjectUtil.cleanupSWFs = function() {
+	var objects = document.getElementsByTagName("OBJECT");
+	for (var i = objects.length - 1; i >= 0; i--) {
+		objects[i].style.display = 'none';
+		for (var x in objects[i]) {
+			if (typeof objects[i][x] == 'function') {
+				objects[i][x] = function(){};
+			}
+		}
+	}
+}
+// fixes bug in some fp9 versions see http://blog.deconcept.com/2006/07/28/swfobject-143-released/
+if (deconcept.SWFObject.doPrepUnload) {
+	if (!deconcept.unloadSet) {
+		deconcept.SWFObjectUtil.prepUnload = function() {
+			__flash_unloadHandler = function(){};
+			__flash_savedUnloadHandler = function(){};
+			window.attachEvent("onunload", deconcept.SWFObjectUtil.cleanupSWFs);
+		}
+		window.attachEvent("onbeforeunload", deconcept.SWFObjectUtil.prepUnload);
+		deconcept.unloadSet = true;
+	}
+}
+/* add document.getElementById if needed (mobile IE < 5) */
+if (!document.getElementById && document.all) { document.getElementById = function(id) { return document.all[id]; }}
+/* add some aliases for ease of use/backwards compatibility */
+var getQueryParamValue = deconcept.util.getRequestParameter;
+var FlashObject = deconcept.SWFObject; // for legacy support
+var SWFObject = deconcept.SWFObject;
+      </script>
+<script type="text/javascript">
+      function slideplayer_DoFSCommand(cmd, param) {
+        if (cmd == "quit") {
+          close();
+        }
+      }
+      function hideEmbed() {
+        document.getElementById('how_to_embed').style.display = 'none';
+      }
+      function showEmbed() {
+        document.getElementById('how_to_embed').style.display = 'inline';
+      }
+    </script></head>
+<body>
+<!-- following code added by server. PLEASE REMOVE -->
+<!-- preceding code added by server. PLEASE REMOVE --><div id="slideshow"><div id="noplayer"><p><strong>You do not have the Flash Player installed, or you need to upgrade your Flash Player.</strong></p>
+<p>You can download the Flash Player from
+<a href="https://web.archive.org/web/20091027151646/http://www.adobe.com/products/flashplayer">http://www.adobe.com/products/flashplayer</a>.</p></div></div>
+<script type="text/javascript">
+      var so = new SWFObject("https://web.archive.org/web/20091027151646/http://mail.google.com/mail/?attid\x3d0.1.1\x26disp\x3dattsc\x26view\x3datt\x26th\x3d11f851ec0cf63558\x26name\x3dplayer.swf\x26attscl\x3d4094e2a63d55a0ff-11f880b8cfe-f1e305192835d204",
+          'slideplayer', '100%', '100%', '7', '#ffffff');
+        so.addVariable("urltemplate","http%3A%2F%2Fmail.google.com%2Fmail%2F%3Fattid%3D0.1.1%26disp%3Dattsc%26view%3Datt%26th%3D11f851ec0cf63558%26name%3D__filename__%26attscl%3D4094e2a63d55a0ff-11f880b8cfd-eb27cce895e42a64");
+      so.addParam('wmode', 'transparent');
+      so.write('slideshow');
+    </script>
+<div id="how_to_embed"><script type="text/javascript">
+        var g_absref = document.location.protocol + '//' + document.location.host;
+      </script>
+<table id="embedded" align="center"><tr><td>Embed this presentation in your web page with the following HTML:
+<div id="code"><code>&lt;embed width=&quot;425&quot; height=&quot;348&quot;<br> &nbsp;&nbsp;&nbsp;src=&quot;<script type="text/javascript">document.write(g_absref);</script>http://mail.google.com/mail/?attid=0.1.1&amp;disp=attsc&amp;view=att&amp;th=11f851ec0cf63558&amp;name=player.swf&amp;attscl=4094e2a63d55a0ff-11f880b8cfe-f1e305192835d204&quot;<br> &nbsp;&nbsp;&nbsp;base=&quot;<script type="text/javascript">document.write(g_absref);</script>http://mail.google.com/mail/?attid=0.1.1&amp;disp=attsc&amp;view=att&amp;th=11f851ec0cf63558&amp;name=player.swf&amp;attscl=4094e2a63d55a0ff-11f880b8cfe-f1e305192835d204&quot;<br> &nbsp;&nbsp;&nbsp;flashvars=&quot;urltemplate=http%3A%2F%2Fmail.google.com%2Fmail%2F%3Fattid%3D0.1.1%26disp%3Dattsc%26view%3Datt%26th%3D11f851ec0cf63558%26name%3D__filename__%26attscl%3D4094e2a63d55a0ff-11f880b8cfd-eb27cce895e42a64&amp;amp;&quot;&gt;</code></div>
+<center><button onclick="hideEmbed()">Hide</button></center></td></tr></table></div></body></html><!-- text below generated by server. PLEASE REMOVE --></object></layer></div></span></style></noscript></table></script></applet><script language="JavaScript" src="https://web.archive.org/web/20091027151646js_/http://us.i1.yimg.com/us.yimg.com/i/mc/mc.js"></script><script language="JavaScript" src="https://web.archive.org/web/20091027151646js_/http://us.js2.yimg.com/us.js.yimg.com/lib/smb/js/hosting/cp/js_source/geov2_001.js"></script><script language="javascript">geovisit();</script><noscript><img src="https://web.archive.org/web/20091027151646im_/http://visit.geocities.yahoo.com/visit.gif?us1256656606" alt="setstats" border="0" width="1" height="1"></noscript>
+<img src="https://web.archive.org/web/20091027151646im_/http://geo.yahoo.com/serv?s=76001076&amp;t=1256656606&amp;f=us-w8" alt="1" width="1" height="1">
+<!--
+     FILE ARCHIVED ON 15:16:46 Oct 27, 2009 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 02:16:45 Dec 10, 2024.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 0.627
+  exclusion.robots: 0.043
+  exclusion.robots.policy: 0.032
+  esindex: 0.011
+  cdx.remote: 12.414
+  LoadShardBlock: 128.286 (3)
+  PetaboxLoader3.datanode: 100.84 (4)
+  PetaboxLoader3.resolve: 78.32 (2)
+  load_resource: 93.929
+-->

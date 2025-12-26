@@ -1,0 +1,601 @@
+<html>
+<head><script src="//archive.org/includes/athena.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app225.us.archive.org';v.server_ms=518;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/bundle-playback.js?v=7YQSqjSh" charset="utf-8"></script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/wombat.js?v=txqj7nKC" charset="utf-8"></script>
+<title>Palestine Directories 1999</title>
+<meta charset="utf-8">
+<meta name="keywords" content="palestine
+yellowpage,internet,business,services,category,computer,Jerusalem,palestinia,guide">
+</head>
+<body bgcolor="#FFFFFF" vlink="#0000FF" alink="#FFCC33">
+<div align="center"> 
+  <table border="0" width="94%" vspace="0" hspace="0" cellspacing="0" cellpadding="0">
+    <tr> 
+      <td align="center" valign="bottom"> 
+        <p><img src="/web/20001211073600im_/http://www.palestine-yellowpages.com/images/toplogo.gif" width="385" height="40"><br>
+          <img src="/web/20001211073600im_/http://www.palestine-yellowpages.com/images/logo.GIF" width="571" height="33" vspace="0" hspace="0" border="0"><br>
+          <br>
+          <font color="#000000"> </font><font face="Arial, Helvetica, sans-serif" size="2"> 
+          <script language="JavaScript">
+<!--
+function popUp(pPage) {
+popUpWin = window.open(pPage,'popWin','resizable=yes,scrollbars=no,width=550,height=200');
+ figDoc= popUpWin.document;
+ window.popUpWin.document.close();
+ }
+//-->
+</script>
+          </font><font color="#000000"> 
+          <script language="JavaScript">
+ <!--
+//Palestine Yellow Pages
+function makeMonthArray() {
+        this.length=12;
+        this[1] = "January", this[2] = "February"; this[3] = "March";
+        this[4] = "April", this[5] = "May"; this[6] = "June";
+        this[7] = "July", this[8] = "August"; this[9] = "September";
+        this[10] = "October", this[11] = "November"; this[12] =
+"December";
+        return(this);
+}
+function makeDayArray() {
+        this.length=7;
+        this[1] = "Sunday", this[2] = "Monday"; this[3] = "Tuesday";
+        this[4] = "Wednesday", this[5] = "Thursday"; this[6] = "Friday";
+        this[7] = "Saturday";
+        return(this);
+}
+function writeDate() {
+        attdate = new Date();
+        monthName = new makeMonthArray();
+        dayName = new makeDayArray();
+        day = attdate.getDay() + 1;
+        date = attdate.getDate();
+        month = attdate.getMonth() + 1;
+        year = attdate.getYear();
+if (navigator.appName == "Netscape")
+{
+  if (year >= 100) 
+{
+year = year + 1900;
+}
+ }  
+        dateStr  = dayName[day];
+        dateStr += ", ";
+        dateStr += monthName[month];
+        dateStr += " ";
+        dateStr += date;
+        dateStr += ", ";
+        dateStr += year;
+        document.write(dateStr);
+}
+//-->
+</script>
+          <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font><font color="#000000"> 
+          <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font> <font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+          <i> </i></font><font size="-1" color="black" face="ARIAL,HELVETICA">&nbsp; 
+          <i> 
+          <script language="JavaScript">
+<!--
+writeDate();
+//-->
+</script>
+          </i></font> </font></p>
+      </td>
+    </tr>
+    <tr> 
+      <td valign="top" align="center"> 
+        <table border="0" width="78%" bgcolor="0" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+          <tr> 
+            <td height="573"> 
+              <table border="0" width="100%" bgcolor="#FFFFFF" cellspacing="1" cellpadding="1" hspace="0" vspace="0">
+                <tr> 
+                  <td width="19%" bgcolor="#FFCC33" align="left" valign="top" nowrap>
+                    <div align="left"> 
+                      <div align="left"> 
+                        <p align="left"><html>
+<head>
+<title>Untitled Document</title>
+<meta charset="utf-8">
+</head>
+<body bgcolor="#FFFFFF">
+<div align="left"> 
+  <p align="center"><img src="/web/20001211073600im_/http://www.palestine-yellowpages.com/images/logo_main.gif" width="74" height="101"></p>
+  <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+    <tr> 
+      <td bgcolor="#333399" height="2" align="center" valign="top"> 
+        <div align="left"><font face="Arial, Helvetica, sans-serif" size="1"><font color="#336699"><font size="1" color="#FFFFFF">Directory 
+          Services</font><font size="1"> </font></font> </font></div>
+      </td>
+    </tr>
+    <tr> 
+      <td height="63" align="left" valign="top"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="2"> <a href="ltypes.asp"><font size="1"><b>Add 
+          Listing</b></font></a><b><font size="1"> <br>
+          <a href="modify.asp">Modify Listing</a> <br>
+          <a href="asp/advertise.asp">Advertise</a> <br>
+          </font><font face="Arial, Helvetica, sans-serif" size="2"><b><font size="1"><a href="asp/feature.asp">Featured 
+          Business </a></font></b></font><font size="1"><br>
+          <a href="asp/contact.asp">Feedback</a> <br>
+          <a href="asp/reverse.asp">Reverse Search </a><br>
+          <a href="asp/tellafriend.asp">Tell a Friend<br>
+          </a><a href="asp/linktous.asp">Link to Us</a><br>
+          </font></b></font><font face="Arial, Helvetica, sans-serif" size="2"><b><font size="1"><a href="index.asp">Home</a><br>
+          </font></b> </font></p>
+        <p>&nbsp;</p>
+      </td>
+    </tr>
+    <tr> 
+      <td align="center" bgcolor="#333399" height="6" nowrap> 
+        <div align="left"><font face="Arial, Helvetica, sans-serif"><font size="1" color="#FFFFFF">Palestine 
+          Directories </font></font></div>
+      </td>
+    </tr>
+    <tr> 
+      <td align="left" valign="top" height="36"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="1"><b><a href="https://web.archive.org/web/20001211073600/http://www.palestine-emails.com/">E-mail 
+          Directory </a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.palestine-directories.com/banks/">Banks Directory</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.palestine-directories.com/domains">Domains Directory</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.a-supernet.net/">Arab supernet</a><br>
+          </b></font></p>
+        <p>&nbsp;</p>
+      </td>
+    </tr>
+    <tr> 
+      <td align="center" valign="top" bgcolor="#333399" height="12"> 
+        <div align="left"><font face="Arial, Helvetica, sans-serif"><font size="1" color="#FFFFFF">Global 
+          Directories </font></font></div>
+      </td>
+    </tr>
+    <tr> 
+      <td align="left" valign="top" height="18"> 
+        <p><font face="Arial, Helvetica, sans-serif" size="1"><b><a href="https://web.archive.org/web/20001211073600/http://www.bigyellow.com/">Big 
+          Yellow </a></b><a href="https://web.archive.org/web/20001211073600/http://www.allsearchengines.com/"></a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.yellowpages.com/">Yellow Pages</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.wajens.no/">International</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.superpages.gte.net/">SuperPages</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.docexport.com/">US Exporters</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.brandpoint.com/">Brand-name Retailers </a><br>
+          <b><a href="https://web.archive.org/web/20001211073600/http://www.worldpages.com/">WorldPages</a><br>
+          <a href="https://web.archive.org/web/20001211073600/http://www.globalyp.com/">GlobalYellowPage</a></b> <br>
+          <br>
+          </font></p>
+        </td>
+    </tr>
+    <tr> 
+      <td align="left" valign="top" height="2" bgcolor="#333399"> 
+        <div align="left"><font face="Arial, Helvetica, sans-serif"><font size="1" color="#FFFFFF">Web 
+          search </font></font></div>
+      </td>
+    </tr>
+    <tr> 
+      <td align="left" valign="top" height="10"><font face="Arial, Helvetica, sans-serif" size="1"><a href="https://web.archive.org/web/20001211073600/http://www.allsearchengines.com/">allsearchengines</a><br>
+        <a href="https://web.archive.org/web/20001211073600/http://www.super-seek.com/">Super-Seek</a><br>
+        <a href="https://web.archive.org/web/20001211073600/http://www.web-search.com/">web-Search </a> </font></td>
+    </tr>
+  </table>
+</div>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;</p>
+</body>
+</html>
+</p>
+                      </div>
+                      </div>
+                    </td>
+                  <td width="82%" valign="top" align="center"> <a href="/web/20001211073600/http://www.palestine-yellowpages.com/adver.asp?url=http://www.palestine-directories.com&amp;image=http://www.palestine-yellowpages.com/images/directory.gif"><img src="https://web.archive.org/web/20001211073600im_/http://www.palestine-yellowpages.com/images/directory.gif" alt="POL" width="406" height="61" border="0"></a><br>
+                    <table border="0" width="100%">
+                      <tr bgcolor="#000099"> 
+                        <td colspan="3" align="center" valign="top"><font color="#FFFFFF" face="Arial, Helvetica, sans-serif"><b><font size="2">Palestine 
+                          Yellow Pages </font></b></font> </td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" align="center" valign="bottom"><img src="/web/20001211073600im_/http://www.palestine-yellowpages.com/images/or.gif" width="360" height="20"></td>
+                      </tr>
+                      <tr> 
+                        <td colspan="3" align="center" valign="top"> 
+                          <table border="0" width="100%" vspace="0" hspace="0" cellspacing="0" cellpadding="0">
+                            <tr> 
+                              <td width="45%" align="left" valign="top" height="143"> 
+                                <form method="post" action="asp/searchbycategory.asp" name="">
+                                  <table border="0" width="100%" bgcolor="#000099">
+                                    <tr> 
+                                      <td bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">Category</font></td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <select name="category">
+                                          <option value="Apparel">Apparel</option>
+                                          <option value="Automotive">Automotive</option>
+                                          <option value="Business Services">Business 
+                                          Services</option>
+                                          <option value="community and family">Community 
+                                          and Family</option>
+                                          <option value="Computers and Electronics">Computers 
+                                          and Electronics</option>
+                                          <option value="Education">Education</option>
+                                          <option value="Entertainment">Entertainment</option>
+                                          <option value="Food and dining">Food 
+                                          and dining</option>
+                                          <option value="health">Health</option>
+                                          <option value="Home Improvement">Home 
+                                          Improvement</option>
+                                          <option value="Insurance">Insurance</option>
+                                          <option value="internet">Internet</option>
+                                          <option value="Law and Finance">Law 
+                                          and Finance</option>
+                                          <option value="Media and Press">Media 
+                                          and Press</option>
+                                          <option value="Non Profit Organizations">Non 
+                                          Profit Organizations</option>
+                                          <option value="Post and Telecommunications">Post 
+                                          &amp; Telecommunications</option>
+                                          <option value="Real Estate">Real Estate</option>
+                                          <option value="Sports  and recreation">Sports 
+                                          and recreation</option>
+                                          <option value="Travel and tourism">Travel 
+                                          and Tourism</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">City(optional)</font></td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <input type="text" name="city" size="20">
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">District</font></td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <select name="district" size="1">
+                                          <option value="Bethlehem">Bethlehem</option>
+                                          <option value="Gaza">Gaza</option>
+                                          <option value="Hebron">Hebron</option>
+                                          <option value="Jenin">Jenin</option>
+                                          <option value="Jericho">Jericho</option>
+                                          <option value="Jerusalem">Jerusalem</option>
+                                          <option value="Nablus">Nablus</option>
+                                          <option value="Ramallah">Ramallah</option>
+                                          <option value="Tulkarem">Tulkarem</option>
+                                          <option value="All" selected>All</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66">&nbsp;</td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <input type="submit" name="submit2" value="Find it">
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66" colspan="2">
+                                        <div align="center"> <font face="Arial, Helvetica, sans-serif" size="2"> 
+                                          <input type="checkbox" name="feature" value="1">
+                                          Only Featured</font></div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                  <a href="javascript:popUp('searchtips.asp')"><img src="/web/20001211073600im_/http://www.palestine-yellowpages.com/images/searchtips.gif" width="72" height="24" border="0" alt="Search tips"></a> 
+                                </form>
+                              </td>
+                              <td width="9%" height="143">&nbsp; </td>
+                              <td width="46%" align="left" valign="top" height="143"> 
+                                <form method="post" action="asp/searchbybus.asp" name="">
+                                  <table border="0" width="100%" bgcolor="#000099">
+                                    <tr> 
+                                      <td bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">Business</font></td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <input type="text" name="companyname" size="20">
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">City(optional)</font></td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <input type="text" name="city" size="20">
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">District</font></td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <select name="district" size="1">
+                                          <option value="Bethlehem">Bethlehem</option>
+                                          <option value="Gaza">Gaza</option>
+                                          <option value="Hebron">Hebron</option>
+                                          <option value="Jenin">Jenin</option>
+                                          <option value="Jericho">Jericho</option>
+                                          <option value="Jerusalem">Jerusalem</option>
+                                          <option value="Ramallah">Ramallah</option>
+                                          <option value="Tulkarem">Tulkarem</option>
+                                          <option value="All" selected>All</option>
+                                        </select>
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66">&nbsp;</td>
+                                      <td bgcolor="#FFCC66"> 
+                                        <input type="submit" name="submit" value="Find it">
+                                      </td>
+                                    </tr>
+                                    <tr> 
+                                      <td bgcolor="#FFCC66" colspan="2">
+                                        <div align="center"><font face="Arial, Helvetica, sans-serif" size="2"> 
+                                          <input type="checkbox" name="feature" value="1">
+                                          Only Featured</font></div>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </form>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <td width="48%" align="left" valign="top" colspan="3"> 
+                      </td>
+<br><br>
+                      </tr>
+                    </table>
+                    <div align="left"></div>
+                    <table border="0" width="100%">
+                      <tr> 
+                        <td width="15%" bgcolor="#000099" height="13"><font color="#FFFFFF" size="2" face="Arial, Helvetica, sans-serif">District</font></td>
+                        <td bgcolor="#FFCC33" width="1%" height="13"> 
+                          <div align="left"> <font size="2" face="Arial, Helvetica, sans-serif"> 
+                            </font><font size="2"> </font></div>
+                        </td>
+                        <td bgcolor="#FFCC66" width="84%" height="13"><font size="2" face="Arial, Helvetica, sans-serif">Top 
+                          Categories </font></td>
+                      </tr>
+                      <tr> 
+                        <td width="15%" align="left" valign="top"><font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycity.asp?city=bethlehem">Bethlehem</a><br>
+                          <a href="asp/listbycity.asp?city=gaza">Gaza</a><br>
+                          <a href="asp/listbycity.asp?city=hebron">Hebron</a><br>
+                          <a href="asp/listbycity.asp?city=jenin">Jenin</a><br>
+                          <a href="asp/listbycity.asp?city=Jerico">Jericho</a><br>
+                          <a href="asp/listbycity.asp?city=jerusalem">Jerusalem</a><br>
+                          <a href="asp/listbycity.asp?city=Nablus">Nablus</a> 
+                          <br>
+                          <a href="asp/listbycity.asp?city=ramalla">Ramallah</a><br>
+                          <a href="asp/listbycity.asp?city=Tulkarem">Tulkarem</a></font><br>
+                        </td>
+                        <td width="1%" bgcolor="#FFFFFF">&nbsp;</td>
+                        <td width="84%" align="left" valign="top"> 
+                          <div align="left"> 
+                            <table border="0" width="100%">
+                              <tr> 
+                                <td align="left" valign="top" width="34%" height="87"> 
+                                  <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=Apparel">Apparel</a></font> 
+                                  <br>
+                                  <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=Automotive">Automotive</a></font> 
+                                  <br>
+                                  <font face="Arial, Helvetica, sans-serif" size="2"> 
+                                  <a href="asp/listbycat.asp?category=Business+Services">Business 
+                                  Services</a></font> <br>
+                                  <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=community%20and%20family">Community/Family</a> 
+                                  <a href="asp/listbycat.asp?category=Computers%20and%20Electronics">Computers/Electronics</a><br>
+                                  <a href="asp/listbycat.asp?category=Entertainment">Entertainment</a><br>
+                                  <a href="asp/listbycat.asp?category=Education">Education</a> 
+                                  </font></td>
+                                <td align="left" valign="top" width="32%" height="87"> 
+                                  <p><font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=food%20and%20dining">Food/Dining 
+                                    </a></font> <br>
+                                    <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=health">Health</a><br>
+                                    <a href="asp/listbycat.asp?category=Home%20Improvement">Home 
+                                    Improvement</a></font><br>
+                                    <a href="asp/listbycat.asp?category=Internet"><font face="Arial, Helvetica, sans-serif" size="2">Internet 
+                                    </font></a><br>
+                                    <font size="2" face="Arial, Helvetica, sans-serif"><a href="asp/listbycat.asp?category=Insurance">Insurance 
+                                    </a></font><br>
+                                    <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=law%20and%20finance">Law/Financial</a> 
+                                    </font> </p>
+                                  </td>
+                                <td width="34%" align="left" valign="top" height="87"> 
+                                  <p><font size="2" face="Arial, Helvetica, sans-serif"><a href="asp/listbycat.asp?category=Media%20and%20Press">Media 
+                                    &amp; Press</a><br>
+                                    </font><font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=non%20profit%20organizations">NGO</a></font><br>
+                                    <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=Real%20estate">Real 
+                                    Estate</a><br>
+                                    <a href="asp/listbycat.asp?category=sports%20and%20recreation">Sport/Recreation 
+                                    </a></font> <font face="Arial, Helvetica, sans-serif" size="2"> 
+                                    <br>
+                                    </font><a href="asp/listbycat.asp?category=Post%20and%20Telecommunications"><font face="Arial, Helvetica, sans-serif" size="2">Post 
+                                    /Telecom</font></a><br>
+                                    <font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/listbycat.asp?category=travel%20and%20tourism">Travel/Tourism 
+                                    </a></font> 
+                                  </td>
+                              </tr>
+                            </table>
+                            <font size="2" face="Arial, Helvetica, sans-serif"> 
+                            </font></div>
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td width="15%" align="left" valign="top" height="12">&nbsp;</td>
+                        <td width="1%" bgcolor="#FFFFFF" height="12">&nbsp;</td>
+                        <td width="84%" align="left" valign="top" height="12">&nbsp;</td>
+                      </tr>
+                      <tr> 
+                        <td width="15%" align="left" valign="top" height="12" colspan="3" bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">More 
+                          Business Search Tools</font></td>
+                      </tr>
+                      <tr> 
+                        <td width="15%" align="left" valign="top" height="165" colspan="3"> 
+                          <div align="left"> 
+                            <table width="100%" border="0" cellspacing="2" cellpadding="2">
+                              <tr>
+                                <td>
+                                  <p><font size="2" face="Arial, Helvetica, sans-serif" color="#3333CC"><b><a href="asp/reverse.asp">Reverse 
+                                    Lookup :<br>
+                                    </a></b></font><font face="Arial, Helvetica, sans-serif" size="1"><b>&nbsp;Enter 
+                                    a Phone, fax or e-mail address to find its 
+                                    owner</b></font> </p>
+                                  <p><font face="Arial, Helvetica, sans-serif"><b><font size="2"><a href="asp/online.asp">Find 
+                                    Online Business</a></font></b></font><a href="asp/online.asp"><b><font face="Arial, Helvetica, sans-serif" size="2"> 
+                                    </font></b></a><font face="Arial, Helvetica, sans-serif" size="2" color="#CC0033"><b><i><font size="1"><blink>(NEW)</blink></font></i></b></font><br>
+                                    <font face="Arial, Helvetica, sans-serif" size="1">Find 
+                                    which business has a web presence</font></p>
+                                  <p><font face="Arial, Helvetica, sans-serif" size="2"><b><a href="asp/export.asp">Export 
+                                    List </a><font size="1" color="#990000"><i>(NEW)<br>
+                                    </i><font color="#000000">A Complete List 
+                                    of Business who does Export</font> </font></b></font></p>
+                                  <p><b><font face="Arial, Helvetica, sans-serif" size="2"><a href="asp/import.asp">Import 
+                                    List</a> <i><font size="1" color="#990000">(NEW)</font></i><br>
+                                    <b><font size="1" color="#990000"><font color="#000000">A 
+                                    Complete List of Business who does Import</font></font></b></font></b></p>
+                                  <p>&nbsp;</p>
+                            </td>
+                                <td valign="top"> 
+                                  <table width="90%" border="0" cellspacing="2" cellpadding="2" align="center">
+                                    <tr bgcolor="#0000CC"> 
+                                      <td> 
+                                        <div align="center"><font face="Arial, Helvetica, sans-serif" size="2"><b><font color="#FFFFFF">Usefull 
+                                          Numbers </font></b></font></div>
+                                      </td>
+                                    </tr>
+                                    <tr align="center" valign="top" bgcolor="#FFCC33"> 
+                                      <td nowrap> 
+                                        <div align="left"><br>
+                                        </div>
+                                        <p align="left"><font face="Arial, Helvetica, sans-serif" size="1"><a href="emergency.asp">Fire 
+                                          ,Ambulance, Police</a></font></p>
+                                        <p align="left"><font size="1" face="Arial, Helvetica, sans-serif"><a href="borders.asp">Border 
+                                          Crossings</a></font></p>
+                                        <p align="left"><font size="1" face="Arial, Helvetica, sans-serif"><a href="tourism.asp">Tourism 
+                                          and Antiquities Police</a><br>
+                                          </font></p>
+                                        <p align="left"><a href="airports.asp"><font size="1" face="Arial, Helvetica, sans-serif">Airports</font></a></p>
+                                        <p align="left">&nbsp;</p>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr> 
+                        <td width="15%" align="left" valign="top" height="2" colspan="3" bgcolor="#FFCC66"><font face="Arial, Helvetica, sans-serif" size="2">Arab 
+                          Pages </font></td>
+                      </tr>
+                      <tr> 
+                        <td width="15%" align="left" valign="top" height="12" colspan="3"> 
+                          <table border="0" width="100%">
+                            <tr align="left" valign="top"> 
+                              <td width="33%" colspan="3">
+                                <p><font face="Arial, Helvetica, sans-serif" size="2"> 
+                                  </font></p>
+                                <table width="100%" border="0">
+                                  <tr nowrap> 
+                                    <td width="31%"><a href="https://web.archive.org/web/20001211073600/http://www.mideastweb.com/yellow/"></a><a href="https://web.archive.org/web/20001211073600/http://www.mideastweb.com/yellow/"></a><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.arab411.com/"><font face="Arial, Helvetica, sans-serif" size="2">Arab 
+                                      411</font></a></font></td>
+                                    <td colspan="2"><a href="https://web.archive.org/web/20001211073600/http://www.mideastweb.com/yellow/"><font face="Arial, Helvetica, sans-serif" size="2">Jordan's 
+                                      Yellow Net</font></a></td>
+                                    <td width="39%"><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.saudiarabiayellowpages.com/">Saudia 
+                                      Arabia Yellow Pages </a></font></td>
+                                  </tr>
+                                  <tr nowrap> 
+                                    <td width="31%"><font size="2" face="Arial, Helvetica, sans-serif"><a href="https://web.archive.org/web/20001211073600/http://www.arabview.net/">ArabView 
+                                      Network</a></font></td>
+                                    <td colspan="2"><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.jyp.com.jo/">Jordan 
+                                      Yellow Pages</a></font></td>
+                                    <td width="39%"><font size="2" face="Arial, Helvetica, sans-serif"><a href="https://web.archive.org/web/20001211073600/http://www.onlineyellow.com/">UAE 
+                                      Online Yellow Pages</a></font></td>
+                                  </tr>
+                                  <tr nowrap> 
+                                    <td width="31%" height="9"><a href="https://web.archive.org/web/20001211073600/http://www.bahrainyellowpages.com.bh/"><font size="2" face="Arial, Helvetica, sans-serif">Bahrain 
+                                      Yellow Pages</font></a></td>
+                                    <td colspan="2" height="9"><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.kuwait-yellow-pages.com/">Kuwait 
+                                      Yellow Pages</a></font></td>
+                                    <td width="39%" height="9"><a href="https://web.archive.org/web/20001211073600/http://www.bahrainyellowpages.com.bh/"></a><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.uae-ypages.com/">UAE 
+                                      Internet Yellow Pages</a></font><font face="Arial, Helvetica, sans-serif"></font></td>
+                                  </tr>
+                                  <tr> 
+                                    <td width="31%" nowrap height="2"><a href="https://web.archive.org/web/20001211073600/http://www.egyptyellowpages.com.eg/"><font face="Arial, Helvetica, sans-serif" size="2">Egypt 
+                                      Yellow Pages</font></a><font face="Arial, Helvetica, sans-serif" size="2"> 
+                                      </font></td>
+                                    <td nowrap colspan="2" height="2"><font face="Arial, Helvetica, sans-serif"></font><font face="Arial, Helvetica, sans-serif" size="2"></font><font face="Arial, Helvetica, sans-serif"></font><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.lebanon.com/directory/index.htm">Lebanon 
+                                      Directory </a></font></td>
+                                    <td width="39%" nowrap height="2"><font face="Arial, Helvetica, sans-serif" size="2"><a href="https://web.archive.org/web/20001211073600/http://www.yenet.com/">Yemen 
+                                      </a></font></td>
+                                  </tr>
+                                  <tr>
+                                    <td width="31%" nowrap><a href="https://web.archive.org/web/20001211073600/http://www.gulfdirectory.com.bh/"><font face="Arial, Helvetica, sans-serif" size="2">Gulf 
+                                      Directory</font></a></td>
+                                    <td nowrap colspan="2"><font face="Arial, Helvetica, sans-serif" size="2"></font><font size="2" face="Arial, Helvetica, sans-serif"><a href="https://web.archive.org/web/20001211073600/http://www.omanyellowpages.com.bh/">Oman 
+                                      Yellow Pages</a></font><font face="Arial, Helvetica, sans-serif"></font></td>
+                                    <td width="39%" nowrap><font size="2" face="Arial, Helvetica, sans-serif"> 
+                                      </font></td>
+                                  </tr>
+                                </table>
+                                <p><font face="Arial, Helvetica, sans-serif" size="2"> 
+                                  </font></p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                    <p align="left">&nbsp;</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+        <br>
+      </td>
+    </tr>
+  </table>
+  &nbsp;<img src="/web/20001211073600im_/http://www.palestine-yellowpages.com/images/dlogo.gif" width="571" height="33"> 
+  <p align="center"><html>
+<head>
+<title>Untitled Document</title>
+<meta charset="utf-8">
+</head>
+<body bgcolor="#FFFFFF">
+<div align="center">
+  <p><font face="Arial, Helvetica, sans-serif" size="1">Copyright &copy; 1999 - 
+    <a href="https://web.archive.org/web/20001211073600/http://www.palestine-directories.com/">Palestine Directories</a> </font><font face="Arial, Helvetica, sans-serif" size="1">- 
+    All rights reserved<br>
+    Designed By <a href="https://web.archive.org/web/20001211073600/mailto:info@palestine-yellowpages.com">Daoud Z Dajani</a></font></p>
+  </div>
+</body>
+</html>
+</p>
+  <p>&nbsp;</p>
+</div>
+</body>
+</html>
+<!--
+     FILE ARCHIVED ON 07:36:00 Dec 11, 2000 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:39:52 Jan 26, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 1.712
+  exclusion.robots: 0.116
+  exclusion.robots.policy: 0.06
+  esindex: 0.018
+  cdx.remote: 54.545
+  LoadShardBlock: 187.307 (3)
+  PetaboxLoader3.datanode: 217.643 (4)
+  load_resource: 226.48
+  PetaboxLoader3.resolve: 96.475
+-->

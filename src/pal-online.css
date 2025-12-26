@@ -1,0 +1,15 @@
+ .pal-online-disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+
+ } 
+
+ .pal-online-wayback {
+    pointer-events: none; 
+    /* pointer-events: none; */
+ }
+
+ .pal-online-wayback-parent {
+    cursor: zoom-in;
+    /* pointer-events: none; */
+ } 

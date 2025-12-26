@@ -1,0 +1,29 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head><script src="//archive.org/includes/athena.js" type="text/javascript"></script>
+<script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app212.us.archive.org';v.server_ms=1086;archive_analytics.send_pageview({});});</script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/bundle-playback.js?v=1B2M2Y8A" charset="utf-8"></script>
+<script type="text/javascript" src="https://web-static.archive.org/_static/js/wombat.js?v=1B2M2Y8A" charset="utf-8"></script>
+<title>404 Not Found</title>
+</head><body>
+<h1>Not Found</h1>
+The requested URL /guestbook/www.africanculture.org was not found on this server.<p>
+</body></html>
+<!--
+     FILE ARCHIVED ON 05:17:54 Jan 12, 2002 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 14:05:30 Jul 30, 2025.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
+<!--
+playback timings (ms):
+  captures_list: 0.504
+  exclusion.robots: 0.027
+  exclusion.robots.policy: 0.018
+  esindex: 0.01
+  cdx.remote: 383.544
+  LoadShardBlock: 271.377 (3)
+  PetaboxLoader3.datanode: 361.939 (4)
+  load_resource: 410.844
+  PetaboxLoader3.resolve: 211.81
+-->
