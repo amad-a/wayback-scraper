@@ -9,6 +9,10 @@ import { detect } from "jschardet";
 import fsExists from "fs.promises.exists";
 import puppeteer from 'puppeteer';
 // import { DOMParser } from 'xmldom';
+
+const timestamp = new Date(Date.now());
+const isoTimestamp = timestamp.toISOString();
+
 const testImageUrls = [
   {
     webArchiveFullUrl: 'https://web.archive.org/web/20020821165006im_/http://www.jericho-city.org/images/OPENING-.JPG',
@@ -253,6 +257,7 @@ let domainDir = "";
 
 // Helper function to extract the original domain and URL from a Wayback URL
 function parseWaybackUrl(waybackUrl) {
+
     const match = waybackUrl.match(waybackPageUrl);
 
     return match
@@ -296,7 +301,7 @@ function getLocalFilePath(baseDir, originalUrl, contentType) {
     }
 
     // Create full local path
-    return path.join(baseDir, urlObj.hostname, pathname);
+    return path.join(baseDir, `${urlObj.hostname}-${isoTimestamp}/${urlObj.hostname}`, pathname);
 }
 
 // Helper function to detect and convert encoding
@@ -382,9 +387,12 @@ async function crawlWaybackMachine(startUrl, dirBound, oneCrawl = false) {
 
     const maxRequests = oneCrawl ? 1 : 1000000000;
 
+   
+
     // Create base download directory
-    const baseDir = path.join(process.cwd(), "scraped-sites");
-    //await ensureDir(baseDir);
+    const baseDir = path.join(process.cwd(), "scraped-output");
+    // makes new dir if does not exist
+    await ensureDir(baseDir);
 
     // Initialize the crawler
     const crawler = new PlaywrightCrawler({
@@ -480,6 +488,8 @@ async function crawlWaybackMachine(startUrl, dirBound, oneCrawl = false) {
                     contentType
                 );
 
+                console.log('🚨 LOCAL PATH', localPath);
+
                 const fileExists = await fsExists(localPath);
                 // Ensure the directory exists
                 await ensureDir(path.dirname(localPath));
@@ -556,7 +566,7 @@ function generatePageListFile() {
 
     console.log('generating page list file');
 
-    let file = createWriteStream(`scraped-sites/${domainDir}/page-list.json`);
+    let file = createWriteStream(`scraped-output/${domainDir}/page-list.json`);
     file.on("error", function (err) {
         /* error handling */
     });
@@ -626,7 +636,7 @@ async function downloadCrawledImages(crawledImages) {
 }
 
 async function processWaybackPageLinks() {
-  let pageList = await fs.readFile(`scraped-sites/${waybackDir}/page-list.json`);
+  let pageList = await fs.readFile(`scraped-output/${waybackDir}/page-list.json`);
   let parsedPages = JSON.parse(pageList);
 
   const hrefPattern = /href=["']([^"']+)["']/gi;
@@ -637,10 +647,10 @@ async function processWaybackPageLinks() {
 
   for (let file of parsedPages) {
     let noHttpPrefixFile = file.split('http://')[1];
-    let fileExists = await fsExists(`scraped-sites/${noHttpPrefixFile}`);
+    let fileExists = await fsExists(`scraped-output/${noHttpPrefixFile}`);
     // console.log(`file ${noHttpPrefixFile} exists: ${fileExists}`);
     if (fileExists && (noHttpPrefixFile.endsWith('html') || noHttpPrefixFile.endsWith('htm'))) {
-      let htmlPageBuffer = await fs.readFile(`scraped-sites/${noHttpPrefixFile}`);
+      let htmlPageBuffer = await fs.readFile(`scraped-output/${noHttpPrefixFile}`);
       let htmlString = htmlPageBuffer.toString();
 
       const hrefMatchData = [...htmlString.matchAll(hrefPattern)];
@@ -679,7 +689,7 @@ const waybackUrl = process.argv[2];
 const waybackDir = process.argv[3];
 const oneCrawl = process.argv[4];
 if (!waybackUrl) {
-    console.error("Please provide a Wayback Machine URL as an argument");
+    console.error("Please provide an Entrypoint Wayback Machine URL to begin crawl");
     process.exit(1);
 }
 
@@ -690,18 +700,18 @@ if (!waybackDir) {
     process.exit(1);
 }
 
-await processWaybackPageLinks();
+// await processWaybackPageLinks();
 
 
 
 // TODO: start at/ stop at args in the program chain
 
-// crawlWaybackMachine(waybackUrl, waybackDir, oneCrawl)
-//     .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
-//     .then(() => generatePageListFile())
-//     .then(() => console.log("crawled images:", crawledImages))
-//     .then(() => processCrawledImages(crawledImages))
-//     .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
-//     .then(() => processWaybackPageLinks())
-//     //TODO: Auto process link changes and images here
-//     .catch((error) => console.error("Crawling failed:", error));
+crawlWaybackMachine(waybackUrl, waybackDir, oneCrawl)
+    .then(() => console.log("Crawling completed! crawled urls:", crawledPages))
+    .then(() => generatePageListFile())
+    .then(() => console.log("crawled images:", crawledImages))
+    .then(() => processCrawledImages(crawledImages))
+    .then((noDuplicateCrawledImagePairs) => downloadCrawledImages(noDuplicateCrawledImagePairs))
+    // .then(() => processWaybackPageLinks())
+    //TODO: Auto process link changes and images here
+    .catch((error) => console.error("Crawling failed:", error));
