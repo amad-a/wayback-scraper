@@ -47,7 +47,6 @@ async function processPageLinks(pageDomain, pagesDir) {
 }
 
 async function editLinks(links, fileContents, type) {
-
   let contents = fileContents;
   for (let link of links) {
     if (link.includes('http:/')) {
