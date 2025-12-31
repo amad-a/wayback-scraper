@@ -14,8 +14,6 @@ const timestamp = new Date(Date.now());
 const isoTimestamp = timestamp.toISOString();
 const baseDir = path.join(process.cwd(), 'scraped-output');
 
-let destDir;
-
 const imageExtensions =
   /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
 
@@ -320,6 +318,10 @@ let crawledPages = [];
 let crawledImages = [];
 let domainDir = '';
 
+function isImageFile(filename) {
+  return /\.(jpe?g|png|gif|webp|svg|bmp|ico|tiff?)$/i.test(filename);
+}
+
 // Helper function to extract the original domain and URL from a Wayback URL
 function parseWaybackUrl(waybackUrl) {
   const match = waybackUrl.match(waybackPageUrl);
@@ -350,6 +352,10 @@ async function ensureDir(dirPath) {
 
 // Helper function to determine file path and name from URL
 function getLocalFilePath(baseDir, originalUrl, contentType) {
+
+  originalUrl = originalUrl.replace('www.', '');
+  originalUrl = originalUrl.replace('ww2.', '');
+  
   const urlObj = new URL(originalUrl);
   let pathname = urlObj.pathname;
 
@@ -363,18 +369,16 @@ function getLocalFilePath(baseDir, originalUrl, contentType) {
     pathname = `${pathname.replace(/\/$/, '')}/index.${ext}`;
   }
 
-  destDir = waybackDir.split('/')[0];
-
   console.log(
     'wayback Dir',
-    `${destDir}-${isoTimestamp}/${urlObj.hostname}`,
+    `${waybackDir}/${urlObj.hostname}`,
     pathname
   );
 
   // Create full local path
   return path.join(
     baseDir,
-    `${destDir}-${isoTimestamp}/${urlObj.hostname}`,
+    `${waybackDir}/${urlObj.hostname}`,
     pathname
   );
 }
@@ -519,8 +523,8 @@ async function crawlWaybackMachine(
 
         // Different handling based on content type
         let content;
-        if (request.url.toLowerCase().endsWith('jpg')) {
-          console.log('🖼️', request.url);
+        // const lowercaseUrl = request.url.toLowerCase();
+        if (isImageFile(request.url)) {
           crawledImages.push(request.url.replace(/\/web\/(\d{14})\//,  '/web/$1im_/'));
         }
         else if (contentType.includes('text/html')) {
@@ -556,9 +560,9 @@ async function crawlWaybackMachine(
           const imgSrcs = await page.$$eval('img', (imgs) =>
             imgs.map((img) => img.src)
           );
+
           imgSrcs.forEach((imgSrc) => {
             if (imageExtensions.test(imgSrc.toLowerCase())) {
-              console.log('MATCH');
               crawledImages.push(imgSrc);
             }
           });
@@ -568,9 +572,11 @@ async function crawlWaybackMachine(
             'body',
             (bodys) => bodys.map((body) => body.background)
           );
+
           imgBackgroundSrcs.forEach((imgSrc) => {
             if (imgSrc.startsWith('/web/')) {
               imgSrc = 'https://web.archive.org' + imgSrc;
+              crawledImages.push(imgSrc);
             }
           });
 
@@ -746,37 +752,27 @@ async function downloadCrawledImages(crawledImages) {
       });
 
       if (imageSrc) {
-        // fs.mkdir(path.dirname(`${img.originalUrl}-${isoTimestamp}/${img.originalUrl}`), { recursive: true });
-
-        // Create directories if they don't exist
-
-        // return path.join(baseDir, `${urlObj.hostname}-${isoTimestamp}/${urlObj.hostname}`, pathname);
-        const domain = img.webArchiveFullUrl.split('http://')[1];
-
-        console.log(
-          '💝',
-          `${waybackDir}-${isoTimestamp}/${img.originalUrl}`
-        );
         const viewSource = await page.goto(imageSrc);
-
         const baseDir = path.join(process.cwd(), 'scraped-output');
+        img.originalUrl = img.originalUrl.replace('www.', '');
+        img.originalUrl = img.originalUrl.replace('ww2.', '');
         fs.mkdir(
           path.dirname(
-            `scraped-output/${waybackDir}-${isoTimestamp}/${img.originalUrl}`
+            `scraped-output/${waybackDir}/${img.originalUrl}`
           ),
           { recursive: true }
         );
         fs.writeFile(
           path.join(
             baseDir,
-            `${waybackDir}-${isoTimestamp}`,
+            `${waybackDir}`,
             `${img.originalUrl}`
           ),
           await viewSource.buffer(),
           { recursive: true }
         );
         console.log(
-          `Downloaded: ${img.webArchiveFullUrl} to scraped-output/${waybackDir}-${isoTimestamp}/${img.originalUrl}`
+          `Downloaded: ${img.webArchiveFullUrl} to scraped-output/${waybackDir}/${img.originalUrl}`
         );
       } else {
         console.error(`No image found at ${img.webArchiveFullUrl}`);
