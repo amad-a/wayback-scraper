@@ -12,6 +12,9 @@ import recursiveReaddirFiles from 'recursive-readdir-files';
 const hrefPattern = /href=["']([^"']+)["']/gi;
 
 const srcPattern = /src=["']([^"']+)["']/gi;
+const bgPattern = /background=["']([^"']+)["']/gi;
+const actionPattern = /action=["']([^"']+)["']/gi;
+
 const webArchiveDomain = 'https://web.archive.org';
 
 const waybackImageUrl = /\/web\/\d{14}im_/;
@@ -32,87 +35,102 @@ async function processPageLinks(pageDomain, pagesDir) {
 
   filesInfo.forEach((fileInfo) => {
     const { ext, name, path } = fileInfo;
-    const dirTimestampMatch = path.match(isoTimestampRegex);
-    const hrefPath = dirTimestampMatch.input.split(
-      dirTimestampMatch[0]
-    )[1];
-    allFilesInfo.push({ ext, name, path, hrefPath });
+    allFilesInfo.push({ ext, name, path });
   });
 
   console.log('all files info', allFilesInfo);
 
   allFilesInfo.forEach((file) => {
-    const { ext, name, path, hrefPath } = file;
-    processOneFile(ext, name, path, hrefPath);
+    const { ext, name, path } = file;
+    processOneFile(ext, name, path);
   });
 }
 
-async function processOneFile(fileExt, fileName, filePath, hrefPath) {
+async function editLinks(links, fileContents, type) {
+
+  let contents = fileContents;
+  for (let link of links) {
+    if (link.includes('http:/')) {
+
+      // http is implied so maybe can just do contains
+      // wayback url to process, either on current site or other site
+      let pageLinkRaw = link.split('http:/')[1];
+
+      pageLinkRaw = pageLinkRaw.replace('www.', '');
+      pageLinkRaw = pageLinkRaw.replace('www2.', '');
+
+      const fileExists =
+      // remove anchor from file search
+        (await fsExists(path.join(pagesDir, pageLinkRaw.split('#')[0]))) || false;
+
+      if (type === 'action') pageLinkRaw = "javascript:void(0)";
+
+      if (fileExists || type === 'action') {
+        contents = contents.replaceAll(link, pageLinkRaw);
+        console.log('EXIST', link, pageLinkRaw, type);
+
+      } else {
+        // console.log('NO EXIST', link, pageLinkRaw);
+      }
+    } else {
+          
+      if (link.includes('mailto:')) {
+        contents = contents.replaceAll(link, '#');
+      } else if (link.startsWith('#')){
+        
+      } else {
+         console.log('NO EXIST', link);
+      }
+      // #anchor (no need to process)
+      // single page no href (no need to process)
+      // other site without wayback (check if includes cur domain)
+      // email (remove entirely)
+      // txt file (process same as img)
+    }
+  }
+
+  return contents;
+}
+
+async function processOneFile(fileExt, fileName, filePath) {
+  const originalScrapedPath = filePath.split('scraped-output/')[1];
+
+  const targetFileDir = originalScrapedPath.split(fileName)[0];
+
+  const newPath = path.join(
+    process.cwd(),
+    'processed-output',
+    targetFileDir
+  );
+
   if (fileExt.includes('htm')) {
     try {
       const fileContents = await fs.readFile(filePath, {
         encoding: 'utf8',
       });
-      
 
-      const foundImgSrcs = fileContents.match(srcPattern);
+      const foundImgSrcs = [...fileContents.matchAll(srcPattern)].map(
+        (match) => match[1]
+      );
+
       const hrefsOnPage = [...fileContents.matchAll(hrefPattern)].map(
         (match) => match[1]
       );
 
-      let fileContentsNew = null;
-
-      // need to replace href link if:
-      // /web/...
-      // web.archive.org/web/....
-
-      if (hrefsOnPage) {
-        // console.log('\x1b[36m%s\x1b[0m', filePath, hrefsOnPage);
-        const anchors = [];
-
-        for (const href of hrefsOnPage) {
-          if (href.includes('http:/')) {
-            // http is implied so maybe can just do contains
-            // wayback url to process, either on current site or other site
-            const pageLinkRaw = href.split('http:/')[1];
-
-            const fileExists = await fsExists(
-              path.join(pagesDir, pageLinkRaw)
-            );
-
-            if (fileExists) {
-              console.log('original HREF🪢', href, 'raw link 🧬', pageLinkRaw);
-            } else {
-
-            }
-          } else {
-            // #anchor
-            // single page no href (no need to process)
-            // other site without wayback
-            // email
-            // txt file
-            // console.log('NO MATCH for', href);
-          }
-        }
-      }
-
-      // console.log('BLEGH', href)  ;
-
-      // fileContentsNew = fileContents.replaceAll(
-      //   test,
-      //   test.split('http:/')[1]
-      // );
-
-      const originalScrapedPath =
-        filePath.split('scraped-output/')[1];
-
-      const targetFileDir = originalScrapedPath.split(fileName)[0];
-
-      const newPath = path.join(
-        process.cwd(),
-        'processed-output',
-        targetFileDir
+      const bgOnPage = [...fileContents.matchAll(bgPattern)].map(
+        (match) => match[1]
       );
+
+      const actionsOnPage = [...fileContents.matchAll(actionPattern)].map(
+        (match) => match[1]
+      );
+
+      let fileContentsNew = fileContents;
+      
+      if (hrefsOnPage) fileContentsNew = await editLinks(hrefsOnPage, fileContentsNew, fileName);
+      if (foundImgSrcs) fileContentsNew = await editLinks(foundImgSrcs, fileContentsNew);
+      if (bgOnPage) fileContentsNew = await editLinks(bgOnPage, fileContentsNew);
+      if (actionsOnPage) fileContentsNew = await editLinks(actionsOnPage, fileContentsNew, 'action');
 
       await fs.mkdir(newPath, { recursive: true });
       await fs.writeFile(
@@ -123,6 +141,13 @@ async function processOneFile(fileExt, fileName, filePath, hrefPath) {
     } catch (err) {
       console.error(err);
     }
+  } else {
+    // just raw copy images and other non html files that need link editing/processing
+    await fs.mkdir(newPath, { recursive: true });
+    await fs.copyFile(
+      filePath,
+      path.join('processed-output', originalScrapedPath)
+    );
   }
 }
 
