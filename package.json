@@ -13,6 +13,7 @@
         "fs.promises.exists": "^1.1.4",
         "get-port": "^7.1.0",
         "glob": "^13.0.0",
+        "htmlfy": "^1.0.1",
         "iconv-lite": "^0.6.3",
         "jschardet": "^3.1.4",
         "jsdom": "^25.0.1",
@@ -29,8 +30,8 @@
     "scripts": {
         "start": "node src/main.js",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
-        "scrape": "node src/wayback-crawler.js",
-        "server": "node src/start-server.js"
+        "crawl": "node src/wayback-crawler.js",
+        "server": "http-server processed-output"
     },
     "author": "It's not you it's me",
     "license": "ISC"

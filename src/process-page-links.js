@@ -1,19 +1,14 @@
-import { URL } from 'url';
 import fs from 'fs/promises';
-import { createReadStream, createWriteStream } from 'fs';
 import path from 'path';
-import mime from 'mime-types';
 import fsExists from 'fs.promises.exists';
-// import fs from 'node:fs/promises';
-import recursiveReadDir from 'recursive-readdir';
 import recursiveReaddirFiles from 'recursive-readdir-files';
+import { prettify } from 'htmlfy';
 
-// const hrefPattern = /href=(["'])([^"']+)\1/gi;
 const hrefPattern = /href=["']([^"']+)["']/gi;
-
 const srcPattern = /src=["']([^"']+)["']/gi;
 const bgPattern = /background=["']([^"']+)["']/gi;
 const actionPattern = /action=["']([^"']+)["']/gi;
+const targetPattern = /target=["']([^"']+)["']/gi;
 
 const webArchiveDomain = 'https://web.archive.org';
 
@@ -23,25 +18,17 @@ const isoTimestampRegex =
   /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)\//;
 
 const scrapedOutputDir = 'scraped-output';
+const processedOutputDir = 'processed-output';
 
 const imageExtensions =
   /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
 
 async function processPageLinks(pageDomain, pagesDir) {
   const baseDir = path.join(process.cwd(), pagesDir);
-  let allFilesInfo = [];
-
   const filesInfo = await recursiveReaddirFiles(baseDir);
 
   filesInfo.forEach((fileInfo) => {
     const { ext, name, path } = fileInfo;
-    allFilesInfo.push({ ext, name, path });
-  });
-
-  console.log('all files info', allFilesInfo);
-
-  allFilesInfo.forEach((file) => {
-    const { ext, name, path } = file;
     processOneFile(ext, name, path);
   });
 }
@@ -49,6 +36,12 @@ async function processPageLinks(pageDomain, pagesDir) {
 async function editLinks(links, fileContents, type) {
   let contents = fileContents;
   for (let link of links) {
+    console.log('linky', link);
+    if (type === 'target') {
+      console.log('targe', link);
+      // contents = contents.replace(link, '_self')
+      return;
+    }
     if (link.includes('http:/')) {
 
       // http is implied so maybe can just do contains
@@ -59,26 +52,27 @@ async function editLinks(links, fileContents, type) {
       pageLinkRaw = pageLinkRaw.replace('www2.', '');
 
       const fileExists =
-      // remove anchor from file search
-        (await fsExists(path.join(pagesDir, pageLinkRaw.split('#')[0]))) || false;
+        // remove any anchors from url local file search
+        (await fsExists(path.join(scrapedOutputDir, pageLinkRaw.split('#')[0]))) || false;
+
+        console.log('😎', path.join(pageLinkRaw.split('#')[0]));
 
       if (type === 'action') pageLinkRaw = "javascript:void(0)";
 
       if (fileExists || type === 'action') {
         contents = contents.replaceAll(link, pageLinkRaw);
-        console.log('EXIST', link, pageLinkRaw, type);
-
       } else {
-        // console.log('NO EXIST', link, pageLinkRaw);
+        console.log(`📄 File not found. Original link: "${link}". a: ${pageLinkRaw}`);
       }
     } else {
-          
       if (link.includes('mailto:')) {
         contents = contents.replaceAll(link, '#');
       } else if (link.startsWith('#')){
         
+      } else if (link.includes('https://web-static.archive.org') || link.includes('athena.js')) {
+        contents = contents.replaceAll(link, "");
       } else {
-         console.log('NO EXIST', link);
+    
       }
       // #anchor (no need to process)
       // single page no href (no need to process)
@@ -88,25 +82,33 @@ async function editLinks(links, fileContents, type) {
     }
   }
 
-  return contents;
+  contents = contents.replace(targetPattern, '')
+  
+  return prettify(contents);
+  // return contents
 }
 
 async function processOneFile(fileExt, fileName, filePath) {
-  const originalScrapedPath = filePath.split('scraped-output/')[1];
+  const originalScrapedPath = filePath.split(`${scrapedOutputDir}/`)[1];
 
   const targetFileDir = originalScrapedPath.split(fileName)[0];
 
   const newPath = path.join(
     process.cwd(),
-    'processed-output',
+    processedOutputDir,
     targetFileDir
   );
+
+  console.log('NEU', newPath);
 
   if (fileExt.includes('htm')) {
     try {
       const fileContents = await fs.readFile(filePath, {
         encoding: 'utf8',
       });
+
+
+      // todo, turn pattern into function, consolidate attributes, 
 
       const foundImgSrcs = [...fileContents.matchAll(srcPattern)].map(
         (match) => match[1]
@@ -124,16 +126,22 @@ async function processOneFile(fileExt, fileName, filePath) {
         (match) => match[1]
       );
 
+      const targetsOnPage = [...fileContents.matchAll(targetPattern)].map(
+        (match) => match[1]
+      );
+
       let fileContentsNew = fileContents;
       
       if (hrefsOnPage) fileContentsNew = await editLinks(hrefsOnPage, fileContentsNew, fileName);
       if (foundImgSrcs) fileContentsNew = await editLinks(foundImgSrcs, fileContentsNew);
       if (bgOnPage) fileContentsNew = await editLinks(bgOnPage, fileContentsNew);
       if (actionsOnPage) fileContentsNew = await editLinks(actionsOnPage, fileContentsNew, 'action');
+      // if (targetsOnPage) fileContentsNew = await editLinks(targetsOnPage, fileContentsNew, 'target');
 
       await fs.mkdir(newPath, { recursive: true });
+      console.log('BOOP', path.join(processedOutputDir, originalScrapedPath));
       await fs.writeFile(
-        path.join('processed-output', originalScrapedPath),
+        path.join(processedOutputDir, originalScrapedPath),
         fileContentsNew ? fileContentsNew : fileContents,
         'utf8'
       );
@@ -142,10 +150,11 @@ async function processOneFile(fileExt, fileName, filePath) {
     }
   } else {
     // just raw copy images and other non html files that need link editing/processing
+    // TODO check here or in crawler if txt, etc. files being scraped
     await fs.mkdir(newPath, { recursive: true });
     await fs.copyFile(
       filePath,
-      path.join('processed-output', originalScrapedPath)
+      path.join(processedOutputDir, originalScrapedPath)
     );
   }
 }
