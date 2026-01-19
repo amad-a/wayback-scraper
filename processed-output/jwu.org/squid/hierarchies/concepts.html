@@ -1,0 +1,136 @@
+<html>
+  <head>
+    <script src="" type="text/javascript"></script>
+    <script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app217.us.archive.org';v.server_ms=310;archive_analytics.send_pageview({});});</script>
+    <script type="text/javascript" src="" charset="utf-8"></script>
+    <script type="text/javascript" src="" charset="utf-8"></script>
+    <title>Squid Users Guide</title>
+  </head>
+  <body bgcolor="#ffffff" link="#990000" vlink="#660000" alink="#660000">
+    <!-- HEADLINE1 START-->
+    <table width="100%" border="0">
+      <tbody>
+        <tr>
+          <td bgcolor="9966ff">
+            <font size="+3" color="FFFFFF">
+              <b>Cache Hierarchies</b>
+            </font>
+          </td>
+          <td bgcolor="BB99FF" width="5%">
+            <font color="BB99FF">_</font>
+          </td>
+          <td bgcolor="DDCCFF" width="5%">
+            <font color="DDCCFF">_</font>
+          </td>
+          <td bgcolor="F0E0FF" width="5%">
+            <font color="F0E0FF">_</font>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="9966ff" link="FFFFFF" valign="BASELINE">
+            <font size="-1" color="#FFFFFF" acolor="#FFFFFF">
+              <a href="/jwu.org/squid/Welcome.html">
+                <img src="/jwu.org/squid/images/index.gif" align="BOTTOM" border="0">
+                INDEX
+              </a>
+              <a href="/jwu.org/squid/detail/accel.html">
+                <img src="/jwu.org/squid/images/back.gif" align="BOTTOM" border="0">
+                BACK
+              </a>
+              <a href="software.html">
+                <img src="/jwu.org/squid/images/next.gif" align="BOTTOM" border="0">
+                NEXT
+              </a>
+            </font>
+          </td>
+          <td bgcolor="BB99FF" width="5%">
+            <font color="BB99FF">_</font>
+          </td>
+          <td bgcolor="DDCCFF" width="5%">
+            <font color="DDCCFF">_</font>
+          </td>
+          <td bgcolor="F0E0FF" width="5%">
+            <font color="F0E0FF">_</font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--HEADLINE1 END-->
+    <p>
+      <!--HEADLINE2 START-->
+      <table width="100%" border="0">
+        <tbody>
+          <tr>
+            <td bgcolor="CCCCFF">
+              <font size="+1" face="arial,helvetica">
+                <b>Concepts</b>
+              </font>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--HEADLINE2 END-->
+      <font face="arial,helvetica"></font>
+    </p>
+    <p>
+      <font face="arial,helvetica">Getting your caches to talk to each other can be confusing, boggling,occasionally painful and sometimes extremely worthwhile.Hierarchies may not be what you need, but in some cases they helptremendously. Here are a few examples along with the basic theory.</font>
+    </p>
+    <p>
+      <font face="arial,helvetica">When a cache gets a query from any other machine (be it a browseror a client) it checks to see if the object (ie the page, graphic,executable or whatever the client requested) is on it's disk.</font>
+    </p>
+    <p>
+      <font face="arial,helvetica">
+        If it is, it checks if the document is up to date and then proceeds tofeed it back to the client. If the object isn't there, or is out of date,it checks to see if any of it's parents or siblings has it (I willexplain the difference in a moment). It does this by simultaneously(or as simultaneously as possible) sending 
+        <b>UDP</b>
+         packets tothese machines with the URL in them.
+      </font>
+    </p>
+    <p>
+      <font face="arial,helvetica">The other servers then check if they have the object on their disks,and then send a message back saying "I have it" (or "I don't have it"as the case may be).</font>
+    </p>
+    <p>
+      <font face="arial,helvetica">The original machine waits for the answers to come back and thendecides which cache it should get the object from, or if it shouldjust go straight off and get it itself.</font>
+    </p>
+    <p>
+      <font face="arial,helvetica"></font>
+    </p>
+    <hr>
+    <font face="arial,helvetica">
+      <b>Parent's vs Siblings</b>
+      <p>If you configure your cache to have (only) siblings your cache will sendUDP queries to the list of siblings, and if they don't have the pagesquid will connect directly to the remote (origin) web/ftp server.</p>
+      <p>
+        If you configure your cache to have a parent it means that ifyou don't have the object, and none of your siblings do, it will opena TCP connection to the parent server and ask it to get the page onyour behalf. Since it's a TCP connection, this parent will possibly gothrough the motions of checking it's parents and siblings if it doesn'thave the page on disk. (sending a UDP query to another cache doesn'tget it to check with any parents or siblings - it only checks the 
+        <i>ondisk</i>
+         cache) What can make things confusing is having multiple parentsand siblings... you can have 2 parent caches... how does squid knowwhich one to connect to to get a page?
+      </p>
+      <p>Obviously, if only one parent has a page it will download it from there,but if none have it your cache will give the request to the machine thatresponded fastest - believing that machine to be the least loaded orto have the best link. You can weight parents too - give a parent a highweight and it will get the most requests, unless it becomes excessivlyslow. You can also set up a default parent, so that if none of yourparents have the object it will use the default to forward the query to.</p>
+      <p>In this example:</p>
+      <pre>cache_host cache.big-isp.com parent 3128 3130</pre>
+       there is only one cache that you are talking to, and it is unlikelyto be down. In this case sending a UDP query can just waste time,so a possibly better configuration could be: 
+      <pre>cache_host cache.big-isp.com parent 3128 3130 no-query default</pre>
+       That means that your cache won't send ICP (UDP) packets to it to seeif it's up, and will connect to it for all queries. This is almostidentical to the hierarchy system that the Netscape proxy supports.(Microsoft's cache server doesn't even do this, let alone theother stuff below) 
+      <p>Another very useful feature of ICP is the capability of siblings.Say you don't want to spend a huge amount of money on a singlelarge cache machine, but would rather load balance between more thanone machine, but don't want duplicate copies of the pages on everymachine. You can set up your machines to speak to oneanother with the "proxy-only" flags like this:</p>
+      <p>On cache1</p>
+      <pre>cache_host cache2.company.com sibling 3128 3130 proxy-only</pre>
+       On cache2 
+      <pre>cache_host cache1.company.com sibling 3128 3130 proxy-only</pre>
+       This means that if a query comes to cache1 for a page that's not on it'sdisk it will send a ICP query to cache2... if it has it it will then downloadthe page from there, and NOT save it on it's disk... it will just get it fromcache2 when it needs it again. This can effectively double your disk spacewithout you having to spend huge amounts of money on a raid disk systemthat will allow for many gigs of disk. Netscape cache can't do this.
+    </font>
+    <p></p>
+    <hr>
+    <font size="-1">
+      <p>
+        <i>
+          The Squid Users guide is copyright Oskar Pearson 
+          <a href="#">oskar@is.co.za</a>
+        </i>
+      </p>
+    </font>
+    <p>
+      <font size="-1">
+        <i>If you like the layout (I do), I can only thank William Meeand hope he forgives me for stealing it</i>
+      </font>
+    </p>
+  </body>
+</html>

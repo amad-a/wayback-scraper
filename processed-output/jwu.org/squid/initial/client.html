@@ -1,0 +1,229 @@
+<html>
+  <head>
+    <script src="" type="text/javascript"></script>
+    <script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app217.us.archive.org';v.server_ms=1390;archive_analytics.send_pageview({});});</script>
+    <script type="text/javascript" src="" charset="utf-8"></script>
+    <script type="text/javascript" src="" charset="utf-8"></script>
+    <title>Squid Users Guide</title>
+  </head>
+  <body bgcolor="#ffffff" link="#990000" vlink="#660000" alink="#660000">
+    <!-- HEADLINE1 START-->
+    <table width="100%" border="0">
+      <tbody>
+        <tr>
+          <td bgcolor="9966ff">
+            <font size="+3" color="FFFFFF">
+              <b>Initial Configuration (Getting it working)</b>
+            </font>
+          </td>
+          <td bgcolor="BB99FF" width="5%">
+            <font color="BB99FF">_</font>
+          </td>
+          <td bgcolor="DDCCFF" width="5%">
+            <font color="DDCCFF">_</font>
+          </td>
+          <td bgcolor="F0E0FF" width="5%">
+            <font color="F0E0FF">_</font>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="9966ff" link="FFFFFF" valign="BASELINE">
+            <font size="-1" color="#FFFFFF" acolor="#FFFFFF">
+              <a href="/jwu.org/squid/Welcome.html">
+                <img src="/jwu.org/squid/images/index.gif" align="BOTTOM" border="0">
+                INDEX
+              </a>
+              <a href="squid.html">
+                <img src="/jwu.org/squid/images/back.gif" align="BOTTOM" border="0">
+                BACK
+              </a>
+              <a href="/jwu.org/squid/detail/acl.html">
+                <img src="/jwu.org/squid/images/next.gif" align="BOTTOM" border="0">
+                NEXT
+              </a>
+            </font>
+          </td>
+          <td bgcolor="BB99FF" width="5%">
+            <font color="BB99FF">_</font>
+          </td>
+          <td bgcolor="DDCCFF" width="5%">
+            <font color="DDCCFF">_</font>
+          </td>
+          <td bgcolor="F0E0FF" width="5%">
+            <font color="F0E0FF">_</font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--HEADLINE1 END-->
+    <p>
+      <!--HEADLINE2 START-->
+      <table width="100%" border="0">
+        <tbody>
+          <tr>
+            <td bgcolor="CCCCFF">
+              <font size="+1" face="arial,helvetica">
+                <b>Basic client software configuration</b>
+              </font>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--HEADLINE2 END-->
+      <font face="arial,helvetica"></font>
+    </p>
+    <p>
+      <font face="arial,helvetica">
+        A lot of this is taken from the 
+        <a href="https://web.archive.org/web/20010426044635/http://squid.nlanr.net/Squid/FAQ/FAQ.html">FAQ</a>
+         So thanks go to whoeverwrote these sections for the FAQ. I am using the examples in here ratherthan refering requests to a seperate page to help with mirroring, andso that we 
+        <i>keep context</i>
+         in terms of having one complete manual.
+      </font>
+    </p>
+    <p>
+      <font face="arial,helvetica"></font>
+    </p>
+    <hr>
+    <font face="arial,helvetica">
+      <font size="+1">
+        <b>Netscape 3</b>
+      </font>
+      <p>
+        Select 
+        <strong>Network Preferences</strong>
+         from the 
+        <strong>Options</strong>
+         menu. On the 
+        <strong>Proxies</strong>
+         page, click the radio button next to 
+        <strong>Manual ProxyConfiguration</strong>
+         and then click on the 
+        <strong>View</strong>
+         button. For each protocol that your Squid server supports (by default,HTTP, FTP, and gopher) enter the Squid server's hostname or IP addressand put the HTTP port number for the Squid server (by default, 3128) inthe 
+        <strong>Port</strong>
+         column. For any protocols that your Squiddoes not support, leave the fields blank.
+      </p>
+      <p>
+        Here is a 
+        <a href="https://web.archive.org/web/20010426044635/http://squid.nlanr.net/Squid/FAQ/navigator.jpg">screen shot</a>
+         of theNetscape Navigator manual proxy configuration screen.
+      </p>
+      <p>
+        Using Netscape with Auto-Config is in the 
+        <a href="/jwu.org/squid/detail/client.html">Advanced client configuration</a>
+         section
+      </p>
+      <p></p>
+      <hr>
+      <font size="+1">
+        <b>Microsoft Internet Explorer</b>
+      </font>
+      <p>
+        Select 
+        <strong>Options</strong>
+         from the 
+        <strong>View</strong>
+         menu. Click on the 
+        <strong>Connection</strong>
+         tab. Tick the 
+        <strong>Connect through Proxy Server</strong>
+         option and press the 
+        <strong>Proxy Settings</strong>
+         button. For each protocol thatyour Squid server supports (by default, HTTP, FTP, and Gopher)enter the Squid server's hostname or IP address and put the HTTPport number for the Squid server (by default, 3128) in the 
+        <strong>Port</strong>
+         column. For any protocols that your Squiddoes not support, leave the fields blank.
+      </p>
+      <p>
+        Here is a 
+        <a href="https://web.archive.org/web/20010426044635/http://squid.nlanr.net/Squid/FAQ/msie.jpg">screen shot</a>
+         of theInternet Explorer proxy configuration screen.
+      </p>
+      <p>
+        Again, you can Auto-Config certain (newer) version of Internet Explorer,but this is only explained in the 
+        <a href="/jwu.org/squid/detail/client.html">Advanced client configuration</a>
+         section.
+      </p>
+      <p></p>
+      <hr>
+      <p>
+        <font size="+1">
+          <b>Netmanage Internet Chameleon Websurfer</b>
+        </font>
+      </p>
+      <p>
+        Netmanage WebSurfer supports manual proxy configuration and exclusionlists for hosts or domains that should not be fetched via the proxy server(this information is current as of WebSurfer 5.0).Select 
+        <strong>Preferences</strong>
+         from the 
+        <strong>Settings</strong>
+         menu. Click on the 
+        <strong>Proxies</strong>
+         tab. Select the 
+        <strong>Use Proxy</strong>
+         options for HTTP, FTP, and gopher. Foreach protocol enter the Squid server's hostname or IP addressand put the HTTP port number for the Squid server (by default,3128) in the 
+        <strong>Port</strong>
+         boxes. For any protocols thatyour Squid server does not support, leave the fields blank.
+      </p>
+      <p>
+        Here is a 
+        <a href="https://web.archive.org/web/20010426044635/http://squid.nlanr.net/Squid/FAQ/netmanage.jpg">screen shot</a>
+      </p>
+      <p></p>
+      <hr>
+      <p>
+        <font size="+1">
+          <b>Generic Unix configuration</b>
+        </font>
+      </p>
+      <p>
+        If you are using unix programsthat allow you to access the web (including 
+        <i>wget</i>,
+        <i>lynx</i>
+         and 
+        <i>mosaic</i>
+         ), you can set shell variables that will get them to use theproxy.
+      </p>
+      <p>If you are using tcsh or csh:</p>
+      <p>
+        <kbd>
+          % setenv http_proxy http://mycache.example.com:3128/ 
+          <br>
+          % setenv gopher_proxy http://mycache.example.com:3128/ 
+          <br>
+          % setenv ftp_proxy http://mycache.example.com:3128/
+        </kbd>
+      </p>
+    </font>
+    <p>
+      <font face="arial,helvetica">
+        You should now be able to use your browser to connect through the cacheto download pages. To check that it's actually going through the cache,check the contents of the 
+        <i>/usr/local/squid/logs/access.log</i>
+         usinga command like 
+        <i>more /usr/local/squid/logs/access.log</i>.
+        You shouldsee any accesses you made appear in this file.
+      </font>
+    </p>
+    <p></p>
+    <hr>
+    <font size="-1">
+      <p>
+        <i>
+          The Squid Users guide is copyright Oskar Pearson 
+          <a href="#">oskar@is.co.za</a>
+        </i>
+      </p>
+      <p>
+        <i>
+          If you want to retain copyright on any of the abovesections, please notify me and I will make a note of it here, and putyou in the 
+          <a href="/jwu.org/squid/info/credits.html">credits</a>
+        </i>
+      </p>
+    </font>
+    <p>
+      <font size="-1">
+        <i>If you like the layout (I do), I can only thank William Meeand hope he forgives me for stealing it</i>
+      </font>
+    </p>
+  </body>
+</html>

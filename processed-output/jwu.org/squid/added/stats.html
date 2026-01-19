@@ -1,0 +1,239 @@
+<html>
+  <head>
+    <script src="" type="text/javascript"></script>
+    <script type="text/javascript">window.addEventListener('DOMContentLoaded',function(){var v=archive_analytics.values;v.service='wb';v.server_name='wwwb-app217.us.archive.org';v.server_ms=205;archive_analytics.send_pageview({});});</script>
+    <script type="text/javascript" src="" charset="utf-8"></script>
+    <script type="text/javascript" src="" charset="utf-8"></script>
+    <title>Squid Users Guide</title>
+  </head>
+  <body bgcolor="#ffffff" link="#990000" vlink="#660000" alink="#660000">
+    <!-- HEADLINE1 START-->
+    <table width="100%" border="0">
+      <tbody>
+        <tr>
+          <td bgcolor="9966ff">
+            <font size="+3" color="FFFFFF">
+              <b>Log analysis and stats</b>
+            </font>
+          </td>
+          <td bgcolor="BB99FF" width="5%">
+            <font color="BB99FF">_</font>
+          </td>
+          <td bgcolor="DDCCFF" width="5%">
+            <font color="DDCCFF">_</font>
+          </td>
+          <td bgcolor="F0E0FF" width="5%">
+            <font color="F0E0FF">_</font>
+          </td>
+        </tr>
+        <tr>
+          <td bgcolor="9966ff" link="FFFFFF" valign="BASELINE">
+            <font size="-1" color="#FFFFFF" acolor="#FFFFFF">
+              <a href="/jwu.org/squid/Welcome.html">
+                <img src="/jwu.org/squid/images/index.gif" align="BOTTOM" border="0">
+                INDEX
+              </a>
+              <a href="/jwu.org/squid/hierarchies/software.html">
+                <img src="/jwu.org/squid/images/back.gif" align="BOTTOM" border="0">
+                BACK
+              </a>
+              <a href="preload.html">
+                <img src="/jwu.org/squid/images/next.gif" align="BOTTOM" border="0">
+                NEXT
+              </a>
+            </font>
+          </td>
+          <td bgcolor="BB99FF" width="5%">
+            <font color="BB99FF">_</font>
+          </td>
+          <td bgcolor="DDCCFF" width="5%">
+            <font color="DDCCFF">_</font>
+          </td>
+          <td bgcolor="F0E0FF" width="5%">
+            <font color="F0E0FF">_</font>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!--HEADLINE1 END-->
+    <p>
+      <!--HEADLINE2 START-->
+      <table width="100%" border="0">
+        <tbody>
+          <tr>
+            <td bgcolor="CCCCFF">
+              <font size="+1" face="arial,helvetica">
+                <b>Introduction</b>
+              </font>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--HEADLINE2 END-->
+      <font face="arial,helvetica">
+        Squid (in it's default configuration) makes 4 logfiles. 
+        <br>
+        <br>
+      </font>
+    </p>
+    <ul>
+      <font face="arial,helvetica">
+        <li>/usr/local/squid/logs/access.log</li>
+        <li>/usr/local/squid/logs/cache.log</li>
+        <li>/usr/local/squid/logs/store.log</li>
+        <li>/usr/local/squid/cache/log</li>
+      </font>
+    </ul>
+    <font face="arial,helvetica">
+      The first three of these logfiles can be safely be cycled. Although thefile in the cache directory is called a log, it is actually an indexof each object on disk (when squid is started it reads this file, ratherthan reading each and every object in the cache), and cannot thus becycled, though it does get smaller if you send squid a 'kill -HUP' 
+      <br>
+      <br>
+      More info on the format of the logs can be found 
+      <a href="https://web.archive.org/web/20010425080710/http://irb.cs.uni-magdeburg.de/~elkner/proxy/Squid/">here</a>,
+      or in the
+      <a href="/web/20010425080710/http://www.jwu.org/squid/Release-Notes-1.1.txt">Release Notes</a>
+       includedin the distribution (these are the release notes for version 1.1, youmay want to check in the doc directory in the source if you have adifferent version.) 
+      <br>
+      <br>
+      Quite often, the logs can start taking a lot of space... due to the waythe unix filesystem works, simply deleting the files (while squid iswriting to them) will not free the space until all programs close thefile. You can get squid to close the file by sending it a 'kill -USR1'.Squid will then move the current access.log, cache.log and store.logto access.log.0, cache.log.0 and store.log.0. If these files exist, however, itwill move the old access.log.0 to access.log.1 and then create a newaccess.log.0 with the current data-set. It will increase the number at the enduntil it reaches the value set in the config file for 'logfile_rotate'.Once the file has been moved, and the new log is being written, you caneither analyse the logs or simply delete them. 
+      <br>
+      <br>
+      Now we know what logfiles there are, let's see what we can do with them: 
+      <br>
+      <ul>
+        <li>
+          <b>logs/access.log</b>
+          <br>
+          Useful, in here are the requests issued to our proxy. From this file wecan find out how many people use our cache, how much each one requested,what pages are most popular, etc.
+        </li>
+        <li>
+          <b>logs/cache.log</b>
+          <br>
+          In this file we'll find info Squid wants us to know. Errors, startupmessages, etc. are logged in here. It's worth examining this fileoften
+        </li>
+        <li>
+          <b>logs/store.log</b>
+          <br>
+          This file shows what's happening with our cache diskwise. It showswhenever an object is added or removed from disk.
+        </li>
+        <li>
+          <b>cache/log</b>
+          <br>
+          This file contains the mapping of objects (saved pages, for example)to their location on the disk. (normally this is only used if squid restarts,since it duplicates almost all of this in ram)
+        </li>
+      </ul>
+      <br>
+      <!--HEADLINE2 START-->
+      <table width="100%" border="0">
+        <tbody>
+          <tr>
+            <td bgcolor="CCCCFF">
+              <font size="+1" face="arial,helvetica">
+                <b>Tools</b>
+              </font>
+            </td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--HEADLINE2 END-->
+      <font face="arial,helvetica">
+        Analysis of the file access.log can be done with several tools. 
+        <br>
+        <ol>
+          <li>
+            <a href="https://web.archive.org/web/20010425080710/ftp://squid.nlanr.net/Squid/Scripts/">Original NLANR scripts</a>
+             (also contains a list of scripts like this) 
+            <br>
+            usage: 
+            <ul>
+              <i>access-extract.pl &lt; access.log &gt; summary</i>
+              <br>
+              <i>access-extract-urls.pl &lt; access.log &gt;&gt; summary</i>
+              <br>
+              <i>access-summary.pl &lt; summary &gt; report.txt</i>
+            </ul>
+             The file "report.txt" then contains all the relevant information. Here is a version that creates html output that also works with the netscape cache logs.
+          </li>
+          <li>
+            <a href="https://web.archive.org/web/20010425080710/http://www.fh-lippe.de/~cord/tools/">Calamaris</a>
+            <br>
+            usage: calamaris.pl &lt; access.log &gt; stats.html
+          </li>
+          <li>
+            <a href="https://web.archive.org/web/20010425080710/http://www.cineca.it/~nico/squidclients.html">squidclients</a>
+            <br>
+            usage: squidclients -H &lt; access.log &gt; clients.html
+          </li>
+          <li>
+            <a href="https://web.archive.org/web/20010425080710/http://www.cineca.it/~nico/squidtimes.html">squidtimes</a>
+            <br>
+            usage: squidtimes &lt; access.log &gt; times.html
+          </li>
+          <li>
+            <a href="https://web.archive.org/web/20010425080710/http://www.unimelb.edu.au/pwebstats/">pwebstats</a>
+            <br>
+            usage: see webpage
+          </li>
+          <li>
+            <a href="https://web.archive.org/web/20010425080710/http://casimir.easynet.fr/">PY_Squid_Stats</a>
+            <br>
+            usage: see webpage of PY_Squid_Stats
+          </li>
+          <li>Many more not yet listed here. Mail them</li>
+        </ol>
+        <!--HEADLINE2 START-->
+        <table width="100%" border="0">
+          <tbody>
+            <tr>
+              <td bgcolor="CCCCFF">
+                <font size="+1" face="arial,helvetica">
+                  <b>Analysis</b>
+                </font>
+              </td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <!--HEADLINE2 END-->
+        <font face="arial,helvetica">
+          These may not give you the stats that you need, or they may give you toomany stats, and take large amounts of time to work them out. I canonly suggest that you change them slightly (this is the main advantage offree software :) 
+          <p>Not everyone expects the same thing from their proxy - the mostcommon usage is to save network traffic, though some people use itas an access-control system. Some of the above utilities will give you onlya portion of these.</p>
+          <p>
+            You should run the analysis scripts on a different machine toyour cache server, as squid seems to get very touchy if it's diskthroughput is very slow. It's probably best to set up a script thatcopies the logs to another machine in the middle of the night (usingsomething like 
+            <b>scp -c none cache:/usr/local/squid/access.log.0 .</b>
+             Don't use rcp, since it has 0 security)
+          </p>
+        </font>
+        <p>
+          <font face="arial,helvetica">
+            Note also that some of the utilities above give you information about'the average time to complete a request'. This is actually a littlemisleading, since when squid sends data to a client it normally putsthe data in a 
+            <b>kernel buffer</b>,
+            the contents of which the kernelthen handles as it transmits the data to the client. In most cases thisbuffer is larger than the actual object being sent, and if it comesfrom the disk cache it will seem to take a
+            <b>very</b>
+             short time tosend, since once it's in a kernel buffer, squid has no idea how long ittakes for the kernel to send the data. If you want to know howloaded your cache is, make a query from a completely unloaded machineto the cache for a page that is 'close' to the cache network wise (suchas your local web server), and then do a query to the same serverdirectly. Check the difference in latency then to see if the cacheis slowing down the connections. Check the 
+            <a href="/jwu.org/squid/opt/performance.html">performance</a>
+             section for more details.
+          </font>
+        </p>
+        <p></p>
+        <hr>
+        <font size="-1">
+          <p>
+            <i>
+              The Squid Users guide is copyright Oskar Pearson 
+              <a href="#">oskar@is.co.za</a>
+               This page is copyright Mark Visser and Oskar Pearson
+            </i>
+          </p>
+        </font>
+        <p>
+          <font size="-1">
+            <i>If you like the layout (I do), I can only thank William Mee,and hope he forgives me for stealing it. This section was almost entirelycontributed by Mark Visser (mark@cal026031.student.utwente.nl).Thanks to Mark!</i>
+          </font>
+        </p>
+      </font>
+    </font>
+  </body>
+</html>

@@ -42,6 +42,7 @@ async function editLinks(links, fileContents, type) {
       // contents = contents.replace(link, '_self')
       return;
     }
+
     if (link.includes('http:/')) {
 
       // http is implied so maybe can just do contains
@@ -55,7 +56,17 @@ async function editLinks(links, fileContents, type) {
         // remove any anchors from url local file search
         (await fsExists(path.join(scrapedOutputDir, pageLinkRaw.split('#')[0]))) || false;
 
-        console.log('😎', path.join(pageLinkRaw.split('#')[0]));
+      console.log('😎', path.join(scrapedOutputDir, pageLinkRaw.split('#')[0]), fileExists);
+
+      if (fileExists && type === 'img') {
+        const pagePathNoFile = pageLinkRaw.split('#')[0].substring(0, pageLinkRaw.lastIndexOf('/'));
+
+        await fs.mkdir(path.join(processedOutputDir, pagePathNoFile), { recursive: true });
+        await fs.copyFile(
+          path.join(scrapedOutputDir, pageLinkRaw.split('#')[0]),
+          path.join(processedOutputDir, pageLinkRaw.split('#')[0])
+        )
+      }
 
       if (type === 'action') pageLinkRaw = "javascript:void(0)";
 
@@ -67,12 +78,12 @@ async function editLinks(links, fileContents, type) {
     } else {
       if (link.includes('mailto:')) {
         contents = contents.replaceAll(link, '#');
-      } else if (link.startsWith('#')){
-        
+      } else if (link.startsWith('#')) {
+
       } else if (link.includes('https://web-static.archive.org') || link.includes('athena.js')) {
         contents = contents.replaceAll(link, "");
       } else {
-    
+
       }
       // #anchor (no need to process)
       // single page no href (no need to process)
@@ -80,10 +91,11 @@ async function editLinks(links, fileContents, type) {
       // email (remove entirely)
       // txt file (process same as img)
     }
+
   }
 
   contents = contents.replace(targetPattern, '')
-  
+
   return prettify(contents);
   // return contents
 }
@@ -93,13 +105,14 @@ async function processOneFile(fileExt, fileName, filePath) {
 
   const targetFileDir = originalScrapedPath.split(fileName)[0];
 
+  // ?? figure out why these are different
   const newPath = path.join(
     process.cwd(),
     processedOutputDir,
     targetFileDir
   );
 
-  console.log('NEU', newPath);
+  const destPath = path.join(processedOutputDir, originalScrapedPath);
 
   if (fileExt.includes('htm')) {
     try {
@@ -109,7 +122,6 @@ async function processOneFile(fileExt, fileName, filePath) {
 
 
       // todo, turn pattern into function, consolidate attributes, 
-
       const foundImgSrcs = [...fileContents.matchAll(srcPattern)].map(
         (match) => match[1]
       );
@@ -131,17 +143,16 @@ async function processOneFile(fileExt, fileName, filePath) {
       );
 
       let fileContentsNew = fileContents;
-      
+
       if (hrefsOnPage) fileContentsNew = await editLinks(hrefsOnPage, fileContentsNew, fileName);
-      if (foundImgSrcs) fileContentsNew = await editLinks(foundImgSrcs, fileContentsNew);
-      if (bgOnPage) fileContentsNew = await editLinks(bgOnPage, fileContentsNew);
+      if (foundImgSrcs) fileContentsNew = await editLinks(foundImgSrcs, fileContentsNew, 'img');
+      if (bgOnPage) fileContentsNew = await editLinks(bgOnPage, fileContentsNew, 'img');
       if (actionsOnPage) fileContentsNew = await editLinks(actionsOnPage, fileContentsNew, 'action');
       // if (targetsOnPage) fileContentsNew = await editLinks(targetsOnPage, fileContentsNew, 'target');
-
+      console.log('doop', fileName)
       await fs.mkdir(newPath, { recursive: true });
-      console.log('BOOP', path.join(processedOutputDir, originalScrapedPath));
       await fs.writeFile(
-        path.join(processedOutputDir, originalScrapedPath),
+        destPath,
         fileContentsNew ? fileContentsNew : fileContents,
         'utf8'
       );
@@ -154,7 +165,7 @@ async function processOneFile(fileExt, fileName, filePath) {
     await fs.mkdir(newPath, { recursive: true });
     await fs.copyFile(
       filePath,
-      path.join(processedOutputDir, originalScrapedPath)
+      destPath
     );
   }
 }

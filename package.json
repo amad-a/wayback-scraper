@@ -4,6 +4,8 @@
     "type": "module",
     "description": "This is an example of a Crawlee project.",
     "dependencies": {
+        "@inquirer/input": "^4.3.1",
+        "@inquirer/prompts": "^7.10.1",
         "axios": "^1.7.7",
         "cheerio": "^1.0.0",
         "chrome-lens-ocr": "^4.0.2",
@@ -15,6 +17,7 @@
         "glob": "^13.0.0",
         "htmlfy": "^1.0.1",
         "iconv-lite": "^0.6.3",
+        "inquirer": "^12.11.1",
         "jschardet": "^3.1.4",
         "jsdom": "^25.0.1",
         "mime-types": "^2.1.35",
