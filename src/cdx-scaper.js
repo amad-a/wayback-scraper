@@ -39,7 +39,7 @@ if (siteLogExists) {
 
   const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
     toBound ? toBound : fromBound
-  }&filter=statuscode:200&`;
+  }&filter=statuscode:200&filter=!original:.*\?.*`;
 
   const cdxResponse = await fetch(cdxRequestUrl);
   if (!cdxResponse.ok) {
@@ -72,7 +72,10 @@ if (siteLogExists) {
 
   uniqueUrls = [
     ...new Map(
-      pageObjects.map((page) => [page.originalUrl.toLowerCase(), page])
+      pageObjects.map((page) => [
+        page.originalUrl.toLowerCase(),
+        page,
+      ])
     ).values(),
   ];
 
@@ -84,12 +87,14 @@ if (siteLogExists) {
       : page.mimetype.startsWith('image')
       ? 'im_'
       : '';
-    let url = `https://web.archive.org/web/${page.timestamp}${suffix}/${page.originalUrl}`;
+    let url = `https://web.archive.org/web/${page.timestamp}${suffix}/${page.originalUrl}/`;
     page.url = url;
-    page.originalUrl = page.originalUrl.replace(':80', '');
-    page.originalUrl = page.originalUrl.replace('www.', '');
-    page.originalUrl = page.originalUrl.replace('http:/', '');
-    page.originalUrl = page.originalUrl.toLowerCase();
+    page.originalUrl = page.originalUrl
+      .replace(':80', '')
+      .replace('www.', '')
+      .replace('http:/', '')
+      .toLowerCase();
+
     if (page.originalUrl.endsWith('/'))
       page.originalUrl += 'index.html';
   });
@@ -99,7 +104,9 @@ if (siteLogExists) {
 
   file.write(JSON.stringify(uniqueUrls));
   file.end();
-  console.log('Page log file successfully generated from CDX response.');
+  console.log(
+    'Page log file successfully generated from CDX response.'
+  );
 }
 
 // const imgSrcs = await page.$$eval('img', (imgs) =>
@@ -130,9 +137,14 @@ async function scrapeWaybackUrls(sites) {
         `${progressString} cdx-output${pageLinkRaw} already exists`
       );
     } else {
-      await page.goto(site.url, {
+      const response = await page.goto(site.url, {
         waitUntil: 'networkidle2',
       });
+
+      const guessedCharset =
+        response.headers()['x-archive-guessed-charset'] || 'utf-8';
+    
+      console.log('guessed', guessedCharset);
 
       let content;
 
