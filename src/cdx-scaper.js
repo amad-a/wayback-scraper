@@ -37,17 +37,19 @@ if (siteLogExists) {
 } else {
   console.log('No page log file found, fetching from CDX API...');
 
+  const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
+
   const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
     toBound ? toBound : fromBound
-  }&filter=statuscode:200&filter=!original:.*\?.*`;
+  }&filter=statuscode:200&filter=${noQueriesFilter}`;
 
   const cdxResponse = await fetch(cdxRequestUrl);
   if (!cdxResponse.ok) {
     throw new Error(`HTTP error! Status: ${cdxResponse.status}`);
-  }
-  console.log('Page list successfully fetched from CDX API!');
-
+  };
+  console.log('Page list successfully fetched from CDX API!', cdxResponseJson);
   const cdxResponseJson = await cdxResponse.json();
+
 
   // CDX response structure:
   //   [
@@ -105,7 +107,7 @@ if (siteLogExists) {
   file.write(JSON.stringify(uniqueUrls));
   file.end();
   console.log(
-    'Page log file successfully generated from CDX response.'
+    'Page log file successfully generated from CDX response.', uniqueUrls
   );
 }
 
