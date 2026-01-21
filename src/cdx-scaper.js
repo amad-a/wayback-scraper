@@ -39,6 +39,7 @@ if (siteLogExists) {
 } else {
   console.log('No page log file found, fetching from CDX API...');
 
+  // ensure no page snapshots with queries, to eliminate duplicate pages
   const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
 
   const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
@@ -79,10 +80,6 @@ if (siteLogExists) {
     ).values(),
   ];
 
-  console.log('before dup delete', pageObjects.length);
-  console.log('after dup delete', uniqueUrls.length);
-  //   process.exit();
-
   uniqueUrls.forEach(async (page) => {
     let suffix = page.mimetype.startsWith('text')
       ? ''
@@ -91,6 +88,7 @@ if (siteLogExists) {
       : '';
     let url = `https://web.archive.org/web/${page.timestamp}${suffix}/${page.originalUrl}`;
     page.url = url;
+    // sanitize url to match local file paths
     page.originalUrl = page.originalUrl
       .replace(':80', '')
       .replace('www.', '')
@@ -112,16 +110,6 @@ if (siteLogExists) {
   );
 }
 
-// const imgSrcs = await page.$$eval('img', (imgs) =>
-//   imgs.map((img) => img.src)
-// );
-
-// imgSrcs.forEach((imgSrc) => {
-//   if (imageExtensions.test(imgSrc.toLowerCase())) {
-//     crawledImages.push(imgSrc);
-//   }
-// });
-
 function replaceLinks(elemType, $, site) {
   const elemsDict = {
     a: 'href',
@@ -131,25 +119,19 @@ function replaceLinks(elemType, $, site) {
 
   const attrType = elemsDict[elemType];
   
-  $(elemType).each((index, element) => {
+  $(elemType).each((_, element) => {
     const attr = $(element).attr(attrType);
-
-    if (attrType === 'background') console.log('BGY', attr);
-
     if (attr) {
-      let relativeHrefPath;
-      let absoluteHrefPath;
-      let hrefType;
-
       // ensure path replacement hasn't happened already
       if (!attr.startsWith('/')) {
-        // now check if localPath exists
-        if (attr.startsWith('http://')) {
-          // absolute path
-          relativeHrefPath = '/' + attr.replace('http://', '');
-          hrefType = 'ABSOLUTE';
+        let relativeHrefPath;
+        let hrefType;
+        // TODO check if localPath exists, create wayback machine url if does not exist AND url outside of current page domain
+        if (attr.startsWith('http:/')) {
+          // if attr is absolute url, remove http prefix
+          relativeHrefPath = attr.replace('http:/', '');
         } else {
-          // relative path
+          // if attr is not absolute url, append filename to path containing page
           relativeHrefPath = path.join(
             site.originalUrl.substring(
               0,
@@ -157,13 +139,12 @@ function replaceLinks(elemType, $, site) {
             ),
             attr
           );
-          hrefType = 'RELATIVE';
         }
-        absoluteHrefPath = path.join(destDir, relativeHrefPath);
+
+        // don't need this here?
+        // const absoluteHrefPath = path.join(destDir, relativeHrefPath);
 
         $(element).attr(attrType, relativeHrefPath);
-
-        if (attrType === 'background') console.log('ELEMY', $(element).attr(attr));
       }
     } else {
     }
@@ -173,7 +154,7 @@ function replaceLinks(elemType, $, site) {
 }
 
 async function scrapeWaybackUrls(sites) {
-  const browser = await puppeteer.launch({ headless: false });
+  const browser = await puppeteer.launch({ headless: true });
 
   const page = await browser.newPage();
   await page.setViewport({ width: 640, height: 480 });
@@ -238,12 +219,6 @@ async function scrapeWaybackUrls(sites) {
           /<!-- BEGIN WAYBACK TOOLBAR INSERT -->[\s\S]*?<!-- END WAYBACK TOOLBAR INSERT -->/gi,
           ''
         );
-
-        // const allFullHrefs = await page.$$eval('a', (anchors) => {
-        //   return anchors.map((anchor) => anchor.href);
-        // });
-
-        // console.log('All full URLs:', allFullHrefs);
       }
 
       if (site.mimetype.startsWith('image')) {
@@ -302,58 +277,16 @@ async function scrapeWaybackUrls(sites) {
       const data = await fs.readFile(filePath, 'utf-8');
       let $ = cheerio.load(data);
 
-    //   $('body').each((index, element) => {
-    //     const bg = $(element).attr('background');
-    //     console.log('BACKGROUND', bg);
-    //   });
-
+      $('html').removeAttr('style');
       $ = replaceLinks('a', $, site);
       $ = replaceLinks('body', $, site);
       $ = replaceLinks('img', $, site);
 
-
       const modifiedHtml = $.html();
-      console.log('poop', modifiedHtml);
-
       await fs.writeFile(filePath, modifiedHtml, 'utf8');
     } else {
-      //   console.log(filePath, 'not found.');
+        console.log(filePath, 'not found.');
     }
-    // console.log('site', site.originalUrl, exists);
-
-    // const fileUrl = `file://${filePath}`;
-    // await page.goto(fileUrl, { waitUntil: 'networkidle0' });
-
-    // const content = await page.content();
-
-    // // console.log('content', content);
-
-    // const imgSrcs = await page.$$eval('img', (imgs) =>
-    //   imgs.map((img) => img.src)
-    // );
-
-    // await page.$$eval('a', async function(anchors) {
-    //   // 'anchors' is an array of all 'a elements found
-    //   for (const a of anchors) {
-    //     imgSrcFile = a.href.replace('http:/', '');
-
-    //     const exists = await fsExists(path.join(destDir, imgSrcFile));
-    //     console.log(`${imgSrcFile} EXISTS:`, exists);
-    //   }
-    // });
-
-    // console.log('plop', imgSrcs);
-
-    // for (let imgSrc of imgSrcs) {
-    // }
-
-    // const hrefs = await page.$$eval('a', (anchors) => anchors);
-
-    // imgSrcs.forEach((imgSrc) => {
-    //   if (imageExtensions.test(imgSrc.toLowerCase())) {
-    //     crawledImages.push(imgSrc);
-    //   }
-    // });
   }
 
   await browser.close();
