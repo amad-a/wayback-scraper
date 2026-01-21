@@ -122,6 +122,56 @@ if (siteLogExists) {
 //   }
 // });
 
+function replaceLinks(elemType, $, site) {
+  const elemsDict = {
+    a: 'href',
+    body: 'background',
+    img: 'src'
+  }
+
+  const attrType = elemsDict[elemType];
+  
+  $(elemType).each((index, element) => {
+    const attr = $(element).attr(attrType);
+
+    if (attrType === 'background') console.log('BGY', attr);
+
+    if (attr) {
+      let relativeHrefPath;
+      let absoluteHrefPath;
+      let hrefType;
+
+      // ensure path replacement hasn't happened already
+      if (!attr.startsWith('/')) {
+        // now check if localPath exists
+        if (attr.startsWith('http://')) {
+          // absolute path
+          relativeHrefPath = '/' + attr.replace('http://', '');
+          hrefType = 'ABSOLUTE';
+        } else {
+          // relative path
+          relativeHrefPath = path.join(
+            site.originalUrl.substring(
+              0,
+              site.originalUrl.lastIndexOf('/')
+            ),
+            attr
+          );
+          hrefType = 'RELATIVE';
+        }
+        absoluteHrefPath = path.join(destDir, relativeHrefPath);
+
+        $(element).attr(attrType, relativeHrefPath);
+
+        if (attrType === 'background') console.log('ELEMY', $(element).attr(attr));
+      }
+    } else {
+    }
+  });
+
+  return $;
+}
+
 async function scrapeWaybackUrls(sites) {
   const browser = await puppeteer.launch({ headless: false });
 
@@ -250,41 +300,22 @@ async function scrapeWaybackUrls(sites) {
       filePath.endsWith('html') || filePath.endsWith('htm');
     if (exists && isHtml) {
       const data = await fs.readFile(filePath, 'utf-8');
-      const $ = cheerio.load(data);
+      let $ = cheerio.load(data);
 
-      $('a').each((index, element) => {
-        const href = $(element).attr('href');
+    //   $('body').each((index, element) => {
+    //     const bg = $(element).attr('background');
+    //     console.log('BACKGROUND', bg);
+    //   });
 
-        if (href) {
-          let relativeHrefPath;
-          let absoluteHrefPath;
-          let hrefType;
+      $ = replaceLinks('a', $, site);
+      $ = replaceLinks('body', $, site);
+      $ = replaceLinks('img', $, site);
 
-          // now check if localPath exists
-          if (href.startsWith('http://')) {
-            // absolute path
-            relativeHrefPath = '/' + href.replace('http://', '');
-            hrefType = 'ABSOLUTE';
-          } else {
-            // relative path
-            relativeHrefPath = path.join(
-              site.originalUrl.substring(
-                0,
-                site.originalUrl.lastIndexOf('/')
-              ),
-              href
-            );
-            hrefType = 'RELATIVE';
-          }
-          absoluteHrefPath = path.join(destDir, relativeHrefPath);
 
-          $(element).attr('href', relativeHrefPath);
-          console.log('ELEMY', $(element).attr('href'));
-        } else {
-        }
-      });
       const modifiedHtml = $.html();
       console.log('poop', modifiedHtml);
+
+      await fs.writeFile(filePath, modifiedHtml, 'utf8');
     } else {
       //   console.log(filePath, 'not found.');
     }
