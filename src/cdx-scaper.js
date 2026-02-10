@@ -13,18 +13,22 @@ const fromBound = process.argv[3];
 const toBound = process.argv[4] || process.argv[3];
 const destDir = path.join(process.cwd(), 'cdx-output');
 const filterOut = process.argv[5];
+const overwrite = process.argv.includes('--overwrite');
 let uniqueUrls = [];
+
+const imageExtensions =
+  /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
 
 if (!webPath) {
   console.error(
-    'Please provide a website path to find in the Wayback Machine'
+    'Please provide a website path to find in the Wayback Machine via the CDX api',
   );
   process.exit(1);
 }
 
 if (!fromBound) {
   console.error(
-    'Please provide a Wayback Machine timestamp to search within (1 year or 2 datetime stamps'
+    'Please provide a Wayback Machine timestamp to search within (1 year or 2 datetime stamps',
   );
   process.exit(1);
 }
@@ -32,19 +36,26 @@ if (!fromBound) {
 const logPath = path.join(destDir, webPath, 'log.json');
 const siteLogExists = await fsExists(logPath);
 
-if (siteLogExists) {
+if (siteLogExists && !overwrite) {
   console.log('Page log found:', logPath);
   const data = await fs.readFile(logPath, 'utf-8');
   uniqueUrls = JSON.parse(data);
 } else {
-  console.log('No page log file found, fetching from CDX API...');
+  if (overwrite && siteLogExists) {
+    console.log('Overwriting existing page log...');
+  } else {
+    console.log('No page log file found, fetching from CDX API...');
+  }
 
   // ensure no page snapshots with queries, to eliminate duplicate pages
   const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
+  const noVtiFilter = encodeURIComponent('!original:.*_vti_.*');
 
   const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
     toBound ? toBound : fromBound
-  }&filter=statuscode:200&filter=${noQueriesFilter}`;
+  }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}`;
+
+  console.log('REQUEST URL:', cdxRequestUrl);
 
   const cdxResponse = await fetch(cdxRequestUrl);
   if (!cdxResponse.ok) {
@@ -52,17 +63,6 @@ if (siteLogExists) {
   }
   console.log('Page list successfully fetched from CDX API!');
   const cdxResponseJson = await cdxResponse.json();
-
-  // CDX response structure:
-  //   [
-  //     "urlkey",
-  //     "timestamp",
-  //     "original",
-  //     "mimetype",
-  //     "statuscode",
-  //     "digest",
-  //     "length"
-  //   ]
 
   const pageObjects = cdxResponseJson.slice(1).map((arr) => ({
     urlKey: arr[0],
@@ -74,18 +74,45 @@ if (siteLogExists) {
     length: arr[6],
   }));
 
+  const imageExtensions =
+    /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
+
+  // Add these media extension patterns
+  const videoExtensions = /\.(mp4|avi|mov|wmv|flv|webm|mkv|m4v)$/i;
+  const audioExtensions = /\.(mp3|wav|ogg|m4a|aac|flac|wma)$/i;
+  const htmlExtensions = /\.(htm|html|shtml|asp|aspx|php|jsp)$/i;
+
   uniqueUrls = [
     ...new Map(
-      pageObjects.map((page) => [page.urlKey, page])
+      pageObjects.map((page) => [page.urlKey, page]),
     ).values(),
   ];
+
+  // Filter to keep only HTML and media files
+  uniqueUrls = uniqueUrls.filter((page) => {
+    const url = page.originalUrl.toLowerCase();
+
+    // Keep if it contains htm
+    if (htmlExtensions.test(url)) return true;
+
+    // Keep if it's a media file
+    if (imageExtensions.test(url)) return true;
+    if (videoExtensions.test(url)) return true;
+    if (audioExtensions.test(url)) return true;
+
+    // Keep if it ends with / (directory/index)
+    if (url.endsWith('/')) return true;
+
+    // Filter out everything else (css, js, xml, txt, etc.)
+    return false;
+  });
 
   uniqueUrls.forEach(async (page) => {
     let suffix = page.mimetype.startsWith('text')
       ? ''
-      : page.mimetype.startsWith('image')
-      ? 'im_'
-      : '';
+      : page.mimetype.startsWith('im')
+        ? 'im_'
+        : '';
     let url = `https://web.archive.org/web/${page.timestamp}${suffix}/${page.originalUrl}`;
     page.url = url;
     // sanitize url to match local file paths
@@ -106,50 +133,65 @@ if (siteLogExists) {
   file.end();
   console.log(
     'Page log file successfully generated from CDX response.',
-    uniqueUrls
+    uniqueUrls,
   );
 }
 
 function replaceLinks(elemType, $, site) {
+  const iframeRegex = /web\.archive\.org\/web\/(\d{14})if_\/(.*)/;
   const elemsDict = {
     a: 'href',
     body: 'background',
-    img: 'src'
-  }
+    img: 'src',
+    frame: 'src',
+    iframe: 'src',
+  };
 
   const attrType = elemsDict[elemType];
-  
+
   $(elemType).each((_, element) => {
-    const attr = $(element).attr(attrType);
+    // IMPORTANT! assumes (correctly, given inputed timestamp captures everything) all available urls on same domain are downloaded
+    // TODO: check fsExists and domain, link directly to wayback machine for external browsing if not.
+    // IDEA: TRACK/keep record of if on available page or wayback: attach script to every loaded page which tracks if (available) /sites/ OR web.archive.org/web clicked - to switch mode
+
+    // make sure all final links are lowercase
+    const attr = $(element).attr(attrType)?.toLowerCase();
+
+    if (site.originalUrl.includes('inter/main.htm')) {
+      console.log('poop', $(element).html());
+    }
+
     if (attr) {
+      if (attr.match(iframeRegex)) {
+        let relativeHrefPath = attr.replace(':80', '').split('http:/')[1];
+        $(element).attr(attrType, relativeHrefPath);
+        return $;
+      }
       // ensure path replacement hasn't happened already
       if (!attr.startsWith('/')) {
         let relativeHrefPath;
-        let hrefType;
         // TODO check if localPath exists, create wayback machine url if does not exist AND url outside of current page domain
         if (attr.startsWith('http:/')) {
           // if attr is absolute url, remove http prefix
           relativeHrefPath = attr.replace('http:/', '');
+          // remove www subdomain if present
+          relativeHrefPath = relativeHrefPath.replace('www.', '');
+          relativeHrefPath = relativeHrefPath.replace('www2.', '');
         } else {
           // if attr is not absolute url, append filename to path containing page
           relativeHrefPath = path.join(
             site.originalUrl.substring(
               0,
-              site.originalUrl.lastIndexOf('/')
+              site.originalUrl.lastIndexOf('/'),
             ),
-            attr
+            attr,
           );
         }
-
-        // don't need this here?
-        // const absoluteHrefPath = path.join(destDir, relativeHrefPath);
-
         $(element).attr(attrType, relativeHrefPath);
       }
     } else {
     }
   });
-
   return $;
 }
 
@@ -176,116 +218,135 @@ async function scrapeWaybackUrls(sites) {
 
     if (exists) {
       console.log(
-        `${progressString} cdx-output${pageLinkRaw} already exists`
+        `${progressString} 📁 cdx-output${pageLinkRaw} already exists`,
       );
     } else {
-      await page.goto(site.url, {
-        waitUntil: 'networkidle2',
-        waitUntil: 'domcontentloaded',
-        timeout: 30000,
-      });
-
-      let content;
-      content = await page.content();
-
-      if (site.mimetype.startsWith('text')) {
-        // remove any charset definitions as rendered page is UTF-8
-        content = content.replace(
-          /<meta[^>]*http-equiv=["']Content-Type["'][^>]*\/?>/gi,
-          ''
-        );
-
-        // remove wayback scripts and toolbar styles
-        content = content.replace(
-          /<head[^>]*>[\s\S]*?<\/head>/i,
-          (head) => {
-            return head
-              .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
-              .replace(/<script\b[^>]*\/>/gi, '')
-              .replace(
-                /<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi,
-                ''
-              )
-              .replace(
-                /<link\b[^>]*type=["']text\/css["'][^>]*>/gi,
-                ''
-              )
-              .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
-          }
-        );
-
-        // remove WB toolbar
-        content = content.replace(
-          /<!-- BEGIN WAYBACK TOOLBAR INSERT -->[\s\S]*?<!-- END WAYBACK TOOLBAR INSERT -->/gi,
-          ''
-        );
-      }
-
-      if (site.mimetype.startsWith('image')) {
-        let imagePage;
-        imagePage = await page.evaluate(() => {
-          const img = document.querySelector('img');
-          return img ? img.src : null;
+      try {
+        const response = await page.goto(site.url, {
+          waitUntil: 'networkidle2',
+          waitUntil: 'domcontentloaded',
+          timeout: 30000,
         });
 
-        if (imagePage) content = await page.goto(imagePage);
-      }
+        let content;
+        content = await page.content();
 
-      // create file containing dir recursively
-      await mkdir(
-        path.join(
-          destDir,
-          pageLinkRaw.substring(0, pageLinkRaw.lastIndexOf('/'))
-        ),
-        { recursive: true }
-      );
+        if (site.mimetype.startsWith('text')) {
+          content = content.replace(/\starget=["'][^"']*["']/gi, '');
+          // remove any charset definitions as rendered page is UTF-8
+          content = content.replace(
+            /<meta[^>]*http-equiv=["']Content-Type["'][^>]*\/?>/gi,
+            '',
+          );
 
-      // if implied index page add real index file
-      if (pageLinkRaw.endsWith('/'))
-        pageLinkRaw = pageLinkRaw + 'index.html';
+          // remove wayback scripts and toolbar styles
+          content = content.replace(
+            /<head[^>]*>[\s\S]*?<\/head>/i,
+            (head) => {
+              return head
+                .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
+                .replace(/<script\b[^>]*\/>/gi, '')
+                .replace(
+                  /<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi,
+                  '',
+                )
+                .replace(
+                  /<link\b[^>]*type=["']text\/css["'][^>]*>/gi,
+                  '',
+                )
+                .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+            },
+          );
 
-      if (site.mimetype.startsWith('image')) {
-        await fs.writeFile(
-          path.join(destDir, pageLinkRaw),
-          await content.buffer()
+          content = content.replace();
+
+          // remove WB toolbar
+          content = content.replace(
+            /<!-- BEGIN WAYBACK TOOLBAR INSERT -->[\s\S]*?<!-- END WAYBACK TOOLBAR INSERT -->/gi,
+            '',
+          );
+
+          content = content.replace(
+            '</html>',
+            `<!-- ${site.url} -->\n</html>`,
+          );
+        }
+
+        if (site.mimetype.startsWith('im')) {
+          let imagePage;
+          imagePage = await page.evaluate(() => {
+            const img = document.querySelector('img');
+            return img ? img.src : null;
+          });
+
+          if (imagePage) content = await page.goto(imagePage);
+        }
+
+        // create file containing dir recursively
+        await mkdir(
+          path.join(
+            destDir,
+            pageLinkRaw.substring(0, pageLinkRaw.lastIndexOf('/')),
+          ),
+          { recursive: true },
         );
-      } else {
-        await fs.writeFile(
-          path.join(destDir, pageLinkRaw),
-          content,
-          'utf8'
+
+        // if implied index page add real index file
+        if (pageLinkRaw.endsWith('/'))
+          pageLinkRaw = pageLinkRaw + 'index.html';
+
+        if (site.mimetype.startsWith('im') && content) {
+          await fs.writeFile(
+            path.join(destDir, pageLinkRaw.toLowerCase()),
+            await content.buffer(),
+          );
+        } else {
+          await fs.writeFile(
+            path.join(destDir, pageLinkRaw.toLowerCase()),
+            content,
+            'utf8',
+          );
+        }
+
+        // delay to combat bot detection
+        await new Promise((r) =>
+          setTimeout(r, Math.random() * 200 + 100),
         );
+
+        console.log(
+          `${progressString} Saved ${site.url} to cdx-output${pageLinkRaw}`,
+        );
+      } catch (error) {
+        console.error('‼️ error:', site.url, error);
       }
-
-      // delay to combat bot detection
-      await new Promise((r) =>
-        setTimeout(r, Math.random() * 2000 + 1000)
-      );
-
-      console.log(
-        `${progressString} Saved ${site.url} to cdx-output${pageLinkRaw}`
-      );
     }
   }
 
   for (const site of sites) {
+    // check if file
     const filePath = path.join(destDir, site.originalUrl);
-    const exists = await fsExists(filePath);
+    const exists = await fsExists(filePath.toLowerCase());
     const isHtml =
       filePath.endsWith('html') || filePath.endsWith('htm');
     if (exists && isHtml) {
       const data = await fs.readFile(filePath, 'utf-8');
+      // console.log('DATA', filePath, data);
       let $ = cheerio.load(data);
 
       $('html').removeAttr('style');
       $ = replaceLinks('a', $, site);
       $ = replaceLinks('body', $, site);
       $ = replaceLinks('img', $, site);
+      $ = replaceLinks('iframe', $, site);
+      $ = replaceLinks('frame', $, site);
+
+      // console.log('$', $, site);
 
       const modifiedHtml = $.html();
       await fs.writeFile(filePath, modifiedHtml, 'utf8');
-    } else {
-        console.log(filePath, 'not found.');
+    }
+    if (!exists) {
+      console.log(`⚠️ file ${filePath} not found`);
     }
   }
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//IETF//DTD HTML 2.0//EN"><html style="--wm-toolbar-height: 67px;"><head>
+
+
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<title>404 Not Found</title>
+</head><body>
+ 
+<h1>Not Found</h1>
+<p>The requested URL /robots.txt was not found on this server.</p>
+<hr>
+<address>Apache/2.2.4 (FreeBSD) DAV/2 PHP/5.2.3 with Suhosin-Patch mod_ssl/2.2.4 OpenSSL/0.9.7e-p1 Server at www.gaza-airport.org Port 80</address>
+
+
+</body><!-- https://web.archive.org/web/20080225212907/http://gaza-airport.org/robots.txt -->
+</html><!--
+     FILE ARCHIVED ON 21:29:16 Feb 25, 2008 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:24:55 Feb 01, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 1.241
+  exclusion.robots: 0.033
+  exclusion.robots.policy: 0.022
+  esindex: 0.009
+  cdx.remote: 33.33
+  LoadShardBlock: 875.136 (3)
+  PetaboxLoader3.datanode: 932.157 (4)
+  load_resource: 66.252
+  nav: 0.13 (6)
+-->

@@ -459,7 +459,7 @@ async function downloadCrawledImages(crawledImages) {
           )
         ) {
           console.log(
-            '📂📂 already exists: ',
+            '📂 already exists: ',
             `scraped-output/${img.originalUrl}`
           );
         } else {
