@@ -1,0 +1,207 @@
+<html><head>
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<title>100 SHAHEED - 100 LIVES</title>
+
+<script language="JavaScript">
+
+        var on1 = new Image;
+        on1.src ="images/pic1.jpg";
+        var off1 = new Image;
+        off1.src="images/pic1-1.jpg";
+
+
+        var on2 = new Image;
+        on2.src ="images/pic2.jpg";
+        var off2 = new Image;
+        off2.src="images/pic2-2.jpg";
+
+
+        var on3 = new Image;
+        on3.src ="images/pic3.jpg";
+        var off3 = new Image;
+        off3.src="images/pic3-3.jpg";
+
+
+        var on4 = new Image;
+        on4.src ="images/pic4.jpg";
+        var off4 = new Image;
+        off4.src="images/pic4-4.jpg";
+
+        var on5 = new Image;
+        on5.src ="images/pic5.jpg";
+        var off5 = new Image;
+        off5.src="images/pic5-5.jpg";
+
+
+        var on6 = new Image;
+        on6.src ="images/pic6.jpg";
+        var off6 = new Image;
+        off6.src="images/pic6-6.jpg";
+
+
+function mouse_over(imageNum) {
+  var iNum;
+  var name;
+  var iname;
+
+  iNum = parseInt(imageNum);
+  name = "i"+iNum;
+  iname = "on"+iNum+".src";
+  document[name].src = eval(iname);     
+    
+  return true;
+}
+
+function mouse_out(imageNum) {
+  var name;
+  var iname;
+
+  name = "i"+imageNum;
+  iname = "off"+imageNum+".src";
+  document [name].src = eval(iname);
+
+  return true;
+}
+
+
+var message=" ***   Welcome to the homepage of: *** ***   This Page was last updated on 24/7/2000  ***   Thank you for visiting our Website ***   We hope that you will enjoy browsing it      "
+
+
+var id,pause=0,position=0;
+var speed = 150;
+
+function ChangeImage (ImageName,FileName) {
+
+        document[ImageName].src = FileName;
+}
+
+
+function slowDown() {
+        speed = 200;
+        document.form.banner.style.color = "#000099";
+}
+
+function speedUp() {
+        speed = 400;
+        document.form.banner.style.color = "#000000";
+}
+
+
+
+function scroll() {
+        var i,k,lab;
+        lab = message;
+        k=(88/lab.length)+1;
+        for(i=0;i<=k;i++) lab+="   "+lab;
+        document.form.banner.value=lab.substring(position,position+88);
+        if(position++==lab.length) position=0;
+        if(lab.substring(position-5,position-1) == "*   ") {
+                id=setTimeout("scroll()",1800);
+                } else {
+                id=setTimeout("scroll()",speed);
+                }
+}
+
+function ChangeImage (ImageName,FileName) {
+
+        document[ImageName].src = FileName;
+
+}
+
+
+// End -->
+
+
+
+</script>
+
+</head>
+
+<body marginwidth="0" marginheight="0" leftmargin="0" topmargin="0" background="/sakakini.org/shaheed/images/back1.gif">
+
+<center>
+<table border="0" cellspacing="0" cellpadding="0" width="620">
+<tbody><tr>
+<td valign="top" align="left" colspan="3" style="font-size: 0;"><img src="/sakakini.org/shaheed/images/topline.gif"></td>
+</tr>
+
+<tr>
+<td valign="top" align="left" rowspan="2" style="font-size: 0;"><img src="/sakakini.org/shaheed/images/topline1.gif"></td>
+
+
+
+
+<td><table border="0" cellspacing="0" cellpadding="0" width="100%">
+<tbody><tr><td valign="top" align="right" style="font-size: 0;"><img src="/sakakini.org/shaheed/images/engname.gif"></td>
+</tr>
+
+<tr><td valign="top" align="center"><table border="0" cellspacing="0" cellpadding="0"><tbody><tr>
+<td valign="top" align="center"><a href="/sakakini.org/shaheed/fares/fares.html" onmouseover="mouse_over('2'); return true " onmouseout="mouse_out('2')" style=""><img src="/sakakini.org/shaheed/images/pic2-2.jpg" name="i2" border="0"></a></td><td valign="top" align="center"><a href="/sakakini.org/shaheed/aseel/aseel.html" onmouseover="mouse_over('6'); return true " onmouseout="mouse_out('6')" style=""><img src="/sakakini.org/shaheed/images/pic6-6.jpg" name="i6" border="0"></a></td><td valign="top" align="center"><a href="/sakakini.org/shaheed/mahmoud/mahmoud.html" onmouseover="mouse_over('5'); return true " onmouseout="mouse_out('5')" style=""><img src="/sakakini.org/shaheed/images/pic5-5.jpg" name="i5" border="0"></a></td><td valign="top" align="center"><a href="/sakakini.org/shaheed/zuhair/zuhair.html" onmouseover="mouse_over('1'); return true " onmouseout="mouse_out('1')" style=""><img src="/sakakini.org/shaheed/images/pic1-1.jpg" name="i1" border="0"></a></td>
+<td valign="top" align="center"><a href="/sakakini.org/shaheed/rahma/rahma.html" onmouseover="mouse_over('4'); return true " onmouseout="mouse_out('4')" style=""><img src="/sakakini.org/shaheed/images/pic4-4.jpg" name="i4" border="0"></a></td><td valign="top" align="center"><a href="/sakakini.org/shaheed/hareld/hareld.html" onmouseover="mouse_over('3'); return true " onmouseout="mouse_out('3')" style=""><img src="/sakakini.org/shaheed/images/pic3-3.jpg" name="i3" border="0"></a></td></tr></tbody></table></td>
+</tr>
+
+<tr>
+<td valign="top" align="center"><br><a href="/sakakini.org/shaheed/arabic.html" style=""><img src="/sakakini.org/shaheed/images/arabname.gif" border="0" hspace="10"></a><a href="/sakakini.org/shaheed/german/german.html" style=""><img src="/sakakini.org/shaheed/images/german.gif" hspace="10" border="0"></a><a href="/sakakini.org/shaheed/french/french.html" style=""><img src="/sakakini.org/shaheed/images/french.gif" hspace="10" border="0"></a><a href="/sakakini.org/shaheed/spanish/spanish.html" style=""><img src="/sakakini.org/shaheed/images/spanish.gif" hspace="10" border="0"></a><br><br><table border="0" cellspacing="0" width="470" cellpadding="0"><tbody><tr><td valign="top"><br><img src="/sakakini.org/shaheed/images/txt.gif" hspace="5"></td><td valign="top"><div align="justify"><font size="-1" color="#6D300A">
+<font face="AvantGarde Bk BT">
+
+
+Welcome to the online version of the new Sakakini exhibit "100 SHAHEED-100 LIVES", the memorial exhibit to the fallen of the Aqsa Intifada. The exhibit will showcase 100 personal photographs and objects belonging to the first 100 <i>Shaheed</i> (martyrs) of this Intifada. An accompanying exhibit catalogue will feature the personal photographs, as well as photographs of the personal objects, and short biographies in Arabic and English.
+
+<p>This memorial will be on display in 7 Palestinian cities. It will open at the Sakakini Centre in February 2001, and -if the current siege is eased- will travel to Bethlehem, Gaza City, Hebron, Jerusalem, Nablus, and Nazareth.
+<!--
+<P>It is hoped that when the Aqsa Intifada ends, the exhibit will be enlarged to include the additional <i>Shuhada</i> (Martyrs), and that the exhibit will be installed in a permanent locale, serving as an enduring tribute to the fallen.
+
+<P>At the time of the exhibit’s conceptualization in mid October 2000, we had planned on including all the Shuhada of the Intifada. Sadly, it quickly became clear that the Palestinian death toll would only continue to rise. It was, therefore, decided to limit the scope of this tribute to the first 100. The fallen represent most geographic areas in the country, including Jerusalem, the West Bank and Gaza Strip, as well as Palestinian populated areas within Israel.
+-->
+</p><p>The project concept is by Adila Laïdi, Sakakini Centre Director. The exhibit is curated by prominent Palestinian artist <a href="/sakakini.org/artists/samir.htm" style=""><font color="000000">Samir Salameh</font></a> in a minimalist fashion, honoring the individuality of each <i>Shaheed</i>. Catalogue and Web Photographs of the objects are by <a href="/sakakini.org/isabel.htm" style=""><font color="000000">Isabel de la Cruz</font></a>.
+
+</p><p>For more information on this project, if you wish to obtain a catalogue, or host the exhibit in your city, please <a href="mailto:sakakini@sakakini.org" style="pointer-events: none;"><font color="000000">Email us</font></a>. For feedback, please leave a message in the <a href="/sakakini.org/guestbook/guestbbok.html" style="pointer-events: none;"><font color="000000">Guestbook</font></a>
+</p><p>
+
+</p><ul>
+<li><a href="/sakakini.org/shaheed/text.html" style="">Presentation Text of the Project</a>
+</li><li><a href="/sakakini.org/shaheed/notes.html" style="">Explanatory Notes</a>
+</li><li><a href="/sakakini.org/shaheed/photos.html" style="">Pictures from the exhibition</a>
+</li></ul>
+<p>
+<b>
+</b></p></font></font></div><font size="-1" color="#6D300A"><font face="AvantGarde Bk BT"><b>
+<a href="/sakakini.org/shaheed/press/press.html" style="">Click here</a> to view press articles on "100 lives 100 Shaheed"
+</b>
+
+</font></font></td><td width="40">&nbsp;</td></tr></tbody></table></td></tr></tbody></table>
+
+</td><td valign="bottom" rowspan="2" style="font-size: 0;"><img src="/sakakini.org/shaheed/images/line.gif"></td></tr><tr><td align="right" style="font-size: 0;"><img src="/sakakini.org/shaheed/images/line1.gif"></td></tr></tbody></table>
+
+</center>
+
+
+
+
+
+</body><!-- https://web.archive.org/web/20010810083016if_/http://www.sakakini.org:80/shaheed/index.html --></html><!--
+     FILE ARCHIVED ON 08:30:16 Aug 10, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 03:31:01 Feb 23, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 0.881
+  exclusion.robots: 0.052
+  exclusion.robots.policy: 0.037
+  esindex: 0.014
+  cdx.remote: 23.043
+  LoadShardBlock: 100.913 (3)
+  PetaboxLoader3.datanode: 131.314 (4)
+  load_resource: 106.573
+  PetaboxLoader3.resolve: 55.569
+-->

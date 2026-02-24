@@ -1,0 +1,23 @@
+<!DOCTYPE html><html style="--wm-toolbar-height: 67px;"><head>
+<title>Wayback Machine</title>
+
+
+
+
+
+
+</head>
+<body style="height:100vh;overflow:hidden;margin:0;display:flex;flex-flow:column nowrap;align-items:stretch;">
+<div style="flex:0 0;">
+
+ </div>
+<iframe id="playback" src="https://web.archive.org/web/20041205211156if_/http://www.jericho-city.org:80/oldarabicnews_files/filelist.xml" frameborder="0" style="flex:1 0">
+</iframe>
+<script>
+if (window.location.hash) {
+  document.getElementById("playback").src += window.location.hash;
+}
+</script>
+
+</body><!-- https://web.archive.org/web/20041205211156/http://www.jericho-city.org:80/oldarabicnews_files/filelist.xml -->
+</html>
