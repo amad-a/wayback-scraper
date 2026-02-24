@@ -5,8 +5,6 @@
 
 
 
-
-
 <!-- End Wayback Rewrite JS Include -->
 <title>Jericho Municipality Site</title>
 
@@ -20,11 +18,79 @@
 
 <meta http-equiv="Refresh" content="600">
 
+<script language="Jscript.Encode">    ////////////////////////////////////////////////////////////////////////
+
+// Dynamic Image Behavior Routine
+
+////////////////////////////////////////////////////////////////////////
 
 
 
+function switchImages(off,on) 
 
+{
 
+//construct the images into an array 
+
+this.on = new Image(); 
+
+this.off = new Image(); 
+
+this.on.src = on;
+
+ this.off.src = (off==""?on:off); 
+
+} 
+
+//---------------------------------------------------------------------- 
+
+function RollOver(nm,id)
+
+ {
+
+ //for [onmouseover] event 
+
+document.images[nm].src = pic[id].on.src;
+
+ } 
+
+//---------------------------------------------------------------------- 
+
+function RollOut(nm,id) 
+
+{ 
+
+//for [onmouseout] event 
+
+document.images[nm].src = pic[id].off.src; 
+
+}
+
+////////////////////////////////////////////////////////////////////////
+
+function openUrl(Url,WinWidth,WinHeight)
+
+{
+
+  
+
+}  </script>
+
+<link href="http://www.jericho-city.org/images/view.css" type="text/css" rel="stylesheet">
+
+<script language="Jscript.Encode"><!--
+
+function printFrame()
+
+{
+
+	this.focus()
+
+	window.parent.frames['fBody'].print();
+
+}
+
+//--></script>
 
 
 
@@ -34,7 +100,15 @@
 
 <!--[if !mso]>
 
+<style>
 
+v\:*         { behavior: url(#default#VML) }
+
+o\:*         { behavior: url(#default#VML) }
+
+.shape       { behavior: url(#default#VML) }
+
+</style>
 
 <![endif]--><!--[if gte mso 9]>
 <xml><o:shapedefaults v:ext="edit" spidmax="1027"/>
@@ -43,7 +117,6 @@
 </head>
 
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
- 
 
 <table dir="rtl" height="80" cellspacing="0" cellpadding="0" width="750" align="center" bgcolor="#cccccc" border="0" topmargin="0">
 
@@ -51,13 +124,13 @@
 
   <tr>
 
-    <td valign="bottom">
+    <td valign="bottom" style="font-size: 0;">
 
     <img alt="" hspace="0" src="/jericho-city.org/images/corner~3.gif" border="0" width="20" height="20"></td>
 
-    <td align="middle"><img border="0" src="/jericho-city.org/images/site.gif" width="683" height="60"></td>
+    <td align="middle" style="font-size: 0;"><img border="0" src="/jericho-city.org/images/site.gif" width="683" height="60"></td>
 
-    <td valign="bottom" align="left">
+    <td valign="bottom" align="left" style="font-size: 0;">
 
     <img alt="" hspace="0" src="/jericho-city.org/images/corner~2.gif" border="0" width="20" height="20"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
 
@@ -67,15 +140,15 @@
 
   <tr>
 
-    <td width="116"><img height="1" src="/jericho-city.org/images/pixel.gif" width="116"></td>
+    <td width="116" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="116"></td>
 
-    <td width="24"><img height="1" src="/jericho-city.org/images/pixel.gif" width="24"></td>
+    <td width="24" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="24"></td>
 
-    <td width="567"><img height="1" src="/jericho-city.org/images/pixel.gif" width="567"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
+    <td width="567" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="567"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
 
 <table class="SEARCH_STRIP" dir="rtl" cellspacing="0" cellpadding="0" width="707" align="center" border="0">
 
-  <form name="searchForm" action="http://www.jericho-city.org/SITE/TEMPLATE/searchResult.asp" method="post"></form><input id="didi" type="hidden" value="2" name="didi"><input type="hidden" value="1" name="num"><input type="hidden" value="0" name="ali"><input type="hidden" value="2" name="xml"><input type="hidden" value="1" name="log"><input type="hidden" value="0" name="sub"><input type="hidden" value="20" name="max"><input type="hidden" value="1" name="start"><input id="searchtype" type="hidden" value="SimpleSearch" name="searchtype">
+  <form name="searchForm" onsubmit="return false"></form><input id="didi" type="hidden" value="2" name="didi"><input type="hidden" value="1" name="num"><input type="hidden" value="0" name="ali"><input type="hidden" value="2" name="xml"><input type="hidden" value="1" name="log"><input type="hidden" value="0" name="sub"><input type="hidden" value="20" name="max"><input type="hidden" value="1" name="start"><input id="searchtype" type="hidden" value="SimpleSearch" name="searchtype">
 
   <tbody>
 
@@ -96,7 +169,7 @@
     <table class="SEARCH_STRIP" cellspacing="0" cellpadding="0" width="100%" border="0">
         <tbody>
         <tr>
-          <td>
+          <td style="font-size: 0;">
           <img alt="" hspace="0" src="/jericho-city.org/images/topbar~1.gif" border="0" width="21" height="21"></td>
           <td id="COLOR" width="100%" bgcolor="#cecede" height="15">
           <marquee direction="right" scrollamount="3" scrolldelay="84" width="700">بلدية أريحا ترحب بكم من مدينة القمر....أقدم مدينة في العالم....أريحا</marquee></td></tr></tbody></table></td>
@@ -120,7 +193,7 @@
 
         <tr>
 
-          <td valign="top" align="middle" width="150" height="100">
+          <td valign="top" align="middle" width="150" height="100" style="font-size: 0;">
 
                    <img src="/jericho-city.org/images/loggif~1.gif" border="0" width="182" height="162"></td></tr><!--
 
@@ -134,67 +207,67 @@
 
         <p align="center">
 
-          <a href="/jericho-city.org/englishsite.html">
+          <a href="/jericho-city.org/englishsite.html" style="pointer-events: none;">
           <img src="/jericho-city.org/images/english.gif" border="0" width="140" height="40"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/arabicsite.htm">
+        <p align="center"><a href="/jericho-city.org/arabicsite.htm" style="">
 
         <img src="/jericho-city.org/images/pr8.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/introduction.htm">
+        <a href="/jericho-city.org/introduction.htm" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr10.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/historya.htm">
+        <a href="/jericho-city.org/historya.htm" style="">
 
         <img src="/jericho-city.org/images/pr6.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/jma.htm">
+        <a href="/jericho-city.org/jma.htm" style="">
 
         <img src="/jericho-city.org/images/pr9.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/projectsa.htm">
+        <p align="center"><a href="/jericho-city.org/projectsa.htm" style="">
 
         <img src="/jericho-city.org/images/pr16.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/activitya.htm">
+        <p align="center"><a href="/jericho-city.org/activitya.htm" style="">
 
         <img src="/jericho-city.org/images/pr15.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/images/jericho.exe">
+        <a href="/jericho-city.org/images/jericho.exe" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr2.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/images/jericho.pdf">
+        <a href="/jericho-city.org/images/jericho.pdf" style="pointer-events: none;">
 
         <img border="0" src="/jericho-city.org/images/map.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/historicala.htm">
+        <a href="/jericho-city.org/historicala.htm" style="">
 
         <img src="/jericho-city.org/images/pr1.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/tourista.htm">
+        <p align="center"><a href="/jericho-city.org/tourista.htm" style="">
 
         <img src="/jericho-city.org/images/pr11.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/accomodation.html">
+        <p align="center"><a href="/jericho-city.org/accomodation.html" style="">
         <img border="0" src="/jericho-city.org/images/accomodationa.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/relationa.htm">
+        <a href="/jericho-city.org/relationa.htm" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr14.gif" border="0" width="140" height="28"></a></p>
 
@@ -247,25 +320,25 @@
 
       <p dir="rtl" align="center"><b><font face="Simplified Arabic" size="4">
 
-      <font color="#000080">[</font><span lang="ar-sa"><a href="/jericho-city.org/#الطريق إلى أريحا"><font color="#000080">الطريق 
+      <font color="#000080">[</font><span lang="ar-sa"><a href="/jericho-city.org/#الطريق إلى أريحا" style=""><font color="#000080">الطريق 
 
-      إلى أريحا</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#العيزرية"><font color="#000080">العيزرية</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#الخان الأحمر"><font color="#000080">الخان 
+      إلى أريحا</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#العيزرية" style=""><font color="#000080">العيزرية</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#الخان الأحمر" style=""><font color="#000080">الخان 
 
-      الأحمر</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#( دير السان جورج ) وادي القلط"><font color="#000080">وادي 
+      الأحمر</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#( دير السان جورج ) وادي القلط" style=""><font color="#000080">وادي 
 
-      القلط</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#مقام النبي موسى"><font color="#000080">مقام 
+      القلط</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#مقام النبي موسى" style=""><font color="#000080">مقام 
 
-      النبي موسى</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#مقام حسن الراعي ومقام عائشة"><font color="#000080">مقام 
+      النبي موسى</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#مقام حسن الراعي ومقام عائشة" style=""><font color="#000080">مقام 
 
-      حسن الراعي ومقام عائشة</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#تلول أبو العلايق"><font color="#000080">تلول 
+      حسن الراعي ومقام عائشة</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#تلول أبو العلايق" style=""><font color="#000080">تلول 
 
-      أبو العلايق</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#أريحا القديمة ( تل السلطان )"><font color="#000080">أريحا 
+      أبو العلايق</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#أريحا القديمة ( تل السلطان )" style=""><font color="#000080">أريحا 
 
-      القديمة(تل السلطان)</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#جبل التجربة"><font color="#000080">جبل 
+      القديمة(تل السلطان)</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#جبل التجربة" style=""><font color="#000080">جبل 
 
-      التجربة</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#نعران"><font color="#000080">نعران</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#قصر هشام"><font color="#000080">قصر 
+      التجربة</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#نعران" style=""><font color="#000080">نعران</font></a></span><font color="#000080">][</font><span lang="ar-sa"><a href="/jericho-city.org/#قصر هشام" style=""><font color="#000080">قصر 
 
-      هشام</font></a></span><font color="#000080">]<span lang="en-us">[</span><a href="/jericho-city.org/#طواحين السكر"><font color="#000080">طواحين 
+      هشام</font></a></span><font color="#000080">]<span lang="en-us">[</span><a href="/jericho-city.org/#طواحين السكر" style=""><font color="#000080">طواحين 
       السكر</font></a><span lang="en-us">]</span></font></font></b></p>
 
       <p dir="rtl" align="justify"><font face="Simplified Arabic"><i>
@@ -916,9 +989,9 @@
 
       <hr>
 
-      <p align="center"><font face="Simplified Arabic"><small>[<a href="/jericho-city.org/contacts.html">اتصل 
+      <p align="center"><font face="Simplified Arabic"><small>[<a href="/jericho-city.org/contacts.html" style="">اتصل 
 
-      بنا</a>]&nbsp; <a href="/jericho-city.org/guestbook.html">[دفتر 
+      بنا</a>]&nbsp; <a href="/jericho-city.org/guestbook.html" style="">[دفتر 
 
       الزوار</a>]</small></font></p>
 
@@ -942,29 +1015,28 @@
 
   <tr>
 
-    <td width="146" height="1"><img height="1" src="/jericho-city.org/images/pixel.gif" width="147"></td>
+    <td width="146" height="1" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="147"></td>
 
-    <td width="498" height="1"><img height="1" src="/jericho-city.org/images/pixel.gif" width="396"></td>
+    <td width="498" height="1" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="396"></td>
 
     </tr></tbody></table>
 
-</body><!-- https://web.archive.org/web/20031229102758/http://www.jericho-city.org:80/historicala.htm --></html><!--
+</body><!-- https://web.archive.org/web/20031229102758if_/http://www.jericho-city.org:80/historicala.htm --></html><!--
      FILE ARCHIVED ON 10:27:58 Dec 29, 2003 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 20:57:04 Feb 01, 2026.
+     INTERNET ARCHIVE ON 02:51:02 Feb 24, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
      SECTION 108(a)(3)).
 --><!--
 playback timings (ms):
-  captures_list: 0.442
-  exclusion.robots: 0.032
-  exclusion.robots.policy: 0.024
-  esindex: 0.008
-  cdx.remote: 105.516
-  LoadShardBlock: 140.213 (3)
-  PetaboxLoader3.datanode: 133.147 (4)
-  PetaboxLoader3.resolve: 137.744 (2)
-  load_resource: 137.326
-  nav: 0.185 (6)
+  captures_list: 0.811
+  exclusion.robots: 0.056
+  exclusion.robots.policy: 0.039
+  esindex: 0.011
+  cdx.remote: 35.012
+  LoadShardBlock: 85.794 (3)
+  PetaboxLoader3.datanode: 187.214 (4)
+  load_resource: 285.843
+  PetaboxLoader3.resolve: 68.435
 -->

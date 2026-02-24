@@ -81,7 +81,7 @@ if (siteLogExists && !overwrite) {
     /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
   const videoExtensions = /\.(mp4|avi|mov|wmv|flv|webm|mkv|m4v)$/i;
   const audioExtensions = /\.(mp3|wav|ogg|m4a|aac|flac|wma)$/i;
-  const htmlExtensions = /\.(htm|html|shtml|asp|aspx|php|jsp)$/i;
+  const htmlExtensions = /\.(htm|html|shtml|asp|aspx|php|jsp|css)$/i;
 
   uniqueUrls = [
     ...new Map(
@@ -189,12 +189,13 @@ async function replaceLinks(elemType, $, site) {
         ? attrLink + 'index.html'
         : attrLink;
 
-      if (attrLink.includes('#')) {
-        console.log('poop1', attrLink);
-        console.log('poop2', attrLink.split('#')[0]);
-      }
 
       const exists = await fsExists(path.join(destDir, attrLink.split('#')[0]));
+
+      if (attrLink.includes('#')) {
+        console.log('poop1', attrLink, exists);
+      }
+
 
       if (attrType === 'href') {
         // TODO: edit this to handle all NOT html/htm/shtml links
@@ -213,6 +214,7 @@ async function replaceLinks(elemType, $, site) {
         } else {
           // re-enable link if found
           const elemStyle = $(element).attr('style') || '';
+
           const elemStyleNoPointerEvents = elemStyle.replace(
             /pointer-events\s*:\s*[^;]+;?/gi,
             '',
@@ -255,7 +257,7 @@ async function scrapeWaybackUrls(sites) {
         const response = await page.goto(site.url, {
           waitUntil: 'networkidle2',
           waitUntil: 'domcontentloaded',
-          timeout: 5000,
+          timeout: 10000,
         });
 
         let content;

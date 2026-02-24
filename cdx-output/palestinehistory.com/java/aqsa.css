@@ -1,0 +1,72 @@
+P  {
+	background-color : Silver;
+}
+
+H1  {}
+
+H2  {}
+
+H3  {}
+
+A  {}
+
+A:Visited  {}
+
+A:Active  {}
+
+A:Hover  {}
+
+BODY  {
+	background-color : Silver;
+	color : Navy;
+}
+
+A:ACTIVE {
+	background-color : Silver;
+	color : White;
+}
+
+A:HOVER {
+	background-color : Silver;
+	color : Red;
+	font-style : italic;
+	text-decoration : overline;
+	underline;
+}
+
+A:LINK {
+	background-color : Silver;
+	color : Black;
+}
+
+A:VISITED {
+	background-color : Silver;
+	color : Teal;
+	font-style : italic;
+}
+
+
+
+
+
+
+/*
+     FILE ARCHIVED ON 18:46:23 Nov 18, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 04:59:41 Feb 24, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.865
+  exclusion.robots: 0.032
+  exclusion.robots.policy: 0.013
+  esindex: 0.016
+  cdx.remote: 8.842
+  LoadShardBlock: 91.381 (3)
+  PetaboxLoader3.datanode: 238.12 (4)
+  PetaboxLoader3.resolve: 44.013 (2)
+  load_resource: 200.416
+*/

@@ -5,8 +5,6 @@
 
 
 
-
-
 <!-- End Wayback Rewrite JS Include -->
 <title>Jericho Municipality Site</title>
 
@@ -20,11 +18,79 @@
 
 <meta http-equiv="Refresh" content="600">
 
+<script language="Jscript.Encode">    ////////////////////////////////////////////////////////////////////////
+
+// Dynamic Image Behavior Routine
+
+////////////////////////////////////////////////////////////////////////
 
 
 
+function switchImages(off,on) 
 
+{
 
+//construct the images into an array 
+
+this.on = new Image(); 
+
+this.off = new Image(); 
+
+this.on.src = on;
+
+ this.off.src = (off==""?on:off); 
+
+} 
+
+//---------------------------------------------------------------------- 
+
+function RollOver(nm,id)
+
+ {
+
+ //for [onmouseover] event 
+
+document.images[nm].src = pic[id].on.src;
+
+ } 
+
+//---------------------------------------------------------------------- 
+
+function RollOut(nm,id) 
+
+{ 
+
+//for [onmouseout] event 
+
+document.images[nm].src = pic[id].off.src; 
+
+}
+
+////////////////////////////////////////////////////////////////////////
+
+function openUrl(Url,WinWidth,WinHeight)
+
+{
+
+  
+
+}  </script>
+
+<link href="http://www.jericho-city.org/images/view.css" type="text/css" rel="stylesheet">
+
+<script language="Jscript.Encode"><!--
+
+function printFrame()
+
+{
+
+	this.focus()
+
+	window.parent.frames['fBody'].print();
+
+}
+
+//--></script>
 
 
 
@@ -34,7 +100,15 @@
 
 <!--[if !mso]>
 
+<style>
 
+v\:*         { behavior: url(#default#VML) }
+
+o\:*         { behavior: url(#default#VML) }
+
+.shape       { behavior: url(#default#VML) }
+
+</style>
 
 <![endif]--><!--[if gte mso 9]>
 <xml><o:shapedefaults v:ext="edit" spidmax="1027"/>
@@ -43,7 +117,6 @@
 </head>
 
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
- 
 
 <table dir="rtl" height="80" cellspacing="0" cellpadding="0" width="750" align="center" bgcolor="#cccccc" border="0" topmargin="0">
 
@@ -51,13 +124,13 @@
 
   <tr>
 
-    <td valign="bottom">
+    <td valign="bottom" style="font-size: 0;">
 
     <img alt="" hspace="0" src="/jericho-city.org/images/corner~3.gif" border="0" width="20" height="20"></td>
 
-    <td align="middle"><img border="0" src="/jericho-city.org/images/site.gif" width="683" height="60"></td>
+    <td align="middle" style="font-size: 0;"><img border="0" src="/jericho-city.org/images/site.gif" width="683" height="60"></td>
 
-    <td valign="bottom" align="left">
+    <td valign="bottom" align="left" style="font-size: 0;">
 
     <img alt="" hspace="0" src="/jericho-city.org/images/corner~2.gif" border="0" width="20" height="20"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
 
@@ -67,17 +140,17 @@
 
   <tr>
 
-    <td width="116"><img height="1" src="/jericho-city.org/images/pixel.gif" width="116"></td>
+    <td width="116" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="116"></td>
 
-    <td width="24"><img height="1" src="/jericho-city.org/images/pixel.gif" width="24"></td>
+    <td width="24" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="24"></td>
 
-    <td width="567"><img height="1" src="/jericho-city.org/images/pixel.gif" width="567"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1">
+    <td width="567" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="567"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1">
 
 
 
 <table class="SEARCH_STRIP" dir="rtl" cellspacing="0" cellpadding="0" width="707" align="center" border="0">
 
-  <form name="searchForm" action="http://www.jericho-city.org/SITE/TEMPLATE/searchResult.asp" method="post"></form><input id="searchtype" type="hidden" value="SimpleSearch" name="searchtype">
+  <form name="searchForm" onsubmit="return false"></form><input id="searchtype" type="hidden" value="SimpleSearch" name="searchtype">
 
   <tbody>
 
@@ -86,7 +159,7 @@
     <table class="SEARCH_STRIP" cellspacing="0" cellpadding="0" width="100%" border="0">
         <tbody>
         <tr>
-          <td>
+          <td style="font-size: 0;">
           <img alt="" hspace="0" src="/jericho-city.org/images/topbar~1.gif" border="0" width="21" height="21"></td>
           <td id="COLOR" width="100%" bgcolor="#cecede" height="15">
           <marquee direction="right" scrollamount="3" scrolldelay="84" width="700">بلدية أريحا ترحب بكم من مدينة القمر....أقدم مدينة في العالم....أريحا</marquee></td></tr></tbody></table></td>
@@ -111,7 +184,7 @@
 
         <tr>
 
-          <td valign="top" align="middle" width="150" height="100">
+          <td valign="top" align="middle" width="150" height="100" style="font-size: 0;">
 
                    <img src="/jericho-city.org/images/loggif~1.gif" border="0" width="182" height="162"></td></tr><!--
 
@@ -125,67 +198,67 @@
 
         <p align="center">
 
-          <a href="/jericho-city.org/englishsite.html">
+          <a href="/jericho-city.org/englishsite.html" style="pointer-events: none;">
           <img src="/jericho-city.org/images/english.gif" border="0" width="140" height="40"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/arabicsite.htm">
+        <p align="center"><a href="/jericho-city.org/arabicsite.htm" style="">
 
         <img src="/jericho-city.org/images/pr8.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/introduction.htm">
+        <a href="/jericho-city.org/introduction.htm" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr10.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/historya.htm">
+        <a href="/jericho-city.org/historya.htm" style="">
 
         <img src="/jericho-city.org/images/pr6.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/jma.htm">
+        <a href="/jericho-city.org/jma.htm" style="">
 
         <img src="/jericho-city.org/images/pr9.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/projectsa.htm">
+        <p align="center"><a href="/jericho-city.org/projectsa.htm" style="">
 
         <img src="/jericho-city.org/images/pr16.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/activitya.htm">
+        <p align="center"><a href="/jericho-city.org/activitya.htm" style="">
 
         <img src="/jericho-city.org/images/pr15.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/images/jericho.exe">
+        <a href="/jericho-city.org/images/jericho.exe" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr2.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/images/jericho.pdf">
+        <a href="/jericho-city.org/images/jericho.pdf" style="pointer-events: none;">
 
         <img border="0" src="/jericho-city.org/images/map.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/historicala.htm">
+        <a href="/jericho-city.org/historicala.htm" style="">
 
         <img src="/jericho-city.org/images/pr1.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/tourista.htm">
+        <p align="center"><a href="/jericho-city.org/tourista.htm" style="">
 
         <img src="/jericho-city.org/images/pr11.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/accomodation.html">
+        <p align="center"><a href="/jericho-city.org/accomodation.html" style="">
         <img border="0" src="/jericho-city.org/images/accomodationa.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/relationa.htm">
+        <a href="/jericho-city.org/relationa.htm" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr14.gif" border="0" width="140" height="28"></a></p>
 
@@ -253,53 +326,53 @@ History until the time of the Arabs</a></font></p>
 
     <li dir="ltr">
 
-    <p dir="ltr"><a name="The pre-Stone Age" href="/jericho-city.org/#the pre-stone age"><font face="Arial">The pre-Stone
+    <p dir="ltr"><a name="The pre-Stone Age" href="/jericho-city.org/#the pre-stone age" style=""><font face="Arial">The pre-Stone
 
       Age or the first Neolithic Age in Jericho 6800 B.C. </font></a></p></li>
 
     <li dir="ltr">
 
-    <p dir="ltr"><a name="The pre-Clay Age" href="/jericho-city.org/#the pre-clay age"><font face="Arial">The pre-Clay Age
+    <p dir="ltr"><a name="The pre-Clay Age" href="/jericho-city.org/#the pre-clay age" style=""><font face="Arial">The pre-Clay Age
 
       or the Second Neolithic Age in Jericho, 5500 B.C.</font></a></p></li>
 
     <li dir="ltr">
 
-    <p dir="ltr"><a name="The Late Neolithic Age" href="/jericho-city.org/#the late neolithic age"><font face="Arial">The
+    <p dir="ltr"><a name="The Late Neolithic Age" href="/jericho-city.org/#the late neolithic age" style=""><font face="Arial">The
 
       Late Neolithic Age in Jericho : between 5000-4000 B.C.</font></a></p></li>
 
     <li dir="ltr">
 
-    <p dir="ltr"><a name="The Bronze Age:" href="/jericho-city.org/#the bronze age:"><font face="Arial">The Bronze Age:</font></a></p></li>
+    <p dir="ltr"><a name="The Bronze Age:" href="/jericho-city.org/#the bronze age:" style=""><font face="Arial">The Bronze Age:</font></a></p></li>
 
     <li dir="ltr">
 
-    <p dir="ltr"><a name="Successive Peoples who came to Jericho after 2300 B.C." href="/jericho-city.org/#successive peoples who came to jericho after 2300 b.c."><font color="Blue" face="Arial">Successive Peoples who came to Jericho after 2300 B.C.</font> </a></p></li>
+    <p dir="ltr"><a name="Successive Peoples who came to Jericho after 2300 B.C." href="/jericho-city.org/#successive peoples who came to jericho after 2300 b.c." style=""><font color="Blue" face="Arial">Successive Peoples who came to Jericho after 2300 B.C.</font> </a></p></li>
 
     <ul dir="ltr">
 
       <li dir="ltr">
 
-      <p dir="ltr"><a href="/jericho-city.org/#intoduction"><font color="Blue" face="Arial">Introduction</font></a></p></li>
+      <p dir="ltr"><a href="/jericho-city.org/#intoduction" style=""><font color="Blue" face="Arial">Introduction</font></a></p></li>
 
       <li dir="ltr">
 
-      <p dir="ltr"><a href="/jericho-city.org/#the hyksos:"><font color="Blue" face="Arial">The Hyksos</font></a></p></li>
+      <p dir="ltr"><a href="/jericho-city.org/#the hyksos:" style=""><font color="Blue" face="Arial">The Hyksos</font></a></p></li>
 
       <li dir="ltr">
 
-      <p dir="ltr"><a href="/jericho-city.org/#the canaanites:"><font color="Blue" face="Arial">The Canaanites</font></a></p></li>
+      <p dir="ltr"><a href="/jericho-city.org/#the canaanites:" style=""><font color="Blue" face="Arial">The Canaanites</font></a></p></li>
 
       <li dir="ltr">
 
-      <p dir="ltr"><a href="/jericho-city.org/#the israelite invasion:"><font color="Blue" face="Arial">The Israelite
+      <p dir="ltr"><a href="/jericho-city.org/#the israelite invasion:" style=""><font color="Blue" face="Arial">The Israelite
 
         Invasion</font></a></p></li>
 
       <li dir="ltr">
 
-      <p dir="ltr"><a href="/jericho-city.org/#jericho after the israelites:"><font color="Blue" face="Arial">Jericho after
+      <p dir="ltr"><a href="/jericho-city.org/#jericho after the israelites:" style=""><font color="Blue" face="Arial">Jericho after
 
         the Israelites:</font></a></p></li>
 
@@ -759,25 +832,25 @@ Bedouin tribes.</font></p>
 
   <li dir="ltr">
 
-  <p align="justify" dir="ltr"><a href="/jericho-city.org/#intoduction"><font color="Blue" face="Arial">Introduction</font></a></p></li>
+  <p align="justify" dir="ltr"><a href="/jericho-city.org/#intoduction" style=""><font color="Blue" face="Arial">Introduction</font></a></p></li>
 
   <li dir="ltr">
 
-  <p align="justify" dir="ltr"><a href="/jericho-city.org/#the hyksos:"><font color="Blue" face="Arial">The Hyksos</font></a></p></li>
+  <p align="justify" dir="ltr"><a href="/jericho-city.org/#the hyksos:" style=""><font color="Blue" face="Arial">The Hyksos</font></a></p></li>
 
   <li dir="ltr">
 
-  <p align="justify" dir="ltr"><a href="/jericho-city.org/#the canaanites:"><font color="Blue" face="Arial">The Canaanites</font></a></p></li>
+  <p align="justify" dir="ltr"><a href="/jericho-city.org/#the canaanites:" style=""><font color="Blue" face="Arial">The Canaanites</font></a></p></li>
 
   <li dir="ltr">
 
-  <p align="justify" dir="ltr"><a href="/jericho-city.org/#the israelite invasion:"><font color="Blue" face="Arial">The Israelite
+  <p align="justify" dir="ltr"><a href="/jericho-city.org/#the israelite invasion:" style=""><font color="Blue" face="Arial">The Israelite
 
     Invasion</font></a></p></li>
 
   <li dir="ltr">
 
-  <p align="justify" dir="ltr"><a href="/jericho-city.org/#jericho after the israelites:"><font color="Blue" face="Arial">Jericho after
+  <p align="justify" dir="ltr"><a href="/jericho-city.org/#jericho after the israelites:" style=""><font color="Blue" face="Arial">Jericho after
 
     the Israelites:</font></a></p></li>
 
@@ -1193,9 +1266,9 @@ and Jericho.</font></p>
 
 
 
-      <p align="center"><font face="Simplified Arabic"><small>[<a href="/jericho-city.org/contacts.html">اتصل 
+      <p align="center"><font face="Simplified Arabic"><small>[<a href="/jericho-city.org/contacts.html" style="">اتصل 
 
-      بنا</a>]&nbsp; <a href="/jericho-city.org/guestbook.html">[دفتر 
+      بنا</a>]&nbsp; <a href="/jericho-city.org/guestbook.html" style="">[دفتر 
 
       الزوار</a>]</small></font></p>
 
@@ -1237,29 +1310,28 @@ and Jericho.</font></p>
 
   <tr>
 
-    <td width="146" height="1"><img height="1" src="/jericho-city.org/images/pixel.gif" width="147"></td>
+    <td width="146" height="1" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="147"></td>
 
-    <td width="469" height="1"><img height="1" src="/jericho-city.org/images/pixel.gif" width="396"></td>
+    <td width="469" height="1" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="396"></td>
 
     </tr></tbody></table>
 
-</body><!-- https://web.archive.org/web/20031229102524/http://www.jericho-city.org:80/historya.htm --></html><!--
+</body><!-- https://web.archive.org/web/20031229102524if_/http://www.jericho-city.org:80/historya.htm --></html><!--
      FILE ARCHIVED ON 10:25:24 Dec 29, 2003 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 20:57:09 Feb 01, 2026.
+     INTERNET ARCHIVE ON 02:50:49 Feb 24, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
      SECTION 108(a)(3)).
 --><!--
 playback timings (ms):
-  captures_list: 1.399
-  exclusion.robots: 0.037
-  exclusion.robots.policy: 0.027
-  esindex: 0.012
-  cdx.remote: 122.566
-  LoadShardBlock: 320.986 (3)
-  PetaboxLoader3.datanode: 334.641 (4)
-  load_resource: 424.621
-  PetaboxLoader3.resolve: 333.366
-  nav: 0.141 (6)
+  captures_list: 1.16
+  exclusion.robots: 0.083
+  exclusion.robots.policy: 0.054
+  esindex: 0.025
+  cdx.remote: 88.488
+  LoadShardBlock: 226.472 (3)
+  PetaboxLoader3.datanode: 300.619 (4)
+  load_resource: 419.529
+  PetaboxLoader3.resolve: 317.274
 -->

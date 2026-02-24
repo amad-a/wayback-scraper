@@ -1,0 +1,314 @@
+<html><head>
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<title>
+Squid Users Guide
+</title>
+</head>
+<body bgcolor="#ffffff" link="#990000" vlink="#660000" alink="#660000">
+
+<!-- HEADLINE1 START-->
+<table width="100%" border="0">
+<tbody><tr>
+<td bgcolor="9966ff"><font size="+3" color="FFFFFF"><b>
+Bottlenecks and performance issues.
+</b></font></td>
+<td bgcolor="BB99FF" width="5%">
+<font color="BB99FF">_</font>
+</td>
+<td bgcolor="DDCCFF" width="5%">
+<font color="DDCCFF">_</font>
+</td>
+<td bgcolor="F0E0FF" width="5%">
+<font color="F0E0FF">_</font>
+</td>
+</tr>
+<tr>
+<td bgcolor="9966ff" link="FFFFFF" valign="BASELINE">
+<font size="-1" color="#FFFFFF" acolor="#FFFFFF">
+<a href="/jwu.org/squid/welcome.html" style=""><img src="/jwu.org/squid/images/index.gif" align="BOTTOM" border="0">INDEX</a>
+<a href="/jwu.org/squid/added/preload.html" style=""><img src="/jwu.org/squid/images/back.gif" align="BOTTOM" border="0">BACK</a>
+<a href="/jwu.org/squid/opt/malloc.html" style=""><img src="/jwu.org/squid/images/next.gif" align="BOTTOM" border="0">NEXT</a>
+</font>
+</td>
+<td bgcolor="BB99FF" width="5%">
+<font color="BB99FF">_</font>
+</td>
+<td bgcolor="DDCCFF" width="5%">
+<font color="DDCCFF">_</font>
+</td>
+<td bgcolor="F0E0FF" width="5%">
+<font color="F0E0FF">_</font>
+</td>
+</tr>
+</tbody></table>
+<!--HEADLINE1 END-->
+<p>
+
+<!--HEADLINE2 START-->
+<table width="100%" border="0">
+<tbody><tr><td bgcolor="CCCCFF">
+<font size="+1" face="arial,helvetica"><b>
+Bottlenecks and performance tuning. 
+</b></font>
+</td><td>
+</td></tr></tbody></table>
+<!--HEADLINE2 END-->
+
+<font face="arial,helvetica">
+
+As of version 1.1, Squid has come in two flavours, <i>Classic Squid</i> and
+<i>Squid NOVM</i>.  The key difference is in the Squid virtual memory
+system.  In Classic Squid, spare memory is be devoted to in-transit
+objects and to "hot" objects.  In-transit objects are pages that are
+being fetched from remote servers, while "hot" objects are objects that
+squid has decided are popular enough that a copy is kept in memory to
+speed up access.  Select the <b>VM_Objects</b> page of the cache
+manager to see the list of in-transit and hot objects.</font></p><p><font face="arial,helvetica">
+
+Squid NOVM, by comparison, avoids using excess memory by transferring
+the fetched portions of in-transit objects to disk as quickly as
+possible.  This trades off memory usage against file I/O and file
+descriptor usage.</font></p><p><font face="arial,helvetica">
+
+Either version of Squid also needs memory to store its meta-object
+database.  This database contains a small (typically around 100 bytes)
+record describing each object that squid has cached.  If your cache
+has 400000 objects cached, you will need around 40MB of memory simply
+to store this metadata.  For the default configuration (with an
+average size object of 20kb) you need around 5MB RAM for each 1 GB
+of cache storage.  See the section on <a href="/jwu.org/squid/opt/malloc.html" style="">Malloc
+problems and memory usage</a> for more information.</font></p><p><font face="arial,helvetica">
+
+You will
+find that if your operating system has to page parts of the memory
+that squid is using due to the ram on the system running low, your
+cache performance will drop dramatically.
+</font></p><p><font face="arial,helvetica">
+
+The first decision you need to make when considering the performance
+of your cache is to choose the appropriate version of Squid.  If you
+don't have a lot of memory to play with, consider NOVM to get the
+maximum benefit from the memory you do have.  If you are serving a
+large user population or have heavy peaks in accesses, go for Squid
+Classic to minimise delays. A
+<a href="/squid.nlanr.net/squid/devel/novm-compare/" style="pointer-events: none;">study</a>
+by Duane Wessels, author of Squid, has found little substantial difference
+between the two in terms of performance. Squid 1.2 is supposed to be a
+'unified' version, trying to get the best of both versions
+and combining them. At this stage, however, 1.2 is still in Alpha.</font></p><p><font face="arial,helvetica">
+
+</font>
+
+<!--HEADLINE2 START-->
+<table width="100%" border="0">
+<tbody><tr><td bgcolor="CCCCFF">
+<font size="+1" face="arial,helvetica"><b>
+Specific Bottlenecks. 
+</b></font>
+</td><td>
+</td></tr></tbody></table>
+<!--HEADLINE2 END-->
+
+<font face="arial,helvetica">
+
+The bottlenecks your cache will encounter depend on the size of the
+cache and browsing habits of your site.  The one first encountered is
+usually lack of memory.  Since you can only service proportionally as
+much disk as you have memory, at the (approximate) 5MB memory / 1GB
+disk ratio, you can quickly consume all available memory by
+configuring too much cache disk.  If this occurs, your operating
+system will begin to swap, and eventually, thrash.  Squid responds
+*very* badly to low memory conditions; performance falls
+dramatically. Use <code>top</code>, <code>pstat -s</code> or
+equivalent to look at swap space usage (also have a look at the
+<a href="/jwu.org/squid/opt/system.html" style="">system-software</a> page for more commands;
+substantial swap usage indicates a problem.  Consider switching to Squid
+NOVM if you're not running it already. Running low of swap space also
+means that your system has less disk space available for network
+and disk buffers, so you can slow down on two fronts, with the
+kernel not having sufficient resources to push the data that squid
+is feeding out, and squid not having enough to push data out in the
+first place.</font></p><p><font face="arial,helvetica">
+
+Once your cache gets busy, disk I/O can become the bottleneck.  Since
+even a moderate sized cache (handling around 200,000 transactions per
+day) can easily peak at more than 50 transactions per second, the I/O
+subsystem can play a significant part in slowing the cache down.
+There are several solutions to improving the I/O capabilities of your
+cache server:
+</font></p><ul><font face="arial,helvetica">
+  <li> Avoid NFS or similar network file systems.<p>
+
+  </p></li><li> Avoid logical file systems such as the DEC Logical Storage
+  manager.  Squid is capable of making use of several independent file
+  systems efficiently.  <p>
+
+  </p></li><li> Try to spread the caching load over several disks and disk
+  controllers, by specifying more than one <code>cache_dir</code>
+  parameter.  Ideally each cache disk should be on its own SCSI
+  controller for maximum throughput. On a loaded cache an IDE disk is
+  not generally a good idea.<p>
+
+  </p></li><li> Depending on your OS, you may see improvements by allocating
+  some additional memory to buffer cache. Some operating systems (notably
+  Solaris) have disk-buffer systems that are not suited to Squid's disk
+  usage. In one case it was found that the disk cache would fill up
+  too fast with data that wasn't going to be used again, and that by
+  simply calling <b>sync</b> at 5 second intervals there was a
+  dramatic increase in performance, as the kernel had more memory
+  to play with for network buffers and usage by Squid (have a look at
+  <a href="/squid.nlanr.net/mail-archive/squid-users/9705/333" style="pointer-events: none;">this</a>
+  for some interesting info... though it doesn't apply to all operating
+  systems... for example the 'sync' loop mentioned doesn't make any difference
+  under Linux).<p>
+
+  </p></li><li> For a busy cache, you may consider turning off access-time
+  updates for the cache file system (this is a common trick for
+  high-volume NNTP servers).  This prevents the OS updating
+  the "last accessed" time on files that it reads, reducing the number
+  of disk writes.  This can cause some problems with tools that make
+  use of the access times, so take care. You should be able to find
+  a 'no-atime' patch for your system by doing a search at <a href="/dejanews.com/" style="pointer-events: none;">dejanews</a> or
+  <a href="/altavista.digital.com/" style="pointer-events: none;">altavista</a>.<p>
+
+  </p></li><li> For very busy caches, you may get some advantage from turning
+  off sychronous metadata updates (if you don't know what they are,
+  you're not qualified to turn them off).  Consult a guru.<p>
+
+</p></li></font></ul><font face="arial,helvetica">
+
+CPU limitations are rarely encountered except in very large caches,
+unless you have particularly complicated ACL lists.  Consider
+compiling with USE_BIN_TREE if you have many ACLs; the default is to
+linear-search through the ACL list.  Another option is to turn off and
+compile out all debugging (preliminary profile suggests Squid spends
+between 10% and 15% of it's cycles on debugging statements).<p>
+
+Network bottlenecks are unfixable by any means other than upgrading
+network infrastructure.  If you have a lots of sibling or parent
+caches, multicast ICP may be more efficient.</p><p> 
+
+Some people (the author of most of this document, for one) have had
+successes with what are often called 'cache-clusters'. These are groups
+of caches which sit very close together on the network and essentially
+pretend to be one cache. Here are some of the advantages:
+</p><ul>
+    <li>Reliability: if one cache goes down or has problems you can
+	simply IP-Alias one of the other caches to take its place
+	and unplug the real cache from the network (note that you will
+	probably have to reset ARP-caches on your routers or hosts)
+	You will lose any connections that you had, but at least all new
+	connections will work, albeit a little slower.
+    </li><li>Cost: Squid runs perfectly on a Linux or FreeBSD machine, 
+	and the cost of an Intel-class machine is a lot lower than a
+	server-class machine. This also ties in with the
+	reliability section, since it may be difficult to get a Digital
+	server or Sun-Ultra as backup in case of failure of your
+	main machine. You could, of course, have a high-end Intel-class machine
+	as backup in case of failure of your workstation machine too.
+</li></ul>
+Most cache-clusters work as follows:
+<br>
+You have 2 (or more) cache machines set up on the same subnet, set up to
+talk to one another as siblings. There is one A record in the DNS that points
+to both IP addresses (that is possible - ask your DNS guru for help here).
+When you set up a browser it points to the A record that references both
+machines. (Note that with Netscape version 3 it selects one of the IP
+addresses that the A record points to and uses that IP only until you
+restart it). The caches are then set up with each other as siblings,
+so that when they get a request for an object that they don't have on
+their disk, they ask the siblings, which then check their disks. If they
+have the object they reply with an 'Over-here!' response, and the original
+cache then connects to them and downloads the object. This means that
+you essentially get a 'distributed disk', and by adding 1 GB of
+disk to each machine you are essentially adding 2 GB to the overall
+disk cache which you can use for storage of objects.
+<hr>
+In your DNS configuration file:
+<pre>cache			A		196.4.160.2
+			A		196.4.160.8
+</pre>
+<br>
+Browsers are simply set up to point to 'cache.mydomain.com'.
+<hr>
+
+Note that this will only really be useful if you have 2 caches which are
+identically configured, otherwise the more powerful one won't be used to its
+full potential. You can't (unfortunately) get around this with adding
+more occurences of the same IP address to the DNS, since bind strips out
+duplicates. The slowest cache then becomes the 'limiting-factor'.
+<p>
+Note that even with the hosts set up as siblings you will still get
+some duplication of objects. This is how it happens:<br>
+Object A is on cache1. A user wants to download this object, but in this
+case he connects to cache2 (this is because of the random rotation of the
+caches). He hits 'shift-reload' on the page though, so the browser tells
+cache2 <b>don't give me this from disk</b>. Since this header is present
+in the request, cache2 goes directly to the origin server and downloads
+another copy, rather than checking with its siblings. There are thus 2
+copies, one in cache1 and one in cache2.
+</p><p>
+Note that this can cause problems when there is an object that you want to
+force the expiration of (such as a page that you have updated or is corrupt).
+Hitting shift-reload won't clear the object from EVERY cache, since
+the next person to come along may hit cache2 when you cleared the object
+from cache1. Caches querying each other don't download the newest object from
+their sibling caches, they simply get them from the one that responds
+fastest. You should use the cachemgr.cgi script to clear the objects
+from each and every cache, one by one.
+</p><p>
+Distributed sibling cache machines can become very effective when you
+use them with the mechanism described in
+<a href="/naragw.sharp.co.jp/sps/" style="pointer-events: none;">this</a> page.
+Essentially the auto-config mentioned in that page allows you to split
+requests to multiple machines with a hash table, meaning that you completely
+remove all duplication, and all machines will be balanced across equally.
+This idea is supposedly being included in the new Microsoft proxy.
+</p></font><p><font face="arial,helvetica">
+Here are some URL's for system-performance/filedescriptor enhancement:<br>
+<a href="/linux.org.za/filehandle.patch.linux" style="pointer-events: none;">Linux</a><br>
+<a href="/digital.com/info/internet/document/ias/tuning.html" style="pointer-events: none;">Digital</a><br>
+<a href="/squid.nlanr.net/squid/faq/faq-10.html#ss10.4" style="pointer-events: none;">General from the squid FAQ</a><br>
+
+</font>
+</p><p>
+</p><hr>
+<font size="-1"><p>
+<i>The Squid Users guide is copyright Oskar Pearson <a href="mailto:oskar@is.co.
+za" style="pointer-events: none;">oskar@is.co.za</a> This page is joint copyright Julian Anderson and
+Oskar Pearson</i></p></font><p><font size="-1"><i>
+If you like the layout (I do), I can only thank William Mee
+and hope he forgives me for stealing it. This section was almost entirely
+contributed by Julian Anderson (julian.anderson@mcs.vuw.ac.nz)</i>
+
+</font>
+
+
+
+</p>
+</body><!-- https://web.archive.org/web/20010219163337if_/http://jwu.org:80/squid/opt/performance.html --></html><!--
+     FILE ARCHIVED ON 16:33:37 Feb 19, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 04:02:10 Feb 24, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 0.799
+  exclusion.robots: 0.056
+  exclusion.robots.policy: 0.041
+  esindex: 0.014
+  cdx.remote: 50.29
+  LoadShardBlock: 383.369 (3)
+  PetaboxLoader3.resolve: 272.184 (4)
+  PetaboxLoader3.datanode: 196.401 (4)
+  load_resource: 202.585
+-->

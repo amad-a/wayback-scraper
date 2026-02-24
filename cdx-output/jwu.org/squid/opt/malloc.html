@@ -1,0 +1,121 @@
+<html><head>
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<title>
+Squid Users Guide
+</title>
+</head>
+<body bgcolor="#ffffff" link="#990000" vlink="#660000" alink="#660000">
+
+<!-- HEADLINE1 START-->
+<table width="100%" border="0">
+<tbody><tr>
+<td bgcolor="9966ff"><font size="+3" color="FFFFFF"><b>
+Optimisation/Optimization
+</b></font></td>
+<td bgcolor="BB99FF" width="5%">
+<font color="BB99FF">_</font>
+</td>
+<td bgcolor="DDCCFF" width="5%">
+<font color="DDCCFF">_</font>
+</td>
+<td bgcolor="F0E0FF" width="5%">
+<font color="F0E0FF">_</font>
+</td>
+</tr>
+<tr>
+<td bgcolor="9966ff" link="FFFFFF" valign="BASELINE">
+<font size="-1" color="#FFFFFF" acolor="#FFFFFF">
+<a href="/jwu.org/squid/welcome.html" style=""><img src="/jwu.org/squid/images/index.gif" align="BOTTOM" border="0">INDEX</a>
+<a href="/jwu.org/squid/opt/performance.html" style=""><img src="/jwu.org/squid/images/back.gif" align="BOTTOM" border="0">BACK</a>
+<a href="/jwu.org/squid/opt/system.html" style=""><img src="/jwu.org/squid/images/next.gif" align="BOTTOM" border="0">NEXT</a>
+</font>
+</td>
+<td bgcolor="BB99FF" width="5%">
+<font color="BB99FF">_</font>
+</td>
+<td bgcolor="DDCCFF" width="5%">
+<font color="DDCCFF">_</font>
+</td>
+<td bgcolor="F0E0FF" width="5%">
+<font color="F0E0FF">_</font>
+</td>
+</tr>
+</tbody></table>
+<!--HEADLINE1 END-->
+<p>
+
+<!--HEADLINE2 START-->
+<table width="100%" border="0">
+<tbody><tr><td bgcolor="CCCCFF">
+<font size="+1" face="arial,helvetica"><b>
+Malloc problems and memory usage
+</b></font>
+</td><td>
+</td></tr></tbody></table>
+<!--HEADLINE2 END-->
+
+<font face="arial,helvetica">
+As mentioned in the <a href="/jwu.org/squid/opt/performance.html" style="">previous</a> section, memory
+plays a very important role in squid's performance. It is used for
+the index of all in-memory objects, and if portions of this data
+are swapped out it slows squid dramatically. Some operating systems have
+a problem with the way that they allocate memory, where when
+a program calls <b>malloc</b> and then calls <b>free</b> it doesn't actually
+return the memory to the operating system. This means that squid, which
+calls these very often, will grow larger and larger over time, until it
+finally reaches the ulimit setting or uses up all the available RAM in
+the system. The only way around this (since installing a gig of RAM is
+not the best idea :) is to compile or download a new malloc library
+for your operating system. You may already have one, in which case you can
+simply link squid with the new library (run ./configure and then edit
+contrib/config.site, and add -lmalloc to the line that reads:
+</font></p><pre><font face="arial,helvetica">${CFLAGS="...."
+</font></pre><font face="arial,helvetica">
+
+<hr>
+You can also get a different malloc from
+<a href="/cs.colorado.edu/~zorn/malloc.html" style="pointer-events: none;">this</a>
+web site. <a href="/g.oswego.edu/dl/html/malloc.html" style="pointer-events: none;">DL-Malloc</a> seems
+to be stable and is believed to be fairly well suited to squid's use.
+
+</font>
+
+<p>
+</p><hr>
+<font size="-1"><p>
+<i>The Squid Users guide is copyright Oskar Pearson <a href="mailto:oskar@is.co.
+za" style="pointer-events: none;">oskar@is.co.za</a></i></p></font><p><font size="-1"><i>
+If you like the layout (I do), I can only thank William Mee
+and hope he forgives me for stealing it</i>
+
+</font>
+
+
+
+</p>
+</body><!-- https://web.archive.org/web/20010219163349if_/http://jwu.org:80/squid/opt/malloc.html --></html><!--
+     FILE ARCHIVED ON 16:33:49 Feb 19, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 04:02:12 Feb 24, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 0.725
+  exclusion.robots: 0.051
+  exclusion.robots.policy: 0.037
+  esindex: 0.01
+  cdx.remote: 41.907
+  LoadShardBlock: 206.902 (3)
+  PetaboxLoader3.resolve: 142.595 (4)
+  PetaboxLoader3.datanode: 254.11 (4)
+  load_resource: 214.632
+-->

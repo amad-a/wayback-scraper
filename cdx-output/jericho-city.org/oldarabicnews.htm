@@ -5,8 +5,6 @@
 
 
 
-
-
 <!-- End Wayback Rewrite JS Include -->
 <title>Jericho Municipality Site</title>
 
@@ -18,11 +16,79 @@
 
 <meta http-equiv="Refresh" content="600">
 
+<script language="Jscript.Encode">    ////////////////////////////////////////////////////////////////////////
+
+// Dynamic Image Behavior Routine
+
+////////////////////////////////////////////////////////////////////////
 
 
 
+function switchImages(off,on) 
 
+{
 
+//construct the images into an array 
+
+this.on = new Image(); 
+
+this.off = new Image(); 
+
+this.on.src = on;
+
+ this.off.src = (off==""?on:off); 
+
+} 
+
+//---------------------------------------------------------------------- 
+
+function RollOver(nm,id)
+
+ {
+
+ //for [onmouseover] event 
+
+document.images[nm].src = pic[id].on.src;
+
+ } 
+
+//---------------------------------------------------------------------- 
+
+function RollOut(nm,id) 
+
+{ 
+
+//for [onmouseout] event 
+
+document.images[nm].src = pic[id].off.src; 
+
+}
+
+////////////////////////////////////////////////////////////////////////
+
+function openUrl(Url,WinWidth,WinHeight)
+
+{
+
+  
+
+}  </script>
+
+<link href="http://www.jericho-city.org/images/view.css" type="text/css" rel="stylesheet">
+
+<script language="Jscript.Encode"><!--
+
+function printFrame()
+
+{
+
+	this.focus()
+
+	window.parent.frames['fBody'].print();
+
+}
+
+//--></script>
 
 
 
@@ -32,7 +98,24 @@
 
 <!--[if !mso]>
 
+<style>
 
+v\:*         { behavior: url(#default#VML) }
+
+o\:*         { behavior: url(#default#VML) }
+
+.shape       { behavior: url(#default#VML) }
+
+h1
+	{margin-bottom:.0001pt;
+	text-align:right;
+	page-break-after:avoid;
+	direction:rtl;
+	unicode-bidi:embed;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	font-weight:normal; margin-left:0cm; margin-right:0cm; margin-top:0cm}
+</style>
 
 <![endif]--><!--[if gte mso 9]>
 <xml><o:shapedefaults v:ext="edit" spidmax="1027"/>
@@ -41,7 +124,6 @@
 </head>
 
 <body leftmargin="0" topmargin="0" marginheight="0" marginwidth="0">
- 
 
 <table dir="rtl" height="80" cellspacing="0" cellpadding="0" width="750" align="center" bgcolor="#cccccc" border="0" topmargin="0">
 
@@ -49,13 +131,13 @@
 
   <tr>
 
-    <td valign="bottom">
+    <td valign="bottom" style="font-size: 0;">
 
     <img alt="" hspace="0" src="/jericho-city.org/images/corner~3.gif" border="0" width="20" height="20"></td>
 
-    <td align="middle"><img border="0" src="/jericho-city.org/images/site.gif" width="683" height="60"></td>
+    <td align="middle" style="font-size: 0;"><img border="0" src="/jericho-city.org/images/site.gif" width="683" height="60"></td>
 
-    <td valign="bottom" align="left">
+    <td valign="bottom" align="left" style="font-size: 0;">
 
     <img alt="" hspace="0" src="/jericho-city.org/images/corner~2.gif" border="0" width="20" height="20"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
 
@@ -65,20 +147,20 @@
 
   <tr>
 
-    <td width="116"><img height="1" src="/jericho-city.org/images/pixel.gif" width="116"></td>
+    <td width="116" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="116"></td>
 
-    <td width="24"><img height="1" src="/jericho-city.org/images/pixel.gif" width="24"></td>
+    <td width="24" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="24"></td>
 
-    <td width="567"><img height="1" src="/jericho-city.org/images/pixel.gif" width="567"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
+    <td width="567" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="567"></td></tr></tbody></table><img height="10" src="/jericho-city.org/images/pixel.gif" width="1"><br>
 
 <table class="SEARCH_STRIP" dir="rtl" cellspacing="0" cellpadding="0" width="707" align="center" border="0">
 
-  <form name="searchForm" action="http://www.jericho-city.org/SITE/TEMPLATE/searchResult.asp" method="post"></form><input id="searchtype" type="hidden" value="SimpleSearch" name="searchtype">
+  <form name="searchForm" onsubmit="return false"></form><input id="searchtype" type="hidden" value="SimpleSearch" name="searchtype">
 
   <tbody>
 
   <tr>
-          <td>
+          <td style="font-size: 0;">
           <img alt="" hspace="0" src="/jericho-city.org/images/topbar~1.gif" border="0" width="21" height="21"></td>
           <td id="COLOR" width="100%" bgcolor="#cecede" height="15">
           <marquee direction="right" scrollamount="3" scrolldelay="84" width="700">بلدية أريحا ترحب بكم من مدينة القمر....أقدم مدينة في العالم....أريحا</marquee></td>
@@ -110,7 +192,7 @@
 
         <tr>
 
-          <td valign="top" align="middle" width="150" height="100">
+          <td valign="top" align="middle" width="150" height="100" style="font-size: 0;">
 
                    <img src="/jericho-city.org/images/loggif~1.gif" border="0" width="182" height="162"></td></tr><!--
 
@@ -124,71 +206,71 @@
 
         <p align="center">
 
-          <a href="/jericho-city.org/englishsite.html">
+          <a href="/jericho-city.org/englishsite.html" style="pointer-events: none;">
           <img src="/jericho-city.org/images/english.gif" border="0" width="140" height="40"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/arabicsite.htm">
+        <p align="center"><a href="/jericho-city.org/arabicsite.htm" style="">
 
         <img src="/jericho-city.org/images/pr8.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/introduction.htm">
+        <a href="/jericho-city.org/introduction.htm" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr10.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/arabicnews.htm"><img border="0" src="/jericho-city.org/images/pr5.gif" width="140" height="28"></a></p>
+        <a href="/jericho-city.org/arabicnews.htm" style=""><img border="0" src="/jericho-city.org/images/pr5.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/historya.htm">
+        <a href="/jericho-city.org/historya.htm" style="">
 
         <img src="/jericho-city.org/images/pr6.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/jma.htm">
+        <a href="/jericho-city.org/jma.htm" style="">
 
         <img src="/jericho-city.org/images/pr9.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/projectsa.htm">
+        <p align="center"><a href="/jericho-city.org/projectsa.htm" style="">
 
         <img src="/jericho-city.org/images/pr16.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/activitya.htm">
+        <p align="center"><a href="/jericho-city.org/activitya.htm" style="">
 
         <img src="/jericho-city.org/images/pr15.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/images/jericho.exe">
+        <a href="/jericho-city.org/images/jericho.exe" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr2.gif" border="0" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/images/jericho.pdf">
+        <a href="/jericho-city.org/images/jericho.pdf" style="pointer-events: none;">
 
         <img border="0" src="/jericho-city.org/images/map.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/historicala.htm">
+        <a href="/jericho-city.org/historicala.htm" style="">
 
         <img src="/jericho-city.org/images/pr1.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/tourista.htm">
+        <p align="center"><a href="/jericho-city.org/tourista.htm" style="">
 
         <img src="/jericho-city.org/images/pr11.gif" border="0" width="140" height="28"></a></p>
 
-        <p align="center"><a href="/jericho-city.org/accomodation.html">
+        <p align="center"><a href="/jericho-city.org/accomodation.html" style="">
         <img border="0" src="/jericho-city.org/images/accomodationa.gif" width="140" height="28"></a></p>
 
         <p align="center">
 
-        <a href="/jericho-city.org/relationa.htm">
+        <a href="/jericho-city.org/relationa.htm" style="pointer-events: none;">
 
         <img src="/jericho-city.org/images/pr14.gif" border="0" width="140" height="28"></a></p>
 
@@ -1057,12 +1139,12 @@ embed"><span lang="AR-SA" style="font-family: Simplified Arabic"><font size="2">
 
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
   <tbody><tr>
-    <td width="33%">
+    <td width="33%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic85.jpg" width="220" height="165" align="right"></td>
     <td width="33%">
     <p align="center">
     <img border="0" src="/jericho-city.org/images/arabic86.jpg" width="220" height="165"></p></td>
-    <td width="34%">
+    <td width="34%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic87.jpg" width="220" height="165" align="left"></td>
   </tr>
 </tbody></table>
@@ -2037,12 +2119,12 @@ embed"><span lang="AR-SA" style="font-family: Simplified Arabic"><font size="2">
 عمان الرئيسي.</p>
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
   <tbody><tr>
-    <td width="33%">
+    <td width="33%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic65.jpg" width="223" height="173" align="right"></td>
     <td width="33%">
     <p align="center"><font face="Simplified Arabic" size="2">
     <img border="0" src="/jericho-city.org/images/arabic60.jpg" width="219" height="171"></font></p></td>
-    <td width="34%">
+    <td width="34%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic62.jpg" width="226" height="171" align="left"></td>
   </tr>
 </tbody></table>
@@ -2175,12 +2257,12 @@ embed"><span lang="AR-SA" style="font-family: Simplified Arabic"><font size="2">
 التعاون بين البلدية و اليونيسيف في تنفيذ مشاريع تخص الطفل</p>
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
   <tbody><tr>
-    <td width="33%">
+    <td width="33%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic44.jpg" width="201" height="151" align="right"></td>
     <td width="33%">
     <p align="center">
     <img border="0" src="/jericho-city.org/images/arabic45.jpg" width="201" height="151"></p></td>
-    <td width="34%">
+    <td width="34%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic46.jpg" width="201" height="151" align="left"></td>
   </tr>
 </tbody></table>
@@ -2337,12 +2419,12 @@ embed"><span lang="AR-SA" style="font-family: Simplified Arabic"><font size="2">
 <p align="justify" dir="rtl">طلاب مدرسة سيرا في اريحا يزورن بلدية المدينة</p>
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
   <tbody><tr>
-    <td width="33%">
+    <td width="33%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic54.jpg" width="211" height="159"></td>
     <td width="33%">
     <p align="center">
     <img border="0" src="/jericho-city.org/images/arabic48.jpg" width="211" height="159"></p></td>
-    <td width="34%">
+    <td width="34%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic49.jpg" width="208" height="157" align="left"></td>
   </tr>
 </tbody></table>
@@ -2402,12 +2484,12 @@ embed"><span lang="AR-SA" style="font-family: Simplified Arabic"><font size="2">
 إشراف بلدية اريحا مكتبة البلدية تنظم مسابقة ثقافية </p>
 <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%">
   <tbody><tr>
-    <td width="33%">
+    <td width="33%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic50.jpg" width="217" height="162" align="right"></td>
     <td width="33%">
     <p align="center">
     <img border="0" src="/jericho-city.org/images/arabic51.jpg" width="213" height="162"></p></td>
-    <td width="34%">
+    <td width="34%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic52.jpg" width="209" height="160" align="left"></td>
   </tr>
 </tbody></table>
@@ -3120,7 +3202,7 @@ writer، من جهتها ساهمت البلدية بمبلغ 600 دولار م�
     <td width="33%">
     <font size="2">
     <img border="0" src="/jericho-city.org/images/arabic13.jpg" width="210" height="147" align="right"></font></td>
-    <td width="34%">
+    <td width="34%" style="font-size: 0;">
     <img border="0" src="/jericho-city.org/images/arabic14.jpg" width="210" height="150" align="left"></td>
     
   </tr>
@@ -3484,7 +3566,7 @@ writer، من جهتها ساهمت البلدية بمبلغ 600 دولار م�
 واقتراحات لتقديم الدعم و المساندة عن طريق نشر أي معلومات تفضح سياسات الأحتلال 
 الخانقة و التي تؤدي إلى تعطيل مصالح السكان في المدينة.<br>
 عنوان الرابطة هو:
-<a title="http://freepages.cultures.rootsweb.com/~florence1860/index.htm" href="/freepages.cultures.rootsweb.com/~florence1860/index.htm">
+<a title="http://freepages.cultures.rootsweb.com/~florence1860/index.htm" href="/freepages.cultures.rootsweb.com/~florence1860/index.htm" style="pointer-events: none;">
 http://freepages.cultures.rootsweb.com/~florence1860/index.htm</a><br>
 &nbsp;</font></font></p>
 
@@ -3527,7 +3609,7 @@ http://freepages.cultures.rootsweb.com/~florence1860/index.htm</a><br>
 الجميع التعاون من أجل العمل على تطوير و تنظيم المدينة.<br>
 &nbsp;</font></p>
       <p>
-<a href="/jericho-city.org/file:/d:/my%20intranet/jericho-city/www.jericho-city.org/arabicnews.htm" #top="">top</a>
+<a href="/jericho-city.org/file:/d:/my%20intranet/jericho-city/www.jericho-city.org/arabicnews.htm" #top="" style="pointer-events: none;">top</a>
       </p>
 
 <hr>
@@ -5162,7 +5244,7 @@ http://freepages.cultures.rootsweb.com/~florence1860/index.htm</a><br>
 بالرفض القاطع من قبل أصحاب الأراضي حيث أعلنوا عن خطوات احتجاجية من شانها الوقوف 
 ضد هذا القرار . </p>
 </font></font><p align="JUSTIFY" dir="rtl"><font face="Traditional Arabic" size="2"><font size="2" face="Simplied arabic"></font></font><font face="Traditional Arabic"><b>
-<a href="/jericho-city.org/#context">نص النداء</a></b></font></p><font face="Traditional Arabic">
+<a href="/jericho-city.org/#context" style="">نص النداء</a></b></font></p><font face="Traditional Arabic">
 </font><font face="Traditional Arabic" size="2">
 <p align="JUSTIFY" dir="rtl"></p>
 </font>
@@ -5415,9 +5497,9 @@ http://freepages.cultures.rootsweb.com/~florence1860/index.htm</a><br>
 
     <td width="146" height="57">&nbsp;</td>
 
-    <td align="middle" width="469" height="57"><font face="Simplified Arabic"><small>[<a href="/jericho-city.org/contacts.html">اتصل 
+    <td align="middle" width="469" height="57"><font face="Simplified Arabic"><small>[<a href="/jericho-city.org/contacts.html" style="">اتصل 
 
-      بنا</a>]&nbsp; <a href="/jericho-city.org/guestbook.html">[دفتر 
+      بنا</a>]&nbsp; <a href="/jericho-city.org/guestbook.html" style="">[دفتر 
 
       الزوار</a>]</small></font></td>
 
@@ -5425,29 +5507,28 @@ http://freepages.cultures.rootsweb.com/~florence1860/index.htm</a><br>
 
   <tr>
 
-    <td width="146" height="1"><img height="1" src="/jericho-city.org/images/pixel.gif" width="147"></td>
+    <td width="146" height="1" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="147"></td>
 
-    <td width="469" height="1"><img height="1" src="/jericho-city.org/images/pixel.gif" width="396"></td>
+    <td width="469" height="1" style="font-size: 0;"><img height="1" src="/jericho-city.org/images/pixel.gif" width="396"></td>
 
     </tr></tbody></table>
 
-</body><!-- https://web.archive.org/web/20031229102344/http://www.jericho-city.org:80/oldarabicnews.htm --></html><!--
+</body><!-- https://web.archive.org/web/20031229102344if_/http://www.jericho-city.org:80/oldarabicnews.htm --></html><!--
      FILE ARCHIVED ON 10:23:44 Dec 29, 2003 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 21:00:27 Feb 01, 2026.
+     INTERNET ARCHIVE ON 02:45:13 Feb 24, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
      SECTION 108(a)(3)).
 --><!--
 playback timings (ms):
-  captures_list: 0.606
-  exclusion.robots: 0.027
-  exclusion.robots.policy: 0.02
-  esindex: 0.007
-  cdx.remote: 11.961
-  LoadShardBlock: 110.285 (3)
-  PetaboxLoader3.datanode: 122.762 (4)
-  load_resource: 282.268
-  PetaboxLoader3.resolve: 242.248
-  nav: 0.395 (6)
+  captures_list: 0.694
+  exclusion.robots: 0.054
+  exclusion.robots.policy: 0.038
+  esindex: 0.011
+  cdx.remote: 17.278
+  LoadShardBlock: 112.077 (3)
+  PetaboxLoader3.datanode: 143.053 (4)
+  load_resource: 178.437
+  PetaboxLoader3.resolve: 117.917
 -->
