@@ -189,10 +189,16 @@ async function replaceLinks(elemType, $, site) {
         ? attrLink + 'index.html'
         : attrLink;
 
-      const exists = await fsExists(path.join(destDir, attrLink));
+      if (attrLink.includes('#')) {
+        console.log('poop1', attrLink);
+        console.log('poop2', attrLink.split('#')[0]);
+      }
+
+      const exists = await fsExists(path.join(destDir, attrLink.split('#')[0]));
 
       if (attrType === 'href') {
         // TODO: edit this to handle all NOT html/htm/shtml links
+        // TODO: make sure # anchors on same page are not disabled
         if (
           (!exists || attrLink.includes('.asp')) &&
           !attrLink.endsWith('/#')
@@ -249,7 +255,7 @@ async function scrapeWaybackUrls(sites) {
         const response = await page.goto(site.url, {
           waitUntil: 'networkidle2',
           waitUntil: 'domcontentloaded',
-          timeout: 30000,
+          timeout: 5000,
         });
 
         let content;
