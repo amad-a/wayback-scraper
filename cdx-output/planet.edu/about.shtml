@@ -1,6 +1,4 @@
-<html style="--wm-toolbar-height: 67px;"><head>
-
-
+<html><head>
 
 
 
@@ -14,7 +12,6 @@
 </head>
 
 <body bgcolor="#FFFFFF" text="black" link="#006600" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
- 
 <div align="left">
   
 <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
@@ -26,25 +23,25 @@
 
 
 
-<a href="http://www.planet.edu/index.html"><img src="http://www.planet.edu/logo2.jpg" width="79" height="80" border="0" alt="logo"></a><br>
+<a href="/planet.edu/index.html"><img src="/planet.edu/logo2.jpg" width="79" height="80" border="0" alt="logo"></a><br>
 <hr noshade="" width="80">
-<p> <a href="http://www.planet.edu/about.shtml"><img src="http://www.planet.edu/im/icon1.gif" width="100" height="36" border="0" alt="about"></a><br>
-  <a href="http://www.planet.edu/services.shtml"><img src="http://www.planet.edu/im/icon2.gif" width="100" height="36" border="0" alt="services"></a><br>
-  <a href="http://www.planet.edu/support/"><img src="http://www.planet.edu/im/icon3.gif" width="100" height="36" border="0" alt="support"></a><br>
-  <a href="http://www.planet.edu/wan.shtml"><img src="http://www.planet.edu/im/icon4.gif" width="100" height="36" border="0" alt="wan"></a><br>
-  <a href="http://www.planet.edu/members"><img src="http://www.planet.edu/im/icon5.gif" width="100" height="36" border="0" alt="members"></a><br>
-  <a href="http://www.planet.edu/links.shtml"><img src="http://www.planet.edu/im/icon6.gif" width="100" height="36" border="0" alt="links"></a><br>
-  <a href="http://www.planet.edu/contact.shtml"><img src="http://www.planet.edu/im/icon7.gif" width="100" height="36" border="0" alt="contact"></a><br>
-  <a href="http://www.planet.edu/websearch.shtml"> <img src="http://www.planet.edu/im/wsicon.gif" width="100" height="36" border="0" al="websearch"></a> <br>
-  <a href="http://www.planet.edu/search"><img src="http://www.planet.edu/im/search.gif" width="99" height="25" border="0"></a> 
+<p> <a href="/planet.edu/about.shtml"><img src="/planet.edu/im/icon1.gif" width="100" height="36" border="0" alt="about"></a><br>
+  <a href="/planet.edu/services.shtml"><img src="/planet.edu/im/icon2.gif" width="100" height="36" border="0" alt="services"></a><br>
+  <a href="/planet.edu/support/"><img src="/planet.edu/im/icon3.gif" width="100" height="36" border="0" alt="support"></a><br>
+  <a href="/planet.edu/wan.shtml"><img src="/planet.edu/im/icon4.gif" width="100" height="36" border="0" alt="wan"></a><br>
+  <a href="/planet.edu/members"><img src="/planet.edu/im/icon5.gif" width="100" height="36" border="0" alt="members"></a><br>
+  <a href="/planet.edu/links.shtml"><img src="/planet.edu/im/icon6.gif" width="100" height="36" border="0" alt="links"></a><br>
+  <a href="/planet.edu/contact.shtml"><img src="/planet.edu/im/icon7.gif" width="100" height="36" border="0" alt="contact"></a><br>
+  <a href="/planet.edu/websearch.shtml"> <img src="/planet.edu/im/wsicon.gif" width="100" height="36" border="0" al="websearch"></a> <br>
+  <a href="/planet.edu/search"><img src="/planet.edu/im/search.gif" width="99" height="25" border="0"></a> 
   <br>
-  <a href="http://tucows.planet.edu/"><img src="http://www.planet.edu/tucows.gif" border="0" width="99" height="53"></a> </p>
-<p><a href="http://webmail.alquds.edu:2000/"><img src="http://www.planet.edu/im/webmail.gif" width="100" height="36" border="0"></a><br>
+  <a href="/tucows.planet.edu/"><img src="/planet.edu/tucows.gif" border="0" width="99" height="53"></a> </p>
+<p><a href="/webmail.alquds.edu:2000/"><img src="/planet.edu/im/webmail.gif" width="100" height="36" border="0"></a><br>
   <br>
-  <a href="http://www.rsac.org/"><img src="http://www.planet.edu/rsaclabel.gif" width="83" height="29" alt="RSAC" vspace="0" hspace="0" border="0"></a> <br>
-  <a href="http://www.rsac.org/"> 
-  </a></p><center><a href="http://www.rsac.org/">
-  </a></center><a href="http://www.rsac.org/">
+  <a href="/rsac.org/"><img src="/planet.edu/rsaclabel.gif" width="83" height="29" alt="RSAC" vspace="0" hspace="0" border="0"></a> <br>
+  <a href="/rsac.org/"> 
+  </a></p><center><a href="/rsac.org/">
+  </a></center><a href="/rsac.org/">
   </a> <p></p>
 
 
@@ -57,7 +54,7 @@
               
 
 <center>
-<img src="http://www.planet.edu/im/rmap.jpg" width="500" height="30" usemap="#rmap" border="0" align="top" alt="Planet map">
+<img src="/planet.edu/im/rmap.jpg" width="500" height="30" usemap="#rmap" border="0" align="top" alt="Planet map">
 <map name="rmap">
 <area shape="rect" coords="446,71,452,29" href="http://www.planet.edu/chat" alt="Meeting Room">
 <area shape="rect" coords="382,8,497,29" href="http://www.planet.edu/chat" alt="Meeting Room">
@@ -90,7 +87,7 @@
 <div align="left"> 
   <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
     <tbody><tr> 
-      <td align="left" valign="top"><a href="http://www.planet.edu/news/"><img src="http://www.planet.edu/round.gif" border="0"></a></td>
+      <td align="left" valign="top"><a href="/planet.edu/news/"><img src="/planet.edu/round.gif" border="0"></a></td>
       <td width="20%" valign="top"></td>
       <td width="21%"></td>
       <td width="23%"></td>
@@ -113,7 +110,7 @@
 
 
 
-<p align="RIGHT"><img src="http://www.planet.edu/about.gif" width="300" height="60"></p>
+<p align="RIGHT"><img src="/planet.edu/about.gif" width="300" height="60"></p>
 <table width="100%">
 <tbody><tr>
 <td width="1%"></td>
@@ -125,7 +122,7 @@
         Internet Service Provider in Palestine. Planet links universities, colleges 
         as well as schools with the World Wide Web. It also links Research Centers 
         and some non-governmental organizations. Planet links most of the Palestinian 
-        ministries using wireless means of communication such as <a href="microwave.shtml"> 
+        ministries using wireless means of communication such as <a href="/planet.edu/microwave.shtml"> 
         microwave</a> devices.<br>
         Now planet offers connectivity between cities and within cities through 
         leased lines provided by PALTEL. </font></p>
@@ -165,16 +162,18 @@
       </ul>
       <p><font size="2" face="Arial, Helvetica, sans-serif"><b><font color="#003366">Team&nbsp;</font></b></font></p>
       <ul>
-        <li><font face="Arial, Helvetica, sans-serif" size="2"><a href="mailto:Sartawi@planet.edu"> 
+        <li><font face="Arial, Helvetica, sans-serif" size="2"><a href="/planet.edu/mailto:sartawi@planet.edu"> 
           Badie Sartawi</a>, Ph.D, Computer Science .</font></li>
         <li><font face="Arial, Helvetica, sans-serif" size="2"> Office Manager, 
-          <a href="mailto:labiba@planet.edu">Labiba Kaloti</a>.</font></li>
+          <a href="/planet.edu/mailto:labiba@planet.edu">Labiba Kaloti</a>.</font></li>
         <li><font face="Arial, Helvetica, sans-serif" size="2"> System Administrator, 
-          <a href="mailto:isam@planet.edu">Isam Ishaq</a>, M.Sc, Communications.</font></li>
+          <a href="/planet.edu/mailto:isam@planet.edu">Isam Ishaq</a>, M.Sc, Communications.</font></li>
         <li><font face="Arial, Helvetica, sans-serif" size="2"> System 
-          Administrator,<a href="mailto:marwan@planet.edu">Marwan Rabie'</a>, Electronic Eng - Communications.</font></li>
-        <li><font face="Arial, Helvetica, sans-serif" size="2">User Support,<a href="mailto:niveen@planet.edu">Niveen 
+          Administrator,<a href="/planet.edu/mailto:marwan@planet.edu">Marwan Rabi'</a>, Electronic Eng - Communications.</font></li>
+        <li><font face="Arial, Helvetica, sans-serif" size="2">User Support,<a href="/planet.edu/mailto:niveen@planet.edu">Niveen 
           Issa</a> B.Sc. </font></li>
+        <li><font face="Arial, Helvetica, sans-serif" size="2">Webmaster,<a href="/planet.edu/~daoud"> 
+          Daoud Dajani</a>, B.Sc. Computer Science .</font></li>
       </ul>
 </td>
 </tr>
@@ -190,17 +189,17 @@
               <div align="center">
 
 <center>
-<font size="2" face="Tahoma">[<a href="http://www.planet.edu/about.shtml">About</a>] [<a href="http://www.planet.edu/services.shtml">Services</a>] [<a href="http://www.planet.edu/support/">Support</a>] [<a href="http://www.planet.edu/wan.shtml">Wan</a>] [<a href="http://www.planet.edu/members/">Members</a>] [<a href="http://www.planet.edu/links.shtml">Links</a>] [<a href="http://www.planet.edu/contact.shtml">Contact</a>]
-[<a href="http://www.planet.edu/rate.shtml">Rate us</a>]
+<font size="2" face="Tahoma">[<a href="/planet.edu/about.shtml">About</a>] [<a href="/planet.edu/services.shtml">Services</a>] [<a href="/planet.edu/support/">Support</a>] [<a href="/planet.edu/wan.shtml">Wan</a>] [<a href="/planet.edu/members/">Members</a>] [<a href="/planet.edu/links.shtml">Links</a>] [<a href="/planet.edu/contact.shtml">Contact</a>]
+[<a href="/planet.edu/rate.shtml">Rate us</a>]
  <br>
-  [<a href="http://www.planet.edu/vote.shtml">Vote</a>] [<a href="http://www.planet.edu/he.shtml">Higher Education</a>] [<a href="http://www.planet.edu/sig.shtml">Special Groups</a>] [<a href="http://www.planet.edu/board">Bulletin 
-  Board</a>] [<a href="http://www.planet.edu/chat">Chat</a>]</font> 
+  [<a href="/planet.edu/vote.shtml">Vote</a>] [<a href="/planet.edu/he.shtml">Higher Education</a>] [<a href="/planet.edu/sig.shtml">Special Groups</a>] [<a href="/planet.edu/board">Bulletin 
+  Board</a>] [<a href="/planet.edu/chat">Chat</a>]</font> 
   <hr width="400" noshade="">
                 <center>
     <font color="black"><b><font size="2">CopyRight © 1998 - Palestinian Academic 
     Network<br>
-    <a href="http://www.alquds.edu/"><font color="#3366CC"> Al-Quds University </font></a></font></b></font><font color="#000000">- <font size="2"><b> Jerusalem <br>
-    contact <font color="#3333FF"><a href="mailto:webmaster@planet.edu"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
+    <a href="/alquds.edu/"><font color="#3366CC"> Al-Quds University </font></a></font></b></font><font color="#000000">- <font size="2"><b> Jerusalem <br>
+    contact <font color="#3333FF"><a href="/planet.edu/mailto:webmaster@planet.edu"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
     this page </b></font></font> 
   </center>
  </center>
@@ -216,23 +215,23 @@
 
 </div>
 
-</body></html><!--
-     FILE ARCHIVED ON 08:25:33 Feb 07, 2003 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 19:45:02 Jan 31, 2026.
+
+</body><!-- https://web.archive.org/web/20011031091107if_/http://www.planet.edu:80/about.shtml --></html><!--
+     FILE ARCHIVED ON 09:11:07 Oct 31, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 01:40:08 Feb 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
      SECTION 108(a)(3)).
 --><!--
 playback timings (ms):
-  captures_list: 0.655
-  exclusion.robots: 0.06
-  exclusion.robots.policy: 0.043
-  esindex: 0.009
-  cdx.remote: 10.3
-  LoadShardBlock: 91.918 (3)
-  PetaboxLoader3.datanode: 121.628 (4)
-  load_resource: 125.125
-  PetaboxLoader3.resolve: 88.621
-  nav: 0.326 (6)
+  captures_list: 0.54
+  exclusion.robots: 0.035
+  exclusion.robots.policy: 0.027
+  esindex: 0.01
+  cdx.remote: 10.026
+  LoadShardBlock: 85.283 (3)
+  PetaboxLoader3.datanode: 135.493 (4)
+  load_resource: 146.898
+  PetaboxLoader3.resolve: 45.646
 -->

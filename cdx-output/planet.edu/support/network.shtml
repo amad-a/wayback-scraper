@@ -1,0 +1,233 @@
+<html><head>
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<title>Palnet-Support-Network</title>
+
+</head>
+
+<body bgcolor="#FFFFFF" text="black" link="#006600" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<div align="left">
+  
+<table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+  <tbody><tr> 
+    <td bgcolor="#000000" width="7%" nowrap="" valign="top"> 
+
+<title>Untitled Document</title>
+
+
+
+
+<a href="/planet.edu/index.html"><img src="/planet.edu/logo2.jpg" width="79" height="80" border="0" alt="logo"></a><br>
+<hr noshade="" width="80">
+<p> <a href="/planet.edu/about.shtml"><img src="/planet.edu/im/icon1.gif" width="100" height="36" border="0" alt="about"></a><br>
+  <a href="/planet.edu/services.shtml"><img src="/planet.edu/im/icon2.gif" width="100" height="36" border="0" alt="services"></a><br>
+  <a href="/planet.edu/support/"><img src="/planet.edu/im/icon3.gif" width="100" height="36" border="0" alt="support"></a><br>
+  <a href="/planet.edu/wan.shtml"><img src="/planet.edu/im/icon4.gif" width="100" height="36" border="0" alt="wan"></a><br>
+  <a href="/planet.edu/members"><img src="/planet.edu/im/icon5.gif" width="100" height="36" border="0" alt="members"></a><br>
+  <a href="/planet.edu/links.shtml"><img src="/planet.edu/im/icon6.gif" width="100" height="36" border="0" alt="links"></a><br>
+  <a href="/planet.edu/contact.shtml"><img src="/planet.edu/im/icon7.gif" width="100" height="36" border="0" alt="contact"></a><br>
+  <a href="/planet.edu/websearch.shtml"> <img src="/planet.edu/im/wsicon.gif" width="100" height="36" border="0" al="websearch"></a> <br>
+  <a href="/planet.edu/search"><img src="/planet.edu/im/search.gif" width="99" height="25" border="0"></a> 
+  <br>
+  <a href="/tucows.planet.edu/"><img src="/planet.edu/tucows.gif" border="0" width="99" height="53"></a> </p>
+<p><a href="/webmail.alquds.edu:2000/"><img src="/planet.edu/support/im/webmail.gif" width="100" height="36" border="0"></a><br>
+  <br>
+  <a href="/rsac.org/"><img src="/planet.edu/rsaclabel.gif" width="83" height="29" alt="RSAC" vspace="0" hspace="0" border="0"></a> <br>
+  <a href="/rsac.org/"> 
+  </a></p><center><a href="/rsac.org/">
+  </a></center><a href="/rsac.org/">
+  </a> <p></p>
+
+
+
+    </td>
+    <td width="93%" align="left" valign="top" bgcolor="#FFFFFF"> 
+        <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+          <tbody><tr> 
+            <td bgcolor="#000000" colspan="2"> 
+              
+
+<center>
+<img src="/planet.edu/im/rmap.jpg" width="500" height="30" usemap="#rmap" border="0" align="top" alt="Planet map">
+<map name="rmap">
+<area shape="rect" coords="446,71,452,29" href="http://www.planet.edu/chat" alt="Meeting Room">
+<area shape="rect" coords="382,8,497,29" href="http://www.planet.edu/chat" alt="Meeting Room">
+<area shape="rect" coords="256,8,369,29" href="http://www.planet.edu/board" alt="Bulletin Board">
+<area shape="rect" coords="131,9,245,29" href="http://www.planet.edu/sig.shtml" alt="Interest Groups">
+<area shape="rect" coords="38,69,39,29">
+ <area shape="rect" coords="2,8,117,29" href="http://www.planet.edu/he.shtml" alt="Higher Education">
+</map>
+
+</center>
+
+
+
+
+            </td>
+          </tr>
+          <tr> 
+            <td colspan="2">
+
+
+
+<title>rtop</title>
+
+
+
+
+
+
+
+<div align="left"> 
+  <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+    <tbody><tr> 
+      <td align="left" valign="top"><a href="/planet.edu/news/"><img src="/planet.edu/round.gif" border="0"></a></td>
+      <td width="20%" valign="top"></td>
+      <td width="21%"></td>
+      <td width="23%"></td>
+    </tr>
+  </tbody></table>
+</div>
+
+
+
+
+
+</td>
+          </tr>
+          <tr> 
+            <td align="left" valign="top" colspan="2">
+
+
+<title>Planet-Support-Network Configuration-</title>
+
+
+
+
+<p align="right"><img src="/planet.edu/support/im/network.gif" width="250" height="60"></p>
+
+<ul>
+  <li>Click on <b>START</b>, then <b>SETTINGS</b>, then <b>CONTROL PANEL</b>. 
+    <br>
+    <br>
+    <img src="/planet.edu/support/im/addremove1.gif" width="320" height="240"><br>
+    <br>
+  </li>
+  <li>Double-click on <b>NETWORK</b>. <br>
+    <img src="/planet.edu/support/im/network1.gif" width="449" height="86"> <br>
+  </li>
+  <li>Make sure that you are on the Configuration tab folder and look in the first 
+    text window entitled 'The following network components are installed:' to 
+    insure that you have a <b>Dial-up Adapter</b> and a <b>TCP/IP</b> Protocol 
+    installed. otherwise follow the instructions following to add these in. <br>
+    <br>
+    <img src="/planet.edu/support/im/network2.gif" width="293" height="129"><br>
+    <br>
+  </li>
+  <li>To add in a Dial-up Adapter click <b>ADD</b> (skip if you already have one) 
+    and select <b>ADAPTER</b> from the list of four choices and then <b>ADD</b> 
+    once again. <br>
+    <br>
+    <img src="/planet.edu/support/im/network3.gif" width="394" height="120"><br>
+    <br>
+  </li>
+  <li>On the left, scroll down until you can select <b>MICROSOFT</b> and then 
+    select <b>DIAL-UP ADAPTER</b> from the two choices on the right. <br>
+    <br>
+    <img src="/planet.edu/support/im/network4.gif" width="430" height="183"><br>
+    <br>
+  </li>
+  <li>Click <b>OK</b>, which will load in the dial-up adapter and take you back 
+    to the main Network window. <br>
+    <br>
+  </li>
+  <li><b>Remove</b> every thing except the Adapter you had just added.<br>
+    <br>
+  </li>
+  <li>To add in the TCP/IP protocol, select <b>ADD</b> and then select <b>PROTOCOL</b> 
+    from the four choices and then <b>ADD</b> to move on to the selection types. 
+    <br>
+    <br>
+    <img src="/planet.edu/support/im/network5.gif" width="393" height="130"><br>
+    <br>
+  </li>
+  <li>For the manufacturer, select <b>Microsoft</b> and then <b>TCP/IP</b> as 
+    the protocol. <br>
+    <br>
+    <img src="/planet.edu/support/im/network6.gif" width="420" height="129"><br>
+    <br>
+  </li>
+  <li>Click <b>OK</b>, which will take you back to the main Network window. (If 
+    it asks to specify the Adapter, do so and select Microsoft and Dial-up Adapter, 
+    then click OK) <br>
+    <br>
+    <br>
+  </li>
+  <li>Windows 95 will add TCP/IP. Do not close the Network window at this point 
+  </li>
+</ul>
+<center><a href="/planet.edu/support/javascript:history.go(-1)"><img src="/planet.edu/support/im/back.gif" border="0"></a><a href="/planet.edu/support/tcpip.shtml"><img src="/planet.edu/support/im/next.gif" border="0"></a></center>
+
+<br>
+
+
+
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top" colspan="2">
+              <div align="center">
+
+<center>
+<font size="2" face="Tahoma">[<a href="/planet.edu/about.shtml">About</a>] [<a href="/planet.edu/services.shtml">Services</a>] [<a href="/planet.edu/support/">Support</a>] [<a href="/planet.edu/wan.shtml">Wan</a>] [<a href="/planet.edu/members/">Members</a>] [<a href="/planet.edu/links.shtml">Links</a>] [<a href="/planet.edu/contact.shtml">Contact</a>]
+[<a href="/planet.edu/rate.shtml">Rate us</a>]
+ <br>
+  [<a href="/planet.edu/vote.shtml">Vote</a>] [<a href="/planet.edu/he.shtml">Higher Education</a>] [<a href="/planet.edu/sig.shtml">Special Groups</a>] [<a href="/planet.edu/board">Bulletin 
+  Board</a>] [<a href="/planet.edu/chat">Chat</a>]</font> 
+  <hr width="400" noshade="">
+                <center>
+    <font color="black"><b><font size="2">CopyRight © 1998 - Palestinian Academic 
+    Network<br>
+    <a href="/alquds.edu/"><font color="#3366CC"> Al-Quds University </font></a></font></b></font><font color="#000000">- <font size="2"><b> Jerusalem <br>
+    contact <font color="#3333FF"><a href="/planet.edu/support/mailto:webmaster@planet.edu"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
+    this page </b></font></font> 
+  </center>
+ </center>
+
+
+
+            </div></td>
+            
+          </tr>
+        </tbody></table>
+</td></tr></tbody></table>
+  <div align="center"> </div>
+
+</div>
+
+
+</body><!-- https://web.archive.org/web/20010905143319if_/http://www.planet.edu:80/support/network.shtml --></html><!--
+     FILE ARCHIVED ON 14:33:19 Sep 05, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 01:41:34 Feb 16, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 0.498
+  exclusion.robots: 0.037
+  exclusion.robots.policy: 0.029
+  esindex: 0.009
+  cdx.remote: 8.106
+  LoadShardBlock: 92.015 (3)
+  PetaboxLoader3.datanode: 153.709 (4)
+  load_resource: 170.965
+  PetaboxLoader3.resolve: 41.642
+-->

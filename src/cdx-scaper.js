@@ -12,12 +12,9 @@ const webPath = process.argv[2];
 const fromBound = process.argv[3];
 const toBound = process.argv[4] || process.argv[3];
 const destDir = path.join(process.cwd(), 'cdx-output');
-const filterOut = process.argv[5];
 const overwrite = process.argv.includes('--overwrite');
+const imagesOnly = process.argv.includes('--images');
 let uniqueUrls = [];
-
-const imageExtensions =
-  /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
 
 if (!webPath) {
   console.error(
@@ -50,10 +47,12 @@ if (siteLogExists && !overwrite) {
   // ensure no page snapshots with queries, to eliminate duplicate pages
   const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
   const noVtiFilter = encodeURIComponent('!original:.*_vti_.*');
+  const noAspFilter = encodeURIComponent('!original:.*\\.asp.*');
+  const imgFilter = '&filter=mimetype:image/.*';
 
   const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
     toBound ? toBound : fromBound
-  }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}`;
+  }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}&filter=${noAspFilter}${imagesOnly ? imgFilter : ''}`;
 
   console.log('REQUEST URL:', cdxRequestUrl);
 
@@ -74,10 +73,12 @@ if (siteLogExists && !overwrite) {
     length: arr[6],
   }));
 
+  // reverse so first (now last in reversed) snapshot of a url is preserved when mapping to uniqueUrls
+  pageObjects.reverse();
+
+  // media extension patterns to filter with
   const imageExtensions =
     /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
-
-  // Add these media extension patterns
   const videoExtensions = /\.(mp4|avi|mov|wmv|flv|webm|mkv|m4v)$/i;
   const audioExtensions = /\.(mp3|wav|ogg|m4a|aac|flac|wma)$/i;
   const htmlExtensions = /\.(htm|html|shtml|asp|aspx|php|jsp)$/i;
@@ -94,12 +95,10 @@ if (siteLogExists && !overwrite) {
 
     // Keep if it contains htm
     if (htmlExtensions.test(url)) return true;
-
     // Keep if it's a media file
     if (imageExtensions.test(url)) return true;
     if (videoExtensions.test(url)) return true;
     if (audioExtensions.test(url)) return true;
-
     // Keep if it ends with / (directory/index)
     if (url.endsWith('/')) return true;
 
@@ -109,7 +108,7 @@ if (siteLogExists && !overwrite) {
 
   uniqueUrls.forEach(async (page) => {
     let suffix = page.mimetype.startsWith('text')
-      ? ''
+      ? 'if_'
       : page.mimetype.startsWith('im')
         ? 'im_'
         : '';
@@ -137,10 +136,10 @@ if (siteLogExists && !overwrite) {
   );
 }
 
-function replaceLinks(elemType, $, site) {
-  const iframeRegex = /web\.archive\.org\/web\/(\d{14})if_\/(.*)/;
+async function replaceLinks(elemType, $, site) {
   const elemsDict = {
     a: 'href',
+    area: 'href',
     body: 'background',
     img: 'src',
     frame: 'src',
@@ -149,7 +148,7 @@ function replaceLinks(elemType, $, site) {
 
   const attrType = elemsDict[elemType];
 
-  $(elemType).each((_, element) => {
+  for (const element of $(elemType).get()) {
     // IMPORTANT! assumes (correctly, given inputed timestamp captures everything) all available urls on same domain are downloaded
     // TODO: check fsExists and domain, link directly to wayback machine for external browsing if not.
     // IDEA: TRACK/keep record of if on available page or wayback: attach script to every loaded page which tracks if (available) /sites/ OR web.archive.org/web clicked - to switch mode
@@ -157,26 +156,21 @@ function replaceLinks(elemType, $, site) {
     // make sure all final links are lowercase
     const attr = $(element).attr(attrType)?.toLowerCase();
 
-    if (site.originalUrl.includes('inter/main.htm')) {
-      console.log('poop', $(element).html());
-    }
-
     if (attr) {
-      if (attr.match(iframeRegex)) {
-        let relativeHrefPath = attr.replace(':80', '').split('http:/')[1];
-        $(element).attr(attrType, relativeHrefPath);
-        return $;
-      }
       // ensure path replacement hasn't happened already
-      if (!attr.startsWith('/')) {
+      if (
+        !attr.startsWith('/') &&
+        !attr.startsWith('https://') &&
+        !attr.startsWith('mailto:')
+      ) {
         let relativeHrefPath;
         // TODO check if localPath exists, create wayback machine url if does not exist AND url outside of current page domain
         if (attr.startsWith('http:/')) {
           // if attr is absolute url, remove http prefix
-          relativeHrefPath = attr.replace('http:/', '');
-          // remove www subdomain if present
-          relativeHrefPath = relativeHrefPath.replace('www.', '');
-          relativeHrefPath = relativeHrefPath.replace('www2.', '');
+          relativeHrefPath = attr
+            .replace('http:/', '')
+            .replace('www.', '')
+            .replace('www2.', '');
         } else {
           // if attr is not absolute url, append filename to path containing page
           relativeHrefPath = path.join(
@@ -189,9 +183,39 @@ function replaceLinks(elemType, $, site) {
         }
         $(element).attr(attrType, relativeHrefPath);
       }
-    } else {
+
+      let attrLink = $(element).attr(attrType);
+      attrLink = attrLink.endsWith('/')
+        ? attrLink + 'index.html'
+        : attrLink;
+
+      const exists = await fsExists(path.join(destDir, attrLink));
+
+      if (attrType === 'href') {
+        // TODO: edit this to handle all NOT html/htm/shtml links
+        if (
+          (!exists || attrLink.includes('.asp')) &&
+          !attrLink.endsWith('/#')
+        ) {
+          // disable link if not found
+          $(element).css('pointer-events', 'none');
+
+          // remove invalid links from area, but store for later in data-href
+          if (elemType === 'area') {
+            $(element).removeAttr('href').attr('data-href', attrLink);
+          }
+        } else {
+          // re-enable link if found
+          const elemStyle = $(element).attr('style') || '';
+          const elemStyleNoPointerEvents = elemStyle.replace(
+            /pointer-events\s*:\s*[^;]+;?/gi,
+            '',
+          );
+          $(element).attr('style', elemStyleNoPointerEvents);
+        }
+      }
     }
-  });
+  }
   return $;
 }
 
@@ -232,7 +256,7 @@ async function scrapeWaybackUrls(sites) {
         content = await page.content();
 
         if (site.mimetype.startsWith('text')) {
-          content = content.replace(/\starget=["'][^"']*["']/gi, '');
+          content = content.replace('target="_blank"', '');
           // remove any charset definitions as rendered page is UTF-8
           content = content.replace(
             /<meta[^>]*http-equiv=["']Content-Type["'][^>]*\/?>/gi,
@@ -243,22 +267,37 @@ async function scrapeWaybackUrls(sites) {
           content = content.replace(
             /<head[^>]*>[\s\S]*?<\/head>/i,
             (head) => {
-              return head
-                .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
-                .replace(/<script\b[^>]*\/>/gi, '')
-                .replace(
-                  /<link\b[^>]*rel=["']stylesheet["'][^>]*>/gi,
-                  '',
-                )
-                .replace(
-                  /<link\b[^>]*type=["']text\/css["'][^>]*>/gi,
-                  '',
-                )
-                .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '');
+              return (
+                head
+                  // Scripts with web-static.archive.org src
+                  .replace(
+                    /<script[^>]*src="[^"]*web-static\.archive\.org[^"]*"[^>]*><\/script>/gi,
+                    '',
+                  )
+                  // Stylesheets with web-static.archive.org href
+                  .replace(
+                    /<link[^>]*href="[^"]*web-static\.archive\.org[^"]*"[^>]*>/gi,
+                    '',
+                  )
+                  // Inline scripts containing RufflePlayer
+                  .replace(
+                    /<script[^>]*>[\s\S]*?window\.RufflePlayer[\s\S]*?<\/script>/gi,
+                    '',
+                  )
+                  // Inline scripts containing __wm.init
+                  .replace(
+                    /<script[^>]*>[\s\S]*?__wm\.init\([\s\S]*?<\/script>/gi,
+                    '',
+                  )
+              );
             },
           );
 
-          content = content.replace();
+          // remove pop up windows
+          content = content.replace(
+            /window\.open\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/g,
+            '',
+          );
 
           // remove WB toolbar
           content = content.replace(
@@ -309,9 +348,7 @@ async function scrapeWaybackUrls(sites) {
         }
 
         // delay to combat bot detection
-        await new Promise((r) =>
-          setTimeout(r, Math.random() * 200 + 100),
-        );
+        await new Promise((r) => setTimeout(r, 1000));
 
         console.log(
           `${progressString} Saved ${site.url} to cdx-output${pageLinkRaw}`,
@@ -330,17 +367,45 @@ async function scrapeWaybackUrls(sites) {
       filePath.endsWith('html') || filePath.endsWith('htm');
     if (exists && isHtml) {
       const data = await fs.readFile(filePath, 'utf-8');
-      // console.log('DATA', filePath, data);
       let $ = cheerio.load(data);
 
+      // remove wayback machine styles
       $('html').removeAttr('style');
-      $ = replaceLinks('a', $, site);
-      $ = replaceLinks('body', $, site);
-      $ = replaceLinks('img', $, site);
-      $ = replaceLinks('iframe', $, site);
-      $ = replaceLinks('frame', $, site);
 
-      // console.log('$', $, site);
+      $ = await replaceLinks('a', $, site);
+      $ = await replaceLinks('body', $, site);
+      $ = await replaceLinks('img', $, site);
+      $ = await replaceLinks('iframe', $, site);
+      $ = await replaceLinks('frame', $, site);
+      $ = await replaceLinks('area', $, site);
+
+      // prevent page open in new tab
+      $('[target="_blank"]').removeAttr('target');
+
+      // disable email
+      $('a[href^="mailto:"]').each((_, el) => {
+        $(el).css('pointer-events', 'none');
+      });
+
+      // disable forms
+      $('form').each((_, el) => {
+        $(el)
+          .removeAttr('action')
+          .removeAttr('method')
+          .attr('onsubmit', 'return false');
+      });
+
+      // remove whitespace from img only containing tables
+      $('td, th').each((_, el) => {
+        const $el = $(el);
+        if (
+          $el.children('img').length &&
+          !$el.text().trim() &&
+          $el.children().not('img').length === 0
+        ) {
+          $el.css('font-size', '0');
+        }
+      });
 
       const modifiedHtml = $.html();
       await fs.writeFile(filePath, modifiedHtml, 'utf8');

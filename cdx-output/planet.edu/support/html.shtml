@@ -1,0 +1,243 @@
+<html><head>
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+<title>Planet-Support-HTML</title>
+
+</head>
+
+<body bgcolor="#FFFFFF" text="black" link="#006600" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<div align="left">
+  
+<table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+  <tbody><tr> 
+    <td bgcolor="#000000" width="7%" nowrap="" valign="top"> 
+
+<title>Untitled Document</title>
+
+
+
+
+<a href="/planet.edu/index.html"><img src="/planet.edu/logo2.jpg" width="79" height="80" border="0" alt="logo"></a><br>
+<hr noshade="" width="80">
+<p> <a href="/planet.edu/about.shtml"><img src="/planet.edu/im/icon1.gif" width="100" height="36" border="0" alt="about"></a><br>
+  <a href="/planet.edu/services.shtml"><img src="/planet.edu/im/icon2.gif" width="100" height="36" border="0" alt="services"></a><br>
+  <a href="/planet.edu/support/"><img src="/planet.edu/im/icon3.gif" width="100" height="36" border="0" alt="support"></a><br>
+  <a href="/planet.edu/wan.shtml"><img src="/planet.edu/im/icon4.gif" width="100" height="36" border="0" alt="wan"></a><br>
+  <a href="/planet.edu/members"><img src="/planet.edu/im/icon5.gif" width="100" height="36" border="0" alt="members"></a><br>
+  <a href="/planet.edu/links.shtml"><img src="/planet.edu/im/icon6.gif" width="100" height="36" border="0" alt="links"></a><br>
+  <a href="/planet.edu/contact.shtml"><img src="/planet.edu/im/icon7.gif" width="100" height="36" border="0" alt="contact"></a><br>
+  <a href="/planet.edu/websearch.shtml"> <img src="/planet.edu/im/wsicon.gif" width="100" height="36" border="0" al="websearch"></a> <br>
+  <a href="/planet.edu/search"><img src="/planet.edu/im/search.gif" width="99" height="25" border="0"></a> 
+  <br>
+  <a href="/tucows.planet.edu/"><img src="/planet.edu/tucows.gif" border="0" width="99" height="53"></a> </p>
+<p><a href="/webmail.alquds.edu:2000/"><img src="/planet.edu/support/im/webmail.gif" width="100" height="36" border="0"></a><br>
+  <br>
+  <a href="/rsac.org/"><img src="/planet.edu/rsaclabel.gif" width="83" height="29" alt="RSAC" vspace="0" hspace="0" border="0"></a> <br>
+  <a href="/rsac.org/"> 
+  </a></p><center><a href="/rsac.org/">
+  </a></center><a href="/rsac.org/">
+  </a> <p></p>
+
+
+
+    </td>
+    <td width="93%" align="left" valign="top" bgcolor="#FFFFFF"> 
+        <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+          <tbody><tr> 
+            <td bgcolor="#000000" colspan="2"> 
+              
+
+<center>
+<img src="/planet.edu/im/rmap.jpg" width="500" height="30" usemap="#rmap" border="0" align="top" alt="Planet map">
+<map name="rmap">
+<area shape="rect" coords="446,71,452,29" href="http://www.planet.edu/chat" alt="Meeting Room">
+<area shape="rect" coords="382,8,497,29" href="http://www.planet.edu/chat" alt="Meeting Room">
+<area shape="rect" coords="256,8,369,29" href="http://www.planet.edu/board" alt="Bulletin Board">
+<area shape="rect" coords="131,9,245,29" href="http://www.planet.edu/sig.shtml" alt="Interest Groups">
+<area shape="rect" coords="38,69,39,29">
+ <area shape="rect" coords="2,8,117,29" href="http://www.planet.edu/he.shtml" alt="Higher Education">
+</map>
+
+</center>
+
+
+
+
+            </td>
+          </tr>
+          <tr> 
+            <td colspan="2">
+
+
+
+<title>rtop</title>
+
+
+
+
+
+
+
+<div align="left"> 
+  <table border="0" width="100%" cellspacing="0" cellpadding="0" vspace="0" hspace="0">
+    <tbody><tr> 
+      <td align="left" valign="top"><a href="/planet.edu/news/"><img src="/planet.edu/round.gif" border="0"></a></td>
+      <td width="20%" valign="top"></td>
+      <td width="21%"></td>
+      <td width="23%"></td>
+    </tr>
+  </tbody></table>
+</div>
+
+
+
+
+ </td>
+          </tr>
+          <tr> 
+            <td align="left" valign="top" colspan="2">
+
+
+<title>Untitled Document</title>
+
+
+
+
+<table width="75%" border="0">
+  <tbody><tr>
+    <td width="2%">&nbsp;</td>
+    <td width="98%"> 
+      <h1><font face="Arial, Helvetica, sans-serif" size="2">
+        <script language="JavaScript">
+<!--
+function popUp(pPage) {
+
+popUpWin = ;
+ figDoc= popUpWin.document;
+
+ window.popUpWin.document.close();
+ 
+ }
+
+//-->
+</script>
+        </font><font color="#0033CC">Creating Your Own Web Page</font></h1>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><br>
+        The first Step is to Run You HTML Editor " In our Case it's the Netscape 
+        Composer" </font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- Double Click on 
+        <a href="/tucows.planet.edu/files3/cc32e47.exe">Netscape</a> icon 
+        in your desktop.</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html1.gif" width="236" height="80"> 
+        </font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- From the Bottom 
+        Left side of the Netscape Browser Screen click on the last icon "Composer"</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html2.gif" width="201" height="24"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- You will have the 
+        Below Screen</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html3.gif" width="465" height="246"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- In the White area 
+        Write Down The Text You Need </font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html4.gif" width="386" height="99"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- To Center The Text, 
+        Mark the Text with the Mouse and click on the align icon on the right 
+        side of the screen.</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html5.gif" width="502" height="139"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- To Enlarge The Text 
+        Choose a Size From The List</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html6.gif" width="382" height="100"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- To Give a Color 
+        For the Text Click in The Color box and Choose a Color</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html7.gif" width="453" height="114"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- To Save The HTML 
+        file choose <b>File</b> from the Menu then <b>Save As</b></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html8.gif" width="200" height="123"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- In the <b>file name</b> 
+        write the name you want . "The first file must be named index.html"</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/html9.gif" width="331" height="64"></font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2">- You can give your 
+        HTML document more Professional look by adding images and lines.</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><img src="/planet.edu/support/im/htmlbar.gif" width="634" height="42"><br>
+        <br>
+        <b>New:</b> For a new HTML Document<br>
+        <b>Open:</b> To open a previous Document<br>
+        <b>Publish:</b> to put your page on the net<br>
+        <b>Preview:</b> to view your document in the Netscape<br>
+        <b>Cut:</b> to cut a selected Text<br>
+        <b>Copy:</b> to Copy a Selected Text<br>
+        <b>Past:</b> to insert Text in a defined place<br>
+        <b>Print</b>: To print the HTML<br>
+        <b>Find</b>: To find a Text in the Document<br>
+        <b>Link:</b> To Link a selected document to a place<br>
+        <b>Image:</b> to add an image to the HTML document<br>
+        <b>H.Line:</b> to Add a horizontal Line<br>
+        <b>Table</b>: to Add a table to the Document<br>
+        <b>Spelling:</b> To check your Document Spelling</font></p>
+      <p><font face="Arial, Helvetica, sans-serif" size="2"><a href="/planet.edu/support/javascript:popup('htmlcode.html')">Click 
+        Here To See The HTML Source Code</a></font></p>
+      <p>&nbsp;</p>
+      </td>
+  </tr>
+</tbody></table>
+
+
+
+            </td>
+          </tr>
+          <tr>
+            <td align="right" valign="top" colspan="2">
+              <div align="center">
+
+<center>
+<font size="2" face="Tahoma">[<a href="/planet.edu/about.shtml">About</a>] [<a href="/planet.edu/services.shtml">Services</a>] [<a href="/planet.edu/support/">Support</a>] [<a href="/planet.edu/wan.shtml">Wan</a>] [<a href="/planet.edu/members/">Members</a>] [<a href="/planet.edu/links.shtml">Links</a>] [<a href="/planet.edu/contact.shtml">Contact</a>]
+[<a href="/planet.edu/rate.shtml">Rate us</a>]
+ <br>
+  [<a href="/planet.edu/vote.shtml">Vote</a>] [<a href="/planet.edu/he.shtml">Higher Education</a>] [<a href="/planet.edu/sig.shtml">Special Groups</a>] [<a href="/planet.edu/board">Bulletin 
+  Board</a>] [<a href="/planet.edu/chat">Chat</a>]</font> 
+  <hr width="400" noshade="">
+                <center>
+    <font color="black"><b><font size="2">CopyRight © 1998 - Palestinian Academic 
+    Network<br>
+    <a href="/alquds.edu/"><font color="#3366CC"> Al-Quds University </font></a></font></b></font><font color="#000000">- <font size="2"><b> Jerusalem <br>
+    contact <font color="#3333FF"><a href="/planet.edu/support/mailto:webmaster@planet.edu"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
+    this page </b></font></font> 
+  </center>
+ </center>
+
+
+
+            </div></td>
+            
+          </tr>
+        </tbody></table>
+</td></tr></tbody></table>
+  <div align="center"> </div>
+
+</div>
+
+
+</body><!-- https://web.archive.org/web/20010905142128if_/http://www.planet.edu:80/support/html.shtml --></html><!--
+     FILE ARCHIVED ON 14:21:28 Sep 05, 2001 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 01:41:24 Feb 16, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 0.546
+  exclusion.robots: 0.038
+  exclusion.robots.policy: 0.029
+  esindex: 0.011
+  cdx.remote: 9.356
+  LoadShardBlock: 51.102 (3)
+  PetaboxLoader3.datanode: 76.872 (4)
+  load_resource: 91.921
+  PetaboxLoader3.resolve: 50.92
+-->

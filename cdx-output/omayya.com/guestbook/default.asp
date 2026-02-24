@@ -1,6 +1,4 @@
-<html style="--wm-toolbar-height: 67px;"><head>
-
-
+<html><head>
 
 
 
@@ -21,8 +19,7 @@
 
 
 </head>
-<body bgcolor="#ffffff">
-  
+<body bgcolor="#ffffff"> 
                 
 
 
@@ -92,7 +89,7 @@
                   Country:France</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:rencontresss@yahoo.fr">rencontresss@yahoo.fr</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.rencontres-rencontre.com/" target="_blank">http://www.rencontres-rencontre.com</a></font>
+                  Email:<a href="mailto:rencontresss@yahoo.fr">rencontresss@yahoo.fr</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.rencontres-rencontre.com/">http://www.rencontres-rencontre.com</a></font>
                 </td>
               </tr>
             </tbody></table>
@@ -953,24 +950,23 @@
 
 
 
-</body><!-- https://web.archive.org/web/20030805042311/http://www.omayya.com:80/guestbook/default.asp -->
+</body><!-- https://web.archive.org/web/20030805042311if_/http://www.omayya.com:80/guestbook/default.asp -->
 </html><!--
      FILE ARCHIVED ON 04:23:11 Aug 05, 2003 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 02:26:10 Feb 08, 2026.
+     INTERNET ARCHIVE ON 04:31:33 Feb 11, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
      SECTION 108(a)(3)).
 --><!--
 playback timings (ms):
-  captures_list: 1.659
+  captures_list: 0.58
   exclusion.robots: 0.05
   exclusion.robots.policy: 0.039
-  esindex: 0.009
-  cdx.remote: 20.708
-  LoadShardBlock: 129.712 (3)
-  PetaboxLoader3.datanode: 163.222 (4)
-  PetaboxLoader3.resolve: 171.535 (2)
-  load_resource: 213.021
-  nav: 0.137 (6)
+  esindex: 0.01
+  cdx.remote: 13.701
+  LoadShardBlock: 75.72 (3)
+  PetaboxLoader3.datanode: 134.81 (4)
+  load_resource: 152.439
+  PetaboxLoader3.resolve: 63.742
 -->

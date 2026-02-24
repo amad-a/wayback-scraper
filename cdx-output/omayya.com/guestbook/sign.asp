@@ -1,6 +1,4 @@
-<html style="--wm-toolbar-height: 67px;"><head>
-
-
+<html><head>
 
 
 
@@ -18,7 +16,79 @@
 
 
 
+<script language="JavaScript">
+<!-- Hide from older browsers...
 
+//Function to check form is filled in correctly before submitting
+function CheckForm () {
+
+	//Intialise variables
+	var errorMsg = "";
+	var errorMsgLong = "";
+
+	//Check for a name
+	if (document.frmSignGusetbook.name.value == ""){
+		errorMsg += "\n\tName \t\t- Enter your Name";
+	}
+	
+	//Check for a country
+	if (document.frmSignGusetbook.country.value == ""){
+		errorMsg += "\n\tCountry \t\t- Select the country you are in";
+	}
+	
+	//Check for comments
+	if (document.frmSignGusetbook.comments.value == ""){
+		errorMsg += "\n\tComments \t- Enter a comment to add to the Guestbook";
+	}
+	
+	//Check the description length before submiting the form	
+	if (document.frmSignGusetbook.comments.value.length >= 300){
+		errorMsgLong += "\n- Your comments are " + document.frmSignGusetbook.comments.value.length + " chracters long, they need to be shortned to below 150 chracters.";
+	}	
+	
+	
+	//Check for HTML tags before submitting the form	
+	for (var count = 0; count <= 7; ++count){
+		if ((document.frmSignGusetbook.elements[count].value.indexOf("<", 0) >= 0) && (document.frmSignGusetbook.elements[count].value.indexOf(">", 0) >= 0)){
+			errorMsgLong += "\n- HTML tags are not permitted, remove all HTML tags.";
+		}			
+	}
+	
+	//If there is aproblem with the form then display an error
+	if ((errorMsg != "") || (errorMsgLong != "")){
+		msg = "___________________________________________________________________\n\n";
+		msg += "Your Comments have not been added because there are problem(s) with the form.\n";
+		msg += "Please correct the problem(s) and re-submit the form.\n";
+		msg += "___________________________________________________________________\n\n";
+		msg += "The following field(s) need to be corrected: -\n";
+		
+		errorMsg += alert(msg + errorMsg + "\n" + errorMsgLong);
+		return false;
+	}
+	
+	return true;
+}
+
+// Function to add the code for bold italic and underline, to the message
+function AddMessageCode(code,promptText, InsertText) {
+
+	if (code != "") {
+		insertCode = prompt(promptText + "\n[" + code + "]xxx[/" + code + "]", InsertText);
+			if ((insertCode != null) && (insertCode != "")){
+				document.frmSignGusetbook.comments.value += "[" + code + "]" + insertCode + "[/"+ code + "] ";
+			}
+	}		
+	document.frmSignGusetbook.comments.focus();
+}
+
+
+//Function to add the code to the message for the smileys
+function AddSmileyIcon(iconCode) {	
+		document.frmSignGusetbook.comments.value += iconCode + " ";
+		document.frmSignGusetbook.comments.focus();
+}
+// -->
+</script>
 
 
 
@@ -30,7 +100,6 @@
 
 </head>
 <body>
- 
                 
 
 
@@ -439,24 +508,23 @@
 
 
 
-</body><!-- https://web.archive.org/web/20030805042759/http://www.omayya.com:80/guestbook/sign.asp -->
+</body><!-- https://web.archive.org/web/20030805042759if_/http://www.omayya.com:80/guestbook/sign.asp -->
 </html><!--
      FILE ARCHIVED ON 04:27:59 Aug 05, 2003 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 02:26:17 Feb 08, 2026.
+     INTERNET ARCHIVE ON 04:31:45 Feb 11, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
      SECTION 108(a)(3)).
 --><!--
 playback timings (ms):
-  captures_list: 0.726
-  exclusion.robots: 0.057
-  exclusion.robots.policy: 0.044
-  esindex: 0.013
-  cdx.remote: 5.791
-  LoadShardBlock: 71.176 (3)
-  PetaboxLoader3.datanode: 241.659 (4)
-  load_resource: 413.78
-  PetaboxLoader3.resolve: 50.215
-  nav: 0.231 (6)
+  captures_list: 0.689
+  exclusion.robots: 0.055
+  exclusion.robots.policy: 0.042
+  esindex: 0.014
+  cdx.remote: 21.148
+  LoadShardBlock: 81.892 (3)
+  PetaboxLoader3.datanode: 95.538 (4)
+  load_resource: 168.112
+  PetaboxLoader3.resolve: 31.614
 -->

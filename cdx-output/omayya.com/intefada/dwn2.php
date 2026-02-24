@@ -1,6 +1,4 @@
-<html style="--wm-toolbar-height: 67px;"><head>
-
-
+<html><head>
 
 
 
@@ -15,7 +13,6 @@
 </head>
 
 <body bgcolor="#FFFFFF" topmargin="0" leftmargin="0">
- 
 <table width="620" border="0" cellspacing="0" cellpadding="0">
   <tbody><tr>
     <td width="71" valign="top"><img src="http://www.omayya.com/images/tt.jpg" width="100" height="121"></td>
@@ -101,7 +98,7 @@
 
 <p>&nbsp; </p>
 <map name="mm">
-  <area shape="rect" coords="512,54,608,132" href="6.htm" target="_blank" alt="click here to see cartoon">
+  <area shape="rect" coords="512,54,608,132" href="6.htm"  alt="click here to see cartoon">
   <area shape="rect" coords="412,52,507,131" href="5.htm" target="_blank" alt="click here to see cartoon">
   <area shape="rect" coords="310,54,406,132" href="4.htm" target="_blank" alt="click here to see cartoon">
   <area shape="rect" coords="212,53,308,132" href="3.htm" target="_blank" alt="click here to see cartoon">
@@ -118,7 +115,7 @@
 
 <!--
      FILE ARCHIVED ON 10:20:51 Jun 28, 2002 AND RETRIEVED FROM THE
-     INTERNET ARCHIVE ON 02:42:09 Feb 08, 2026.
+     INTERNET ARCHIVE ON 01:03:59 Feb 16, 2026.
      JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
 
      ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
@@ -126,15 +123,14 @@
 -->
 <!--
 playback timings (ms):
-  captures_list: 0.511
-  exclusion.robots: 0.039
-  exclusion.robots.policy: 0.029
+  captures_list: 0.583
+  exclusion.robots: 0.044
+  exclusion.robots.policy: 0.032
   esindex: 0.009
-  cdx.remote: 12.692
-  LoadShardBlock: 94.998 (3)
-  PetaboxLoader3.datanode: 135.943 (4)
-  load_resource: 219.351
-  PetaboxLoader3.resolve: 161.987
-  nav: 0.131 (6)
---></td></tr></tbody></table></center></div></body><!-- https://web.archive.org/web/20020628102051/http://www.omayya.com:80/intefada/dwn2.php -->
+  cdx.remote: 12.09
+  LoadShardBlock: 108.242 (3)
+  PetaboxLoader3.datanode: 229.724 (4)
+  load_resource: 252.797
+  PetaboxLoader3.resolve: 40.906
+--></td></tr></tbody></table></center></div></body><!-- https://web.archive.org/web/20020628102051if_/http://www.omayya.com:80/intefada/dwn2.php -->
 </html>
