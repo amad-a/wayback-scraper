@@ -1,0 +1,302 @@
+<!DOCTYPE html><!-- This Site Was Designed By Wayne D. Fields http://illusivedesign.cjb.net --><!-- Please make sure you read all of the read me file that came with this template then
+you may delete this comment --><html><head>
+
+
+
+
+
+
+<!-- End Wayback Rewrite JS Include -->
+
+
+<title>Salfeet Web Page</title>
+<meta name="description" content="Insert Description Here">
+<meta name="keywords" content="Insert Keywords Here">
+<style type="text/css">
+<!--
+a:link, a:active, a:visited {
+color: #4A265A; 
+text-decoration: underline}
+
+a:hover {
+color: #4A265A; 
+text-decoration: none}
+
+body {
+background-image: URL(images/bg.gif);
+background-repeat: repeat-x}
+  
+-->
+</style>
+<script language="JavaScript">
+ <!--
+ // Scrolling message settings
+ var MessageText = "Welcome to the offical web site of Salfeet Municipality       مرحبا في الموقع الرسمي لبلدية سلفيت"
+ var DisplayLength = 130
+ var pos = 1 - DisplayLength;
+ function ScrollInStatusBar(){
+ var scroll = "";
+ pos++;
+ if (pos == MessageText.length) pos = 1 - DisplayLength;
+ if (pos<0)
+   {
+ for (var i=1; i<=Math.abs(pos); i++)
+ scroll = scroll + " ";
+     scroll = scroll + MessageText.substring(0, DisplayLength - i + 1);
+   }
+ else
+     scroll = scroll + MessageText.substring(pos, pos + DisplayLength);
+ window.status = scroll;
+ //Scrolling speed
+ setTimeout("ScrollInStatusBar()",50);
+ }
+ 
+ ScrollInStatusBar()
+ //-->
+ </script>
+
+  <title>mouse</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+<style>.spanstyle {
+	COLOR: white; FONT-FAMILY: Verdana; FONT-SIZE: 8pt; FONT-WEIGHT: bold; POSITION: absolute; TOP: -50px; VISIBILITY: visible
+}
+</style>
+
+<script language="JavaScript">
+
+var x, y;
+var step = 10;
+var flag = 0;
+
+var message = " IT - Salfeet Municipality";
+message = message.split("");
+var xpos = new Array();
+for (i = 0; i <= message.length - 1; i++) {
+xpos[i] = -50;
+}
+var ypos = new Array();
+for (i = 0; i <= message.length - 1; i++) {
+ypos[i]= -50;
+}
+function handlerMM(e) {
+x = (document.layers) ? e.pageX : document.body.scrollLeft + event.clientX;
+y = (document.layers) ? e.pageY : document.body.scrollTop + event.clientY;
+flag = 1;
+}
+function makesnake() {
+if (flag == 1 && document.all) {
+for (i = message.length - 1; i >= 1; i--) {
+xpos[i] = xpos[i - 1] + step;
+ypos[i] = ypos[i - 1];
+}
+xpos[0] = x + step;
+ypos[0] = y;
+for (i = 0; i < message.length - 1; i++) {
+var thisspan = eval("span" + (i) + ".style");
+thisspan.posLeft = xpos[i];
+thisspan.posTop = ypos[i];
+   }
+}
+else if (flag==1 && document.layers) {
+for (i = message.length - 1; i >= 1; i--) {
+xpos[i] = xpos[i - 1] + step;
+ypos[i] = ypos[i - 1];
+}
+xpos[0] = x + step;
+ypos[0] = y;
+for (i = 0; i < message.length - 1; i++) {
+var thisspan = eval("document.span" + i);
+thisspan.left = xpos[i];
+thisspan.top = ypos[i];
+   }
+}
+var timer = setTimeout("makesnake()", 10);
+}
+// End -->
+</script>
+
+<style>
+.spanstyle {
+	position:absolute;
+	visibility:visible;
+	top:-50px;
+	font-size:10pt;
+	font-family:Verdana;
+      font-weight:bold;
+	color:black;
+}
+</style>
+
+</head>
+
+<body onload="makesnake()" style="width:100%;overflow-x:hidden;overflow-y:scroll">
+
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+
+<td style="font-size: 0;"><img border="0" src="/salfeet.org/images/your_logo2f.gif" width="215" height="105"><img border="0" src="/salfeet.org/images/mod_temp1_02f.gif" width="265" height="105"><img border="0" src="/salfeet.org/images/mod_temp1_03f.gif" width="300" height="105"></td>
+<td></td>
+
+</tr>
+<tr>
+<td colspan="2" background="http://www.salfeet.org/images/bg_pg.gif" valign="top">
+
+<table border="0" cellpadding="0" cellspacing="0" height="667">
+<tbody><tr>
+<td width="10" height="667">&nbsp;</td>
+<td valign="top" height="667">
+
+<!-- Side Panel -->
+<table border="0" cellpadding="0" cellspacing="0">
+<tbody><tr>
+<td width="170" height="95">
+  <p><img border="0" src="/salfeet.org/images/salfeetlogo.bmp" width="158" height="146"></p>
+</td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/intoroduc.html" style=""><img border="0" src="/salfeet.org/images/link1f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/quality_manual.htm" style=""><img border="0" src="/salfeet.org/images/link2f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/administ.htm" style=""><img border="0" src="/salfeet.org/images/link3f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/sevices.htm" style=""><img border="0" src="/salfeet.org/images/link8f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/salfeet_news.htm" style=""><img border="0" src="/salfeet.org/images/link10f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/projects.htm" style=""><img border="0" src="/salfeet.org/images/link7f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/income.htm" style=""><img border="0" src="/salfeet.org/images/link4f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/entrance.htm" style=""><img border="0" src="/salfeet.org/images/link6f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/topography.htm" style=""><img border="0" src="/salfeet.org/images/link9f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/settlements.htm" style=""><img border="0" src="/salfeet.org/images/link5f.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.org/search.htm" style=""><img border="0" src="/salfeet.org/images/search.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="/salfeet.com/forum/portal.php" style="pointer-events: none;"><img border="0" src="/salfeet.org/images/forum.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td><a href="mailto:salfeet@salfeet.org" style="pointer-events: none;"><img border="0" src="/salfeet.org/images/contactus.gif" width="170" height="30"></a></td>
+</tr>
+
+<tr>
+<td width="170" height="214" valign="top">
+
+</td>
+</tr>
+</tbody></table>
+<!-- Side Panel -->
+
+</td>
+<td width="40" height="667">&nbsp;</td>
+
+<td align="center" valign="top" height="667">
+
+<!-- Content --><br>
+<center>
+<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://active.macromedia.com/flash4/cabs/swflash.cab#version=4,0,0,0" id="salfeetenglish" width="282" height="55">
+  <param name="movie" value="salfeetenglish.swf">
+  <param name="quality" value="high">
+  <param name="bgcolor" value="#FFFFFF">
+  <ruffle-embed name="salfeetenglish" src="http://www.salfeet.org/salfeetenglish.swf" quality="high" bgcolor="#FFFFFF" width="170" height="40" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></ruffle-embed>
+  
+</object>
+</center>
+<br>
+<img src="/salfeet.org/images/hr_top.gif" border="0" width="480" height="58">
+
+<p><img border="0" src="/salfeet.org/images/2.jpg" width="529" height="319"><br>
+
+<img src="/salfeet.org/images/hr_bot.gif" border="0" width="528" height="44">
+ <!-- Content -->
+
+</p>
+
+</td>
+</tr>
+</tbody></table>
+
+
+</td>
+</tr>
+</tbody></table>
+
+<p align="center">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |&nbsp; <a href="/salfeet.org/intoroduc.html" style="">Inroduction</a>
+| <a href="/salfeet.org/quality_manual.htm" style="">Quality Manual</a> | <a href="/salfeet.org/administ.htm" style="">Municipality
+Dept.</a> | <a href="/salfeet.org/sevices.htm" style="">Services</a> | <a href="/salfeet.org/salfeet_news.htm" style="">Activites
+&amp; news</a> | <a href="/salfeet.org/projects.htm" style="">Projects &amp; Needs</a>|</p><p align="center">
+<script language="JavaScript">
+<!-- http://www.elnahda.net-->
+<!--   
+function click() {  
+message="Copyright - IT Salfeet Municipality"
+if (event.button==2) {   
+alert(message);   
+}   
+}   
+document.onmousedown=click
+-->   
+</script>| <a href="/salfeet.org/income.htm" style="">Income</a>| <a href="/salfeet.org/entrance.htm" style="">Entrances</a>
+| <a href="/salfeet.org/topography.htm" style="">Topography</a> |<a href="/salfeet.org/settlements.htm" style=""> Settlement</a>
+| <a href="/salfeet.org/search.htm" style="">Search</a> | <a href="/salfeet.org/forum/portal.php" style="">Forum</a>
+|
+
+
+
+</p><p align="center">Salfeet Municipality All Rights Reserved © 2004 - 2005 </p>
+
+<p align="center">
+
+<img title="" border="0" src="/count.greatauctionsnow.com/ct/mir4rnjhdsfkhj/ainv/" align="middle" width="98" height="21"><br>
+
+
+
+</p>
+</body><!-- https://web.archive.org/web/20040910101842if_/http://www.salfeet.org:80/index.html --></html><!--
+     FILE ARCHIVED ON 10:18:42 Sep 10, 2004 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:25:37 Feb 27, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+--><!--
+playback timings (ms):
+  captures_list: 0.493
+  exclusion.robots: 0.034
+  exclusion.robots.policy: 0.024
+  esindex: 0.009
+  cdx.remote: 13.795
+  LoadShardBlock: 111.185 (3)
+  PetaboxLoader3.datanode: 184.473 (4)
+  load_resource: 183.545
+  PetaboxLoader3.resolve: 57.545
+-->

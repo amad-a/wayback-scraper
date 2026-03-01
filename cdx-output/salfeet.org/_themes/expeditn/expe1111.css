@@ -1,0 +1,314 @@
+<html><head><meta name="color-scheme" content="light dark"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">.mstheme     { nav-banner-image: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbanna.gif); separator-image: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphorsa.gif); 
+               list-image-1: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbul1a.gif); list-image-2: 
+               url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbul2a.gif); list-image-3: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbul3a.gif); 
+               navbutton-horiz-pushed: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphbusa.gif); 
+               navbutton-horiz-normal: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphbuda.gif); 
+               navbutton-horiz-hovered: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphbuha.gif); 
+               navbutton-vert-pushed: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expvbusa.gif); 
+               navbutton-vert-normal: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expvbuda.gif); 
+               navbutton-vert-hovered: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expvbuha.gif); 
+               navbutton-home-normal: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphomda.gif); 
+               navbutton-home-hovered: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphomha.gif); 
+               navbutton-home-pushed: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphomsa.gif); navbutton-up-normal: 
+               url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expupda.gif); navbutton-up-hovered: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expupha.gif); 
+               navbutton-up-pushed: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expupsa.gif); navbutton-prev-normal: 
+               url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exppreda.gif); navbutton-prev-hovered: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exppreha.gif); 
+               navbutton-prev-pushed: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exppresa.gif); 
+               navbutton-next-normal: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expnexda.gif); 
+               navbutton-next-hovered: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expnexha.gif); 
+               navbutton-next-pushed: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expnexsa.gif) }
+.mstheme-bannertxt { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 6; color: 
+               rgb(255,255,204) }
+.mstheme-horiz-navtxt { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 2; 
+               font-weight: bold; color: rgb(255,255,204) }
+.mstheme-vert-navtxt { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 2; 
+               font-weight: bold; color: rgb(255,255,204) }
+.mstheme-navtxthome { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204) }
+.mstheme-navtxtup { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204) }
+.mstheme-navtxtprev { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204) }
+.mstheme-navtxtnext { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204) }
+ul           { list-style-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbul1a.gif') }
+ul ul        { list-style-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbul2a.gif') }
+ul ul ul     { list-style-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbul3a.gif') }
+a:link       { color: rgb(102,102,0) }
+a:visited    { color: rgb(153,51,0) }
+a:active     { color: rgb(204,51,0) }
+body         { color: rgb(0,0,0); background-color: rgb(255,255,204) }
+h1           { color: rgb(102,0,51) }
+h2, marquee  { color: rgb(153,102,0) }
+h3           { color: rgb(102,102,0) }
+h4           { color: rgb(102,0,51) }
+h5           { color: rgb(153,102,0) }
+h6           { color: rgb(102,102,0) }
+hr           { color: rgb(102,102,0) }
+button       { background-color: rgb(102,0,51); color: white; border-color: rgb(153,51,0) }
+label, .MSTHEME-LABEL { color: rgb(0,0,0) }
+textarea     { color: black; border-color: rgb(102,51,0) }
+fieldset     { color: Black; border-color: rgb(102,51,0) }
+legend       { color: rgb(102,102,0) }
+select       { color: black; border-color: rgb(102,51,0) }
+table        { table-border-color-light: rgb(153,51,0); table-border-color-dark: 
+               rgb(102,51,0); color: rgb(0,0,0); border-color: rgb(102,51,0) }
+caption      { color: rgb(102,102,0) }
+th           { color: rgb(0,0,0); border-color: rgb(102,51,0) }
+td           { border-color: rgb(102,51,0) }
+.mstheme-bannertxt a:active { color: rgb(255,255,204) }
+.mstheme-bannertxt a:link { color: rgb(255,255,204) }
+.mstheme-bannertxt a:visited { color: rgb(255,255,204) }
+.mstheme-bannertxt-g { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 6; color: 
+               rgb(255,255,204); background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expbannd.gif') }
+.mstheme-bannertxt-g a:active { color: rgb(255,255,204) }
+.mstheme-bannertxt-g a:link { color: rgb(255,255,204) }
+.mstheme-bannertxt-g a:visited { color: rgb(255,255,204) }
+.mstheme-bannertxt-s { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 6; color: 
+               rgb(255,255,204) }
+.mstheme-bannertxt-s a:active { color: rgb(255,255,204) }
+.mstheme-bannertxt-s a:link { color: rgb(255,255,204) }
+.mstheme-bannertxt-s a:visited { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt a:active { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt a:link { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt a:visited { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt-g { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 2; color: 
+               rgb(255,255,204); background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphbudd.gif') }
+.mstheme-horiz-navtxt-g a:active { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt-g a:link { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt-g a:visited { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt-gs { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 2; color: 
+               rgb(255,255,204); background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphbusd.gif') }
+.mstheme-horiz-navtxt-gs a:active { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt-gs a:link { color: rgb(255,255,204) }
+.mstheme-horiz-navtxt-gs a:visited { color: rgb(255,255,204) }
+.mstheme-navtxthome a:active { color: rgb(255,255,204) }
+.mstheme-navtxthome a:link { color: rgb(255,255,204) }
+.mstheme-navtxthome a:visited { color: rgb(255,255,204) }
+.mstheme-navtxthome-g { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204); 
+               background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exphombd.gif') }
+.mstheme-navtxthome-g a:active { color: rgb(255,255,204) }
+.mstheme-navtxthome-g a:link { color: rgb(255,255,204) }
+.mstheme-navtxthome-g a:visited { color: rgb(255,255,204) }
+.mstheme-navtxtnext a:active { color: rgb(255,255,204) }
+.mstheme-navtxtnext a:link { color: rgb(255,255,204) }
+.mstheme-navtxtnext a:visited { color: rgb(255,255,204) }
+.mstheme-navtxtnext-g { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204); 
+               background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expnexbd.gif') }
+.mstheme-navtxtnext-g a:active { color: rgb(255,255,204) }
+.mstheme-navtxtnext-g a:link { color: rgb(255,255,204) }
+.mstheme-navtxtnext-g a:visited { color: rgb(255,255,204) }
+.mstheme-navtxtprev a:active { color: rgb(255,255,204) }
+.mstheme-navtxtprev a:link { color: rgb(255,255,204) }
+.mstheme-navtxtprev a:visited { color: rgb(255,255,204) }
+.mstheme-navtxtprev-g { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204); 
+               background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expprebd.gif') }
+.mstheme-navtxtprev-g a:active { color: rgb(255,255,204) }
+.mstheme-navtxtprev-g a:link { color: rgb(255,255,204) }
+.mstheme-navtxtprev-g a:visited { color: rgb(255,255,204) }
+.mstheme-navtxtup a:active { color: rgb(255,255,204) }
+.mstheme-navtxtup a:link { color: rgb(255,255,204) }
+.mstheme-navtxtup a:visited { color: rgb(255,255,204) }
+.mstheme-navtxtup-g { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204); 
+               background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expupbd.gif') }
+.mstheme-navtxtup-g a:active { color: rgb(255,255,204) }
+.mstheme-navtxtup-g a:link { color: rgb(255,255,204) }
+.mstheme-navtxtup-g a:visited { color: rgb(255,255,204) }
+.mstheme-topbar-font a:active { color: rgb(255,255,204) }
+.mstheme-topbar-font a:link { color: rgb(255,255,204) }
+.mstheme-topbar-font a:visited { color: rgb(255,255,204) }
+.mstheme-topbar-font-g { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204); 
+               background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expglob.gif') }
+.mstheme-topbar-font-g a:active { color: rgb(255,255,204) }
+.mstheme-topbar-font-g a:link { color: rgb(255,255,204) }
+.mstheme-topbar-font-g a:visited { color: rgb(255,255,204) }
+.mstheme-vert-navtxt a:active { color: rgb(255,255,204) }
+.mstheme-vert-navtxt a:link { color: rgb(255,255,204) }
+.mstheme-vert-navtxt a:visited { color: rgb(255,255,204) }
+.mstheme-vert-navtxt-g { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 2; color: 
+               rgb(255,255,204); background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expvbudd.gif') }
+.mstheme-vert-navtxt-g a:active { color: rgb(255,255,204) }
+.mstheme-vert-navtxt-g a:link { color: rgb(255,255,204) }
+.mstheme-vert-navtxt-g a:visited { color: rgb(255,255,204) }
+.mstheme-vert-navtxt-gs { font-family: 'Book Antiqua', 'Times New Roman', Times; font-size: 2; color: 
+               rgb(255,255,204); background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expvbusd.gif') }
+.mstheme-vert-navtxt-gs a:active { color: rgb(255,255,204) }
+.mstheme-vert-navtxt-gs a:link { color: rgb(255,255,204) }
+.mstheme-vert-navtxt-gs a:visited { color: rgb(255,255,204) }
+.mstheme     { navbutton-background-color: rgb(204,204,153); top-bar-button: url(/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/expglob.gif) }
+.mstheme-topbar-font { font-family: Arial, Helvetica; font-size: 1; color: rgb(255,255,204) }
+body         { font-family: 'Book Antiqua', 'Times New Roman', Times; background-image: 
+               url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/exptextb.jpg') }
+h1           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-weight: normal; 
+               font-style: normal; font-size: 24pt }
+h2           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-weight: normal; 
+               font-style: normal; font-size: 18pt }
+h3           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-weight: normal; 
+               font-style: normal; font-size: 14pt }
+h4           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-weight: normal; 
+               font-style: normal; font-size: 12pt }
+h5           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-weight: normal; 
+               font-style: normal; font-size: 10pt }
+h6           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-weight: normal; 
+               font-style: normal; font-size: 8pt }
+button       { font-size: 8pt; font-family: Arial, Helvetica; font-style: normal; 
+               border-style: solid; border-width: 1pt }
+label, .MSTHEME-LABEL { font-size: 8pt; font-family: Arial, Helvetica; font-style: normal }
+textarea     { font-size: 8pt; font-family: Arial, Helvetica; font-style: normal; 
+               border-style: solid; border-width: 1pt }
+fieldset     { font-size: 8pt; font-family: Arial, Helvetica; font-style: normal; 
+               border-style: solid; border-width: 1pt }
+legend       { font-size: 8pt; font-family: 'Book Antiqua', 'Times New Roman', Times; 
+               font-style: Normal }
+select       { font-size: 8pt; font-family: Arial, Helvetica; font-style: normal; 
+               border-style: solid; border-width: 1pt }
+table        { font-family: 'Book Antiqua', 'Times New Roman', Times; font-style: normal }
+caption      { font-size: 14pt; font-family: 'Book Antiqua', 'Times New Roman', Times; 
+               font-style: Normal }
+th           { font-family: 'Book Antiqua', 'Times New Roman', Times; font-style: normal }
+marquee      { font-size: 14pt; font-family: 'Book Antiqua', 'Times New Roman', Times }
+.ms-main     { border-right: 50 solid #660000 }
+.ms-bannerframe { background-color: #660000; border-bottom: 4 solid #cc9966 }
+.ms-banner   { color: #ffffcc; font-size: 10pt; font-family: Arial, sans-serif }
+.ms-banner a:link { font-family: Arial, sans-serif; font-size: 10pt; color: #ffffcc; font-weight: 
+               normal; text-decoration: none }
+.ms-banner a:visited { font-family: Arial, sans-serif; font-size: 10pt; color: #ffffcc; font-weight: 
+               normal; text-decoration: none }
+.ms-nav td   { font-family: Arial, sans-serif; font-size: 9pt; font-weight: normal; color: 
+               #000000 }
+.ms-nav th   { font-size: 9pt; font-family: Arial, sans-serif; font-weight: normal; 
+               text-align: left; color: #000000 }
+.ms-navframe { color: #000000; border-left: 4 solid #cc9966 }
+.ms-nav a    { text-decoration: none; font-family: Arial, sans-serif; font-size: 9pt; 
+               font-weight: normal; color: #336600 }
+.ms-nav a:link {  }
+.ms-nav a:hover { text-decoration: underline; color: #cc6600 }
+.ms-nav a:visited { color: #663333 }
+.ms-verticaldots { background-image: url('/web/20040228230010im_/http://www.salfeet.org/_themes/expeditn/blank.gif'); background-repeat: repeat-y; 
+               background-position: right 50% }
+.ms-viewselect a:link { font-size: 9pt; font-family: Arial, sans-serif; color: #669933 }
+.ms-titlearea { font-family: Arial, sans-serif; font-size: 9pt; color: #000000 }
+.ms-titleareaframe { color: #000000; border-left: 4 solid #cc9966 }
+.ms-pagetitle { color: #336600; font-family: 'Book Antiqua', serif; font-size: 1.25em; 
+               font-weight: normal }
+.ms-pagetitle a { text-decoration: underline; color: #336600 }
+.ms-pagetitle a:hover { text-decoration: underline; color: #336600 }
+.ms-announcementtitle { font-weight: normal }
+.ms-formlabel { text-align: left; font-family: Arial, sans-serif; font-size: 9pt; 
+               font-weight: normal; color: #000000 }
+.ms-formdescription a { color: #000099; text-decoration: underline }
+.ms-formbody { text-align: left; font-family: Arial, sans-serif; font-size: 9pt }
+.ms-formdescription { font-family: Arial, sans-serif; font-size: 9pt; color: #000000 }
+.ms-radiotext { cursor: default; text-align: left; font-family: Arial, sans-serif; font-size: 
+               10pt; height: 19px }
+.ms-searchbox { width: 100% }
+.ms-input    { font-size: 9pt; font-family: Arial, sans-serif; vertical-align: baseline }
+.ms-long     { font-size: 9pt; font-family: Arial, sans-serif; width: 300px }
+.ms-wvsel    { color: #3366cc }
+.ms-selected { background-color: #ffffcc; color: #660000 }
+.ms-selected span { color: #000000 }
+.ms-filedialog td { height: 16px }
+.ms-descriptiontext { color: #000000; font-family: Arial, sans-serif; font-size: 9pt }
+.ms-descriptiontext a { color: #336600; font-family: Arial, sans-serif; font-size: 9pt }
+.ms-toolbar  { font-family: Arial, sans-serif; font-size: 9pt; text-decoration: none; color: 
+               #996600 }
+.ms-separator { color: #cc6600; font-size: 10pt }
+.ms-authoringcontrols { background-color: #f2f2f2; font-family: Arial, sans-serif; font-size: 9pt; 
+               color: #000000 }
+.ms-sectionheader { color: #660033; font-family: Arial, sans-serif; font-size: 10pt }
+.ms-sectionline { background-color: #000000; height: 1px }
+.ms-propertysheet { font-family: Arial, sans-serif; font-size: 9pt }
+.ms-propertysheet th { font-family: Arial, sans-serif; font-size: 9pt; color: #000000; font-weight: 
+               normal }
+.ms-propertysheet a { text-decoration: none; color: #336600 }
+.ms-propertysheet a:hover { text-decoration: underline; color: #cc6600 }
+.ms-propertysheet a:visited { color: #663333; text-decoration: none }
+.ms-propertysheet a:hover { text-decoration: underline }
+.ms-itemheader a { font-size: 10pt; font-family: Arial, sans-serif; font-weight: normal; color: 
+               #336600; text-decoration: none }
+.ms-itemheader a:hover { text-decoration: underline; color: #cc6600 }
+.ms-itemheader a:visited { text-decoration: none; color: #663333 }
+.ms-itemheader a:hover { text-decoration: underline }
+.ms-discussiontitle { font-size: 10pt; font-family: Book Antiqua. serif; color: #660033; 
+               font-weight: bold }
+.ms-vh       { font-family: Arial, sans-serif; font-size: 9pt; color: #000000; text-align: 
+               left; text-decoration: none; font-weight: normal }
+.ms-vh a     { color: #336600; text-decoration: none }
+.ms-vh a:hover { text-decoration: underline }
+.ms-vb       { font-family: Arial, sans-serif; font-size: 9pt; height: 18px; vertical-align: 
+               top }
+.ms-vb a     { color: #336600; text-decoration: none }
+.ms-vb a:hover { color: #cc6600; text-decoration: underline }
+.ms-vb a:visited { color: #663333; text-decoration: none }
+.ms-vb a:hover { text-decoration: underline }
+.ms-homepagetitle { font-family: 'Book Antiqua', serif; font-size: 12pt; color: #660033; 
+               font-weight: bold; text-decoration: none }
+.ms-homepagetitle:hover { text-decoration: underline; color: #660033 }
+.ms-addnew   { font-weight: normal; font-family: Arial, sans-serif; font-size: .7em; color: 
+               #cc6600; text-decoration: none }
+.ms-cal      { border-collapse: collapse; table-layout: fixed; font-family: Arial, sans-serif; 
+               cursor: default }
+.ms-caltop   { vertical-align: top; font-size: 10pt; width: 14%; height: 30px; 
+               border-left: 1px solid black; border-right: 1px solid black; 
+               border-top: 1px solid black }
+.ms-calhead  { text-align: center; background-color: #660000; color: #ffffcc; font-size: 16pt; 
+               font-family: Arial, sans-serif; border-style: none; 
+               border-width: medium; padding: 2px }
+.ms-caldow   { vertical-align: top; text-align: center; font-weight: bold; font-size: 10pt; 
+               height: 20px; border-left: 1px solid black; 
+               border-right: 1px solid black; border-top: 1px solid black }
+.ms-calmid   { height: 20px; border-left: 1px solid black; border-right: 1px solid black }
+.ms-calspacer { height: 4px; border-left: 1px solid black; border-right: 1px solid black }
+.ms-calbot   { height: 2px; border-left: 1px solid black; border-right: 1px solid black; 
+               border-top-style: none; border-top-width: medium; 
+               border-bottom: 1px solid black }
+.ms-appt a   { color: #000000 }
+.ms-appt a:hover { color: red }
+.ms-appt     { text-align: center; vertical-align: middle; font-size: 8pt; height: 18px; 
+               overflow: hidden; background-color: #ffffcc; color: black; 
+               border: 2px solid #cc6600 }
+.ms-caldowdown { font-family: Arial, sans-serif; font-weight: bold; color: #000000; 
+               text-align: center; vertical-align: middle }
+.ms-caldown  { font-size: 8pt; color: #000000; text-align: left; vertical-align: top }
+.ms-datepickeriframe { position: absolute; display: none; background-color: white; 
+               background-repeat: repeat; background-attachment: scroll; 
+               background-position: 0% }
+.ms-datepicker { font-family: Arial, sans-serif; background-color: #ffffff; cursor: default; 
+               border: 2 outset activeborder }
+.ms-dpdow    { vertical-align: top; text-align: center; font-weight: bold; font-size: 8pt; 
+               border-left-style: none; border-left-width: medium; 
+               border-right-style: none; border-right-width: medium; 
+               border-top-style: none; border-top-width: medium; 
+               border-bottom: 1px solid black }
+.ms-dpday    { font-size: 8pt; text-align: center; border-style: none; border-width: medium }
+.ms-dpselectedday { background-color: #ffffcc; font-size: 8pt; text-align: center; border-style: 
+               none; border-width: medium }
+.ms-dpnonmonth { color: gray; font-size: 8pt; text-align: center; border-style: none; 
+               border-width: medium }
+.ms-dphead   { text-align: center; font-weight: bold; font-size: 8pt; background-color: 
+               #660000; color: #ffffcc; border-style: none; border-width: 
+               medium }
+.ms-dpfoot   { text-align: center; font-size: 8pt; font-style: italic; height: 24px; 
+               border-left-style: none; border-left-width: medium; 
+               border-right-style: none; border-right-width: medium; 
+               border-top-style: solid; border-top-width: 1px; 
+               border-bottom-style: none; border-bottom-width: medium }
+img.ms-button { cursor: hand }
+
+/*
+     FILE ARCHIVED ON 23:00:10 Feb 28, 2004 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 00:28:31 Feb 27, 2026.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 0.578
+  exclusion.robots: 0.044
+  exclusion.robots.policy: 0.033
+  esindex: 0.01
+  cdx.remote: 13.279
+  LoadShardBlock: 54.328 (3)
+  PetaboxLoader3.datanode: 74.697 (4)
+  load_resource: 80.947
+  PetaboxLoader3.resolve: 58.339
+*/</pre></body><!-- https://web.archive.org/web/20040228230010if_/http://www.salfeet.org:80/_themes/expeditn/expe1111.css -->
+</html>

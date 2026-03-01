@@ -156,6 +156,8 @@ async function replaceLinks(elemType, $, site) {
     // make sure all final links are lowercase
     const attr = $(element).attr(attrType)?.toLowerCase();
 
+    console.log('attry', attr);
+
     if (attr) {
       // ensure path replacement hasn't happened already
       if (
@@ -172,14 +174,16 @@ async function replaceLinks(elemType, $, site) {
             .replace('www.', '')
             .replace('www2.', '');
         } else {
-          // if attr is not absolute url, append filename to path containing page
-          relativeHrefPath = path.join(
-            site.originalUrl.substring(
-              0,
-              site.originalUrl.lastIndexOf('/'),
-            ),
-            attr,
-          );
+          // if attr is not absolute url AND not local anchor tag, append filename to path containing page
+          if (!attr.startsWith('#')) {
+            relativeHrefPath = path.join(
+              site.originalUrl.substring(
+                0,
+                site.originalUrl.lastIndexOf('/'),
+              ),
+              attr,
+            );
+          }
         }
         $(element).attr(attrType, relativeHrefPath);
       }
@@ -189,13 +193,13 @@ async function replaceLinks(elemType, $, site) {
         ? attrLink + 'index.html'
         : attrLink;
 
-
-      const exists = await fsExists(path.join(destDir, attrLink.split('#')[0]));
+      const exists = await fsExists(
+        path.join(destDir, attrLink.split('#')[0]),
+      );
 
       if (attrLink.includes('#')) {
         console.log('poop1', attrLink, exists);
       }
-
 
       if (attrType === 'href') {
         // TODO: edit this to handle all NOT html/htm/shtml links
