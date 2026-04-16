@@ -8,10 +8,11 @@ import { createWriteStream } from 'fs';
 import fsExists from 'fs.promises.exists';
 const { mkdir } = pkg;
 
+const DEST_PATH = 'sites';
 const webPath = process.argv[2];
 const fromBound = process.argv[3];
 const toBound = process.argv[4] || process.argv[3];
-const destDir = path.join(process.cwd(), 'cdx-output');
+const destDir = path.join(process.cwd(), DEST_PATH);
 const overwrite = process.argv.includes('--overwrite');
 const imagesOnly = process.argv.includes('--images');
 let uniqueUrls = [];
@@ -48,11 +49,11 @@ if (siteLogExists && !overwrite) {
   const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
   const noVtiFilter = encodeURIComponent('!original:.*_vti_.*');
   const noAspFilter = encodeURIComponent('!original:.*\\.asp.*');
-  const imgFilter = '&filter=mimetype:image/.*';
+  const imgFilter = '&filter=!mimetype:im*';
 
   const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
     toBound ? toBound : fromBound
-  }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}&filter=${noAspFilter}${imagesOnly ? imgFilter : ''}`;
+  }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}&filter=${noAspFilter}${imgFilter}`;
 
   console.log('REQUEST URL:', cdxRequestUrl);
 
@@ -149,14 +150,10 @@ async function replaceLinks(elemType, $, site) {
   const attrType = elemsDict[elemType];
 
   for (const element of $(elemType).get()) {
-    // IMPORTANT! assumes (correctly, given inputed timestamp captures everything) all available urls on same domain are downloaded
-    // TODO: check fsExists and domain, link directly to wayback machine for external browsing if not.
     // IDEA: TRACK/keep record of if on available page or wayback: attach script to every loaded page which tracks if (available) /sites/ OR web.archive.org/web clicked - to switch mode
 
     // make sure all final links are lowercase
     const attr = $(element).attr(attrType)?.toLowerCase();
-
-    console.log('attry', attr);
 
     if (attr) {
       // ensure path replacement hasn't happened already
@@ -201,31 +198,39 @@ async function replaceLinks(elemType, $, site) {
         console.log('poop1', attrLink, exists);
       }
 
-      if (attrType === 'href') {
-        // TODO: edit this to handle all NOT html/htm/shtml links
-        // TODO: make sure # anchors on same page are not disabled
-        if (
-          (!exists || attrLink.includes('.asp')) &&
-          !attrLink.endsWith('/#')
-        ) {
-          // disable link if not found
-          $(element).css('pointer-events', 'none');
+      // if (attrType === 'href') {
+      //   // TODO: edit this to handle all NOT html/htm/shtml links
+      //   // TODO: make sure # anchors on same page are not disabled
+      //   if (
+      //     (!exists || attrLink.includes('.asp')) &&
+      //     !attrLink.endsWith('/#')
+      //   ) {
+      //     // disable link if not found
+      //     $(element).css('pointer-events', 'none');
 
-          // remove invalid links from area, but store for later in data-href
-          if (elemType === 'area') {
-            $(element).removeAttr('href').attr('data-href', attrLink);
-          }
-        } else {
-          // re-enable link if found
-          const elemStyle = $(element).attr('style') || '';
+      //     // remove invalid links from area, but store for later in data-href
+      //     if (elemType === 'area') {
+      //       $(element).removeAttr('href').attr('data-href', attrLink);
+      //     }
+      //   } else {
+      //     // re-enable link if found
+      //     const elemStyle = $(element).attr('style') || '';
 
-          const elemStyleNoPointerEvents = elemStyle.replace(
-            /pointer-events\s*:\s*[^;]+;?/gi,
-            '',
-          );
-          $(element).attr('style', elemStyleNoPointerEvents);
-        }
-      }
+      //     const elemStyleNoPointerEvents = elemStyle.replace(
+      //       /pointer-events\s*:\s*[^;]+;?/gi,
+      //       '',
+      //     );
+      //     $(element).attr('style', elemStyleNoPointerEvents);
+      //   }
+      // }
+
+      // TODO FIGURE OUT THIS ERROR
+      if (!attrLink.startsWith('/sites'))
+        attrLink = path.join('/sites', attrLink);
+
+      if (attrLink.includes('#'))
+        attrLink = '#' + attrLink.split('#')[1];
+      $(element).attr(attrType, attrLink);
     }
   }
   return $;
@@ -254,14 +259,14 @@ async function scrapeWaybackUrls(sites) {
 
     if (exists) {
       console.log(
-        `${progressString} 📁 cdx-output${pageLinkRaw} already exists`,
+        `${progressString} 📁 ${path.join(DEST_PATH, pageLinkRaw)} already exists`,
       );
     } else {
       try {
         const response = await page.goto(site.url, {
           waitUntil: 'networkidle2',
           waitUntil: 'domcontentloaded',
-          timeout: 10000,
+          timeout: 5000
         });
 
         let content;
@@ -346,6 +351,8 @@ async function scrapeWaybackUrls(sites) {
         if (pageLinkRaw.endsWith('/'))
           pageLinkRaw = pageLinkRaw + 'index.html';
 
+        pageLinkRaw = pageLinkRaw.replace('%20', ' ');
+
         if (site.mimetype.startsWith('im') && content) {
           await fs.writeFile(
             path.join(destDir, pageLinkRaw.toLowerCase()),
@@ -363,7 +370,7 @@ async function scrapeWaybackUrls(sites) {
         await new Promise((r) => setTimeout(r, 1000));
 
         console.log(
-          `${progressString} Saved ${site.url} to cdx-output${pageLinkRaw}`,
+          `${progressString} Saved ${site.url} to ${path.join(DEST_PATH, pageLinkRaw)}`,
         );
       } catch (error) {
         console.error('‼️ error:', site.url, error);
@@ -384,12 +391,76 @@ async function scrapeWaybackUrls(sites) {
       // remove wayback machine styles
       $('html').removeAttr('style');
 
+      $('head').append(
+        '<script defer src="/src/injection.js"></script>',
+      );
+      $('head').append(
+        '<link rel="stylesheet" href="/styles/injected-styles.css">',
+      );
+      $('body').attr('data-wayback-url', site.url);
+
       $ = await replaceLinks('a', $, site);
       $ = await replaceLinks('body', $, site);
       $ = await replaceLinks('img', $, site);
       $ = await replaceLinks('iframe', $, site);
       $ = await replaceLinks('frame', $, site);
       $ = await replaceLinks('area', $, site);
+
+      const imgTagSources = $('img')
+        .map((i, el) => $(el).attr('src'))
+        .get();
+
+      const inlineBgUrls = $('[style*="background"]')
+        .map((i, el) => {
+          const style = $(el).attr('style') || '';
+          const match = style.match(/url\(['"]?([^'")\s]+)['"]?\)/i);
+          return match ? match[1] : null;
+        })
+        .get()
+        .filter(Boolean);
+
+      const bodyBg = $('body').attr('background');
+
+      const imageSources = [...new Set([...imgTagSources, ...inlineBgUrls])];
+
+      if (bodyBg) imageSources.push(bodyBg);
+
+      for (let imageSource of imageSources) {
+      console.log("🚀 ~ scrapeWaybackUrls ~ imageSource:", imageSource)
+
+        
+        let outputPath = path.join(process.cwd(), imageSource);
+        outputPath = outputPath.replace('%20', ' ');
+
+        const exists = await fsExists(outputPath);
+
+        if (exists) {
+          console.log(`🖼️ ${outputPath} already exists`);
+        } else {
+          const imageUrl =
+            site.url.split('if_/')[0] +
+            'im_/' +
+            imageSource.split('/sites/')[1];
+
+          await new Promise((r) => setTimeout(r, 1000));
+          const response = await fetch(imageUrl);
+
+          if (response.status === 200) {
+            console.log(`🖼️ new image found at ${imageUrl}`);
+
+            await mkdir(
+              outputPath.substring(0, outputPath.lastIndexOf('/')),
+              { recursive: true },
+            );
+
+            const arrayBuffer = await response.arrayBuffer();
+            const buffer = Buffer.from(arrayBuffer);
+            await fs.writeFile(outputPath, buffer);
+          } else {
+            console.log(`🖼️ ${imageUrl} not found`);
+          }
+        }
+      }
 
       // prevent page open in new tab
       $('[target="_blank"]').removeAttr('target');
