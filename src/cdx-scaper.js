@@ -194,10 +194,6 @@ async function replaceLinks(elemType, $, site) {
         path.join(destDir, attrLink.split('#')[0]),
       );
 
-      if (attrLink.includes('#')) {
-        console.log('poop1', attrLink, exists);
-      }
-
       // if (attrType === 'href') {
       //   // TODO: edit this to handle all NOT html/htm/shtml links
       //   // TODO: make sure # anchors on same page are not disabled
@@ -392,7 +388,7 @@ async function scrapeWaybackUrls(sites) {
       $('html').removeAttr('style');
 
       $('head').append(
-        '<script defer src="/src/injection.js"></script>',
+        '<script defer type="module" src="/src/injection.js"></script>',
       );
       $('head').append(
         '<link rel="stylesheet" href="/styles/injected-styles.css">',
@@ -426,9 +422,6 @@ async function scrapeWaybackUrls(sites) {
       if (bodyBg) imageSources.push(bodyBg);
 
       for (let imageSource of imageSources) {
-      console.log("🚀 ~ scrapeWaybackUrls ~ imageSource:", imageSource)
-
-        
         let outputPath = path.join(process.cwd(), imageSource);
         outputPath = outputPath.replace('%20', ' ');
 
