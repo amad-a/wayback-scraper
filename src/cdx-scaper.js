@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs/promises';
 import path from 'path';
 import * as cheerio from 'cheerio';
+import PublicGoogleSheetsParser from 'public-google-sheets-parser';
 
 import pkg from 'fs-extra';
 import { createWriteStream } from 'fs';
@@ -9,132 +10,139 @@ import fsExists from 'fs.promises.exists';
 const { mkdir } = pkg;
 
 const DEST_PATH = 'sites';
+const spreadsheetId = '1Uz5CdMlhosmaNYMejns1kiPpqs95JwVlHjlz9iDQn0c';
 const webPath = process.argv[2];
 const fromBound = process.argv[3];
 const toBound = process.argv[4] || process.argv[3];
 const destDir = path.join(process.cwd(), DEST_PATH);
 const overwrite = process.argv.includes('--overwrite');
 const imagesOnly = process.argv.includes('--images');
+const sheetsSiteList = process.argv.includes('--sheets');
 let uniqueUrls = [];
 
-if (!webPath) {
-  console.error(
-    'Please provide a website path to find in the Wayback Machine via the CDX api',
-  );
-  process.exit(1);
-}
+const sheetsParser = new PublicGoogleSheetsParser(spreadsheetId);
 
-if (!fromBound) {
-  console.error(
-    'Please provide a Wayback Machine timestamp to search within (1 year or 2 datetime stamps',
-  );
-  process.exit(1);
-}
+async function processCdxRequest() {
+  if (!webPath) {
+    console.error(
+      'Please provide a website path to find in the Wayback Machine via the CDX api',
+    );
+    process.exit(1);
+  }
 
-const logPath = path.join(destDir, webPath, 'log.json');
-const siteLogExists = await fsExists(logPath);
+  if (!fromBound) {
+    console.error(
+      'Please provide a Wayback Machine timestamp to search within (1 year or 2 datetime stamps',
+    );
+    process.exit(1);
+  }
 
-if (siteLogExists && !overwrite) {
-  console.log('Page log found:', logPath);
-  const data = await fs.readFile(logPath, 'utf-8');
-  uniqueUrls = JSON.parse(data);
-} else {
-  if (overwrite && siteLogExists) {
-    console.log('Overwriting existing page log...');
+  const logPath = path.join(destDir, webPath, 'log.json');
+  const siteLogExists = await fsExists(logPath);
+
+  if (siteLogExists && !overwrite) {
+    console.log('Page log found:', logPath);
+    const data = await fs.readFile(logPath, 'utf-8');
+    uniqueUrls = JSON.parse(data);
   } else {
-    console.log('No page log file found, fetching from CDX API...');
+    if (overwrite && siteLogExists) {
+      console.log('Overwriting existing page log...');
+    } else {
+      console.log('No page log file found, fetching from CDX API...');
+    }
+
+    // ensure no page snapshots with queries, to eliminate duplicate pages
+    const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
+    const noVtiFilter = encodeURIComponent('!original:.*_vti_.*');
+    const noAspFilter = encodeURIComponent('!original:.*\\.asp.*');
+    const imgFilter = '&filter=!mimetype:im*';
+
+    const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
+      toBound ? toBound : fromBound
+    }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}&filter=${noAspFilter}${imgFilter}`;
+
+    console.log('REQUEST URL:', cdxRequestUrl);
+
+    const cdxResponse = await fetch(cdxRequestUrl);
+    if (!cdxResponse.ok) {
+      throw new Error(`HTTP error! Status: ${cdxResponse.status}`);
+    }
+    console.log('Page list successfully fetched from CDX API!');
+    const cdxResponseJson = await cdxResponse.json();
+
+    const pageObjects = cdxResponseJson.slice(1).map((arr) => ({
+      urlKey: arr[0],
+      timestamp: arr[1],
+      originalUrl: arr[2],
+      mimetype: arr[3],
+      statusCode: arr[4],
+      digest: arr[5],
+      length: arr[6],
+    }));
+
+    // reverse so first (now last in reversed) snapshot of a url is preserved when mapping to uniqueUrls
+    pageObjects.reverse();
+
+    // media extension patterns to filter with
+    const imageExtensions =
+      /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
+    const videoExtensions = /\.(mp4|avi|mov|wmv|flv|webm|mkv|m4v)$/i;
+    const audioExtensions = /\.(mp3|wav|ogg|m4a|aac|flac|wma)$/i;
+    const htmlExtensions =
+      /\.(htm|html|shtml|asp|aspx|php|jsp|css)$/i;
+
+    uniqueUrls = [
+      ...new Map(
+        pageObjects.map((page) => [page.urlKey, page]),
+      ).values(),
+    ];
+
+    // Filter to keep only HTML and media files
+    uniqueUrls = uniqueUrls.filter((page) => {
+      const url = page.originalUrl.toLowerCase();
+
+      // Keep if it contains htm
+      if (htmlExtensions.test(url)) return true;
+      // Keep if it's a media file
+      if (imageExtensions.test(url)) return true;
+      if (videoExtensions.test(url)) return true;
+      if (audioExtensions.test(url)) return true;
+      // Keep if it ends with / (directory/index)
+      if (url.endsWith('/')) return true;
+
+      // Filter out everything else (css, js, xml, txt, etc.)
+      return false;
+    });
+
+    uniqueUrls.forEach(async (page) => {
+      let suffix = page.mimetype.startsWith('text')
+        ? 'if_'
+        : page.mimetype.startsWith('im')
+          ? 'im_'
+          : '';
+      let url = `https://web.archive.org/web/${page.timestamp}${suffix}/${page.originalUrl}`;
+      page.url = url;
+      // sanitize url to match local file paths
+      page.originalUrl = page.originalUrl
+        .replace(':80', '')
+        .replace('www.', '')
+        .replace('http:/', '')
+        .toLowerCase();
+
+      if (page.originalUrl.endsWith('/'))
+        page.originalUrl += 'index.html';
+    });
+
+    await mkdir(path.join(destDir, webPath), { recursive: true });
+    const file = createWriteStream(logPath);
+
+    file.write(JSON.stringify(uniqueUrls));
+    file.end();
+    console.log(
+      'Page log file successfully generated from CDX response.',
+      uniqueUrls,
+    );
   }
-
-  // ensure no page snapshots with queries, to eliminate duplicate pages
-  const noQueriesFilter = encodeURIComponent('!original:.*\\?.*');
-  const noVtiFilter = encodeURIComponent('!original:.*_vti_.*');
-  const noAspFilter = encodeURIComponent('!original:.*\\.asp.*');
-  const imgFilter = '&filter=!mimetype:im*';
-
-  const cdxRequestUrl = `https://web.archive.org/cdx/search/cdx?url=${webPath}/*&output=json&from=${fromBound}&to=${
-    toBound ? toBound : fromBound
-  }&filter=statuscode:200&filter=${noQueriesFilter}&filter=${noVtiFilter}&filter=${noAspFilter}${imgFilter}`;
-
-  console.log('REQUEST URL:', cdxRequestUrl);
-
-  const cdxResponse = await fetch(cdxRequestUrl);
-  if (!cdxResponse.ok) {
-    throw new Error(`HTTP error! Status: ${cdxResponse.status}`);
-  }
-  console.log('Page list successfully fetched from CDX API!');
-  const cdxResponseJson = await cdxResponse.json();
-
-  const pageObjects = cdxResponseJson.slice(1).map((arr) => ({
-    urlKey: arr[0],
-    timestamp: arr[1],
-    originalUrl: arr[2],
-    mimetype: arr[3],
-    statusCode: arr[4],
-    digest: arr[5],
-    length: arr[6],
-  }));
-
-  // reverse so first (now last in reversed) snapshot of a url is preserved when mapping to uniqueUrls
-  pageObjects.reverse();
-
-  // media extension patterns to filter with
-  const imageExtensions =
-    /\.(jpg|jpeg|png|gif|webp|svg|bmp|ico|tiff?)$/i;
-  const videoExtensions = /\.(mp4|avi|mov|wmv|flv|webm|mkv|m4v)$/i;
-  const audioExtensions = /\.(mp3|wav|ogg|m4a|aac|flac|wma)$/i;
-  const htmlExtensions = /\.(htm|html|shtml|asp|aspx|php|jsp|css)$/i;
-
-  uniqueUrls = [
-    ...new Map(
-      pageObjects.map((page) => [page.urlKey, page]),
-    ).values(),
-  ];
-
-  // Filter to keep only HTML and media files
-  uniqueUrls = uniqueUrls.filter((page) => {
-    const url = page.originalUrl.toLowerCase();
-
-    // Keep if it contains htm
-    if (htmlExtensions.test(url)) return true;
-    // Keep if it's a media file
-    if (imageExtensions.test(url)) return true;
-    if (videoExtensions.test(url)) return true;
-    if (audioExtensions.test(url)) return true;
-    // Keep if it ends with / (directory/index)
-    if (url.endsWith('/')) return true;
-
-    // Filter out everything else (css, js, xml, txt, etc.)
-    return false;
-  });
-
-  uniqueUrls.forEach(async (page) => {
-    let suffix = page.mimetype.startsWith('text')
-      ? 'if_'
-      : page.mimetype.startsWith('im')
-        ? 'im_'
-        : '';
-    let url = `https://web.archive.org/web/${page.timestamp}${suffix}/${page.originalUrl}`;
-    page.url = url;
-    // sanitize url to match local file paths
-    page.originalUrl = page.originalUrl
-      .replace(':80', '')
-      .replace('www.', '')
-      .replace('http:/', '')
-      .toLowerCase();
-
-    if (page.originalUrl.endsWith('/'))
-      page.originalUrl += 'index.html';
-  });
-
-  await mkdir(path.join(destDir, webPath), { recursive: true });
-  const file = createWriteStream(logPath);
-
-  file.write(JSON.stringify(uniqueUrls));
-  file.end();
-  console.log(
-    'Page log file successfully generated from CDX response.',
-    uniqueUrls,
-  );
 }
 
 async function replaceLinks(elemType, $, site) {
@@ -249,127 +257,139 @@ async function scrapeWaybackUrls(sites) {
   });
 
   for (const [index, site] of sites.entries()) {
-    let pageLinkRaw = site.originalUrl;
-    let progressString = `(${index + 1}/${sites.length})`;
-    const exists = await fsExists(path.join(destDir, pageLinkRaw));
+    if (site) {
+      let pageLinkRaw = site.originalUrl;
+      let progressString = `(${index + 1}/${sites.length})`;
+      const exists = await fsExists(path.join(destDir, pageLinkRaw));
 
-    if (exists) {
-      console.log(
-        `${progressString} 📁 ${path.join(DEST_PATH, pageLinkRaw)} already exists`,
-      );
-    } else {
-      try {
-        const response = await page.goto(site.url, {
-          waitUntil: 'networkidle2',
-          waitUntil: 'domcontentloaded',
-          timeout: 5000
-        });
-
-        let content;
-        content = await page.content();
-
-        if (site.mimetype.startsWith('text')) {
-          content = content.replace('target="_blank"', '');
-          // remove any charset definitions as rendered page is UTF-8
-          content = content.replace(
-            /<meta[^>]*http-equiv=["']Content-Type["'][^>]*\/?>/gi,
-            '',
-          );
-
-          // remove wayback scripts and toolbar styles
-          content = content.replace(
-            /<head[^>]*>[\s\S]*?<\/head>/i,
-            (head) => {
-              return (
-                head
-                  // Scripts with web-static.archive.org src
-                  .replace(
-                    /<script[^>]*src="[^"]*web-static\.archive\.org[^"]*"[^>]*><\/script>/gi,
-                    '',
-                  )
-                  // Stylesheets with web-static.archive.org href
-                  .replace(
-                    /<link[^>]*href="[^"]*web-static\.archive\.org[^"]*"[^>]*>/gi,
-                    '',
-                  )
-                  // Inline scripts containing RufflePlayer
-                  .replace(
-                    /<script[^>]*>[\s\S]*?window\.RufflePlayer[\s\S]*?<\/script>/gi,
-                    '',
-                  )
-                  // Inline scripts containing __wm.init
-                  .replace(
-                    /<script[^>]*>[\s\S]*?__wm\.init\([\s\S]*?<\/script>/gi,
-                    '',
-                  )
-              );
-            },
-          );
-
-          // remove pop up windows
-          content = content.replace(
-            /window\.open\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/g,
-            '',
-          );
-
-          // remove WB toolbar
-          content = content.replace(
-            /<!-- BEGIN WAYBACK TOOLBAR INSERT -->[\s\S]*?<!-- END WAYBACK TOOLBAR INSERT -->/gi,
-            '',
-          );
-
-          content = content.replace(
-            '</html>',
-            `<!-- ${site.url} -->\n</html>`,
-          );
-        }
-
-        if (site.mimetype.startsWith('im')) {
-          let imagePage;
-          imagePage = await page.evaluate(() => {
-            const img = document.querySelector('img');
-            return img ? img.src : null;
+      if (exists) {
+        console.log(
+          `${progressString} 📁 ${path.join(DEST_PATH, pageLinkRaw)} already exists`,
+        );
+      } else {
+        try {
+          const response = await page.goto(site.url, {
+            waitUntil: 'networkidle2',
+            waitUntil: 'domcontentloaded',
+            timeout: 5000,
           });
 
-          if (imagePage) content = await page.goto(imagePage);
-        }
+          let content;
+          content = await page.content();
 
-        // create file containing dir recursively
-        await mkdir(
-          path.join(
-            destDir,
-            pageLinkRaw.substring(0, pageLinkRaw.lastIndexOf('/')),
-          ),
-          { recursive: true },
-        );
+          const bgAttr = await page.$eval('body', el => el.getAttribute('background'));
 
-        // if implied index page add real index file
-        if (pageLinkRaw.endsWith('/'))
-          pageLinkRaw = pageLinkRaw + 'index.html';
+          if (site.mimetype.startsWith('text')) {
+            content = content.replace('target="_blank"', '');
+            // remove any charset definitions as rendered page is UTF-8
+            content = content.replace(
+              /<meta[^>]*http-equiv=["']Content-Type["'][^>]*\/?>/gi,
+              '',
+            );
 
-        pageLinkRaw = pageLinkRaw.replace('%20', ' ');
+            // remove wayback scripts and toolbar styles
+            content = content.replace(
+              /<head[^>]*>[\s\S]*?<\/head>/i,
+              (head) => {
+                return (
+                  head
+                    // Scripts with web-static.archive.org src
+                    .replace(
+                      /<script[^>]*src="[^"]*web-static\.archive\.org[^"]*"[^>]*><\/script>/gi,
+                      '',
+                    )
+                    // Stylesheets with web-static.archive.org href
+                    .replace(
+                      /<link[^>]*href="[^"]*web-static\.archive\.org[^"]*"[^>]*>/gi,
+                      '',
+                    )
+                    // Inline scripts containing RufflePlayer
+                    .replace(
+                      /<script[^>]*>[\s\S]*?window\.RufflePlayer[\s\S]*?<\/script>/gi,
+                      '',
+                    )
+                    // Inline scripts containing __wm.init
+                    .replace(
+                      /<script[^>]*>[\s\S]*?__wm\.init\([\s\S]*?<\/script>/gi,
+                      '',
+                    )
+                );
+              },
+            );
 
-        if (site.mimetype.startsWith('im') && content) {
-          await fs.writeFile(
-            path.join(destDir, pageLinkRaw.toLowerCase()),
-            await content.buffer(),
+            // remove pop up windows
+            content = content.replace(
+              /window\.open\((?:[^)(]+|\((?:[^)(]+|\([^)(]*\))*\))*\)/g,
+              '',
+            );
+
+            // remove WB toolbar
+            content = content.replace(
+              /<!-- BEGIN WAYBACK TOOLBAR INSERT -->[\s\S]*?<!-- END WAYBACK TOOLBAR INSERT -->/gi,
+              (match) => {
+                const head = match.match(/<\/head>/i)?.[0] || '';
+                const body = match.match(/<body[^>]*>/i)?.[0] || '';
+                return head + body;
+              }
+            );
+
+            content = content.replace(
+              '</html>',
+              `<!-- ${site.url} -->\n</html>`,
+            );
+
+            if (bgAttr && !/<body[^>]*background=/i.test(content)) {
+              content = content.replace(/<body/i, `<body background="${bgAttr}"`);
+            }
+          }
+
+          if (site.mimetype.startsWith('im')) {
+            let imagePage;
+            imagePage = await page.evaluate(() => {
+              const img = document.querySelector('img');
+              return img ? img.src : null;
+            });
+
+            if (imagePage) content = await page.goto(imagePage);
+          }
+
+          // create file containing dir recursively
+          await mkdir(
+            path.join(
+              destDir,
+              pageLinkRaw.substring(0, pageLinkRaw.lastIndexOf('/')),
+            ),
+            { recursive: true },
           );
-        } else {
-          await fs.writeFile(
-            path.join(destDir, pageLinkRaw.toLowerCase()),
-            content,
-            'utf8',
+
+          // if implied index page add real index file
+          if (pageLinkRaw.endsWith('/'))
+            pageLinkRaw = pageLinkRaw + 'index.html';
+
+          pageLinkRaw = pageLinkRaw.replace('%20', ' ');
+
+          if (site.mimetype.startsWith('im') && content) {
+            await fs.writeFile(
+              path.join(destDir, pageLinkRaw.toLowerCase()),
+              await content.buffer(),
+            );
+          } else {
+            await fs.writeFile(
+              path.join(destDir, pageLinkRaw.toLowerCase()),
+              content,
+              'utf8',
+            );
+          }
+
+          // delay to combat bot detection
+          await new Promise((r) => setTimeout(r, 1000));
+
+          console.log(
+            `${progressString} Saved ${site.url} to ${path.join(DEST_PATH, pageLinkRaw)}`,
           );
+        } catch (error) {
+          console.error('‼️ error:', site.url, error);
         }
-
-        // delay to combat bot detection
-        await new Promise((r) => setTimeout(r, 1000));
-
-        console.log(
-          `${progressString} Saved ${site.url} to ${path.join(DEST_PATH, pageLinkRaw)}`,
-        );
-      } catch (error) {
-        console.error('‼️ error:', site.url, error);
       }
     }
   }
@@ -387,6 +407,8 @@ async function scrapeWaybackUrls(sites) {
       // remove wayback machine styles
       $('html').removeAttr('style');
 
+      $('head base').removeAttr('href').removeAttr('target');
+
       $('head').append(
         '<script defer type="module" src="/src/injection.js"></script>',
       );
@@ -394,6 +416,15 @@ async function scrapeWaybackUrls(sites) {
         '<link rel="stylesheet" href="/styles/injected-styles.css">',
       );
       $('body').attr('data-wayback-url', site.url);
+
+      console.log('bawdy', $('body').attr('background'));
+
+      const printStyle = `<style id="print-size">@media print { @page { size: 176mm 240mm; } }</style>`;
+
+      if (!$('#print-size').length) {
+        console.log('📄 ADDING PRINT');
+        $('head').append(printStyle);
+      }
 
       $ = await replaceLinks('a', $, site);
       $ = await replaceLinks('body', $, site);
@@ -417,7 +448,9 @@ async function scrapeWaybackUrls(sites) {
 
       const bodyBg = $('body').attr('background');
 
-      const imageSources = [...new Set([...imgTagSources, ...inlineBgUrls])];
+      const imageSources = [
+        ...new Set([...imgTagSources, ...inlineBgUrls]),
+      ];
 
       if (bodyBg) imageSources.push(bodyBg);
 
@@ -427,13 +460,26 @@ async function scrapeWaybackUrls(sites) {
 
         const exists = await fsExists(outputPath);
 
+        console.log('test', outputPath, site.url);
+
         if (exists) {
           console.log(`🖼️ ${outputPath} already exists`);
         } else {
-          const imageUrl =
-            site.url.split('if_/')[0] +
-            'im_/' +
-            imageSource.split('/sites/')[1];
+          let imageUrl;
+
+          console.log('SITE', site);
+
+          if (site.url.includes('if_/')) {
+            imageUrl =
+              site.url.split('if_/')[0] +
+              'im_/' +
+              imageSource.split('/sites/')[1];
+          } else {
+            imageUrl =
+              site.url.split('/http://')[0] +
+              'im_/http://' +
+              imageSource.split('/sites/')[1];
+          }
 
           await new Promise((r) => setTimeout(r, 1000));
           const response = await fetch(imageUrl);
@@ -494,4 +540,34 @@ async function scrapeWaybackUrls(sites) {
   await browser.close();
 }
 
-await scrapeWaybackUrls(uniqueUrls);
+if (!sheetsSiteList) {
+  await processCdxRequest();
+  await scrapeWaybackUrls(uniqueUrls);
+} else {
+  let sites;
+  let items = await sheetsParser.parse();
+
+  sites = items.map((sheetRow) => {
+    if (sheetRow.URL) {
+      let originalUrl = sheetRow.URL.replace('www.', '')
+        .replace('www2.', '')
+        .split('http://')[1];
+
+      if (originalUrl.endsWith('/'))
+        originalUrl = originalUrl + 'index.html';
+
+      return {
+        url: sheetRow.URL,
+        originalUrl: originalUrl,
+        mimetype: 'text/html',
+      };
+    }
+  });
+
+  if (webPath) {
+    sites = sites.filter(site => site?.url.includes(webPath));
+    console.log('SITES', sites);
+  }
+  
+  await scrapeWaybackUrls(sites);
+}
