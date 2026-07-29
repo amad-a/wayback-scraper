@@ -31,8 +31,12 @@
         "user-agents": "^1.1.320",
         "xmldom": "^0.6.0"
     },
+    "engines": {
+        "node": ">=18"
+    },
     "scripts": {
         "start": "node src/main.js",
+        "scrape": "node src/cdx-scraper.js",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
         "crawl": "node src/wayback-crawler.js",
         "server": "http-server processed-output"

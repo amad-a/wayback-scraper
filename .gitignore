@@ -4,6 +4,7 @@
 .idea
 dist/
 sites/
+sites-v2/
 cdx-output/
 node_modules
 storage/
