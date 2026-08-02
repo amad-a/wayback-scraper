@@ -210,6 +210,18 @@ function pageHref(localPath) {
   return `/${DEST_PATH}/` + localPath.split('/').map(encodeURIComponent).join('/');
 }
 
+// The snapshot this page came from, on web.archive.org.
+//
+// Deliberately without the `id_` suffix the scraper uses. That suffix asks for the raw
+// original bytes, which is what a scraper wants and what a reader does not: it strips
+// the toolbar, the date banner and the surrounding navigation, and it is why Flash
+// pages arrive without a player. The plain form is the one worth linking a human to.
+function waybackUrl(timestamp, originalUrl) {
+  if (!timestamp) return '';
+  const bare = originalUrl.replace(/^https?:\/\//i, '');
+  return `https://web.archive.org/web/${timestamp}/http://${bare}`;
+}
+
 function renderCrawl(crawl) {
   const rows = crawl.pages
     .map((page) => {
@@ -230,9 +242,15 @@ function renderCrawl(crawl) {
         ? ` <span class="t">${escapeHtml(shortened)}</span>`
         : '';
 
+      // Carried on the row so the click handler can surface it above the frame without
+      // needing a lookup table of every page in the archive.
+      const wayback = waybackUrl(page.timestamp, page.originalUrl);
+
       return (
         `<li><a href="${escapeHtml(pageHref(page.localPath))}"` +
-        ` title="${escapeHtml(tooltip)}">` +
+        ` title="${escapeHtml(tooltip)}"` +
+        (wayback ? ` data-wayback="${escapeHtml(wayback)}"` : '') +
+        `>` +
         `<span class="f">${escapeHtml(page.label)}</span>${titleSpan}</a></li>`
       );
     })
@@ -274,7 +292,9 @@ function renderPage(crawls, stats) {
   /* 4:3 at 800x600. width/height rather than an aspect-ratio box: the archived pages
      are fixed-width 2001-era layouts, so a viewport that matches the era is the point. */
   iframe { width: 800px; height: 600px; border: 1px solid #ccc; background: #fff; }
-  #frame-label { margin: 0 0 .5rem; color: #555; height: 1.2em; }
+  #frame-label { margin: 0 0 .25rem; color: #555; height: 1.2em; }
+  /* Reserves its line whether or not a page is selected, so the frame never shifts. */
+  #frame-source { margin: 0 0 .5rem; height: 1.2em; visibility: hidden; }
 </style>
 </head>
 <body>
@@ -286,6 +306,7 @@ ${tree}
   </nav>
   <main>
     <p id="frame-label">Select a page from the tree.</p>
+    <p id="frame-source"><a id="wayback-link" href="" target="_blank" rel="noopener">View on the Wayback Machine</a></p>
     <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
   </main>
 </div>
@@ -294,6 +315,8 @@ ${tree}
   // plain left click is redirected into the frame.
   var frame = document.getElementById('frame');
   var label = document.getElementById('frame-label');
+  var source = document.getElementById('frame-source');
+  var waybackLink = document.getElementById('wayback-link');
   var active = null;
 
   document.querySelector('nav').addEventListener('click', function (event) {
@@ -304,6 +327,18 @@ ${tree}
     event.preventDefault();
     frame.src = link.getAttribute('href');
     label.textContent = link.getAttribute('title') || link.textContent;
+
+    // Hidden rather than emptied for pages whose log entry carried no timestamp, so
+    // the frame does not jump when moving between rows that have one and rows that
+    // do not.
+    var wayback = link.getAttribute('data-wayback');
+    if (wayback) {
+      waybackLink.href = wayback;
+      source.style.visibility = 'visible';
+    } else {
+      waybackLink.removeAttribute('href');
+      source.style.visibility = 'hidden';
+    }
 
     if (active) active.classList.remove('active');
     link.classList.add('active');
