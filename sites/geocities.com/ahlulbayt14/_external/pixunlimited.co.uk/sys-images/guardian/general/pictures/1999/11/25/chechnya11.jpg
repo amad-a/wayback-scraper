@@ -1,0 +1,4813 @@
+        
+    <!DOCTYPE html><html lang="en">
+
+<head>
+		    	<title> In pictures | The Guardian </title>
+	<link href="http://www.theguardian.com/inpictures/rss" rel="alternate" type="application/rss+xml" title="rss">
+	
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+
+<link rel="canonical" href="http://www.theguardian.com/inpictures" />
+
+            <meta name="description" content="In pictures" />
+    
+            <meta name="DC.date.issued" content="2008-04-16">
+    
+
+
+
+
+<meta name="llt" content="AUTlYylI" />
+
+
+
+<meta name="keywords" content="Global" />
+<meta name="news_keywords" content="Global" />
+
+
+	<link rel="shortcut icon" href="http://static.guim.co.uk/favicon.ico" type="image/x-icon" />
+
+<meta name="application-name" content="The Guardian"/>
+<meta name="msapplication-TileColor" content="#004983"/>
+<meta name="msapplication-TileImage" content="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/images/favicons/windows_tile_144_b.png"/>
+
+
+
+
+    
+
+    <link rel="shorturl" href="http://gu.com/p/x3yft" />
+
+<meta name="content-id" content="/inpictures"/>
+
+<link rel="publisher" href="https://plus.google.com/113000071431138202574"/>
+
+
+
+<meta name="p:domain_verify" content="4f4576e6bac27d86fd926c4579b97f23"/>
+<meta name="pocket-site-verification" content="be6d97bc1f6961ce6348e7ced4f1f4" />
+
+							<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/other.css" media="all" />
+		
+		<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/zones/global/styles/zone-accent.css" media="screen" class="contrast" />
+
+			<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/base-typography.css" media="screen" />
+
+
+			
+
+		<!--[if ie 7]>
+		    <link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/ie7.css" media="screen" class="ie" />
+		<![endif]-->
+
+		<!--[if ie 8]>
+			<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/ie8.css" media="screen" class="ie" />
+		<![endif]-->
+
+		<!--[if lte IE 6]>
+			<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/ie-scratch.css" media="screen" class="ie" />
+    		<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/zones/global/styles/zone-navigation-ie.css" media="screen" class="contrast" />
+		<![endif]-->
+
+		<!--[if lte IE 9]>
+			<script src="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/external-scripts/html5enable.js"></script>
+		<![endif]-->
+
+	<link rel="stylesheet" type="text/css" href="http://combo.guim.co.uk/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/custom-adslot+common/styles/default-ad-placeholders+common/styles/header-feeds+common/styles/header-local-info+common/styles/list-of-trails-promo+common/styles/local/image-side-trailblock+common/styles/pagination+common/styles/related-keywords+common/styles/top-navigation.css" />
+
+
+<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/shame.css"/>
+		<link rel="stylesheet" type="text/css" href="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/styles/other-typography.css" media="screen" />
+	
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+	if (!commonStaticRoot) {	
+		var commonStaticRoot = "http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/";
+	}
+	if (!sectionStaticRoot) {	
+		var sectionStaticRoot = "http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/global/";
+	}
+	if (!staticHost) {	
+		var staticHost="http://www.guardian.co.uk/";
+	}
+	if (!sitePrefixUrl) {
+		var sitePrefixUrl = "http://www.theguardian.com";
+	}
+    if(!discussionApiUrl) {
+        var discussionApiUrl = "http://discussion.guardianapis.com";
+    }
+
+//]]>
+</script>
+
+<script>
+		
+	var guardian = {
+		r2: {
+		comScoreVideoEnabled: true,
+		oasEnabled: true,
+		dfpEnabled: false,
+		liveEnvironment: true
+		},
+		page: {
+			contentId: '/inpictures',
+			type: 'content type',
+			contentTypes : 'gallery',
+			livePage:  false ,
+			section: 'global',
+			zone: 'global',
+			edition: 'US',
+			productionOffice: 'UK',
+			showAdverts: false,
+			showRelated:  true ,
+			showCommercialRelated: true
+		},
+		user: {
+			edition: 'us'
+		},
+		capabilities: {
+			localStorage: (function() {
+				try {
+					localStorage.setItem("gdn-test", "test-item");
+					localStorage.removeItem("gdn-test");
+					return true;
+				} catch (e) {
+					return false;
+				}
+			})()
+		},
+		keys: {
+			socialOverlay: "gdn.r2.social.overlay.stop"
+		}
+	};
+
+</script>
+
+    	    
+
+
+
+
+
+		
+										
+
+        
+
+
+<script type='text/javascript'>
+    // Chartbeat timing variable
+    var _sf_startpt=(new Date()).getTime();
+</script>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="http://pasteup.guim.co.uk/js/lib/jquery/1.8.1/jquery.min.js">\x3C/script>')</script>
+<script src="http://pasteup.guim.co.uk/js/lib/jquery.cookie/1.2/jquery.cookie.min.js"></script>
+<script src="http://pasteup.guim.co.uk/js/lib/jquery.writecapture/1.0.5/jquery.writecapture.min.js"></script>
+
+<script>
+	var jQ = jQuery.noConflict();
+	jQ.ajaxSetup({ cache: true });
+</script>
+
+            
+        <script>
+        var getCookieValue = function (cookieName) {
+            var regexp = new RegExp(cookieName + "=([^;]*)")
+            var cookieMatch = document.cookie.match(regexp);
+            if (cookieMatch && cookieMatch.length > 1) {
+                return unescape(cookieMatch[1]);
+            }
+            return "";
+        }
+
+        var revSciString = (function() {
+            var hasStorage = (function() {
+                try {
+                    localStorage.setItem("xxx_localstorage_test", "xxx_localstorage_test");
+                    localStorage.removeItem("xxx_localstorage_test");
+                    return true;
+                } catch(e) {
+                    return false;
+                }
+            }());
+
+            if (hasStorage && true && localStorage.getItem('rsi_segs_csv')) {
+                return localStorage.getItem('rsi_segs_csv');
+            } else {
+                return getCookieValue("rsi_segs_csv");
+            }
+        }());
+        OAS_listpos = 'Top,Right1,Middle,x31,Middle2';
+
+        OAS_query = 'cf=&pid=&pt=contenttype&';
+    </script>
+
+        <script type='text/javascript'> function crtg_getCookie(a){var b,c,d,e=document.cookie.split(";");for(b=0;b<e.length;b++){c=e[b].substr(0,e[b].indexOf("="));d=e[b].substr(e[b].indexOf("=")+1);c=c.replace(/^\s+|\s+$/g,"");if(c==a){return unescape(d)}}return""}var crtg_nid="1476";var crtg_cookiename="cto2_guardian";var crtg_content=crtg_getCookie(crtg_cookiename);var crtg_rnd=Math.floor(Math.random()*99999999999);var crtg_url="http://rtax.criteo.com/delivery/rta/rta.js?netid="+escape(crtg_nid);crtg_url+="&cookieName="+escape(crtg_cookiename);crtg_url+="&rnd="+crtg_rnd;crtg_url+="&varName=crtg_content";var crtg_script=document.createElement("script");crtg_script.type="text/javascript";crtg_script.src=crtg_url;crtg_script.async=true;if(document.getElementsByTagName("head").length>0)document.getElementsByTagName("head")[0].appendChild(crtg_script);else if(document.getElementsByTagName("body").length>0)document.getElementsByTagName("body")[0].appendChild(crtg_script)</script>
+    
+	        <!------ OAS SETUP begin ------>
+		<script>
+
+            guardian.r2['oas'] = {
+                rns : '1234567890',
+                sitepage : "www.theguardian.com/inpictures/oas.html",
+                query : 'cf=&pid=&pt=contenttype&',
+                host : 'http://oas.theguardian.com'
+            };
+
+			OAS_url = 'http://oas.theguardian.com/RealMedia/ads/';
+			OAS_sitepage = "www.theguardian.com/inpictures/oas.html";
+			OAS_target = '_blank';
+
+			OAS_rn = '001234567890';
+			OAS_rns = '1234567890';
+			OAS_rn = new String (Math.random());
+			OAS_rns = OAS_rn.substring (2, 11);
+
+
+
+            // Add segments from rev_sci cookie to OAS_query.
+            OAS_query += (function() {
+                var oasSegs = "a=" + (revSciString.split(',').slice(0,100).join('&a=')) + "&";
+
+                return oasSegs;
+            })();
+		</script>
+            	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        <script type="text/javascript">
+        var gdnCrmSegs = "&";
+        OAS_query = OAS_query + gdnCrmSegs
+        var guardian = guardian || {};
+        guardian.r2 = guardian.r2 || {};
+        guardian.r2.revsci = guardian.r2.revsci || {};
+        guardian.r2.revsci.adData = [  ];
+        try {
+          localStorage.setItem('gdncrmparams', gdnCrmSegs);
+        } catch(er) {
+          // Ignore
+        }
+        </script>
+                                            				
+			        
+
+	
+    
+
+    
+    
+
+
+<script src="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/scripts/gu-core.js"></script>
+<script>
+	var thirdPartyReferralCookieService = new guardian.r2.ThirdPartyReferralCookieService();
+	thirdPartyReferralCookieService.setThirdPartyReferralCookie();
+
+	var communitiesSite = false;
+
+				
+	guardian.r2.resourceRoot = "http://resource.guim.co.uk/";
+    var pageUrl = "http://www.theguardian.com/inpictures";
+
+	var RESOURCE_ROOT = 'http://resource.guim.co.uk/';
+
+</script>
+
+
+<script src="//pasteup.guim.co.uk/js/lib/requirejs/2.1.5/require.min.js"
+			data-main="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/scripts/main.js"
+			data-modules="gu/author-twitter-handles, http://id.guim.co.uk/static/cs/js/guardian.identity.clientside-toolkit.js"
+			data-callback=""
+			id="require-js"></script>
+
+
+<script type="text/javascript">
+	//<![CDATA[
+	function insertStyleSheet(href) {
+		var styleObject = document.createElement('link');
+		styleObject.setAttribute('href', commonStaticRoot + href);
+		styleObject.setAttribute('type', 'text/css');
+		styleObject.setAttribute('media', 'screen');
+		styleObject.setAttribute('rel', 'stylesheet');
+		var head = document.getElementsByTagName('head')[0];
+		head.appendChild(styleObject);
+	}
+	insertStyleSheet('styles/js-on.css');
+	insertPluckStylesheet = true;
+	//]]>
+</script>
+	<script type="text/javascript" src="http://combo.guim.co.uk/152e4bc5afe52cfac06490157bc2260789cf2733/common/scripts/alpha-test+common/scripts/convertJSONtoAd+common/scripts/custom-adslot+common/scripts/guardian.geolocation+common/scripts/guardian.r2.OmnitureTracking+common/scripts/mediamath-tag+common/scripts/signinTopNav.js"></script>
+
+
+<script type='text/javascript'>
+ensurePackage('guardian.r2.omniture');
+guardian.r2.omniture.isAvailable = function(){
+			return true;
+	}
+</script>
+
+
+	
+
+</head>
+
+<body class="other trail-block-page content-index ">
+
+	<div id="wrapper">
+			    	    	    	    	    
+
+
+
+			    
+
+	
+	<div id="header">
+	
+		    			<div id="sub-header">
+							    	    	     
+	
+
+	    
+
+
+		
+	<div class="top-navigation twelve-col top-navigation-js">
+	<div class="user-functions">
+		<div id="video-settings">
+    <div class="cookied">
+        <p class="on"><a class="autoplay-off" href="#skiplinks">Turn autoplay off</a></p>
+        <p class="off"><a class="autoplay-on" href="#skiplinks">Turn autoplay on</a></p>
+    </div>
+    <div class="not-cookied">
+        <p>Please activate cookies in order to turn autoplay off</p>
+    </div>
+</div>
+
+<div id="skiplinks">
+	<ul>
+		<li><a href="#box" accesskey="s">Jump to content [s]</a></li>
+				<li><a href="#global-nav" accesskey="0">Jump to site navigation [0]</a></li>
+		<li><a href="#searchbeta" accesskey="4">Jump to search [4]</a></li>
+		<li><a href="http://www.theguardian.com/help/terms-of-service" accesskey="8">Terms and conditions [8]</a></li>
+	</ul>
+</div>		
+               
+    
+    
+    
+    
+        
+    
+    
+    
+	
+	
+
+
+<div id="edition-selector">
+
+    <div id="drop-down-edition" class="change-to-us" tabindex="20">
+        <h2>Edition:</h2>
+                                    <span class="UK"><a href="http://www.theguardian.com/edition-permission/uk">UK</a></span>
+                                                <span class="US current-edition">US</span>
+                                                <span class="AU"><a href="http://www.theguardian.com/edition-permission/au">AU</a></span>
+                        </div>
+
+</div>
+
+
+<div class="user-details">
+    <div class="drop-down id-profile-links initially-off">
+        <h2 class="id-populate-with-display-name"></h2>
+        <ul>
+            <li><a href="https://id.theguardian.com/profile/?returnUrl=http://www.theguardian.com/inpictures">Your activity</a></li>
+            <li><a href="https://id.theguardian.com/email/list?returnUrl=http://www.theguardian.com/inpictures">Email subscriptions</a></li>
+            <li><a href="https://id.theguardian.com/dashboard?returnUrl=http://www.theguardian.com/inpictures">Account details</a></li>
+            <li><a href="https://id.theguardian.com/linked-services?returnUrl=http://www.theguardian.com/inpictures">Linked services</a></li>
+            <li><a href="https://id.theguardian.com/signout?returnUrl=http://www.theguardian.com/inpictures">Sign out</a></li>
+        </ul>
+    </div>
+
+    <noscript>
+        <span><a href="https://id.theguardian.com/dashboard?returnUrl=http://www.theguardian.com/inpictures">Profile</a></span>
+    </noscript>
+
+    <span class='id-sign-in-top-nav initially-off'><a></a></span>
+    <span class="trackable-component" style="background-color:#4bc6df" data-component="ngw-optin"><a href="/preference/platform/mobile?page=http%3A%2F%2Fwww.theguardian.com%3Fview%3Dmobile%23opt-in-message" style="color:white" class="switch-to-mobile" data-link-name="Switch to beta" rel="nofollow">Beta</a></span>
+
+</div>
+					<div id="drop-down-1" class="drop-down" tabindex="21">
+						<h2>
+		
+	        About us
+    </h2>
+								<ul>
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/info/about-guardian-us"  class="link-text">About us</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/info/about-guardian-us/contact"  class="link-text">Contact us</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/guardian-us-press-office"  class="link-text">Press office</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/help/terms-of-service"  class="link-text">Terms of service</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/help/privacy-policy"  class="link-text">Privacy policy</a>
+    </li>
+					
+									</ul>
+					</div>
+		</div>
+	
+	<div class="other-functions">
+									<div id="drop-down-3" class="drop-down mirror" tabindex="23">
+						<h2>
+		
+	        Subscribe
+    </h2>
+								<ul>
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/mobile/iphone/guardian"  class="link-text">Guardian iPhone</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/mobile/ipad/guardian-ipad-edition"  class="link-text">iPad edition</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.amazon.com/The-Guardian-and-the-Observer/dp/B004MME3M8/ref=sr_1_2?ie=UTF8&m=A3TVV12T0I6NSM&s=digital-text&qid=1310129212&sr=1-2"  class="link-text">Kindle</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/weekly/subscribe"  class="link-text">Guardian Weekly</a>
+    </li>
+					
+											    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://guardian.newspaperdirect.com/epaper/viewer.aspx"  class="link-text">Digital edition</a>
+    </li>
+					
+									</ul>
+					</div>
+		</div>
+		
+</div>
+
+
+			
+						        
+    
+        
+            <div id="Top" class=" hide-on-popup" data-cb-ad-id="Top">
+                
+                	
+                <div id="ad-placeholder-Top"></div>
+            </div>
+        
+        
+    		</div>
+	
+		
+					    	    	    
+
+	<div id="guardian-logo" class="trackable-component"         	        data-component="Gallery:guardian logo">
+			    			    		<a href="http://www.theguardian.com/us"><img src="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/images/logos/the-guardian/global.gif" width="115" height="22" alt="The Guardian home" /></a>
+        					</div>
+
+				
+	
+			
+					
+<div class="top-search-box">
+	<div class="gcse-search">
+		<form action="http://www.google.com/search" class="placeholder-search-box">
+			<input type="hidden" name="as_sitesearch" value="theguardian.com"/>
+			<input type="text" id="searchbox" name="q" placeholder="Your search terms" />
+			<input id="search-button" type="submit" value="Search" />
+		</form>
+	</div>
+</div>				
+				
+		<div id="zones-nav">
+							    	    
+
+	<div id="global-nav" class="trackable-component"         	        data-component="Gallery:global nav">
+		<ul>
+								    
+																								<li class="first news">
+						<a href="http://www.guardiannews.com" data-link-name="1:News">News</a>
+					</li>
+												    
+																			<li class="news">
+						<a href="http://www.theguardian.com/world/usa" data-link-name="2:US">US</a>
+					</li>
+												    
+																			<li class="news">
+						<a href="http://www.theguardian.com/world" data-link-name="3:World">World</a>
+					</li>
+												    
+																			<li class="sport">
+						<a href="http://www.theguardian.com/uk/sport" data-link-name="4:Sports">Sports</a>
+					</li>
+												    
+																			<li class="comment">
+						<a href="http://www.theguardian.com/us/commentisfree" data-link-name="5:Comment">Comment</a>
+					</li>
+												    
+																			<li class="culture">
+						<a href="http://www.theguardian.com/culture" data-link-name="6:Culture">Culture</a>
+					</li>
+												    
+																			<li class="business">
+						<a href="http://www.theguardian.com/us/business" data-link-name="7:Business">Business</a>
+					</li>
+												    
+																			<li class="money">
+						<a href="http://www.theguardian.com/us/money" data-link-name="8:Money">Money</a>
+					</li>
+												    
+																			<li class="environment">
+						<a href="http://www.theguardian.com/environment" data-link-name="9:Environment">Environment</a>
+					</li>
+												    
+																			<li class="news">
+						<a href="http://www.theguardian.com/science" data-link-name="10:Science">Science</a>
+					</li>
+												    
+																			<li class="travel">
+						<a href="http://www.theguardian.com/travel" data-link-name="11:Travel">Travel</a>
+					</li>
+												    
+																			<li class="news">
+						<a href="http://www.theguardian.com/technology" data-link-name="12:Tech">Tech</a>
+					</li>
+												    
+																			<li class="news">
+						<a href="http://www.theguardian.com/media" data-link-name="13:Media">Media</a>
+					</li>
+												    
+																			<li class="life-and-style">
+						<a href="http://www.theguardian.com/lifeandstyle" data-link-name="14:Life &amp; style">Life &amp; style</a>
+					</li>
+												    
+																								<li class="last news">
+						<a href="http://www.theguardian.com/data" data-link-name="15:Data">Data</a>
+					</li>
+									</ul>
+	</div>
+
+
+										    
+    
+            
+                                
+
+
+<div class="trackable-component crumb-wrapper"         	        data-component="Gallery:crumb nav" xmlns:v="http://rdf.data-vocabulary.org/#">
+
+            <ul class="crumb-nav">
+                            <li id="crumb1">
+                    <span typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="http://www.theguardian.com/multimedia" data-link-name="Multimedia">Multimedia</a>
+                    </span>
+                </li>
+                            <li id="crumb2">
+                    <span typeof="v:Breadcrumb">
+                        <a rel="v:url" property="v:title" href="http://www.theguardian.com/inpictures" data-link-name="In pictures">In pictures</a>
+                    </span>
+                </li>
+                    </ul>
+    
+    
+        
+        <ul class="local-nav related-to-crumb2">
+                                                <li        
+        
+            class='first'
+>
+                                                                        <a href="http://www.theguardian.com/artanddesign/photography" data-link-name="Photography">Photography</a>
+                    </li>
+                                                                <li    
+        
+        
+>
+                                                                        <a href="http://www.theguardian.com/audioslideshows" data-link-name="Audio slideshows">Audio slideshows</a>
+                    </li>
+                                                                <li    
+        
+        
+>
+                                                                        <a href="http://www.theguardian.com/video" data-link-name="Video">Video</a>
+                    </li>
+                                                                <li    
+        
+        
+>
+                                                                        <a href="http://www.theguardian.com/audio" data-link-name="Audio &amp; podcasts">Audio &amp; podcasts</a>
+                    </li>
+                                                                <li    
+        
+        
+>
+                                                                        <a href="http://www.theguardian.com/interactive" data-link-name="Interactive guides">Interactive guides</a>
+                    </li>
+                                                                <li        
+        
+            class=' last'
+>
+                                                                        <a href="http://www.theguardian.com/cartoons" data-link-name="Cartoons">Cartoons</a>
+                    </li>
+                                    </ul>
+    
+</div>
+
+					</div>
+				
+				    	    
+
+
+
+
+
+		
+										
+
+        
+
+	</div>
+
+	
+
+
+		<div id="box">
+
+			<div id="article-header">
+			                                            
+
+
+
+
+<div class="section-heading" id="heading">
+
+            
+		
+
+    
+    
+                
+            <h1 id="section-heading">
+                                    <img src="http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/global/images/in-pictures-heading.gif" alt="In pictures" />
+                            </h1>
+            
+		
+		
+	
+	    	    
+
+
+
+
+
+		
+										
+
+        
+
+	    
+	
+
+                		
+
+	<div class="header-feeds trackable-component"         	        data-component="Gallery:header feeds">
+		<ul class="feeds">
+			<li>
+				<a href="http://www.theguardian.com/inpictures/rss" class="feeds-icon rss" title="RSS" target="_blank" data-link-name="RSS">RSS</a>
+			</li>
+		</ul>
+		<div class="feeds-label">RSS</div>
+	</div>
+
+
+    
+    
+
+</div>
+
+                			</div>
+
+			<div id="content">
+									    
+
+	    
+
+
+
+
+	
+    
+
+
+	
+	
+	
+
+	<ul id="main-trailblock" class=" trail trailblock global editable-trailblock">
+
+		
+	            	    
+                
+		
+				
+		
+		
+
+		
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+				
+						
+
+		
+			<li class="major-heading ">
+
+			
+		
+			
+
+        
+			
+
+            
+
+
+
+
+
+
+
+			<h2>
+						
+		
+	        <a href="http://www.theguardian.com/world/series/eyewitness"  class="link-text">Eyewitness</a>
+    		</h2>
+	
+
+
+
+			
+
+        </li>
+
+		
+
+		
+		
+	            	    
+                
+		
+				
+		
+		
+
+		
+		
+		
+			
+				
+			
+		
+		
+
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+		
+
+		
+		
+				
+						
+
+		
+			<li class="normal first image wide">
+
+			
+		
+			
+
+        
+			
+
+            
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/world/picture/2014/mar/20/eyewitness-siamese-fighting-fish" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395402878880/A-crane-used-to-build-Sha-021.jpg" width="460" height="307" alt="A crane used to build Shanghai Tower, the world&rsquo;s second tallest building at 632 metres (2,073ft), i"
+						class="picture-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/world/picture/2014/mar/20/eyewitness-siamese-fighting-fish"  class="link-text">Eyewitness: Shanghai</a>
+    				</h3>									</div>
+	
+		
+	
+		<div class="trailtext">
+						                            			
+			
+																    
+
+
+		    		    
+	
+				
+		
+			
+								<strong>
+				<span>
+													Picture: 								</span>
+			</strong>
+			
+			
+										A crane used to build Shanghai Tower, the world's second tallest building at 632 metres (2,073ft), is taken down. The tower is topped only by Dubai's 830-metre Burj Khalifa Photo: HAP/Quirky China News/Rex
+			
+							 
+																																									                	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-discussion-comment-counts'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://resource.guim.co.uk/global/static/file/discussion/5/fill-comment-counts-swimlaned.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+        
+    													
+			
+			
+		</div>
+
+					    
+	
+		
+	
+</div>
+
+    		
+
+
+
+			
+
+        </li>
+
+		
+
+		
+	
+	</ul>
+
+
+
+								    
+
+	
+
+		<h3 class="first">Recent</h3>
+				
+				<ul id="auto-trailblock" class="tri trail trailblock">
+							    
+
+			                            <li class="normal first image">
+    
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/lifeandstyle/gallery/2014/mar/22/behind-the-scenes-poppies-fish-and-chips-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/20/1395317575550/Poppies-trail-006.jpg" width="140" height="84" alt="Poppies trail"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/lifeandstyle/gallery/2014/mar/22/behind-the-scenes-poppies-fish-and-chips-in-pictures"  class="link-text">Behind the Scenes in pictures – Poppies restaurant.</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (9 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">22 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/books/gallery/2014/mar/21/mewar-ramayana-epic-rama-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395414050946/Book-4-Kishlindhakanda-006.jpg" width="140" height="84" alt="Book 4, Kishlindhakanda"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/books/gallery/2014/mar/21/mewar-ramayana-epic-rama-pictures"  class="link-text">The Mewar Ramayana epic – in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (10 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/world/gallery/2014/mar/21/inside-kolkata-tanneries-photography" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395244200034/A-boy-working-in-a-leathe-006.jpg" width="140" height="84" alt="A boy working in a leather shoe factory in Calcutta"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/world/gallery/2014/mar/21/inside-kolkata-tanneries-photography"  class="link-text">Inside Kolkata's tanneries - in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (12 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+            </ul>
+		        <ul class="tri trail trailblock">
+                                        <li class="normal first image">
+    
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/fashion/gallery/2014/mar/21/fashion-get-the-look-high-street-off-duty-wardrobe" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/20/1395321467021/Get-the-look-007.jpg" width="140" height="84" alt="Get the look"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/fashion/gallery/2014/mar/21/fashion-get-the-look-high-street-off-duty-wardrobe"  class="link-text">Off-duty wardrobe: get the look - in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (4 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/fashion/gallery/2014/mar/21/fashion-wish-list-high-street" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/20/1395318559663/Fashion-wish-list-008.jpg" width="140" height="84" alt="Fashion wish list"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/fashion/gallery/2014/mar/21/fashion-wish-list-high-street"  class="link-text">Fashion wish list: what we like this week - in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (5 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/lifeandstyle/gallery/2014/mar/21/homes-wish-list-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395235966704/Space-trail-003.jpg" width="140" height="84" alt="Space trail"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/lifeandstyle/gallery/2014/mar/21/homes-wish-list-in-pictures"  class="link-text">Homes wish list: Middle Eastern- and Moroccan-inspired home furnishings - in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (15 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+            </ul>
+		        <ul class="tri trail trailblock">
+                                        <li class="normal first image">
+    
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/21/pictures-of-the-week-memories-and-nightmares" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395226504132/Big-Picture-Trail-007.jpg" width="140" height="84" alt="Big Picture Trail"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/21/pictures-of-the-week-memories-and-nightmares"  class="link-text">Pictures of the week: Memories And Nightmares, by Lottie Davies</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (5 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/lifeandstyle/gallery/2014/mar/21/photographs-new-guardian-weekend-readers" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/18/1395155072903/In-Pictures--Trail-007.jpg" width="140" height="84" alt="In Pictures- Trail"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/lifeandstyle/gallery/2014/mar/21/photographs-new-guardian-weekend-readers"  class="link-text">Weekend readers' best photographs: new</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (6 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/fashion/gallery/2014/mar/21/high-street-fashion-pink" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/14/1394816642082/All-Ages-pink-005.jpg" width="140" height="84" alt="All Ages pink"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/fashion/gallery/2014/mar/21/high-street-fashion-pink"  class="link-text">Pink: fashion for all ages – in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (5 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+            </ul>
+		        <ul class="tri trail trailblock">
+                                        <li class="normal first image">
+    
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/technology/gallery/2014/mar/21/fashion-magazine-centrefold-shoots-on-a-nokia-mobile-phone-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395406249606/93e34c32-244c-433b-bfb2-e1d481c14cb2-140x84.jpeg" width="140" height="84" alt="Centrefold magazine Nokia shoot"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/technology/gallery/2014/mar/21/fashion-magazine-centrefold-shoots-on-a-nokia-mobile-phone-in-pictures"  class="link-text">Fashion magazine Centrefold shoots on a Nokia mobile phone – in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+	
+			
+	
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/tv-and-radio/gallery/2014/mar/21/game-of-thrones-fans-brooklyn-costumes" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395415949550/f835c7c6-4d3b-4249-ae53-142df5bae1a3-140x84.jpeg" width="140" height="84" alt="NEW YORK, NY - MARCH 20:  Fans attend the &quot;Game Of Thrones&quot; fan experience at Barclays Center on March 20, 2014 in New York City.  (Photo by Rob Kim/Getty Images)
+Celebrities"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/tv-and-radio/gallery/2014/mar/21/game-of-thrones-fans-brooklyn-costumes"  class="link-text">Game of Thrones fans stray from reality to queue for Brooklyn event</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+	
+			
+	
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/21/78-87-london-youth-derek-ridgers-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395230858466/7887-London-Youth-001.jpg" width="140" height="84" alt="78/87 London Youth"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/21/78-87-london-youth-derek-ridgers-in-pictures"  class="link-text">78/87 London Youth by Derek Ridgers – in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+		
+			
+								<strong>
+				<span>
+													<span> (7 pictures)</span>								</span>
+			</strong>
+			
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+            </ul>
+		        <ul class="tri trail trailblock">
+                                        <li class="normal first">
+    
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="trail-caption">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/cities/gallery/2014/mar/21/quiz-can-you-identify-this-city"  class="link-text">Quiz: can you identify this city?</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+	
+			
+	
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/technology/gallery/2014/mar/21/elder-scrolls-online-exclusive-concept-art-gallery" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395399231097/328f114c-a397-4ab5-a5ad-b22ef56dbda2-140x84.jpeg" width="140" height="84" alt="Elder Scrolls Online"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/technology/gallery/2014/mar/21/elder-scrolls-online-exclusive-concept-art-gallery"  class="link-text">Elder Scrolls Online – exclusive concept art gallery – in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+	
+			
+	
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+                        <li class=" image">
+            
+				    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/environment/gallery/2014/mar/21/the-week-in-wildlife-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395413108779/c05133b5-3eb6-4fbd-abad-0a0ac1ef292e-140x84.jpeg" width="140" height="84" alt="Week in Wildlife : a monkey at National Park Palo Verde"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+							<h3>				
+		
+	        <a href="http://www.theguardian.com/environment/gallery/2014/mar/21/the-week-in-wildlife-in-pictures"  class="link-text">The week in wildlife – in pictures</a>
+    				</h3>									</div>
+	
+		
+										
+					    
+
+
+		    		    
+		
+	
+	
+			
+	
+		
+									<span class="date">21 Mar 2014</span>
+			        
+	
+			
+</div>
+
+    		
+
+
+    </li>
+
+    
+					</ul>
+	
+						
+		
+        
+
+    
+        <ul class="pagination b3">
+
+    	    			
+        
+                    <li class="last"><a  href="http://www.theguardian.com/inpictures?page=2" >Next</a></li>
+        
+			        		
+        
+                            <li>1</li>
+                    
+                                                <li><a  href="http://www.theguardian.com/inpictures?page=2"  >2</a></li>
+                                    
+                                                <li><a  href="http://www.theguardian.com/inpictures?page=3"  >3</a></li>
+                                    
+                                                <li><a  href="http://www.theguardian.com/inpictures?page=4"  >4</a></li>
+                                    
+                                                <li><a  href="http://www.theguardian.com/inpictures?page=5"  >5</a></li>
+                                    
+		        </ul>
+    			<p class="explainer">
+	        Displaying 1-15
+	        of 26642.
+		</p>
+	
+
+			</div>
+
+			<div id="related">
+				                
+    
+	
+		
+											
+
+							
+				    	    
+
+
+
+
+		
+										<div class="global capsule ed-zone editor-zone-1">
+	<div id="editor-zone-1" class="tri trail trailblock">
+					<ul class="tri trail trailblock">
+
+				
+				
+										
+										
+															
+										
+											<li class="major-heading first">
+											
+						    
+
+
+
+
+
+
+
+			<h2>
+						
+		
+	        Featured galleries
+    		</h2>
+	
+
+
+					</li>
+				
+										
+										
+										
+										
+											<li class="image">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/19/testament-by-chris-hondros-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/11/1394552677855/aedc46e7-96aa-4dd8-aff2-e05c33a5e707-140x84.jpeg" width="140" height="84" alt="Joseph Duo, a Liberian militia commander loyal to the government, exults after firing a rocket-propelled grenade at rebel forces in Monrovia, Liberia."
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/19/testament-by-chris-hondros-in-pictures"  class="link-text">Testament by Chris Hondros</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+				
+										
+										
+										
+										
+											<li class="image">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/travel/gallery/2014/mar/21/travel-picture-quiz-names-these-famous-streets" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Travel/Pix/pictures/2014/3/20/1395316170609/Image-six-003.jpg" width="140" height="84" alt="Trail Street quiz 210314: Image six"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/travel/gallery/2014/mar/21/travel-picture-quiz-names-these-famous-streets"  class="link-text">Travel quiz - name these famous streets</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+				
+										
+										
+										
+										
+											<li class="image">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/20/the-worlds-first-underwater-museum-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395251150022/4a68706e-c05a-4aef-81c3-eb7434b0bdfd-140x84.jpeg" width="140" height="84" alt="Vicissitudes Grenada Collection 2007 Depth 5m Moliniere, Grenada"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/artanddesign/gallery/2014/mar/20/the-worlds-first-underwater-museum-in-pictures"  class="link-text">World's first underwater museum</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+				
+										
+										
+										
+															
+											<li class="image last">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/fashion/gallery/2014/mar/20/fashion-iridescent-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395253004635/Antipodium-Hot-knife-dres-007.jpg" width="140" height="84" alt="Antipodium Hot-knife dress"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/fashion/gallery/2014/mar/20/fashion-iridescent-in-pictures"  class="link-text">Fashion: Incredible iridescent</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+							</ul>
+					<ul class="tri trail trailblock next">
+
+				
+				
+										
+										
+															
+										
+											<li class="major-heading first comment">
+											
+						    
+
+
+
+
+
+
+
+			<h2>
+						
+		
+	        Go to ...
+    		</h2>
+	
+
+
+					</li>
+				
+										
+										
+										
+										
+											<li class="image">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/news/gallery/2014/mar/21/photo-highlights-of-the-day" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395403836754/c5e5da4c-eeb5-4102-b036-a358411ad193-140x84.jpeg" width="140" height="84" alt="These two frog in Sekura, Indonesia."
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/news/gallery/2014/mar/21/photo-highlights-of-the-day"  class="link-text">Photo highlights of the day</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+				
+										
+										
+										
+										
+											<li class="image">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/global-development/gallery/2014/mar/08/nepal-chaupadi-tradition-banishes-menstruating-women-in-pictures" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Environment/Pix/pictures/2014/3/7/1394213017480/MDG--Chaupadi-in-Nepal--s-004.jpg" width="140" height="84" alt="MDG : Chaupadi in Nepal : shadow of Uttara Saud is cast the wall of her house in Achham District"
+						class="gallery-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/global-development/gallery/2014/mar/08/nepal-chaupadi-tradition-banishes-menstruating-women-in-pictures"  class="link-text">From the agencies</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+				
+										
+										
+										
+															
+											<li class="image last">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/artanddesign/series/camera-club" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2011/11/22/1321973672424/Camera-club-logo-001.jpg" width="140" height="84" alt="Camera club logo"
+					 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/artanddesign/series/camera-club"  class="link-text">Camera club</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+							</ul>
+					<ul class="tri trail trailblock next">
+
+				
+				
+										
+										
+															
+										
+											<li class="major-heading first">
+											
+						    
+
+
+
+
+
+
+
+			<h2>
+						
+		
+	        Audio slideshows
+    		</h2>
+	
+
+
+					</li>
+				
+										
+										
+										
+										
+											<li class="image">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/artanddesign/audioslideshow/2014/feb/23/photography-scotland-hebrides" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/2/20/1392894360643/Island-life-a-Lewis-famil-006.jpg" width="140" height="84" alt="Island life: a Lewis family"
+						class="audioslideshow-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/artanddesign/audioslideshow/2014/feb/23/photography-scotland-hebrides"  class="link-text">The lost pictures of Lewis, Scotland</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+				
+										
+										
+										
+															
+											<li class="image last">
+											
+						    
+
+
+
+
+
+
+
+	
+		
+			    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	<div class="pictureurl">
+					    		<a href="http://www.theguardian.com/lifeandstyle/audioslideshow/2014/mar/20/learn-how-build-table-budget" data-link-name="anchor image"  class="link-image">	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/12/1394639632875/Sophie-Heawood-making-a-t-005.jpg" width="140" height="84" alt="Sophie Heawood making a table"
+						class="audioslideshow-mask"
+		 />
+</a>
+    			</div>
+
+
+
+
+<div class="trail-caption media-above">
+			<div class="linktext">
+											
+		
+	        <a href="http://www.theguardian.com/lifeandstyle/audioslideshow/2014/mar/20/learn-how-build-table-budget"  class="link-text">Build a table on a budget</a>
+    													</div>
+	
+		
+				
+</div>
+
+    		
+
+
+					</li>
+							</ul>
+			</div>
+</div>
+	
+				    
+			</div>
+
+		</div>
+
+		<div id="promo">
+			    	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo ***right hand ad slot on all  sites:Flexible right hand slot advert">
+                                                                
+    
+	
+		
+											        
+    
+        
+            <div id="Right1" class=" hide-on-popup" data-cb-ad-id="Right1">
+                
+                	
+                <div id="ad-placeholder-Right1"></div>
+            </div>
+        
+        
+    
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo **Today&#39;s video:List of trails from named trailblock">
+                                                                
+    
+	
+		
+											
+		
+	<div class="promo-component list-of-trails">
+		<div class="hd">
+						<h3>
+		
+	        Today's best video
+    </h3>
+			</div>
+		<div class="bd">
+			<ul class="l1d">
+																						<li class="inline-pic">
+										    					    
+																																										
+			
+			
+		
+	
+					    
+																																											
+		
+		
+		
+			
+	
+		
+						<a href="http://www.theguardian.com/music/video/2014/mar/21/how-to-busk-billy-bragg-jack-monroe-video" title="Video will start automatically on this page" data-link-name="anchor image" class="link-image " >
+										 
+    
+    
+    
+	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2014/3/10/1394466283566/Busking-with-Billy-Bragg--026.jpg"  width="280" height="168" alt="Busking with Billy Bragg - video"
+						class="video-mask"
+			 />
+													</a>
+			
+
+		
+	
+					    
+
+																																										
+			
+	 	
+	
+	
+				
+		<h4 class="t6">
+		
+	        <a href="http://www.theguardian.com/music/video/2014/mar/21/how-to-busk-billy-bragg-jack-monroe-video" title="Video will start automatically on this page"  class="link-text">How to busk: with Billy Bragg and Jack Monroe</a>
+    </h4>
+					
+					    
+																																										
+			
+			
+		
+			
+			<div class="trail-text">
+											                        
+                                    			We challenged our food writer to go busking – and  Billy Bragg went along to help
+		</div>
+	
+					 
+																																									    														</li>
+																						<li class="inline-pic">
+										    					    
+																																										
+			
+			
+		
+	
+					    
+																																											
+		
+		
+		
+			
+	
+		
+						<a href="http://www.theguardian.com/sport/video/2014/mar/21/speed-riding-avalanche-video" title="Video will start automatically on this page" data-link-name="anchor image" class="link-image " >
+										 
+    
+    
+    
+	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2014/3/20/1395312926588/Speed-Riding-Avalanche-008.jpg"  width="140" height="84" alt="Speed Riding Avalanche"
+						class="video-mask"
+			 />
+													</a>
+			
+
+		
+	
+					    
+
+																																										
+			
+	 	
+	
+	
+				
+		<h4 class="t6">
+		
+	        <a href="http://www.theguardian.com/sport/video/2014/mar/21/speed-riding-avalanche-video" title="Video will start automatically on this page"  class="link-text">Speed riding an avalanche</a>
+    </h4>
+					
+					    
+																																										
+			
+			
+		
+			
+			<div class="trail-text">
+											                        
+                                    			David Bozon heads down a river-like avalanche – then rides it off a cliff
+		</div>
+	
+					 
+																																									    														</li>
+																						<li class="inline-pic">
+										    					    
+																																										
+			
+			
+		
+	
+					    
+																																											
+		
+		
+		
+			
+	
+		
+						<a href="http://www.theguardian.com/film/video/2014/mar/21/guardian-film-show-labor-day-starred-up-and-a-long-way-down-video" title="Video will start automatically on this page" data-link-name="anchor image" class="link-image " >
+										 
+    
+    
+    
+	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/19/1395251943173/Kate-Winslet-and-Josh-Bro-004.jpg"  width="140" height="84" alt="Kate Winslet and Josh Brolin sweating decorously in Labor Day."
+						class="video-mask"
+			 />
+													</a>
+			
+
+		
+	
+					    
+
+																																										
+			
+	 	
+	
+	
+				
+		<h4 class="t6">
+		
+	        <a href="http://www.theguardian.com/film/video/2014/mar/21/guardian-film-show-labor-day-starred-up-and-a-long-way-down-video" title="Video will start automatically on this page"  class="link-text">The Guardian Film Show</a>
+    </h4>
+					
+					    
+																																										
+			
+			
+		
+			
+			<div class="trail-text">
+											                        
+                                    			Our critics review Labor Day (left), Starred Up and A Long Way Down
+		</div>
+	
+					 
+																																									    																									<a href="http://www.theguardian.com/film/video/2014/mar/21/guardian-film-show-labor-day-starred-up-and-a-long-way-down-video#start-of-comments" class="trail-comment-count comments-open" short-url="-p-3nyg7" style="display:none"><span class="comment-count-val"></span></a>
+																			</li>
+																						<li class="inline-pic">
+										    					    
+																																										
+			
+			
+		
+	
+					    
+																																											
+		
+		
+		
+			
+	
+		
+						<a href="http://www.theguardian.com/sport/video/2014/mar/21/diver-peruvian-amazon-river-video" title="Video will start automatically on this page" data-link-name="anchor image" class="link-image " >
+										 
+    
+    
+    
+	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2014/3/21/1395401333925/Diver-jumps-from-35m-into-008.jpg"  width="140" height="84" alt="Diver jumps from 35m into Peruvian Amazon river- video"
+						class="video-mask"
+			 />
+													</a>
+			
+
+		
+	
+					    
+
+																																										
+			
+	 	
+	
+	
+				
+		<h4 class="t6">
+		
+	        <a href="http://www.theguardian.com/sport/video/2014/mar/21/diver-peruvian-amazon-river-video" title="Video will start automatically on this page"  class="link-text">Diver jumps from 35 metres into Peruvian Amazon</a>
+    </h4>
+					
+					    
+																																										
+			
+			
+		
+			
+			<div class="trail-text">
+											                        
+                                    			World high-diving champion Orlando Duque jumps from tree
+		</div>
+	
+					 
+																																									    														</li>
+							</ul>
+		</div>
+	</div>
+
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo Related content and tags (Comp galleries):Related content and story package">
+                                                                
+    
+	
+		
+											
+<div id="related-wide">
+        	    
+
+
+
+
+
+		
+										
+
+        
+
+
+                            
+    
+	
+		
+											
+	
+	    
+
+
+
+    
+	<div class="related-keywords trackable-component"         	        data-component="Gallery:related-keywords">
+	
+	
+	
+	
+			
+
+									
+				
+	
+</div>
+
+
+    
+                
+        	    
+
+				
+        	    
+
+
+
+
+
+		
+										
+
+        
+
+</div>
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo 4th ad slot:Custom advert slot">
+                                                                
+    
+	
+		
+											
+    	
+    	
+
+    <div class="custom-adslot">
+		        
+    
+        
+            <div id="Middle" class=" hide-on-popup" data-cb-ad-id="Middle">
+                
+                	
+                <div id="ad-placeholder-Middle"></div>
+            </div>
+        
+        
+        </div>
+
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo **Most viewed:microapp zeitgeist:Most Viewed Old Promo">
+                                                    <style>
+  .m-zeitgeist .bd { float: left } /* for the IE6 lols */
+  .m-zeitgeist .hd { padding-bottom: 0px; margin-bottom: -12px}
+  .m-zeitgeist .hd h2 { padding-bottom: 12px; }
+  .m-zeitgeist #att-panes { background-color: #fff; float: left; }
+	.m-zeitgeist .att-toggle-pane { min-width:280px; }
+  .m-zeitgeist ol { padding: 0 5px; }
+  .m-zeitgeist #most-zeitgeist ol { padding-left: 0; }
+  .m-zeitgeist .zg-date { color: #D61D00; padding-left:5px; padding-top: 5px; }
+  .m-zeitgeist ol li { clear: both; padding-left: 15px; }
+  .m-zeitgeist div#att-most-viewed ol li.l1,
+  .m-zeitgeist div#att-latest ol li.l1 { padding-bottom: 9px !important; }
+  .m-zeitgeist ol li.footer { clear: both; padding-left: 0px !important; padding-top: 5px !important; }
+  .m-zeitgeist .rank { float: left; margin-left: -15px; }
+  .m-zeitgeist .kicker { font-weight: bold; }
+  .m-zeitgeist ol li.thumb { padding-left: 0; }
+  .m-zeitgeist ol li.thumb .rank { margin-left: 0; }
+  .m-zeitgeist ol li img { float: left; margin: 0 10px 3px 0; }
+  
+  .m-zeitgeist #most-zeitgeist ol li { border-top: none; padding: 0; border-top: none; }  
+  .m-zeitgeist #most-zeitgeist ol li .zeit-link {background-color: #fff; padding: 5px 0 9px 5px; border-top: 1px dotted #999; margin-bottom: 0px;  }  
+  .m-zeitgeist #most-zeitgeist ol li.footer { border-top:1px dotted #999; padding: 5px 0 9px 10px; margin-left: 5px }  
+  .m-zeitgeist #most-zeitgeist .m-zeigeist ol { padding-left: 0}
+  
+  /* zeit-up */
+  .m-zeitgeist #most-zeitgeist .what-is { float: none; padding: 0 3px; vertical-align: middle; cursor: pointer; }
+  .about-zeit { position: relative; }
+  .zeit-popup { position: absolute; display: none; background-color: #dbedf3; color: #333; padding: 6px; width: 200px; }    
+
+.fade-1 { border-left: 5px solid # !important;}
+.fade-2 { border-left: 5px solid # !important;}
+.fade-3 { border-left: 5px solid # !important;}
+.fade-4 { border-left: 5px solid # !important;}
+.fade-5 { border-left: 5px solid # !important;}
+
+.m-zeitgeist div.hd { padding-bottom: 0; }
+.m-zeitgeist.most-viewed div.hd { padding-bottom: 7px; }
+
+
+
+.m-zeitgeist #most-zeitgeist .fashion { border-left-color: #FFC202; }
+.m-zeitgeist #most-zeitgeist .networkukprod { border-left-color: #333333; }
+.m-zeitgeist #most-zeitgeist .money { border-left-color: #8F1AB6; }
+.m-zeitgeist #most-zeitgeist .society { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .books { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .world { border-left-color: #D61D00; }
+.m-zeitgeist #most-zeitgeist .politics { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .sport { border-left-color: #008000; }
+.m-zeitgeist #most-zeitgeist .technology { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .film { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .media-network { border-left-color: #c4c6c8; }
+.m-zeitgeist #most-zeitgeist .education { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .mobilenet { border-left-color: #333333; }
+.m-zeitgeist #most-zeitgeist .media { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .travel { border-left-color: #65C5FB; }
+.m-zeitgeist #most-zeitgeist .public-leaders-network { border-left-color: #B51D5D; }
+.m-zeitgeist #most-zeitgeist .environment { border-left-color: #7BBB00; }
+.m-zeitgeist #most-zeitgeist .voluntary-sector-network { border-left-color: #FFB200; }
+.m-zeitgeist #most-zeitgeist .music { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .better-business { border-left-color: #2d353a; }
+.m-zeitgeist #most-zeitgeist .global-development { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .culture-professionals-network { border-left-color: #0363A8; }
+.m-zeitgeist #most-zeitgeist .childrens-books-site { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .commentisfree { border-left-color: #0061A6; }
+.m-zeitgeist #most-zeitgeist .healthcare-network { border-left-color: #0363A8; }
+.m-zeitgeist #most-zeitgeist .business { border-left-color: #4A64D9; }
+.m-zeitgeist #most-zeitgeist .artanddesign { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .tv-and-radio { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .football { border-left-color: #006000; }
+.m-zeitgeist #most-zeitgeist .social-care-network { border-left-color: #0061A6; }
+.m-zeitgeist #most-zeitgeist .lifeandstyle { border-left-color: #FFC202; }
+.m-zeitgeist #most-zeitgeist .news { border-left-color: #D61D00; }
+.m-zeitgeist #most-zeitgeist .law { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .local-government-network { border-left-color: #993399; }
+.m-zeitgeist #most-zeitgeist .stage { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .housing-network { border-left-color: #993399; }
+.m-zeitgeist #most-zeitgeist .culture { border-left-color: #D1008B; }
+.m-zeitgeist #most-zeitgeist .science { border-left-color: #801100; }
+.m-zeitgeist #most-zeitgeist .small-business-network { border-left-color: #c4c6c8; }
+.m-zeitgeist #most-zeitgeist .uk { border-left-color: #D61D00; }
+.m-zeitgeist #most-zeitgeist .social-enterprise-network { border-left-color: #FFB200; }
+.m-zeitgeist #most-zeitgeist .networkusprod { border-left-color: #333333; }
+.m-zeitgeist #most-zeitgeist .government-computing-network { border-left-color: #00513B; }
+.m-zeitgeist #most-zeitgeist .sustainablebusiness { border-left-color: #0061A6; }
+
+
+img.tinythumb { width: 140px }
+</style>
+
+<script type="text/javascript">
+jQ(function($){$('.about-zeit').each(function(){var distance=-10;var time=250;var hideDelay=500;var hideDelayTimer=null;var beingShown=false;var shown=false;var trigger=$('.what-is',this);var info=$('.zeit-popup',this).css('opacity',0);$([trigger.get(0),info.get(0)]).mouseover(function(){if(hideDelayTimer)clearTimeout(hideDelayTimer);if(beingShown||shown){return;}else{beingShown=true;info.css({top:-97,right:0,display:'block'}).animate({top:'-='+distance+'px',opacity:1},time,'swing',function(){beingShown=false;shown=true;});}return false;}).mouseout(function(){if(hideDelayTimer)clearTimeout(hideDelayTimer);hideDelayTimer=setTimeout(function(){hideDelayTimer=null;info.animate({top:'-='+distance+'px',opacity:0},time,'swing',function(){shown=false;info.css('display','none');});},hideDelay);return false;});});});
+</script>
+
+  <!------ widget old rhs: global : 2014-03-21 19:46:41.173701 ------>
+  <div class="m-zeitgeist promo-component four-col attention-data">
+
+    <div class="hd">
+    	<h3>On the Guardian</h3>
+    </div>
+	
+  	<div class="bd">
+  		<div id="att-toggle">
+  			<ul class="tabs">
+          <li>
+            <a class="active" href="#att-most-viewed">Most viewed</a>
+          </li>
+          
+          
+          <li>
+            <a class="inactive" href="#att-latest">Latest</a>
+          </li>
+          
+        </ul>
+			 
+        <div id="att-panes">
+          <div class="att-tabs att-toggle-pane" id="att-most-viewed">
+            <p class="b2 zg-date">Last 24 hours</p>
+            <ol>
+              
+              <li class="l1 thumb">
+                
+                  
+                    <img class="tinythumb" src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395410431459/A-drifting-buoy-measuring-006.jpg" />
+                  
+                
+                <span class="rank">1.&nbsp;</span>
+                <strong>World:</strong> 
+								<a href="http://www.theguardian.com/world/2014/mar/21/malaysia-airlines-mh370-search-australia-no-sign-missing-plane">MH370: Australia says no possible debris from missing plane found yet</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">2. </span>
+                <strong>Comment:</strong> 
+								<a href="http://www.theguardian.com/commentisfree/2014/mar/21/top-10-most-satisfying-jobs">These are the top 10 most satisfying jobs: surprised? | Open thread</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">3. </span>
+                <strong>World:</strong> 
+								<a href="http://www.theguardian.com/world/2014/mar/21/what-happened-to-flight-mh370-missing-plane">What happened to MH370? A pilot and a flight attendant give their views</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">4. </span>
+                <strong>World:</strong> 
+								<a href="http://www.theguardian.com/world/2014/mar/21/mh370-search-for-missing-plane-resumes-at-daybreak-live">MH370: Aircraft reach search zone in south Indian Ocean  - live</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">5. </span>
+                <strong>Comment:</strong> 
+								<a href="http://www.theguardian.com/commentisfree/2014/mar/21/no-make-up-selfie-facebook-beat-cancer-research-meme">No-makeup selfies on Facebook won't beat cancer alone | Sali Hughes</a>
+              </li>
+              
+              <li class="more-most-viewed l1 footer">
+					
+					<a href="http://www.theguardian.com/most-viewed">More most viewed</a>
+					
+              </li>
+            </ol>
+          </div>
+        
+          
+        
+          
+          <div class="att-tabs att-toggle-pane initially-off" id="att-latest">
+            <p class="b2 zg-date">Last 24 hours</p>
+            <ol>
+              
+              <li class="l1 thumb">
+                
+                  
+                    <img class="tinythumb" src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2014/3/21/1395429281796/no-make-up-003.jpg" />
+                  
+                
+                <span class="rank">1.&nbsp;</span>
+                <a href="http://www.theguardian.com/media/2014/mar/21/no-makeup-selfie-campaign-facebook">No-makeup selfies campaign generates £2m windfall for cancer research</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">2. </span>
+                <a href="http://www.theguardian.com/football/2014/mar/21/jose-mourinho-bad-moments-arsene-wenger-chelsea-arsenal">José Mourinho says Arsenal stuck by Arsène Wenger in all 'the bad moments'</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">3. </span>
+                <a href="http://www.theguardian.com/sport/2014/mar/21/cue-card-joe-tizzard-quits-saddle">Cue Card's jockey Joe Tizzard quits saddle to help father's business</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">4. </span>
+                <a href="http://www.theguardian.com/commentisfree/2014/mar/21/tuition-fees-teetering-on-the-brink-editorial">Tuition fees: teetering on the brink | Editorial</a>
+              </li>
+              
+              <li class="l1">
+                
+                <span class="rank">5. </span>
+                <a href="http://www.theguardian.com/world/2014/mar/21/oligarch-timchenko-denies-putin-links-us-blacklist-sanctions">Gennady Timchenko denies Putin links made him one of Russia's top oligarchs</a>
+              </li>
+              
+              <li class="more-latest l1 footer">
+				
+				<a href="http://www.theguardian.com/global/all">All today&#39;s stories</a>
+				
+              </li>
+            </ol>
+          </div>
+          
+  
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<script type="text/javascript">
+  function cleanUpExtraWeirdLinkCreatedBySomeOtherScriptThatOnlyExistsOnOnePageThatICantFineAwesomesauce() {
+    try {
+      jQ('.m-zeitgeist #att-toggle ul.tabs li a').each(function(i, el) { if (jQ(el).html().trim().length === 0) { jQ(el).remove() }});
+    } catch(er) {
+      // Ignore
+    }
+  }
+  cleanUpExtraWeirdLinkCreatedBySomeOtherScriptThatOnlyExistsOnOnePageThatICantFineAwesomesauce();
+  //  And because we have no idea when the script runs that adds the extra <a> tag
+  setTimeout("cleanUpExtraWeirdLinkCreatedBySomeOtherScriptThatOnlyExistsOnOnePageThatICantFineAwesomesauce()", 1000);
+  setTimeout("cleanUpExtraWeirdLinkCreatedBySomeOtherScriptThatOnlyExistsOnOnePageThatICantFineAwesomesauce()", 2500);
+</script>
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo NSA files trailblock:Trail with image on side (from named trailblock)">
+                                                                
+    
+	
+		
+												
+
+
+
+	<div class="promo-component image-side">
+		<div class="hd">
+						</div>
+		
+		<div class="bd">
+			<ul class="l1d">
+															<li>
+							    
+																																											
+		
+		
+		
+			
+	
+		
+						<a href="http://www.theguardian.com/world/the-nsa-files?INTCMP=mic_232382" data-link-name="anchor image" class="link-image " >
+										 
+    
+    
+    
+	<img src="http://static.guim.co.uk/sys-images/Guardian/Pix/pictures/2013/10/4/1380904542361/TheNSAfilestrailblockimage.png"  width="280" height="165" alt="The NSA files trailblock image"
+		 />
+													</a>
+			
+
+		
+	
+							    
+
+																																										
+			
+	
+	
+	
+				
+		<p>
+		
+	        <a href="http://www.theguardian.com/world/the-nsa-files?INTCMP=mic_232382"  class="link-text"><em></em></a>
+    </p>
+					
+							    
+																																										
+			
+			
+		
+			
+			<div class="trail-text">
+											                        
+                                    			Follow NSA-related developments as controversy over leaks continues to make headlines
+		</div>
+	
+							 
+																																														</li>
+												</ul>
+		</div>
+	</div>
+
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo sponsored features:Sponsored features">
+                                                                
+    
+	
+		
+													
+	
+	
+	
+		
+					
+			
+	<div class="promo-component json-features x31 four-col" style="display: none;">
+		<div class="hd">
+			<h3>Sponsored feature</h3>
+		</div>
+		<div class="bd inline-pic">
+			<a class="link-image" rel="nofollow"><img width="130" height="121" alt="" /></a>
+							                        
+    
+        
+            <div id="x31" class=" hide-on-popup" data-cb-ad-id="x31">
+                
+                	
+                <div id="ad-placeholder-x31"></div>
+            </div>
+        
+        
+        
+            <span class="x31-script-placeholder"></span>
+            <script>
+
+                function showSponsoredFeaturex31(slotJson) {
+                    if (typeof(slotJson) === 'object') {
+                        var node = jQ('.json-features.x31');
+                        convertJSONtoAd(
+                                node.find('img:first-child'),
+                                node.find('a.t6'),
+                                node.find('p:last-child'),
+                                slotJson,
+                                node.find('.hd').children().eq(0),
+                                'x31'
+                        );
+                    }
+                }
+
+                                jQ(document).ready(function(){
+                    jQ('.x31-script-placeholder').writeCapture().replaceWith('<script>showSponsoredFeaturex31(window.sponJSON)<' + '/script>')
+                })
+
+			</script>
+			<a class="t6" rel="nofollow"></a>
+			<p></p>
+		</div>
+	</div>
+
+                                                    </span>
+                                            				
+			        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo 3rd ad slot:Below fold ad slot">
+                                                                
+    
+	
+		
+											
+
+	        
+    
+        
+            <div id="Middle2" class=" hide-on-popup" data-cb-ad-id="Middle2">
+                
+                	
+                <div id="ad-placeholder-Middle2"></div>
+            </div>
+        
+        
+    
+
+                                                    </span>
+                                            				
+			        
+
+    	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                    				
+			        
+
+
+		<div id="promo" class="four-col edge">
+		    	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+										
+                                                                                                                                                                                                                            
+
+                                                                        
+	
+	
+		
+			
+                                                        
+                                                                                                                <span class="trackable-component component-wrapper four-col" data-component="Content Type:promo-bottom Bottom advertiserlinks:Advertiser links for promo slot">
+                                                                
+    
+	
+		
+											
+	
+	
+		
+			
+			<script type="text/javascript">
+
+google_ad_client = 'ca-guardian_js';
+google_ad_channel = 'global';
+</script>
+
+    	    
+
+
+
+
+
+		
+										
+
+        
+
+
+<script>
+
+google_max_num_ads = '3';
+
+</script>
+			    				<div id="google-ads-container" class="four-col promo-component advertiser-links" style="display: none;"></div>
+		<script type="text/javascript">
+		//<![CDATA[
+			if (true) {
+					  writeScript("http://pagead2.googlesyndication.com/pagead/show_ads.js", false, function(){});
+			}
+		// ]]>
+		</script>
+	
+
+                                                    </span>
+                                            				
+			        
+
+	</div>
+		</div>
+
+			    	    	    	    
+    	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                    				
+			        
+
+
+	    
+    
+                
+
+<div id="footer-container">
+    <div id="footer" class="global footer b4">
+    	    	<ul id="footer-links">
+    		    			    				    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://syndication.guardian.co.uk/"  class="link-text">License/buy our content</a>
+    </li>
+					
+  |     			    				    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/help/privacy-policy"  class="link-text">Privacy policy</a>
+    </li>
+					
+  |     			    				    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/help/terms-of-service"  class="link-text">Terms of service</a>
+    </li>
+					
+  |     			    				    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/advertising/guardian-america-advertising-info"  class="link-text">US advertising</a>
+    </li>
+					
+  |     			    				    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/index/subjects/a"  class="link-text">A - Z index</a>
+    </li>
+					
+  |     			    				    
+
+																																										
+			
+	
+	
+	
+				
+		<li>
+		
+	        <a href="http://www.theguardian.com/info/about-guardian-us"  class="link-text">About us</a>
+    </li>
+					
+     			    		    	</ul>
+    
+        <ul id="copyright-links">
+        	    			<li>&#169; 2014 Guardian News and Media Limited or its affiliated companies. All rights reserved.</li>
+    			    		        </ul>
+    </div>
+</div>
+    	    
+
+
+
+
+
+		
+										
+
+        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        <script>
+jQ(function() {
+    jQ('#article-wrapper .factbox-container .factbox').each(function() {
+        var node = jQ(this),
+            className = node.attr('class');
+        node.attr('data-component', 'comp: r2: ' + className).addClass('trackable-component');
+    });
+});
+</script>
+
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        <script type='text/javascript' src='http://resource.guim.co.uk/global/survey/foresee/foresee-trigger.js'></script>
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-signin-top-nav'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://id.guim.co.uk/static/17/cs/js/guardian.r2.identity.signin-top-nav.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-signin-overlay'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://id.guim.co.uk/static/17/cs/js/guardian.r2.identity.overlay.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-facebook-banner'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://id.guim.co.uk/static/17/cs/js/guardian.r2.identity.facebookbanner.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-cookie-notification'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://id.guim.co.uk/static/17/cs/js/guardian.r2.identity.site-notification.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-identity-location'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://id.guim.co.uk/static/17/cs/js/guardian.r2.identity.location.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        <script async defer>
+jQ(function() {
+	if(jQ.support.cors && !(typeof(window.getSelection) === 'undefined')) {
+		jQ(window).on("copy", function() { jQ.post("http://gu-text-catcher.appspot.com/capture", {selection: window.getSelection().toString(), path: window.location.pathname}); });
+	}
+});
+</script>
+
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        
+    <div class='initially-off ma-placeholder-identity-cookie-refresh'></div>
+    <script>
+        jQ(document).ready(function(){
+          jQ.ajax({ url : 'http://id.guim.co.uk/static/17/cs/js/guardian.r2.identity.refresh.js', dataType : 'script', type : 'get', crossDomain : true, cache: true });
+        });
+    </script>
+  
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        <script>
+// Next-gen performance benchmark - https://gist.github.com/commuterjoy/8325989
+jQ(document).ready(function () {
+  if (  s
+        && (s.prop67 === "nextgen-compatible")
+     ) {
+    jQ.get(location.pathname + '?view=mobile');
+    try {
+        var nextGenNavigation = 'http://api.nextgen.guardianapps.co.uk';
+        var edition = guardian.page.edition.toLowerCase();
+        var section = guardian.page.contentId.split("/")[1];
+        var path = location.pathname;
+        jQ.get(nextGenNavigation + '/top-stories/trails.json?page-size=10&view=link&_edition='+edition);
+        // Stop us requesting 'most-read' sections that don't exist
+        if (/business|world|football|culture|technology|travel|education|fashion|money|envrionment|science|lifeandstyle/.test(section)) {
+          jQ.get(nextGenNavigation + '/most-read/'+section+'.json?_edition='+edition);
+        }
+        
+    } catch(e) {
+        console.log('next-gen-performance-benchmark', e);
+    }
+  }
+});
+</script>
+
+                                            				
+			        
+
+			            						
+					
+					
+                                                                                                                                                                                                                            
+
+                                                                        <script>
+if (/prepaiid365.com/.test(document.domain)) {
+           document.title = '.';
+           document.body.innerHTML = '<h1 style="font-family: times, sans-serif; margin: 10px;">The link you clicked on is trying to take you to a scam site.<br>Please close your browser and delete the email containing the link.</h1>';
+}
+</script>
+
+                                            				
+			        
+
+    	    
+
+
+
+
+
+		
+										
+
+        
+
+
+
+	</div>
+
+
+
+
+<script src="//cdn.optimizely.com/js/10822091.js"></script>
+
+    	
+
+
+
+
+<script>
+    require.config({
+        paths: {
+            "jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min",
+            "ophan/r2": 'http://j.ophan.co.uk/ophan.r2'
+        }
+    });
+    require(["ophan/r2"], function () {});
+</script>
+            <script id="omnitureGeneratorScript" type="text/javascript">
+    //<![CDATA[
+    if(true) {
+        var s_account="guardiangu-network";
+
+        
+        writeScript('http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/scripts/omniture-H.25.5.js', false, function(){});
+    }
+    //]]>
+    </script>
+
+            <script type="text/javascript">
+        window.optimizely = window.optimizely || [];
+        window.optimizely.push("sc_activate");
+        if (window.optimizely.activeExperiments && window.optimizely.activeExperiments.length > 0) {
+            s.events = s.events ? s.events + ",event58" : "event58";
+        }
+    </script>
+    
+    <script id="omnitureScript" type="text/javascript">
+
+    //<![CDATA[
+    if(true) {
+        	
+
+        if (false) {
+            s.pageName = document.title;
+        } else {
+            s.pageName = "Global";
+        }
+
+        s.channel = "Global";
+        s.server  = "102529238";
+
+        var userId = "(none)";
+        if(userId != "(none)") {
+            s.prop2   = "GUID:" + userId;
+        }
+
+                    s.prop3 = "GU.co.uk";
+                    s.prop4 = "";
+                    s.prop5 = "";
+                    s.prop6 = "";
+                    s.prop7 = "2008/04/16 03:18";
+                    s.prop8 = "606222";
+                    s.prop9 = "Gallery";
+                    s.prop10 = "";
+                    s.prop13 = "";
+                    s.prop19 = "GUS";
+                    s.prop47 = "US";
+                    s.prop64 = "UK";
+                    s.prop66 = "";
+                    s.prop67 = "nextgen-non-compatible";
+                    s.prop72 = "Global";
+                    s.prop73 = "Global";
+                    s.prop74 = "Global";
+                    s.prop75 = "Global";
+        
+                    guardian.r2.OmnitureTracking.setAdditionalPageProperties({
+                isContentPage: false,
+                contentType:   "Gallery",
+                published:     "2008/04/16 03:18"
+            });
+        
+        
+        // Apply any additional props set by the page before s_code has loaded
+        guardian.r2.OmnitureTracking.applyProperties();
+
+                s.eVar23="";
+
+
+        // Masterclass tracking
+                // /Masterclass tracking
+
+        try {
+            if (guardian.r2.OmnitureTrackingOverride) {
+                new guardian.r2.OmnitureTrackingOverride(s);
+            }
+        }
+        catch(err) {
+        }
+
+        var s_code=s.t();if(s_code)document.write(s_code);
+
+
+            }
+    //]]>
+    </script>
+    <noscript id="omnitureNoScript">
+        <div><img alt="" src='http://hits.theguardian.com/b/ss/guardiangu-network/1/H.25.5/41361?ns=guardian&pageName=Global&ch=Global&c3=GU.co.uk&c4=&c5=&c6=&c7=2008%2F04%2F16+03%3A18&c8=606222&c9=Gallery&c10=&c13=&c19=GUS&c47=US&c64=UK&c66=&c67=nextgen-non-compatible&c72=Global&c73=Global&c74=Global&c75=Global&h2=GU%2FGlobal%2F&c2=GUID:(none)' width="1" height="1" /></div>
+    </noscript>
+
+	    		    		    
+			<script>
+		var _qevents = _qevents || [];
+		(function() {
+			var elem = document.createElement('script');
+
+			elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+			elem.async = true;
+			elem.type = "text/javascript";
+			var scpt = document.getElementsByTagName('script')[0];
+			scpt.parentNode.insertBefore(elem, scpt);
+		})();
+		_qevents.push( { qacct:'p-73ktnlRTKQPTw', labels: 'global'} );
+		</script>
+		<noscript><div style="display: none;"><img src="//pixel.quantserve.com/pixel/p-73ktnlRTKQPTw.gif?labels=global" height="1" width="1" alt="Quantcast"/></div></noscript>
+	
+        		<script>
+			var qcResults = function (result) {
+                var justTheParameters = '';
+				for (var i = 0, len = result.segments.length; i < len; i++) {
+					OAS_query += 'qc=' + result.segments[i].id + '&';
+                    justTheParameters += 'qc=' + result.segments[i].id + '&';
+				}
+			}
+		</script>
+		<script src="//pixel.quantserve.com/api/segments.json?a=p-73ktnlRTKQPTw&amp;callback=qcResults"></script>
+	
+;
+
+<script id="componentTrackingScript" type="text/javascript">
+if (true && true) {
+    guardian.r2.OmnitureTracking.enableComponentTracking();
+}
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+	if (true) {
+        // guardian.co.uk Connect Adprobe Tag, MPU [9814], Leaderboard [9815]
+        var wlOrd = new Date().getTime();
+        document.write('<scr' + 'ipt type="text/javascript" src="http://req.connect.wunderloop.net/AP/1566/5823/9815/js?cus=9815,9814&ord=' + wlOrd + '"></sc' + 'ript>');
+	}
+// ]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+	if (true) {
+        OAS_query += 'wl9815=' + wl9815camp + '&wl9814=' + wl9814camp + '&';
+	}
+// ]]>
+</script>
+                <script type="text/javascript">
+            // Audience Science - Gateway Media
+            // Page PlacementID: c7Zrhu,Y1C40a
+            try {
+                var cb = new Date().getTime();
+                var asiPqTag = false;
+                document.write("<sc" + "ript type='text/javascript' language='JavaScript' src='//pq-direct.revsci.net/pql?placementIdList=c7Zrhu,Y1C40a&cb=" + cb + "'></sc" + "ript>");
+            } catch(err) { }
+        </script>
+
+        <script type="text/javascript">
+            // Needs to be in a different script block to allow the returned
+            // asiPlacements global to become available
+            if (OAS_query && typeof asiPlacements != "undefined") {
+                for(var p in asiPlacements) {
+                    var returnValue = (asiPlacements[p].default) ? 'T' : '';
+                    OAS_query += 'pq_' + p + '=' + returnValue + '&';
+                }
+            }
+            if (window.guardian.r2.dfpEnabled && typeof asiPlacements != "undefined") {
+                for (var p in asiPlacements) {
+                    var returnValue = (asiPlacements[p].default) ? 'T' : '';
+                    googletag.pubads().setTargeting("pq_" + p, returnValue);
+                }
+            }
+        </script>
+    
+	    	<script>
+	if(true) {
+		ensurePackage("guardian.r2.revsci");
+
+        guardian.r2.revsci.revSciLocalStorage = true;
+
+		guardian.r2.revsci.siteName = 'Global';
+					guardian.r2.revsci.commercialFolder = 'Global'
+		
+		addEvent(null, 'load', function () {
+			writeScript('http://js.revsci.net/gateway/gw.js?csid=E05516', true, function() {
+				writeScript('http://static.guim.co.uk/static/152e4bc5afe52cfac06490157bc2260789cf2733/common/scripts/revsci.js', true, function() {
+					rs_initTracking();
+				});	
+			})
+		});
+	}
+	</script>
+
+
+                <script>
+                            OAS_query += crtg_content;
+                        				function OAS_NORMAL(pos) {
+					document.write('<A HREF="' + OAS_url + 'click_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + pos + '!' + pos + '?' + OAS_query + '" TARGET=' + OAS_target + '>');
+					document.write('<IMG SRC="' + OAS_url + 'adstream_nx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + pos + '!' + pos + '?' + OAS_query + '" BORDER=0></A>');
+				}
+
+				OAS_version = 11;
+				if ((navigator.userAgent.indexOf('Mozilla/3') != -1) || (navigator.userAgent.indexOf('Mozilla/4.0 WebTV') != -1)) OAS_version = 10;
+
+                if (true) {
+                    if (OAS_version >= 11) document.write('<scr' + 'ipt src="' + OAS_url + 'adstream_mjx.ads/' + OAS_sitepage + '/1' + OAS_rns + '@' + OAS_listpos + '?' + OAS_query + '"><\/script>');
+                }
+
+				function OAS_AD(pos) {
+                    if (true) {
+                        if (typeof(OAS_RICH) !== 'undefined' && OAS_version >= 11) {
+                            OAS_RICH(pos);
+
+                            // trigger event to say that content of ad is now readable
+                            var event;
+                            var adLoad = "ad-load";
+                            if (document.createEvent) {
+                                event = document.createEvent("HTMLEvents");
+                                event.initEvent(adLoad, false, false);
+                            } else if (document.createEventObject) {
+                                event = document.createEventObject();
+                                event.eventType = adLoad;
+                            }
+                            var slot = document.getElementById(pos);
+                            slot.dispatchEvent(event);
+
+                        } else {
+                            OAS_NORMAL(pos);
+                        }
+                    }
+				}
+					</script>
+		<!------ OAS SETUP end ------>
+	
+    	    
+    	<div id="ad-temp-Top">
+		                    <script>
+                //<![CDATA[
+                    insertAsyncAd('#ad-placeholder-Top', '<script>OAS_AD("Top")<' + '/script>');
+                //]]>
+            </script>
+        	</div>
+        <script>
+              jQ('#ad-temp-Top').hide();
+          </script>
+    
+	    
+    	<div id="ad-temp-Right1">
+		                    <script>
+                //<![CDATA[
+                    insertAsyncAd('#ad-placeholder-Right1', '<script>OAS_AD("Right1")<' + '/script>');
+                //]]>
+            </script>
+        	</div>
+        <script>
+              jQ('#ad-temp-Right1').hide();
+          </script>
+    
+	    
+    	<div id="ad-temp-Middle">
+		                    <script>
+                //<![CDATA[
+                    insertAsyncAd('#ad-placeholder-Middle', '<script>OAS_AD("Middle")<' + '/script>');
+                //]]>
+            </script>
+        	</div>
+        <script>
+              jQ('#ad-temp-Middle').hide();
+          </script>
+    
+	    
+    	<div id="ad-temp-x31">
+		                    <script>
+                //<![CDATA[
+                    insertAsyncAd('#ad-placeholder-x31', '<script>OAS_AD("x31")<' + '/script>');
+                //]]>
+            </script>
+        	</div>
+        <script>
+              jQ('#ad-temp-x31').hide();
+          </script>
+    
+	    
+    	<div id="ad-temp-Middle2">
+		                    <script>
+                //<![CDATA[
+                    insertAsyncAd('#ad-placeholder-Middle2', '<script>OAS_AD("Middle2")<' + '/script>');
+                //]]>
+            </script>
+        	</div>
+        <script>
+              jQ('#ad-temp-Middle2').hide();
+          </script>
+    
+
+
+
+
+
+<script type="text/javascript">
+    (function() {
+        // Load OutBrain code
+        var ob = document.createElement('script');
+        ob.type = 'text/javascript';
+        ob.async = true;
+        ob.src = 'http://widgets.outbrain.com/outbrain.js';
+
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ob, s);
+    })();
+</script>
+
+
+
+
+
+
+
+
+
+
+<!-- START Nielsen Online SiteCensus V6.0 -->
+<!-- COPYRIGHT 2010 Nielsen Online -->
+<span id="n-analytics-placeholder"></span>
+<script type='text/javascript'>
+    if (true) {
+        jQ(document).ready( function(){
+                var script = "<scr" + "ipt type='text/javascript' src='//secure-uk.imrworldwide.com/v60.js'><" + "/script>";
+                script += "\n<sc" + "ript type='text/javascript'" + ">";
+                script += "\nvar pvar = { cid: 'uk-305078h', content: '0', server: 'secure-uk' };";
+                script += "\nvar feat = { landing_page: 0 };";
+                script += "\nvar trac = nol_t(pvar, feat);";
+                script += "\ntrac.record().post();";
+                script += "\n<" + "/script>";
+                jQ("#n-analytics-placeholder").writeCapture().replaceWith(script);
+            }
+        );
+    }
+</script>
+<noscript>
+ <div>
+    <img src="//secure-uk.imrworldwide.com/cgi-bin/m?ci=uk-305078h&amp;cg=0&amp;cc=1&amp;ts=noscript" width="1" height="1" alt="" />
+ </div>
+</noscript>
+<!-- END Nielsen Online SiteCensus V6.0 -->
+
+<script type='text/javascript'>
+
+    if (true) {
+        var _sf_async_config = {};
+        /** CONFIGURATION START **/
+        _sf_async_config.uid = 30676;
+        _sf_async_config.domain = document.domain;
+        _sf_async_config.sections = 'Global,Gallery (Content type),Gallery';
+        _sf_async_config.authors = '';
+        _sf_async_config.useCanonical = true;
+        _sf_async_config.sections = 'Global';
+
+        /** CONFIGURATION END **/
+        (function() {
+            function loadChartbeat() {
+                window._sf_endpt = (new Date()).getTime();
+
+                var e = document.createElement('script');
+                e.setAttribute('language', 'javascript');
+                e.setAttribute('type', 'text/javascript');
+                e.setAttribute('src',
+                        (('https:' == document.location.protocol) ? 'https://a248.e.akamai.net/chartbeat.download.akamai.com/102508/' : 'http://static.chartbeat.com/') +
+                                'js/chartbeat_pub.js');
+                document.body.appendChild(e);
+            }
+
+            var oldonload = window.onload;
+            window.onload = (typeof window.onload != 'function') ?
+                    loadChartbeat : function() {
+                oldonload();
+                loadChartbeat();
+            };
+        })();
+    }
+</script>
+
+    	
+
+
+
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/997352581/?value=0&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>
+
+<script>
+    (function(jQ) {
+        var google_conversion_id = 997352581;
+        var google_custom_params = window.google_tag_params;
+        var google_remarketing_only = true;
+
+        jQ.ajax({
+            url: "https://www.googleadservices.com/pagead/conversion.js",
+            cache: true,
+            dataType: "script"
+        });
+    })(jQuery);
+</script>
+
+
+	
+
+
+
+<script>
+		(function() {
+		var li = document.createElement('script'); li.type = 'text/javascript'; li.async = true;
+		li.src = ('https:' == document.location.protocol ? 'https:' : 'http:') + '//platform.stumbleupon.com/1/widgets.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(li, s);
+	})();
+	
+	(function() {
+
+		function searchboxCallback() {
+			jQ('.searchFilmForm .gsc-input').css("background-image", "none").attr("placeholder", "Enter film title");
+		}
+
+		window.__gcse = {
+			callback: searchboxCallback
+		};
+
+		var cx = '015267030705423474967:wogwzhj1luu';
+		var gcse = document.createElement('script');
+		gcse.type = 'text/javascript';
+		gcse.async = true;
+		gcse.src = 'https://www.google.com/cse/cse.js?cx=' + cx;
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(gcse, s);
+	})();
+
+
+	
+</script>
+
+
+
+</body>
+</html>

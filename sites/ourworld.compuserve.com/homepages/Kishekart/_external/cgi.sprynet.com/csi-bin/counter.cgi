@@ -1,0 +1,4 @@
+<html><head><script id="wayback-guard">window.open=function(){return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8"><style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head><body>GIF87aeЎяяя,eкЊЏ©ЛнгґЦ`3О—wlћИ‘ў†К‚¦х~c;»jLб©НЧ~IєtДа©'ь•0Ма	НћjКjЭ@+lєе^·2`Xм$зDЮq
+~K±р¶TЮgiн4~…7GµG'ш·Ф‡ёЧЈXВ&amp;&amp;ИЕЁ—wh·ѓh€XиЦщuvg9ъхйЧЙ'	љ%z‰Є…
+[чz·y«›дЁ‡&amp;kH[с‹™«iЬЪшК[Ьј·*Н©єл&lt;нЈьLК›э�¦6NVvв].	И„~ќї$?ЇбйЮk_ПяоЇЯD‚АЃP;
+</body></html>
