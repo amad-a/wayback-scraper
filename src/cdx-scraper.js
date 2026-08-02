@@ -68,7 +68,22 @@ const ASSET_SELECTORS = [
   ['table', 'background'],
   ['frame', 'src', { document: true }],
   ['iframe', 'src', { document: true }],
+  // Flash. A 2001 page states its movie three different ways -- <object data>, the
+  // nested <embed src> fallback for non-IE browsers, and <param name="movie"> -- and
+  // pages routinely use only one of them, so all three have to be collected. The
+  // <param> case is not attribute-addressable by selector alone; see enqueueAssets.
+  ['object[data]', 'data'],
+  ['embed[src]', 'src'],
 ];
+
+// <param> names that carry the movie URL, lowercased. `src` is the rarer spelling but
+// appears in FrontPage-generated markup.
+const MOVIE_PARAMS = new Set(['movie', 'src']);
+
+// A <param> element whose value is the SWF URL, for both the crawl and rewrite passes.
+function isMovieParam($, el) {
+  return MOVIE_PARAMS.has((($(el).attr('name') || '').trim().toLowerCase()));
+}
 
 // Elements whose URLs get rewritten to point at the local copy.
 //
@@ -88,6 +103,10 @@ const LINK_ATTRS = {
   table: { attr: 'background', localizeOffHost: true },
   img: { attr: 'src', localizeOffHost: true },
   'input[type="image"]': { attr: 'src', localizeOffHost: true },
+  // Ruffle reads the movie URL straight off these attributes, so they have to point at
+  // the local copy like any other subresource.
+  object: { attr: 'data', localizeOffHost: true },
+  embed: { attr: 'src', localizeOffHost: true },
 };
 
 // Extensions to try when an archived asset URL carries no extension of its own --
@@ -647,6 +666,14 @@ function enqueueAssets(html, page, queue) {
     }
   });
 
+  // <param name="movie" value="..."> -- the only place many Flash pages name the SWF.
+  // Selected by attribute value rather than by selector, hence the separate pass.
+  $('param[value]').each((_, el) => {
+    if (!isMovieParam($, el)) return;
+    const value = $(el).attr('value');
+    if (value) refs.push({ ref: value, isDocument: false });
+  });
+
   // Inline background:url(...) declarations.
   $('[style*="url("]').each((_, el) => {
     const style = $(el).attr('style') || '';
@@ -940,6 +967,62 @@ function externalContext(localPath) {
   return { host, inner, site: parts.slice(0, marker).join('/') };
 }
 
+// True when a loaded page embeds a Flash movie, by any of the three spellings.
+function hasFlash($) {
+  if ($('object[data$=".swf" i], embed[src$=".swf" i]').length) return true;
+  if ($('object[type="application/x-shockwave-flash" i]').length) return true;
+  if ($('embed[type="application/x-shockwave-flash" i]').length) return true;
+
+  let found = false;
+  $('param[value]').each((_, el) => {
+    if (found) return;
+    if (isMovieParam($, el) && /\.swf(\?|#|$)/i.test($(el).attr('value') || '')) {
+      found = true;
+    }
+  });
+
+  return found;
+}
+
+// Copy Ruffle's selfhosted build into <destDir>/_wayback/ruffle/ so the archive plays
+// Flash with no network. Returns false when the package is not installed, in which case
+// the injection is skipped entirely rather than pointing pages at a script that 404s.
+//
+// Ruffle is a webpack bundle: `ruffle.js` is a small loader that resolves its core
+// chunks and wasm binaries relative to its own URL, so the whole directory has to travel
+// together. Source maps are the one thing worth dropping -- they roughly double the size
+// and are of no use in an archive viewer. The licences are copied deliberately; the
+// build is MIT/Apache-2.0 and redistributing it means carrying them along.
+async function vendorRuffle(waybackDir) {
+  const source = path.join(process.cwd(), 'node_modules', '@ruffle-rs', 'ruffle');
+  if (!existsSync(source)) return false;
+
+  const target = path.join(waybackDir, 'ruffle');
+  await fs.mkdir(target, { recursive: true });
+
+  let copied = 0;
+  for (const name of await fs.readdir(source)) {
+    if (name.endsWith('.map') || name === 'package.json') continue;
+
+    const from = path.join(source, name);
+    const to = path.join(target, name);
+
+    // Ruffle's filenames are content-hashed, so same name means same bytes; only the
+    // unhashed ruffle.js needs a size check to catch a version bump.
+    const [src, dest] = await Promise.all([
+      fs.stat(from),
+      fs.stat(to).catch(() => null),
+    ]);
+    if (dest && dest.size === src.size) continue;
+
+    await fs.copyFile(from, to);
+    copied += 1;
+  }
+
+  if (copied) console.log(`Vendored Ruffle: ${copied} files into _wayback/ruffle/.`);
+  return true;
+}
+
 async function rewriteSavedPages(seeds) {
   console.log('\nRewriting links in saved pages...');
   let rewritten = 0;
@@ -1007,6 +1090,8 @@ async function rewriteSavedPages(seeds) {
       '},true);\n'
   );
   const assetBase = `${linkPrefix}_wayback`;
+  const ruffleReady = await vendorRuffle(waybackDir);
+  let flashPages = 0;
 
   for (const fullPath of htmlFiles) {
     const localPath = path.relative(destDir, fullPath);
@@ -1059,6 +1144,17 @@ async function rewriteSavedPages(seeds) {
         if (next) $(el).attr(spec.attr, next);
       });
     }
+
+    // <param name="movie"> alongside the attribute table above -- same rewrite, but the
+    // element is picked by its `name` value rather than by selector.
+    $('param[value]').each((_, el) => {
+      if (!isMovieParam($, el)) return;
+      const next = rewriteAttr($(el).attr('value'), localPath, {
+        isDocument: false,
+        localizeOffHost: true,
+      });
+      if (next) $(el).attr('value', next);
+    });
 
     // Disable links whose target is not a file we saved. Cleared first and fully
     // recomputed from the current file set, never accumulated -- so a link marked dead
@@ -1165,11 +1261,33 @@ async function rewriteSavedPages(seeds) {
       );
     }
 
+    // Flash. Ruffle's selfhosted build is a polyfill: loading it is the whole
+    // integration -- it finds the page's own <object>/<embed> Flash elements and swaps
+    // in its player, reading the movie URL off the attributes rewritten above. So
+    // nothing about the archived markup changes, which is what keeps this
+    // non-invasive; the `id_` snapshots simply never had the player the Wayback
+    // toolbar injects for you.
+    //
+    // Injected only on pages that actually reference a SWF. It pulls a ~14MB wasm core
+    // on first use, and only 6 pages in this archive are Flash pages -- putting the tag
+    // on all 6000 would make every unrelated page pay for a feature it never uses.
+    if (ruffleReady && hasFlash($) && !$('#ruffle-js').length) {
+      $('head').append(
+        `<script id="ruffle-js" src="${assetBase}/ruffle/ruffle.js"></script>`
+      );
+      flashPages += 1;
+    }
+
     await fs.writeFile(fullPath, $.html(), 'utf8');
     rewritten += 1;
   }
 
   console.log(`Rewrote ${rewritten} pages.`);
+  if (flashPages) {
+    console.log(`Ruffle injected into ${flashPages} Flash pages.`);
+  } else if (!ruffleReady) {
+    console.log('Ruffle not installed (npm i @ruffle-rs/ruffle); Flash left inert.');
+  }
 }
 
 // Every file under `dir`, as a Set of destDir-relative posix paths, lowercased -- the
