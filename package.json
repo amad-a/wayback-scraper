@@ -4,9 +4,11 @@
     "type": "module",
     "description": "This is an example of a Crawlee project.",
     "dependencies": {
+        "@anthropic-ai/sdk": "^0.115.0",
         "@inquirer/input": "^4.3.1",
         "@inquirer/prompts": "^7.10.1",
         "axios": "^1.7.7",
+        "better-sqlite3": "^12.11.1",
         "cheerio": "^1.1.2",
         "chrome-lens-ocr": "^4.0.2",
         "crawlee": "^3.11.5",
@@ -37,6 +39,7 @@
     "scripts": {
         "start": "node src/main.js",
         "scrape": "node src/cdx-scraper.js",
+        "archive": "node --env-file-if-exists=.env src/archive.js",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
         "crawl": "node src/wayback-crawler.js",
         "server": "http-server processed-output"
