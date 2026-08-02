@@ -292,9 +292,11 @@ function renderPage(crawls, stats) {
   /* 4:3 at 800x600. width/height rather than an aspect-ratio box: the archived pages
      are fixed-width 2001-era layouts, so a viewport that matches the era is the point. */
   iframe { width: 800px; height: 600px; border: 1px solid #ccc; background: #fff; }
-  #frame-label { margin: 0 0 .25rem; color: #555; height: 1.2em; }
-  /* Reserves its line whether or not a page is selected, so the frame never shifts. */
-  #frame-source { margin: 0 0 .5rem; height: 1.2em; visibility: hidden; }
+  #frame-label { margin: 0 0 .5rem; color: #555; height: 1.2em; }
+  /* The source line is itself the link to the snapshot. With no page selected -- or a
+     page whose log entry carried no timestamp -- the anchor keeps its text but loses
+     its href, so it reads as plain caption rather than a link that goes nowhere. */
+  #frame-label a:not([href]) { color: #555; cursor: default; text-decoration: none; }
 </style>
 </head>
 <body>
@@ -305,8 +307,7 @@ function renderPage(crawls, stats) {
 ${tree}
   </nav>
   <main>
-    <p id="frame-label">Select a page from the tree.</p>
-    <p id="frame-source"><a id="wayback-link" href="" target="_blank" rel="noopener">View on the Wayback Machine</a></p>
+    <p id="frame-label"><a id="wayback-link" target="_blank" rel="noopener">Select a page from the tree.</a></p>
     <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
   </main>
 </div>
@@ -314,8 +315,6 @@ ${tree}
   // Anchors keep real hrefs so middle-click and "open in new tab" still work; only a
   // plain left click is redirected into the frame.
   var frame = document.getElementById('frame');
-  var label = document.getElementById('frame-label');
-  var source = document.getElementById('frame-source');
   var waybackLink = document.getElementById('wayback-link');
   var active = null;
 
@@ -326,19 +325,15 @@ ${tree}
 
     event.preventDefault();
     frame.src = link.getAttribute('href');
-    label.textContent = link.getAttribute('title') || link.textContent;
 
-    // Hidden rather than emptied for pages whose log entry carried no timestamp, so
-    // the frame does not jump when moving between rows that have one and rows that
-    // do not.
+    // The source line is the link: its text names the page, its href points at the
+    // snapshot. A row whose log entry carried no timestamp keeps the text and drops
+    // the href, so the line stays put and simply stops being clickable.
+    waybackLink.textContent = link.getAttribute('title') || link.textContent;
+
     var wayback = link.getAttribute('data-wayback');
-    if (wayback) {
-      waybackLink.href = wayback;
-      source.style.visibility = 'visible';
-    } else {
-      waybackLink.removeAttribute('href');
-      source.style.visibility = 'hidden';
-    }
+    if (wayback) waybackLink.href = wayback;
+    else waybackLink.removeAttribute('href');
 
     if (active) active.classList.remove('active');
     link.classList.add('active');

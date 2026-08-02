@@ -25,16 +25,18 @@
   /* 4:3 at 800x600. width/height rather than an aspect-ratio box: the archived pages
      are fixed-width 2001-era layouts, so a viewport that matches the era is the point. */
   iframe { width: 800px; height: 600px; border: 1px solid #ccc; background: #fff; }
-  #frame-label { margin: 0 0 .25rem; color: #555; height: 1.2em; }
-  /* Reserves its line whether or not a page is selected, so the frame never shifts. */
-  #frame-source { margin: 0 0 .5rem; height: 1.2em; visibility: hidden; }
+  #frame-label { margin: 0 0 .5rem; color: #555; height: 1.2em; }
+  /* The source line is itself the link to the snapshot. With no page selected -- or a
+     page whose log entry carried no timestamp -- the anchor keeps its text but loses
+     its href, so it reads as plain caption rather than a link that goes nowhere. */
+  #frame-label a:not([href]) { color: #555; cursor: default; text-decoration: none; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <nav>
     <h1>Wayback archive index</h1>
-    <p>58 crawls, 6925 pages</p>
+    <p>64 crawls, 7210 pages</p>
 <details>
 <summary>a-supernet.net/org_missions/pyu <span class="count">5</span></summary>
 <ul>
@@ -1117,12 +1119,16 @@ http://www.angelfire.com:80/pa/hebronpc/works.html" data-wayback="https://web.ar
 </ul>
 </details>
 <details>
-<summary>art.net/~samia <span class="count">72</span></summary>
+<summary>art.net/~samia <span class="count">83</span></summary>
 <ul>
 <li><a href="/sites/art.net/~samia/index.html" title="Samia A. Halaby
 http://art.net:80/~samia/" data-wayback="https://web.archive.org/web/20000824103632/http://art.net:80/~samia/"><span class="f">index.html</span> <span class="t">Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/abst/prevabst.html" title="Samia A. Halaby
 http://art.net:80/~samia/abst/prevabst.html" data-wayback="https://web.archive.org/web/20000412225406/http://art.net:80/~samia/abst/prevabst.html"><span class="f">abst/prevabst.html</span> <span class="t">Samia A. Halaby</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/abstract.html" title="&quot;Abstraction and Illusion&quot; by Samia A. Halaby
+http://art.net:80/~samia/anstudio/abstract.html" data-wayback="https://web.archive.org/web/20010109003900/http://art.net:80/~samia/anstudio/abstract.html"><span class="f">anstudio/abstract.html</span> <span class="t">&quot;Abstraction and Illusion&quot; by Samia A. Halaby</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/bio.html" title="An Aesthetic View by Samia A. Halaby
+http://www.art.net:80/~samia/anstudio/bio.html" data-wayback="https://web.archive.org/web/20010315023704/http://www.art.net:80/~samia/anstudio/bio.html"><span class="f">anstudio/bio.html</span> <span class="t">An Aesthetic View by Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/bzu.html" title="BirZeit University
 http://art.net:80/~samia/anstudio/bzu.html" data-wayback="https://web.archive.org/web/20001121134000/http://art.net:80/~samia/anstudio/bzu.html"><span class="f">anstudio/bzu.html</span> <span class="t">BirZeit University</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/essays.html" title="Essays by Samia A. Halaby
@@ -1145,6 +1151,10 @@ http://art.net:80/~samia/anstudio/home2.html" data-wayback="https://web.archive.
 http://art.net:80/~samia/anstudio/khader.html" data-wayback="https://web.archive.org/web/20000302093622/http://art.net:80/~samia/anstudio/khader.html"><span class="f">anstudio/khader.html</span> <span class="t">Children of Palestine</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/kinetic.html" title="Kinetic Computer Painting
 http://art.net:80/~samia/anstudio/kinetic.html" data-wayback="https://web.archive.org/web/20000605095408/http://art.net:80/~samia/anstudio/kinetic.html"><span class="f">anstudio/kinetic.html</span> <span class="t">Kinetic Computer Painting</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/kinsub.html" title="Kinetic Computer Painting
+http://art.net:80/~samia/anstudio/kinsub.html" data-wayback="https://web.archive.org/web/20010123042900/http://art.net:80/~samia/anstudio/kinsub.html"><span class="f">anstudio/kinsub.html</span> <span class="t">Kinetic Computer Painting</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/longbio.html" title="Biography of Samia A. Halaby
+http://art.net:80/~samia/anstudio/longbio.html" data-wayback="https://web.archive.org/web/20010109005700/http://art.net:80/~samia/anstudio/longbio.html"><span class="f">anstudio/longbio.html</span> <span class="t">Biography of Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/menu.html" title="&quot;Menu of the entire site of artist Samia A. Halaby
 http://art.net:80/~samia/anstudio/menu.html" data-wayback="https://web.archive.org/web/20000418034341/http://art.net:80/~samia/anstudio/menu.html"><span class="f">anstudio/menu.html</span> <span class="t">&quot;Menu of the entire site of artist Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/pal/sari/sari.html" title="Palestinian Artst Sari Khoury
@@ -1157,10 +1167,14 @@ http://art.net:80/~samia/anstudio/pal/sari/sarisub2.html" data-wayback="https://
 http://art.net:80/~samia/anstudio/pal/sari/sarisub3.html" data-wayback="https://web.archive.org/web/20000303061052/http://art.net:80/~samia/anstudio/pal/sari/sarisub3.html"><span class="f">anstudio/pal/sari/sarisub3.html</span> <span class="t">Sari Khoury, the painter.</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/pal/sari/sarisub4.html" title="Palestinian Artst Sari Khouri
 http://art.net:80/~samia/anstudio/pal/sari/sarisub4.html" data-wayback="https://web.archive.org/web/20001118205700/http://art.net:80/~samia/anstudio/pal/sari/sarisub4.html"><span class="f">anstudio/pal/sari/sarisub4.html</span> <span class="t">Palestinian Artst Sari Khouri</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/pompidou.html" title="Kinetic Computer Painting
+http://art.net:80/~samia/anstudio/pompidou.html" data-wayback="https://web.archive.org/web/20010123043900/http://art.net:80/~samia/anstudio/pompidou.html"><span class="f">anstudio/pompidou.html</span> <span class="t">Kinetic Computer Painting</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/prevabst.html" title="Abstract Paintings by Samia A. Halaby
 http://art.net:80/~samia/anstudio/prevabst.html" data-wayback="https://web.archive.org/web/20000709060911/http://art.net:80/~samia/anstudio/prevabst.html"><span class="f">anstudio/prevabst.html</span> <span class="t">Abstract Paintings by Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/previllu.html" title="Paintings by Samia A. Halaby
 http://art.net:80/~samia/anstudio/previllu.html" data-wayback="https://web.archive.org/web/20001202235500/http://art.net:80/~samia/anstudio/previllu.html"><span class="f">anstudio/previllu.html</span> <span class="t">Paintings by Samia A. Halaby</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/res.html" title="Resume of Samia A. Halaby
+http://art.net:80/~samia/anstudio/res.html" data-wayback="https://web.archive.org/web/20010109010700/http://art.net:80/~samia/anstudio/res.html"><span class="f">anstudio/res.html</span> <span class="t">Resume of Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/resume.html" title="Resume of Samia A. Halaby
 http://art.net:80/~samia/anstudio/resume.html" data-wayback="https://web.archive.org/web/20001203003200/http://art.net:80/~samia/anstudio/resume.html"><span class="f">anstudio/resume.html</span> <span class="t">Resume of Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/rock.html" title="Jerusalem, Song Of The Rock
@@ -1169,12 +1183,16 @@ http://art.net:80/~samia/anstudio/rock.html" data-wayback="https://web.archive.o
 http://art.net:80/~samia/anstudio/sabah.html" data-wayback="https://web.archive.org/web/20000522133407/http://art.net:80/~samia/anstudio/sabah.html"><span class="f">anstudio/sabah.html</span> <span class="t">Baka'a Refugee camp</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/samsub.html" title="HOME IN PALESTINE
 http://art.net:80/~samia/anstudio/samsub.html" data-wayback="https://web.archive.org/web/20000521145345/http://art.net:80/~samia/anstudio/samsub.html"><span class="f">anstudio/samsub.html</span> <span class="t">HOME IN PALESTINE</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/shortbio.html" title="Short Biography of Samia A. Halaby
+http://art.net:80/~samia/anstudio/shortbio.html" data-wayback="https://web.archive.org/web/20010109012300/http://art.net:80/~samia/anstudio/shortbio.html"><span class="f">anstudio/shortbio.html</span> <span class="t">Short Biography of Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/taxi.html" title="Taxi
 http://art.net:80/~samia/anstudio/taxi.html" data-wayback="https://web.archive.org/web/20000531032718/http://art.net:80/~samia/anstudio/taxi.html"><span class="f">anstudio/taxi.html</span> <span class="t">Taxi</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/vera.html" title="Ceramist: Vera Tamari
 http://art.net:80/~samia/anstudio/vera.html" data-wayback="https://web.archive.org/web/20000527091823/http://art.net:80/~samia/anstudio/vera.html"><span class="f">anstudio/vera.html</span> <span class="t">Ceramist: Vera Tamari</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/verasub.html" title="Vera Tamari by Rana Anani
 http://art.net:80/~samia/anstudio/verasub.html" data-wayback="https://web.archive.org/web/20001203061000/http://art.net:80/~samia/anstudio/verasub.html"><span class="f">anstudio/verasub.html</span> <span class="t">Vera Tamari by Rana Anani</span></a></li>
+<li><a href="/sites/art.net/~samia/anstudio/writings/fisea96.html" title="&quot;RHYTHMS, The Aesthetics of Electronic Painting&quot; by Samia A. Halaby
+http://art.net:80/~samia/anstudio/writings/fisea96.html" data-wayback="https://web.archive.org/web/20010109013700/http://art.net:80/~samia/anstudio/writings/fisea96.html"><span class="f">anstudio/writings/fisea96.html</span> <span class="t">&quot;RHYTHMS, The Aesthetics of Electronic Painting&quot; by Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/writings/prestock.html" title="Book Review, part two&quot;Palestinian Art&quot; by Samia A. Halaby
 http://art.net:80/~samia/anstudio/writings/prestock.html" data-wayback="https://web.archive.org/web/20000303084344/http://art.net:80/~samia/anstudio/writings/prestock.html"><span class="f">anstudio/writings/prestock.html</span> <span class="t">Book Review, part two&quot;Palestinian Art&quot; by Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/anstudio/writings/stokholm.html" title="Book Review, part two &quot;Palestinian Art&quot; by Samia A. Halaby
@@ -1195,6 +1213,8 @@ http://art.net:80/~samia/essays/prestock.html" data-wayback="https://web.archive
 http://art.net:80/~samia/illu/previllu.html" data-wayback="https://web.archive.org/web/20000413044407/http://art.net:80/~samia/illu/previllu.html"><span class="f">illu/previllu.html</span> <span class="t">Paintings by Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/kinetic/group/bakr.html" title="Hasan Bakr
 http://art.net:80/~samia/kinetic/group/bakr.html" data-wayback="https://web.archive.org/web/20001207172700/http://art.net:80/~samia/kinetic/group/bakr.html"><span class="f">kinetic/group/bakr.html</span> <span class="t">Hasan Bakr</span></a></li>
+<li><a href="/sites/art.net/~samia/kinetic/group/history.html" title="Kinetic Computer Painting
+http://art.net:80/~samia/kinetic/group/history.html" data-wayback="https://web.archive.org/web/20021121101959/http://art.net:80/~samia/kinetic/group/history.html"><span class="f">kinetic/group/history.html</span> <span class="t">Kinetic Computer Painting</span></a></li>
 <li><a href="/sites/art.net/~samia/kinetic/group/kevin.html" title="Kevin Nathaniel
 http://art.net:80/~samia/kinetic/group/kevin.html" data-wayback="https://web.archive.org/web/20000930170031/http://art.net:80/~samia/kinetic/group/kevin.html"><span class="f">kinetic/group/kevin.html</span> <span class="t">Kevin Nathaniel</span></a></li>
 <li><a href="/sites/art.net/~samia/kinetic/group/kinsub.html" title="Kinetic Computer Painting
@@ -1219,6 +1239,8 @@ http://art.net:80/~samia/pal/kafqasem/art/kqart.html" data-wayback="https://web.
 http://art.net:80/~samia/pal/kafqasem/visit/kafqasem.html" data-wayback="https://web.archive.org/web/20000118195358/http://art.net:80/~samia/pal/kafqasem/visit/kafqasem.html"><span class="f">pal/kafqasem/visit/kafqasem.html</span> <span class="t">Kafr Qasem in Israel</span></a></li>
 <li><a href="/sites/art.net/~samia/pal/khader/khader.html" title="Children of Palestine
 http://art.net:80/~samia/pal/khader/khader.html" data-wayback="https://web.archive.org/web/20000414000409/http://art.net:80/~samia/pal/khader/khader.html"><span class="f">pal/khader/khader.html</span> <span class="t">Children of Palestine</span></a></li>
+<li><a href="/sites/art.net/~samia/pal/olives/olives.html" title="Olives of Palestine
+http://art.net:80/~samia/pal/olives/olives.html" data-wayback="https://web.archive.org/web/20020615135409/http://art.net:80/~samia/pal/olives/olives.html"><span class="f">pal/olives/olives.html</span> <span class="t">Olives of Palestine</span></a></li>
 <li><a href="/sites/art.net/~samia/pal/pal1/home.html" title="JERUSALEM, PALESTINE
 http://art.net:80/~samia/pal/pal1/home.html" data-wayback="https://web.archive.org/web/20000414032923/http://art.net:80/~samia/pal/pal1/home.html"><span class="f">pal/pal1/home.html</span> <span class="t">JERUSALEM, PALESTINE</span></a></li>
 <li><a href="/sites/art.net/~samia/pal/pal2/home2.html" title="Beisan in Palestine
@@ -1251,6 +1273,8 @@ http://art.net:80/~samia/pal/samsub.html" data-wayback="https://web.archive.org/
 http://art.net:80/~samia/pal/taxi/taxi.html" data-wayback="https://web.archive.org/web/20000407191650/http://art.net:80/~samia/pal/taxi/taxi.html"><span class="f">pal/taxi/taxi.html</span> <span class="t">Taxi</span></a></li>
 <li><a href="/sites/art.net/~samia/pal/yafa/yafa.html" title="YAFA, PALESTINE, by Samia A. Halaby
 http://art.net:80/~samia/pal/yafa/yafa.html" data-wayback="https://web.archive.org/web/20000407212252/http://art.net:80/~samia/pal/yafa/yafa.html"><span class="f">pal/yafa/yafa.html</span> <span class="t">YAFA, PALESTINE, by Samia A. Halaby</span></a></li>
+<li><a href="/sites/art.net/~samia/quick.html" title="Quick Summary of the Studio of Samia A. Halaby
+http://www.art.net:80/~samia/quick.html" data-wayback="https://web.archive.org/web/20010312181926/http://www.art.net:80/~samia/quick.html"><span class="f">quick.html</span> <span class="t">Quick Summary of the Studio of Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/resume/bio.html" title="An Aesthetic View by Samia A. Halaby
 http://art.net:80/~samia/resume/bio.html" data-wayback="https://web.archive.org/web/20000424014108/http://art.net:80/~samia/resume/bio.html"><span class="f">resume/bio.html</span> <span class="t">An Aesthetic View by Samia A. Halaby</span></a></li>
 <li><a href="/sites/art.net/~samia/resume/longbio.html" title="Biography of Samia A. Halaby
@@ -1312,6 +1336,45 @@ http://www.ashtar-theatre.org:80/act6/scene1.htm" data-wayback="https://web.arch
 http://www.ashtar-theatre.org:80/act6/scene2.htm" data-wayback="https://web.archive.org/web/19981207045256/http://www.ashtar-theatre.org:80/act6/scene2.htm"><span class="f">act6/scene2.htm</span> <span class="t">Money</span></a></li>
 <li><a href="/sites/ashtar-theatre.org/index.htm" title="Ashatr Theatre, Palestine
 http://www.ashtar-theatre.org:80/index.htm" data-wayback="https://web.archive.org/web/19990222001848/http://www.ashtar-theatre.org:80/index.htm"><span class="f">index.htm</span> <span class="t">Ashatr Theatre, Palestine</span></a></li>
+</ul>
+</details>
+<details>
+<summary>assali.com/jti/raffi <span class="count">17</span></summary>
+<ul>
+<li><a href="/sites/assali.com/jti/raffi/index.html" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/" data-wayback="https://web.archive.org/web/20010104202500/http://www.assali.com:80/jti/raffi/"><span class="f">index.html</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/010h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/010h.htm" data-wayback="https://web.archive.org/web/20010108134800/http://www.assali.com:80/jti/raffi/010h.htm"><span class="f">010h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/011h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/011h.htm" data-wayback="https://web.archive.org/web/20010108140600/http://www.assali.com:80/jti/raffi/011h.htm"><span class="f">011h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/012h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/012h.htm" data-wayback="https://web.archive.org/web/20010108141400/http://www.assali.com:80/jti/raffi/012h.htm"><span class="f">012h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/013h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/013h.htm" data-wayback="https://web.archive.org/web/20010108142300/http://www.assali.com:80/jti/raffi/013h.htm"><span class="f">013h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/014h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/014h.htm" data-wayback="https://web.archive.org/web/20010108143600/http://www.assali.com:80/jti/raffi/014h.htm"><span class="f">014h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/015h.htm" title="Hanna Safieh Phto Collection
+http://www.assali.com:80/jti/raffi/015h.htm" data-wayback="https://web.archive.org/web/20010108144800/http://www.assali.com:80/jti/raffi/015h.htm"><span class="f">015h.htm</span> <span class="t">Hanna Safieh Phto Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/01h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/01h.htm" data-wayback="https://web.archive.org/web/20010108145800/http://www.assali.com:80/jti/raffi/01h.htm"><span class="f">01h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/02h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/02h.htm" data-wayback="https://web.archive.org/web/20010108151400/http://www.assali.com:80/jti/raffi/02h.htm"><span class="f">02h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/03h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/03h.htm" data-wayback="https://web.archive.org/web/20010108151700/http://www.assali.com:80/jti/raffi/03h.htm"><span class="f">03h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/04h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/04h.htm" data-wayback="https://web.archive.org/web/20010108152900/http://www.assali.com:80/jti/raffi/04h.htm"><span class="f">04h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/05h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/05h.htm" data-wayback="https://web.archive.org/web/20010108153800/http://www.assali.com:80/jti/raffi/05h.htm"><span class="f">05h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/06h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/06h.htm" data-wayback="https://web.archive.org/web/20010220085019/http://www.assali.com:80/jti/raffi/06h.htm"><span class="f">06h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/07h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/07h.htm" data-wayback="https://web.archive.org/web/20010220090614/http://www.assali.com:80/jti/raffi/07h.htm"><span class="f">07h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/08h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/08h.htm" data-wayback="https://web.archive.org/web/20010108155400/http://www.assali.com:80/jti/raffi/08h.htm"><span class="f">08h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/09h.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/09h.htm" data-wayback="https://web.archive.org/web/20010108160300/http://www.assali.com:80/jti/raffi/09h.htm"><span class="f">09h.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
+<li><a href="/sites/assali.com/jti/raffi/index2.htm" title="Hanna Safieh Photo Collection
+http://www.assali.com:80/jti/raffi/index2.htm" data-wayback="https://web.archive.org/web/20010220034637/http://www.assali.com:80/jti/raffi/index2.htm"><span class="f">index2.htm</span> <span class="t">Hanna Safieh Photo Collection</span></a></li>
 </ul>
 </details>
 <details>
@@ -1872,6 +1935,281 @@ http://www.birzeit.edu:80/aff/steps3a.html" data-wayback="https://web.archive.or
 http://www.birzeit.edu:80/aff/words.html" data-wayback="https://web.archive.org/web/20000917184330/http://www.birzeit.edu:80/aff/words.html"><span class="f">words.html</span> <span class="t">portrait and testimony - 1998 gaza students campaign</span></a></li>
 <li><a href="/sites/birzeit.edu/aff/workshp.html" title="1998 Gaza Students Campaign - a campaign for academic freedom
 http://www.birzeit.edu:80/aff/workshp.html" data-wayback="https://web.archive.org/web/20000917184414/http://www.birzeit.edu:80/aff/workshp.html"><span class="f">workshp.html</span> <span class="t">1998 Gaza Students Campaign - a campaign for academic freedom</span></a></li>
+</ul>
+</details>
+<details>
+<summary>birzeit.edu/bzunews <span class="count">136</span></summary>
+<ul>
+<li><a href="/sites/birzeit.edu/bzunews/index.html" title="Birzeit News: News about Palestine, the Israeli Palestinian Conflict, Palestinian life in the West Bank. News from Palestine. Main Index
+http://www.birzeit.edu:80/bzunews/index.html" data-wayback="https://web.archive.org/web/20000619044226/http://www.birzeit.edu:80/bzunews/index.html"><span class="f">index.html</span> <span class="t">Birzeit News: News about Palestine, the Israeli Palestinian Conflict, Palestinian life in the West Bank. News from Pales…</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1996/dec/19.html" title="Birzeit News Report: 19-Dec-96
+http://www2.birzeit.edu:80/bzunews/1996/Dec/19.html" data-wayback="https://web.archive.org/web/20000116121504/http://www2.birzeit.edu:80/bzunews/1996/Dec/19.html"><span class="f">1996/dec/19.html</span> <span class="t">Birzeit News Report: 19-Dec-96</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1996/dec/23.html" title="Birzeit News Report: 23-Dec-96
+http://www.birzeit.edu:80/bzunews/1996/Dec/23.html" data-wayback="https://web.archive.org/web/20000824094422/http://www.birzeit.edu:80/bzunews/1996/Dec/23.html"><span class="f">1996/dec/23.html</span> <span class="t">Birzeit News Report: 23-Dec-96</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/aug/10.html" title="Birzeit News Report: 10-August-97
+http://www.birzeit.edu:80/bzunews/1997/Aug/10.html" data-wayback="https://web.archive.org/web/20000824093827/http://www.birzeit.edu:80/bzunews/1997/Aug/10.html"><span class="f">1997/aug/10.html</span> <span class="t">Birzeit News Report: 10-August-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/aug/5.html" title="Birzeit News Report: 5-August-97
+http://www.birzeit.edu:80/bzunews/1997/Aug/5.html" data-wayback="https://web.archive.org/web/20000824093835/http://www.birzeit.edu:80/bzunews/1997/Aug/5.html"><span class="f">1997/aug/5.html</span> <span class="t">Birzeit News Report: 5-August-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/aug/6.html" title="Birzeit News Report: 6-August-97
+http://www2.birzeit.edu:80/bzunews/1997/Aug/6.html" data-wayback="https://web.archive.org/web/20000930061804/http://www2.birzeit.edu:80/bzunews/1997/Aug/6.html"><span class="f">1997/aug/6.html</span> <span class="t">Birzeit News Report: 6-August-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/dec/11.html" title="Birzeit News Report: 11-December-97
+http://www.birzeit.edu:80/bzunews/1997/Dec/11.html" data-wayback="https://web.archive.org/web/20000520065723/http://www.birzeit.edu:80/bzunews/1997/Dec/11.html"><span class="f">1997/dec/11.html</span> <span class="t">Birzeit News Report: 11-December-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/dec/3.html" title="Birzeit News Report: 3-December-97
+http://www2.birzeit.edu:80/bzunews/1997/Dec/3.html" data-wayback="https://web.archive.org/web/20000930061605/http://www2.birzeit.edu:80/bzunews/1997/Dec/3.html"><span class="f">1997/dec/3.html</span> <span class="t">Birzeit News Report: 3-December-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/dec/3a.html" title="Birzeit News Report: 3-December-97
+http://www.birzeit.edu:80/bzunews/1997/Dec/3a.html" data-wayback="https://web.archive.org/web/20000824093437/http://www.birzeit.edu:80/bzunews/1997/Dec/3a.html"><span class="f">1997/dec/3a.html</span> <span class="t">Birzeit News Report: 3-December-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/feb/14.html" title="Birzeit News Report: 14-Feb-97
+http://www.birzeit.edu:80/bzunews/1997/Feb/14.html" data-wayback="https://web.archive.org/web/20000824094413/http://www.birzeit.edu:80/bzunews/1997/Feb/14.html"><span class="f">1997/feb/14.html</span> <span class="t">Birzeit News Report: 14-Feb-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/feb/15.html" title="Birzeit News Report: 15-Feb-97
+http://www2.birzeit.edu:80/bzunews/1997/Feb/15.html" data-wayback="https://web.archive.org/web/20000930062028/http://www2.birzeit.edu:80/bzunews/1997/Feb/15.html"><span class="f">1997/feb/15.html</span> <span class="t">Birzeit News Report: 15-Feb-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/feb/17.html" title="Birzeit News Report: 17-Feb-97
+http://www2.birzeit.edu:80/bzunews/1997/Feb/17.html" data-wayback="https://web.archive.org/web/20000115185354/http://www2.birzeit.edu:80/bzunews/1997/Feb/17.html"><span class="f">1997/feb/17.html</span> <span class="t">Birzeit News Report: 17-Feb-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/jul/5.html" title="Birzeit News Report: 5-Jul-97
+http://www2.birzeit.edu:80/bzunews/1997/Jul/5.html" data-wayback="https://web.archive.org/web/20000115193012/http://www2.birzeit.edu:80/bzunews/1997/Jul/5.html"><span class="f">1997/jul/5.html</span> <span class="t">Birzeit News Report: 5-Jul-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/jul/hate.html" title="http://www.birzeit.edu:80/bzunews/1997/Jul/hate.html" data-wayback="https://web.archive.org/web/20000524172433/http://www.birzeit.edu:80/bzunews/1997/Jul/hate.html"><span class="f">1997/jul/hate.html</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/jul/header.html" title="http://www.birzeit.edu:80/bzunews/1997/Jul/header.html" data-wayback="https://web.archive.org/web/20000524125844/http://www.birzeit.edu:80/bzunews/1997/Jul/header.html"><span class="f">1997/jul/header.html</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/jun/5.html" title="Birzeit News Report: 5-Jun-97
+http://www2.birzeit.edu:80/bzunews/1997/Jun/5.html" data-wayback="https://web.archive.org/web/20000115233103/http://www2.birzeit.edu:80/bzunews/1997/Jun/5.html"><span class="f">1997/jun/5.html</span> <span class="t">Birzeit News Report: 5-Jun-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/jun/7.html" title="Birzeit News Report: 7-Jun-97
+http://www2.birzeit.edu:80/bzunews/1997/Jun/7.html" data-wayback="https://web.archive.org/web/20000116000512/http://www2.birzeit.edu:80/bzunews/1997/Jun/7.html"><span class="f">1997/jun/7.html</span> <span class="t">Birzeit News Report: 7-Jun-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/jun/7a.html" title="Birzeit News Report: 7-Jun-97
+http://www2.birzeit.edu:80/bzunews/1997/Jun/7a.html" data-wayback="https://web.archive.org/web/20000116003916/http://www2.birzeit.edu:80/bzunews/1997/Jun/7a.html"><span class="f">1997/jun/7a.html</span> <span class="t">Birzeit News Report: 7-Jun-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/mar/05-06.html" title="Birzeit News Report: 6-Mar-97
+http://www2.birzeit.edu:80/bzunews/1997/Mar/05-06.html" data-wayback="https://web.archive.org/web/20000116011327/http://www2.birzeit.edu:80/bzunews/1997/Mar/05-06.html"><span class="f">1997/mar/05-06.html</span> <span class="t">Birzeit News Report: 6-Mar-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/mar/20.html" title="Birzeit News Report: 20-Mar-97
+http://www2.birzeit.edu:80/bzunews/1997/Mar/20.html" data-wayback="https://web.archive.org/web/20000116014718/http://www2.birzeit.edu:80/bzunews/1997/Mar/20.html"><span class="f">1997/mar/20.html</span> <span class="t">Birzeit News Report: 20-Mar-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/mar/27.html" title="Birzeit News Report: 27-Mar-97
+http://www2.birzeit.edu:80/bzunews/1997/Mar/27.html" data-wayback="https://web.archive.org/web/20000116022132/http://www2.birzeit.edu:80/bzunews/1997/Mar/27.html"><span class="f">1997/mar/27.html</span> <span class="t">Birzeit News Report: 27-Mar-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/mar/8.html" title="Birzeit News Report: 8-Mar-97
+http://www2.birzeit.edu:80/bzunews/1997/Mar/8.html" data-wayback="https://web.archive.org/web/20000107124606/http://www2.birzeit.edu:80/bzunews/1997/Mar/8.html"><span class="f">1997/mar/8.html</span> <span class="t">Birzeit News Report: 8-Mar-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/nov/18.html" title="Birzeit News Report: 18-November-97
+http://www2.birzeit.edu:80/bzunews/1997/Nov/18.html" data-wayback="https://web.archive.org/web/20000116025549/http://www2.birzeit.edu:80/bzunews/1997/Nov/18.html"><span class="f">1997/nov/18.html</span> <span class="t">Birzeit News Report: 18-November-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/nov/20.html" title="Birzeit News Report: 20-November-97
+http://www2.birzeit.edu:80/bzunews/1997/Nov/20.html" data-wayback="https://web.archive.org/web/20000116033010/http://www2.birzeit.edu:80/bzunews/1997/Nov/20.html"><span class="f">1997/nov/20.html</span> <span class="t">Birzeit News Report: 20-November-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/nov/26.html" title="Birzeit News Report: 26-November-97
+http://www2.birzeit.edu:80/bzunews/1997/Nov/26.html" data-wayback="https://web.archive.org/web/20000116040359/http://www2.birzeit.edu:80/bzunews/1997/Nov/26.html"><span class="f">1997/nov/26.html</span> <span class="t">Birzeit News Report: 26-November-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/nov/27a.html" title="Birzeit News Report: 27-November-97
+http://www2.birzeit.edu:80/bzunews/1997/Nov/27a.html" data-wayback="https://web.archive.org/web/20000116043751/http://www2.birzeit.edu:80/bzunews/1997/Nov/27a.html"><span class="f">1997/nov/27a.html</span> <span class="t">Birzeit News Report: 27-November-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/oct/22.html" title="Birzeit News Report: 22-October-97
+http://www2.birzeit.edu:80/bzunews/1997/Oct/22.html" data-wayback="https://web.archive.org/web/20000116051149/http://www2.birzeit.edu:80/bzunews/1997/Oct/22.html"><span class="f">1997/oct/22.html</span> <span class="t">Birzeit News Report: 22-October-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/oct/9.html" title="Birzeit News Report: 9-October-97
+http://www2.birzeit.edu:80/bzunews/1997/Oct/9.html" data-wayback="https://web.archive.org/web/20000116054556/http://www2.birzeit.edu:80/bzunews/1997/Oct/9.html"><span class="f">1997/oct/9.html</span> <span class="t">Birzeit News Report: 9-October-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/sep/17.html" title="Birzeit News Report: 17-September-97
+http://www2.birzeit.edu:80/bzunews/1997/Sep/17.html" data-wayback="https://web.archive.org/web/20000116062450/http://www2.birzeit.edu:80/bzunews/1997/Sep/17.html"><span class="f">1997/sep/17.html</span> <span class="t">Birzeit News Report: 17-September-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/sep/20.html" title="Birzeit News Report: 20-September-97
+http://www2.birzeit.edu:80/bzunews/1997/Sep/20.html" data-wayback="https://web.archive.org/web/20000116065901/http://www2.birzeit.edu:80/bzunews/1997/Sep/20.html"><span class="f">1997/sep/20.html</span> <span class="t">Birzeit News Report: 20-September-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/sep/24.html" title="Birzeit News Report: 24-September-97
+http://www2.birzeit.edu:80/bzunews/1997/Sep/24.html" data-wayback="https://web.archive.org/web/20000116073258/http://www2.birzeit.edu:80/bzunews/1997/Sep/24.html"><span class="f">1997/sep/24.html</span> <span class="t">Birzeit News Report: 24-September-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/sep/8.html" title="Birzeit News Report: 8-September-97
+http://www2.birzeit.edu:80/bzunews/1997/Sep/8.html" data-wayback="https://web.archive.org/web/20000116080650/http://www2.birzeit.edu:80/bzunews/1997/Sep/8.html"><span class="f">1997/sep/8.html</span> <span class="t">Birzeit News Report: 8-September-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1997/sep/9.html" title="Birzeit News Report: 9-September-97
+http://www2.birzeit.edu:80/bzunews/1997/Sep/9.html" data-wayback="https://web.archive.org/web/20000116084058/http://www2.birzeit.edu:80/bzunews/1997/Sep/9.html"><span class="f">1997/sep/9.html</span> <span class="t">Birzeit News Report: 9-September-97</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/apr/3.html" title="Birzeit News Report: 4-April-98
+http://www2.birzeit.edu:80/bzunews/1998/Apr/3.html" data-wayback="https://web.archive.org/web/20000116103146/http://www2.birzeit.edu:80/bzunews/1998/Apr/3.html"><span class="f">1998/apr/3.html</span> <span class="t">Birzeit News Report: 4-April-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/apr/30.html" title="Birzeit News Report: 30-April-98
+http://www2.birzeit.edu:80/bzunews/1998/Apr/30.html" data-wayback="https://web.archive.org/web/20000116110856/http://www2.birzeit.edu:80/bzunews/1998/Apr/30.html"><span class="f">1998/apr/30.html</span> <span class="t">Birzeit News Report: 30-April-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/apr/4.html" title="Birzeit News Report: 4-April-98
+http://www2.birzeit.edu:80/bzunews/1998/Apr/4.html" data-wayback="https://web.archive.org/web/20000116114544/http://www2.birzeit.edu:80/bzunews/1998/Apr/4.html"><span class="f">1998/apr/4.html</span> <span class="t">Birzeit News Report: 4-April-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/apr/4a.html" title="Birzeit News Report: 4-April-98
+http://www2.birzeit.edu:80/bzunews/1998/Apr/4a.html" data-wayback="https://web.archive.org/web/20000116122239/http://www2.birzeit.edu:80/bzunews/1998/Apr/4a.html"><span class="f">1998/apr/4a.html</span> <span class="t">Birzeit News Report: 4-April-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/aug/22.html" title="Birzeit News Report: 20-August-98
+http://www2.birzeit.edu:80/bzunews/1998/Aug/22.html" data-wayback="https://web.archive.org/web/20000116125953/http://www2.birzeit.edu:80/bzunews/1998/Aug/22.html"><span class="f">1998/aug/22.html</span> <span class="t">Birzeit News Report: 20-August-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/aug/24.html" title="Birzeit News Report: 24-August-98
+http://www2.birzeit.edu:80/bzunews/1998/Aug/24.html" data-wayback="https://web.archive.org/web/20000107152828/http://www2.birzeit.edu:80/bzunews/1998/Aug/24.html"><span class="f">1998/aug/24.html</span> <span class="t">Birzeit News Report: 24-August-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/aug/24ar.html" title="Birzeit News Report: 24-August-98
+http://www.birzeit.edu:80/bzunews/1998/Aug/24ar.html" data-wayback="https://web.archive.org/web/20000930061459/http://www.birzeit.edu:80/bzunews/1998/Aug/24ar.html"><span class="f">1998/aug/24ar.html</span> <span class="t">Birzeit News Report: 24-August-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/dec/11.html" title="Birzeit News Report:11 December-1998
+http://www2.birzeit.edu:80/bzunews/1998/dec/11.html" data-wayback="https://web.archive.org/web/20000116003425/http://www2.birzeit.edu:80/bzunews/1998/dec/11.html"><span class="f">1998/dec/11.html</span> <span class="t">Birzeit News Report:11 December-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/dec/7.html" title="Birzeit News Report:7 December-1998
+http://www2.birzeit.edu:80/bzunews/1998/dec/7.html" data-wayback="https://web.archive.org/web/20000116010831/http://www2.birzeit.edu:80/bzunews/1998/dec/7.html"><span class="f">1998/dec/7.html</span> <span class="t">Birzeit News Report:7 December-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/dec/8.html" title="Birzeit News Report:8 December-1998
+http://www2.birzeit.edu:80/bzunews/1998/dec/8.html" data-wayback="https://web.archive.org/web/20000116014229/http://www2.birzeit.edu:80/bzunews/1998/dec/8.html"><span class="f">1998/dec/8.html</span> <span class="t">Birzeit News Report:8 December-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/dec/9.html" title="Birzeit News Report:9 December-1998
+http://www2.birzeit.edu:80/bzunews/1998/dec/9.html" data-wayback="https://web.archive.org/web/20000116021634/http://www2.birzeit.edu:80/bzunews/1998/dec/9.html"><span class="f">1998/dec/9.html</span> <span class="t">Birzeit News Report:9 December-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/feb/14.html" title="Birzeit News Report: 14-February-98
+http://www2.birzeit.edu:80/bzunews/1998/Feb/14.html" data-wayback="https://web.archive.org/web/20000116133454/http://www2.birzeit.edu:80/bzunews/1998/Feb/14.html"><span class="f">1998/feb/14.html</span> <span class="t">Birzeit News Report: 14-February-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/feb/18.html" title="Birzeit News Report: 18-February-98
+http://www.birzeit.edu:80/bzunews/1998/Feb/18.html" data-wayback="https://web.archive.org/web/20000824093353/http://www.birzeit.edu:80/bzunews/1998/Feb/18.html"><span class="f">1998/feb/18.html</span> <span class="t">Birzeit News Report: 18-February-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/feb/20.html" title="Birzeit News Report: 20-February-98
+http://www.birzeit.edu:80/bzunews/1998/Feb/20.html" data-wayback="https://web.archive.org/web/20000824093342/http://www.birzeit.edu:80/bzunews/1998/Feb/20.html"><span class="f">1998/feb/20.html</span> <span class="t">Birzeit News Report: 20-February-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/feb/25.html" title="Birzeit News Report: 25-February-98
+http://www.birzeit.edu:80/bzunews/1998/Feb/25.html" data-wayback="https://web.archive.org/web/20000824093333/http://www.birzeit.edu:80/bzunews/1998/Feb/25.html"><span class="f">1998/feb/25.html</span> <span class="t">Birzeit News Report: 25-February-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/feb/25a.html" title="Birzeit News Report: 25-February-98
+http://www.birzeit.edu:80/bzunews/1998/Feb/25a.html" data-wayback="https://web.archive.org/web/20000824093324/http://www.birzeit.edu:80/bzunews/1998/Feb/25a.html"><span class="f">1998/feb/25a.html</span> <span class="t">Birzeit News Report: 25-February-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/mar/19.html" title="Birzeit News Report: 19-March-98
+http://www.birzeit.edu:80/bzunews/1998/Mar/19.html" data-wayback="https://web.archive.org/web/20001120152800/http://www.birzeit.edu:80/bzunews/1998/Mar/19.html"><span class="f">1998/mar/19.html</span> <span class="t">Birzeit News Report: 19-March-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/mar/21.html" title="Birzeit News Report: 21-March-98
+http://www.birzeit.edu:80/bzunews/1998/Mar/21.html" data-wayback="https://web.archive.org/web/20000824093300/http://www.birzeit.edu:80/bzunews/1998/Mar/21.html"><span class="f">1998/mar/21.html</span> <span class="t">Birzeit News Report: 21-March-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/may/12.html" title="Birzeit News Report: 12-May-98
+http://www.birzeit.edu:80/bzunews/1998/May/12.html" data-wayback="https://web.archive.org/web/20000824093150/http://www.birzeit.edu:80/bzunews/1998/May/12.html"><span class="f">1998/may/12.html</span> <span class="t">Birzeit News Report: 12-May-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/may/15.html" title="Birzeit News Report: 15-April-98
+http://www2.birzeit.edu:80/bzunews/1998/May/15.html" data-wayback="https://web.archive.org/web/20000115184842/http://www2.birzeit.edu:80/bzunews/1998/May/15.html"><span class="f">1998/may/15.html</span> <span class="t">Birzeit News Report: 15-April-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/may/24.html" title="Birzeit News Report: 24-May-98
+http://www2.birzeit.edu:80/bzunews/1998/May/24.html" data-wayback="https://web.archive.org/web/20000115192501/http://www2.birzeit.edu:80/bzunews/1998/May/24.html"><span class="f">1998/may/24.html</span> <span class="t">Birzeit News Report: 24-May-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/12.html" title="Birzeit News Report:12 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/12.html" data-wayback="https://web.archive.org/web/20000115200012/http://www2.birzeit.edu:80/bzunews/1998/Nov/12.html"><span class="f">1998/nov/12.html</span> <span class="t">Birzeit News Report:12 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/13.html" title="Birzeit News Report:12 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/13.html" data-wayback="https://web.archive.org/web/20000115203506/http://www2.birzeit.edu:80/bzunews/1998/Nov/13.html"><span class="f">1998/nov/13.html</span> <span class="t">Birzeit News Report:12 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/17.html" title="Birzeit News Report:17 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/17.html" data-wayback="https://web.archive.org/web/20000115210945/http://www2.birzeit.edu:80/bzunews/1998/Nov/17.html"><span class="f">1998/nov/17.html</span> <span class="t">Birzeit News Report:17 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/21.html" title="Birzeit News Report:21 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/21.html" data-wayback="https://web.archive.org/web/20000115214358/http://www2.birzeit.edu:80/bzunews/1998/Nov/21.html"><span class="f">1998/nov/21.html</span> <span class="t">Birzeit News Report:21 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/21b.html" title="Birzeit News Report:21 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/21b.html" data-wayback="https://web.archive.org/web/20000115221807/http://www2.birzeit.edu:80/bzunews/1998/Nov/21b.html"><span class="f">1998/nov/21b.html</span> <span class="t">Birzeit News Report:21 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/3.html" title="Birzeit News Report:3 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/3.html" data-wayback="https://web.archive.org/web/20000930061359/http://www2.birzeit.edu:80/bzunews/1998/Nov/3.html"><span class="f">1998/nov/3.html</span> <span class="t">Birzeit News Report:3 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/nov/7.html" title="Birzeit News Report:7 November-1998
+http://www2.birzeit.edu:80/bzunews/1998/Nov/7.html" data-wayback="https://web.archive.org/web/20000115232615/http://www2.birzeit.edu:80/bzunews/1998/Nov/7.html"><span class="f">1998/nov/7.html</span> <span class="t">Birzeit News Report:7 November-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/oct/21.html" title="Birzeit News Report:21 October-1998
+http://www.birzeit.edu:80/bzunews/1998/Oct/21.html" data-wayback="https://web.archive.org/web/20000824093007/http://www.birzeit.edu:80/bzunews/1998/Oct/21.html"><span class="f">1998/oct/21.html</span> <span class="t">Birzeit News Report:21 October-1998</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/sep/14.html" title="Birzeit News Report:14-September-98
+http://www2.birzeit.edu:80/bzunews/1998/sep/14.html" data-wayback="https://web.archive.org/web/20000116025055/http://www2.birzeit.edu:80/bzunews/1998/sep/14.html"><span class="f">1998/sep/14.html</span> <span class="t">Birzeit News Report:14-September-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/sep/29.html" title="Birzeit News Report:14-September-98
+http://www2.birzeit.edu:80/bzunews/1998/sep/29.html" data-wayback="https://web.archive.org/web/20000116032511/http://www2.birzeit.edu:80/bzunews/1998/sep/29.html"><span class="f">1998/sep/29.html</span> <span class="t">Birzeit News Report:14-September-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1998/sep/9.html" title="Birzeit News Report:9-September-98
+http://www2.birzeit.edu:80/bzunews/1998/sep/9.html" data-wayback="https://web.archive.org/web/20000116035912/http://www2.birzeit.edu:80/bzunews/1998/sep/9.html"><span class="f">1998/sep/9.html</span> <span class="t">Birzeit News Report:9-September-98</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/apr/18.html" title="Birzeit News Report: 18 April - 1999
+http://www.birzeit.edu:80/bzunews/1999/Apr/18.html" data-wayback="https://web.archive.org/web/20001121110300/http://www.birzeit.edu:80/bzunews/1999/Apr/18.html"><span class="f">1999/apr/18.html</span> <span class="t">Birzeit News Report: 18 April - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/apr/18ar.html" title="Arabic Bulletin: 18 April - 1999
+http://www.birzeit.edu:80/bzunews/1999/Apr/18ar.html" data-wayback="https://web.archive.org/web/20000824094631/http://www.birzeit.edu:80/bzunews/1999/Apr/18ar.html"><span class="f">1999/apr/18ar.html</span> <span class="t">Arabic Bulletin: 18 April - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/apr/29.html" title="Birzeit News Report: 18 April - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Apr/29.html" data-wayback="https://web.archive.org/web/20000116043301/http://www2.birzeit.edu:80/bzunews/1999/Apr/29.html"><span class="f">1999/apr/29.html</span> <span class="t">Birzeit News Report: 18 April - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/apr/9.html" title="Birzeit News Report: 9 April - 1999
+http://www.birzeit.edu:80/bzunews/1999/Apr/9.html" data-wayback="https://web.archive.org/web/20000824092716/http://www.birzeit.edu:80/bzunews/1999/Apr/9.html"><span class="f">1999/apr/9.html</span> <span class="t">Birzeit News Report: 9 April - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/dec/11.html" title="Birzeit News Report: 11 December - 1999
+http://www.birzeit.edu:80/bzunews/1999/Dec/11.html" data-wayback="https://web.archive.org/web/20000824092130/http://www.birzeit.edu:80/bzunews/1999/Dec/11.html"><span class="f">1999/dec/11.html</span> <span class="t">Birzeit News Report: 11 December - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/dec/9.html" title="Birzeit News Report: 9 December - 1999
+http://www.birzeit.edu:80/bzunews/1999/Dec/9.html" data-wayback="https://web.archive.org/web/20000706232329/http://www.birzeit.edu:80/bzunews/1999/Dec/9.html"><span class="f">1999/dec/9.html</span> <span class="t">Birzeit News Report: 9 December - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/jan/23.html" title="Birzeit News Report:23 January -1999
+http://www2.birzeit.edu:80/bzunews/1999/Jan/23.html" data-wayback="https://web.archive.org/web/20000116050658/http://www2.birzeit.edu:80/bzunews/1999/Jan/23.html"><span class="f">1999/jan/23.html</span> <span class="t">Birzeit News Report:23 January -1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/jan/26.html" title="Birzeit News Report:23 January -1999
+http://www2.birzeit.edu:80/bzunews/1999/Jan/26.html" data-wayback="https://web.archive.org/web/20000930061250/http://www2.birzeit.edu:80/bzunews/1999/Jan/26.html"><span class="f">1999/jan/26.html</span> <span class="t">Birzeit News Report:23 January -1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/jan/29.html" title="Birzeit News Report:23 January -1999
+http://www.birzeit.edu:80/bzunews/1999/Jan/29.html" data-wayback="https://web.archive.org/web/20000619233756/http://www.birzeit.edu:80/bzunews/1999/Jan/29.html"><span class="f">1999/jan/29.html</span> <span class="t">Birzeit News Report:23 January -1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/jan/29ar.html" title="Birzeit News Report: 29-January-99
+http://www.birzeit.edu:80/bzunews/1999/Jan/29ar.html" data-wayback="https://web.archive.org/web/20000824092749/http://www.birzeit.edu:80/bzunews/1999/Jan/29ar.html"><span class="f">1999/jan/29ar.html</span> <span class="t">Birzeit News Report: 29-January-99</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/july/24.html" title="Birzeit News Report: 24 July - 1999
+http://www2.birzeit.edu:80/bzunews/1999/July/24.html" data-wayback="https://web.archive.org/web/20000116054106/http://www2.birzeit.edu:80/bzunews/1999/July/24.html"><span class="f">1999/july/24.html</span> <span class="t">Birzeit News Report: 24 July - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/june/23.html" title="Birzeit News Report: 22 June - 1999
+http://www2.birzeit.edu:80/bzunews/1999/June/23.html" data-wayback="https://web.archive.org/web/20000116061944/http://www2.birzeit.edu:80/bzunews/1999/June/23.html"><span class="f">1999/june/23.html</span> <span class="t">Birzeit News Report: 22 June - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/june/29.html" title="Birzeit News Report: 29 June - 1999
+http://www2.birzeit.edu:80/bzunews/1999/June/29.html" data-wayback="https://web.archive.org/web/20000116065410/http://www2.birzeit.edu:80/bzunews/1999/June/29.html"><span class="f">1999/june/29.html</span> <span class="t">Birzeit News Report: 29 June - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/mar/21.html" title="Birzeit News Report: 21 March - 1999
+http://www.birzeit.edu:80/bzunews/1999/Mar/21.html" data-wayback="https://web.archive.org/web/20000824092724/http://www.birzeit.edu:80/bzunews/1999/Mar/21.html"><span class="f">1999/mar/21.html</span> <span class="t">Birzeit News Report: 21 March - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/mar/9.html" title="Birzeit News Report:9 March - 1999
+http://www.birzeit.edu:80/bzunews/1999/Mar/9.html" data-wayback="https://web.archive.org/web/20000824092731/http://www.birzeit.edu:80/bzunews/1999/Mar/9.html"><span class="f">1999/mar/9.html</span> <span class="t">Birzeit News Report:9 March - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/may/1.html" title="Birzeit News Report: 1 May - 1999
+http://www2.birzeit.edu:80/bzunews/1999/May/1.html" data-wayback="https://web.archive.org/web/20000116072803/http://www2.birzeit.edu:80/bzunews/1999/May/1.html"><span class="f">1999/may/1.html</span> <span class="t">Birzeit News Report: 1 May - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/may/6.html" title="Birzeit News Report: 1 May - 1999
+http://www2.birzeit.edu:80/bzunews/1999/May/6.html" data-wayback="https://web.archive.org/web/20000116080159/http://www2.birzeit.edu:80/bzunews/1999/May/6.html"><span class="f">1999/may/6.html</span> <span class="t">Birzeit News Report: 1 May - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/nov/29.html" title="Birzeit News Report: 29 NOVEMBER - 1999
+http://www.birzeit.edu:80/bzunews/1999/Nov/29.html" data-wayback="https://web.archive.org/web/20000706232407/http://www.birzeit.edu:80/bzunews/1999/Nov/29.html"><span class="f">1999/nov/29.html</span> <span class="t">Birzeit News Report: 29 NOVEMBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/nov/5.html" title="Birzeit News Report: 5 NOVEMBER - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Nov/5.html" data-wayback="https://web.archive.org/web/20000126083209/http://www2.birzeit.edu:80/bzunews/1999/Nov/5.html"><span class="f">1999/nov/5.html</span> <span class="t">Birzeit News Report: 5 NOVEMBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/oct/16.html" title="Birzeit News Report: 16 OCTOBER - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Oct/16.html" data-wayback="https://web.archive.org/web/20000126100433/http://www2.birzeit.edu:80/bzunews/1999/Oct/16.html"><span class="f">1999/oct/16.html</span> <span class="t">Birzeit News Report: 16 OCTOBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/oct/21.html" title="Birzeit News Report: 21 OCTOBER - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Oct/21.html" data-wayback="https://web.archive.org/web/20000126124948/http://www2.birzeit.edu:80/bzunews/1999/Oct/21.html"><span class="f">1999/oct/21.html</span> <span class="t">Birzeit News Report: 21 OCTOBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/oct/4.html" title="Birzeit News Report: 4 October - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Oct/4.html" data-wayback="https://web.archive.org/web/20000126144541/http://www2.birzeit.edu:80/bzunews/1999/Oct/4.html"><span class="f">1999/oct/4.html</span> <span class="t">Birzeit News Report: 4 October - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/oct/5.html" title="Birzeit News Report: 7 October - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Oct/5.html" data-wayback="https://web.archive.org/web/20000126175159/http://www2.birzeit.edu:80/bzunews/1999/Oct/5.html"><span class="f">1999/oct/5.html</span> <span class="t">Birzeit News Report: 7 October - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/sep/13.html" title="Birzeit News Report: 13 September - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Sep/13.html" data-wayback="https://web.archive.org/web/20000116083604/http://www2.birzeit.edu:80/bzunews/1999/Sep/13.html"><span class="f">1999/sep/13.html</span> <span class="t">Birzeit News Report: 13 September - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/sep/16.html" title="Birzeit News Report: 16 SEPTEMBER - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Sep/16.html" data-wayback="https://web.archive.org/web/20000118065014/http://www2.birzeit.edu:80/bzunews/1999/Sep/16.html"><span class="f">1999/sep/16.html</span> <span class="t">Birzeit News Report: 16 SEPTEMBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/sep/28.html" title="Birzeit News Report: 28 SEPTEMBER - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Sep/28.html" data-wayback="https://web.archive.org/web/20000126202409/http://www2.birzeit.edu:80/bzunews/1999/Sep/28.html"><span class="f">1999/sep/28.html</span> <span class="t">Birzeit News Report: 28 SEPTEMBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/1999/sep/30.html" title="Birzeit News Report: 30 SEPTEMBER - 1999
+http://www2.birzeit.edu:80/bzunews/1999/Sep/30.html" data-wayback="https://web.archive.org/web/20000126223325/http://www2.birzeit.edu:80/bzunews/1999/Sep/30.html"><span class="f">1999/sep/30.html</span> <span class="t">Birzeit News Report: 30 SEPTEMBER - 1999</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/april/1.html" title="Birzeit News Report: 1 April - 2000
+http://www.birzeit.edu:80/bzunews/2000/April/1.html" data-wayback="https://web.archive.org/web/20000816223616/http://www.birzeit.edu:80/bzunews/2000/April/1.html"><span class="f">2000/april/1.html</span> <span class="t">Birzeit News Report: 1 April - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/april/20.html" title="Birzeit News Report: 20 April - 2000
+http://www.birzeit.edu:80/bzunews/2000/April/20.html" data-wayback="https://web.archive.org/web/20000816223543/http://www.birzeit.edu:80/bzunews/2000/April/20.html"><span class="f">2000/april/20.html</span> <span class="t">Birzeit News Report: 20 April - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/april/3a.html" title="Birzeit News Report: 4 April - 2000
+http://www.birzeit.edu:80/bzunews/2000/April/3a.html" data-wayback="https://web.archive.org/web/20000816223609/http://www.birzeit.edu:80/bzunews/2000/April/3a.html"><span class="f">2000/april/3a.html</span> <span class="t">Birzeit News Report: 4 April - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/april/3b.html" title="Birzeit News Report: 3 April - 2000
+http://www.birzeit.edu:80/bzunews/2000/April/3b.html" data-wayback="https://web.archive.org/web/20000707005718/http://www.birzeit.edu:80/bzunews/2000/April/3b.html"><span class="f">2000/april/3b.html</span> <span class="t">Birzeit News Report: 3 April - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/april/5.html" title="Birzeit News Report: 5 April - 2000
+http://www.birzeit.edu:80/bzunews/2000/April/5.html" data-wayback="https://web.archive.org/web/20000816223556/http://www.birzeit.edu:80/bzunews/2000/April/5.html"><span class="f">2000/april/5.html</span> <span class="t">Birzeit News Report: 5 April - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/april/8.html" title="Birzeit News Report: 8 April - 2000
+http://www.birzeit.edu:80/bzunews/2000/April/8.html" data-wayback="https://web.archive.org/web/20001102170635/http://www.birzeit.edu:80/bzunews/2000/April/8.html"><span class="f">2000/april/8.html</span> <span class="t">Birzeit News Report: 8 April - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/aug/23.html" title="Birzeit News Report: 23 August - 2000
+http://www.birzeit.edu:80/bzunews/2000/Aug/23.html" data-wayback="https://web.archive.org/web/20001102181317/http://www.birzeit.edu:80/bzunews/2000/Aug/23.html"><span class="f">2000/aug/23.html</span> <span class="t">Birzeit News Report: 23 August - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/1.html" title="Birzeit News Report: 1 February- 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/1.html" data-wayback="https://web.archive.org/web/20000824092113/http://www.birzeit.edu:80/bzunews/2000/Feb/1.html"><span class="f">2000/feb/1.html</span> <span class="t">Birzeit News Report: 1 February- 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/12.html" title="Birzeit News Report: 12 February- 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/12.html" data-wayback="https://web.archive.org/web/20001121215400/http://www.birzeit.edu:80/bzunews/2000/Feb/12.html"><span class="f">2000/feb/12.html</span> <span class="t">Birzeit News Report: 12 February- 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/22.html" title="Birzeit News Report: 22 January - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/22.html" data-wayback="https://web.archive.org/web/20000824092100/http://www.birzeit.edu:80/bzunews/2000/Feb/22.html"><span class="f">2000/feb/22.html</span> <span class="t">Birzeit News Report: 22 January - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/26.html" title="Birzeit News Report: 26 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/26.html" data-wayback="https://web.archive.org/web/20000707001800/http://www.birzeit.edu:80/bzunews/2000/Feb/26.html"><span class="f">2000/feb/26.html</span> <span class="t">Birzeit News Report: 26 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/26st.html" title="Birzeit News Report: 26 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/26st.html" data-wayback="https://web.archive.org/web/20001209071600/http://www.birzeit.edu:80/bzunews/2000/Feb/26st.html"><span class="f">2000/feb/26st.html</span> <span class="t">Birzeit News Report: 26 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/26ste.html" title="Birzeit News Report: 26 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/26ste.html" data-wayback="https://web.archive.org/web/20000930055628/http://www.birzeit.edu:80/bzunews/2000/Feb/26ste.html"><span class="f">2000/feb/26ste.html</span> <span class="t">Birzeit News Report: 26 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/29.html" title="Birzeit News Report: 29 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/29.html" data-wayback="https://web.archive.org/web/20000824092032/http://www.birzeit.edu:80/bzunews/2000/Feb/29.html"><span class="f">2000/feb/29.html</span> <span class="t">Birzeit News Report: 29 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/29a.html" title="Birzeit News Report: 29 February - 2000
+http://www2.birzeit.edu:80/bzunews/2000/Feb/29a.html" data-wayback="https://web.archive.org/web/20000930060512/http://www2.birzeit.edu:80/bzunews/2000/Feb/29a.html"><span class="f">2000/feb/29a.html</span> <span class="t">Birzeit News Report: 29 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/29c.html" title="Birzeit News Report: 29 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/29c.html" data-wayback="https://web.archive.org/web/20000824092019/http://www.birzeit.edu:80/bzunews/2000/Feb/29c.html"><span class="f">2000/feb/29c.html</span> <span class="t">Birzeit News Report: 29 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/29d.html" title="Birzeit News Report: 29 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/29d.html" data-wayback="https://web.archive.org/web/20000707023043/http://www.birzeit.edu:80/bzunews/2000/Feb/29d.html"><span class="f">2000/feb/29d.html</span> <span class="t">Birzeit News Report: 29 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/29e.html" title="Birzeit News Report: 29 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/29e.html" data-wayback="https://web.archive.org/web/20000824092039/http://www.birzeit.edu:80/bzunews/2000/Feb/29e.html"><span class="f">2000/feb/29e.html</span> <span class="t">Birzeit News Report: 29 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/feb/29ear1.html" title="Birzeit News Report: 29 February - 2000
+http://www.birzeit.edu:80/bzunews/2000/Feb/29ear1.html" data-wayback="https://web.archive.org/web/20000824092047/http://www.birzeit.edu:80/bzunews/2000/Feb/29ear1.html"><span class="f">2000/feb/29ear1.html</span> <span class="t">Birzeit News Report: 29 February - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/jan/17.html" title="Birzeit News Report: 17 January - 2000
+http://www.birzeit.edu:80/bzunews/2000/Jan/17.html" data-wayback="https://web.archive.org/web/20000824092120/http://www.birzeit.edu:80/bzunews/2000/Jan/17.html"><span class="f">2000/jan/17.html</span> <span class="t">Birzeit News Report: 17 January - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/july/1.html" title="Birzeit News Report: 1 JuLY - 2000
+http://www.birzeit.edu:80/bzunews/2000/July/1.html" data-wayback="https://web.archive.org/web/20000816223248/http://www.birzeit.edu:80/bzunews/2000/July/1.html"><span class="f">2000/july/1.html</span> <span class="t">Birzeit News Report: 1 JuLY - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/june/20.html" title="Birzeit News Report: 20 June - 2000
+http://www.birzeit.edu:80/bzunews/2000/June/20.html" data-wayback="https://web.archive.org/web/20000816223305/http://www.birzeit.edu:80/bzunews/2000/June/20.html"><span class="f">2000/june/20.html</span> <span class="t">Birzeit News Report: 20 June - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/june/24.html" title="Birzeit News Report: 24 June - 2000
+http://www.birzeit.edu:80/bzunews/2000/June/24.html" data-wayback="https://web.archive.org/web/20000816223257/http://www.birzeit.edu:80/bzunews/2000/June/24.html"><span class="f">2000/june/24.html</span> <span class="t">Birzeit News Report: 24 June - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/june/6.html" title="Birzeit News Report: 6 June - 2000
+http://www.birzeit.edu:80/bzunews/2000/June/6.html" data-wayback="https://web.archive.org/web/20000816223331/http://www.birzeit.edu:80/bzunews/2000/June/6.html"><span class="f">2000/june/6.html</span> <span class="t">Birzeit News Report: 6 June - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/1.html" title="Birzeit News Report: 1 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/1.html" data-wayback="https://web.archive.org/web/20000824092012/http://www.birzeit.edu:80/bzunews/2000/March/1.html"><span class="f">2000/march/1.html</span> <span class="t">Birzeit News Report: 1 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/11.html" title="Birzeit News Report: 11 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/11.html" data-wayback="https://web.archive.org/web/20000816223631/http://www.birzeit.edu:80/bzunews/2000/March/11.html"><span class="f">2000/march/11.html</span> <span class="t">Birzeit News Report: 11 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/14.html" title="Birzeit News Report: 14 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/14.html" data-wayback="https://web.archive.org/web/20000816223625/http://www.birzeit.edu:80/bzunews/2000/March/14.html"><span class="f">2000/march/14.html</span> <span class="t">Birzeit News Report: 14 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/2.html" title="Birzeit News Report: 2 March - 2000
+http://www2.birzeit.edu:80/bzunews/2000/March/2.html" data-wayback="https://web.archive.org/web/20000930060501/http://www2.birzeit.edu:80/bzunews/2000/March/2.html"><span class="f">2000/march/2.html</span> <span class="t">Birzeit News Report: 2 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/2a.html" title="Birzeit News Report: 2 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/2a.html" data-wayback="https://web.archive.org/web/20000824091959/http://www.birzeit.edu:80/bzunews/2000/March/2a.html"><span class="f">2000/march/2a.html</span> <span class="t">Birzeit News Report: 2 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/2b.html" title="Birzeit News Report: 2 March - 2000
+http://www2.birzeit.edu:80/bzunews/2000/March/2b.html" data-wayback="https://web.archive.org/web/20000930060450/http://www2.birzeit.edu:80/bzunews/2000/March/2b.html"><span class="f">2000/march/2b.html</span> <span class="t">Birzeit News Report: 2 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/3.html" title="Birzeit News Report: 3 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/3.html" data-wayback="https://web.archive.org/web/20000824091945/http://www.birzeit.edu:80/bzunews/2000/March/3.html"><span class="f">2000/march/3.html</span> <span class="t">Birzeit News Report: 3 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/4.html" title="Birzeit News Report: 4 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/4.html" data-wayback="https://web.archive.org/web/20000824091939/http://www.birzeit.edu:80/bzunews/2000/March/4.html"><span class="f">2000/march/4.html</span> <span class="t">Birzeit News Report: 4 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/4b.html" title="Birzeit News Report: 4 March- 2000
+http://www.birzeit.edu:80/bzunews/2000/March/4b.html" data-wayback="https://web.archive.org/web/20000824091932/http://www.birzeit.edu:80/bzunews/2000/March/4b.html"><span class="f">2000/march/4b.html</span> <span class="t">Birzeit News Report: 4 March- 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/5.html" title="Birzeit News Report: 6 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/5.html" data-wayback="https://web.archive.org/web/20000824091925/http://www.birzeit.edu:80/bzunews/2000/March/5.html"><span class="f">2000/march/5.html</span> <span class="t">Birzeit News Report: 6 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/5a.html" title="Birzeit News Report: 6 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/5a.html" data-wayback="https://web.archive.org/web/20000824091919/http://www.birzeit.edu:80/bzunews/2000/March/5a.html"><span class="f">2000/march/5a.html</span> <span class="t">Birzeit News Report: 6 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/5b.html" title="Birzeit News Report: 6 March - 2000
+http://www2.birzeit.edu:80/bzunews/2000/March/5b.html" data-wayback="https://web.archive.org/web/20000930060419/http://www2.birzeit.edu:80/bzunews/2000/March/5b.html"><span class="f">2000/march/5b.html</span> <span class="t">Birzeit News Report: 6 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/march/5c.html" title="Birzeit News Report: 6 March - 2000
+http://www.birzeit.edu:80/bzunews/2000/March/5c.html" data-wayback="https://web.archive.org/web/20000816223638/http://www.birzeit.edu:80/bzunews/2000/March/5c.html"><span class="f">2000/march/5c.html</span> <span class="t">Birzeit News Report: 6 March - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/may/12.html" title="Birzeit News Report: 12 May - 2000
+http://www.birzeit.edu:80/bzunews/2000/May/12.html" data-wayback="https://web.archive.org/web/20000816223435/http://www.birzeit.edu:80/bzunews/2000/May/12.html"><span class="f">2000/may/12.html</span> <span class="t">Birzeit News Report: 12 May - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/may/2.html" title="Birzeit News Report: 2 May - 2000
+http://www.birzeit.edu:80/bzunews/2000/May/2.html" data-wayback="https://web.archive.org/web/20000706230538/http://www.birzeit.edu:80/bzunews/2000/May/2.html"><span class="f">2000/may/2.html</span> <span class="t">Birzeit News Report: 2 May - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/may/24.html" title="Birzeit News Report: 24 May - 2000
+http://www.birzeit.edu:80/bzunews/2000/May/24.html" data-wayback="https://web.archive.org/web/20000619010016/http://www.birzeit.edu:80/bzunews/2000/May/24.html"><span class="f">2000/may/24.html</span> <span class="t">Birzeit News Report: 24 May - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/may/24a.html" title="Birzeit News Report: 24 May - 2000
+http://www.birzeit.edu:80/bzunews/2000/May/24a.html" data-wayback="https://web.archive.org/web/20000619031024/http://www.birzeit.edu:80/bzunews/2000/May/24a.html"><span class="f">2000/may/24a.html</span> <span class="t">Birzeit News Report: 24 May - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/may/30.html" title="Birzeit News Report: 12 May - 2000
+http://www.birzeit.edu:80/bzunews/2000/May/30.html" data-wayback="https://web.archive.org/web/20000816223348/http://www.birzeit.edu:80/bzunews/2000/May/30.html"><span class="f">2000/may/30.html</span> <span class="t">Birzeit News Report: 12 May - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/2000/may/8.html" title="Birzeit News Report: 8 May - 2000
+http://www.birzeit.edu:80/bzunews/2000/May/8.html" data-wayback="https://web.archive.org/web/20000816223445/http://www.birzeit.edu:80/bzunews/2000/May/8.html"><span class="f">2000/may/8.html</span> <span class="t">Birzeit News Report: 8 May - 2000</span></a></li>
+<li><a href="/sites/birzeit.edu/bzunews/index2.html" title="Birzeit News: News about Palestine, the Israeli Palestinian Conflict, Palestinian life in the West Bank. News from Palestine. Main Index
+http://www.birzeit.edu:80/bzunews/index2.html" data-wayback="https://web.archive.org/web/20000520072940/http://www.birzeit.edu:80/bzunews/index2.html"><span class="f">index2.html</span> <span class="t">Birzeit News: News about Palestine, the Israeli Palestinian Conflict, Palestinian life in the West Bank. News from Pales…</span></a></li>
 </ul>
 </details>
 <details>
@@ -2977,6 +3315,39 @@ http://www.gcmhp.net:80/visitors_opinions.htm" data-wayback="https://web.archive
 http://www.gcmhp.net:80/women.htm" data-wayback="https://web.archive.org/web/20000301083106/http://www.gcmhp.net:80/women.htm"><span class="f">women.htm</span> <span class="t">Gaza Mental Health ProgramGaza Mental Health Program</span></a></li>
 <li><a href="/sites/gcmhp.net/zaanoun.htm" title="zaanoun
 http://www.gcmhp.net:80/zaanoun.htm" data-wayback="https://web.archive.org/web/20000301111257/http://www.gcmhp.net:80/zaanoun.htm"><span class="f">zaanoun.htm</span> <span class="t">zaanoun</span></a></li>
+</ul>
+</details>
+<details>
+<summary>geocities.com/CapeCanaveral/Runway/9575 <span class="count">14</span></summary>
+<ul>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/arabs.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/arabs.html" data-wayback="https://web.archive.org/web/20010511062908/http://www.geocities.com:80/CapeCanaveral/Runway/9575/arabs.html"><span class="f">geocities.com/capecanaveral/runway/9575/arabs.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/eclipse.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/eclipse.html" data-wayback="https://web.archive.org/web/20010813130736/http://www.geocities.com:80/CapeCanaveral/Runway/9575/eclipse.html"><span class="f">geocities.com/capecanaveral/runway/9575/eclipse.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/galileo.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/galileo.html" data-wayback="https://web.archive.org/web/20010813132606/http://www.geocities.com:80/CapeCanaveral/Runway/9575/galileo.html"><span class="f">geocities.com/capecanaveral/runway/9575/galileo.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/guestbook.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/guestbook.html" data-wayback="https://web.archive.org/web/20010813132741/http://www.geocities.com:80/CapeCanaveral/Runway/9575/guestbook.html"><span class="f">geocities.com/capecanaveral/runway/9575/guestbook.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/index.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/" data-wayback="https://web.archive.org/web/20010424165535/http://www.geocities.com:80/CapeCanaveral/Runway/9575/"><span class="f">geocities.com/capecanaveral/runway/9575/index.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/info.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/info.html" data-wayback="https://web.archive.org/web/20010604005111/http://www.geocities.com:80/CapeCanaveral/Runway/9575/info.html"><span class="f">geocities.com/capecanaveral/runway/9575/info.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/leonids/archive.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/leonids/archive.html" data-wayback="https://web.archive.org/web/20010424192343/http://www.geocities.com:80/CapeCanaveral/Runway/9575/leonids/archive.html"><span class="f">geocities.com/capecanaveral/runway/9575/leonids/archive.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/leonids/leonids.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/leonids/leonids.html" data-wayback="https://web.archive.org/web/20010419162325/http://www.geocities.com:80/CapeCanaveral/Runway/9575/leonids/leonids.html"><span class="f">geocities.com/capecanaveral/runway/9575/leonids/leonids.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/leonids/results.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/leonids/results.html" data-wayback="https://web.archive.org/web/20010501122554/http://www.geocities.com:80/CapeCanaveral/Runway/9575/leonids/results.html"><span class="f">geocities.com/capecanaveral/runway/9575/leonids/results.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/links.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/links.html" data-wayback="https://web.archive.org/web/20010730074619/http://www.geocities.com:80/CapeCanaveral/Runway/9575/links.html"><span class="f">geocities.com/capecanaveral/runway/9575/links.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/maillist.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/maillist.html" data-wayback="https://web.archive.org/web/20010501095332/http://www.geocities.com:80/CapeCanaveral/Runway/9575/maillist.html"><span class="f">geocities.com/capecanaveral/runway/9575/maillist.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/moonphase.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/moonphase.html" data-wayback="https://web.archive.org/web/20010501094730/http://www.geocities.com:80/CapeCanaveral/Runway/9575/moonphase.html"><span class="f">geocities.com/capecanaveral/runway/9575/moonphase.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/moons.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/moons.html" data-wayback="https://web.archive.org/web/20010501100159/http://www.geocities.com:80/CapeCanaveral/Runway/9575/moons.html"><span class="f">geocities.com/capecanaveral/runway/9575/moons.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
+<li><a href="/sites/geocities.com/capecanaveral/runway/9575/software.html" title="Palestinian Astronomical Society (PAS)
+http://www.geocities.com:80/CapeCanaveral/Runway/9575/software.html" data-wayback="https://web.archive.org/web/20010501060054/http://www.geocities.com:80/CapeCanaveral/Runway/9575/software.html"><span class="f">geocities.com/capecanaveral/runway/9575/software.html</span> <span class="t">Palestinian Astronomical Society (PAS)</span></a></li>
 </ul>
 </details>
 <details>
@@ -4372,6 +4743,68 @@ http://www.jericho-city.org:80/tourist.html" data-wayback="https://web.archive.o
 </ul>
 </details>
 <details>
+<summary>jerusalemiloveyou.com <span class="count">29</span></summary>
+<ul>
+<li><a href="/sites/jerusalemiloveyou.com/index.html" title="Jerusalem Palestine
+http://www.jerusalemiloveyou.com:80/index.html" data-wayback="https://web.archive.org/web/20010119095400/http://www.jerusalemiloveyou.com:80/index.html"><span class="f">index.html</span> <span class="t">Jerusalem Palestine</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/allnations.asp" title="http://jerusalemiloveyou.com:80/AllNations.asp" data-wayback="https://web.archive.org/web/20011113223905/http://jerusalemiloveyou.com:80/AllNations.asp"><span class="f">allnations.asp</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/bethany.htm" title="Jerusalem - Bethany (al-Azarieh)
+http://www.jerusalemiloveyou.com:80/Bethany.htm" data-wayback="https://web.archive.org/web/20010422195619/http://www.jerusalemiloveyou.com:80/Bethany.htm"><span class="f">bethany.htm</span> <span class="t">Jerusalem - Bethany (al-Azarieh)</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/bethlehem.html" title="Bethlehem - The birthplace of Jesus
+http://www.jerusalemiloveyou.com:80/bethlehem.html" data-wayback="https://web.archive.org/web/20010119094000/http://www.jerusalemiloveyou.com:80/bethlehem.html"><span class="f">bethlehem.html</span> <span class="t">Bethlehem - The birthplace of Jesus</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/caesarea.html" title="Caesarea
+http://www.jerusalemiloveyou.com:80/caesarea.html" data-wayback="https://web.archive.org/web/20010119095100/http://www.jerusalemiloveyou.com:80/caesarea.html"><span class="f">caesarea.html</span> <span class="t">Caesarea</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/deadsea.html" title="The Dead Sea - lowest point on earth!
+http://www.jerusalemiloveyou.com:80/deadsea.html" data-wayback="https://web.archive.org/web/20010119094500/http://www.jerusalemiloveyou.com:80/deadsea.html"><span class="f">deadsea.html</span> <span class="t">The Dead Sea - lowest point on earth!</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/galilee.html" title="The Galilee - The Miracle of Loaves and Fish
+http://www.jerusalemiloveyou.com:80/galilee.html" data-wayback="https://web.archive.org/web/20010119095100/http://www.jerusalemiloveyou.com:80/galilee.html"><span class="f">galilee.html</span> <span class="t">The Galilee - The Miracle of Loaves and Fish</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/hebron.htm" title="Hebron
+http://www.jerusalemiloveyou.com:80/hebron.htm" data-wayback="https://web.archive.org/web/20010119095500/http://www.jerusalemiloveyou.com:80/hebron.htm"><span class="f">hebron.htm</span> <span class="t">Hebron</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jericho.html" title="Jericho and the surrounding areas
+http://www.jerusalemiloveyou.com:80/jericho.html" data-wayback="https://web.archive.org/web/20010119095200/http://www.jerusalemiloveyou.com:80/jericho.html"><span class="f">jericho.html</span> <span class="t">Jericho and the surrounding areas</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20arabic%20poetry.htm" title="New Page 1
+http://jerusalemiloveyou.com:80/Jerusalem%20Arabic%20Poetry.htm" data-wayback="https://web.archive.org/web/20021204195106/http://jerusalemiloveyou.com:80/Jerusalem%20Arabic%20Poetry.htm"><span class="f">jerusalem arabic poetry.htm</span> <span class="t">New Page 1</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20citadel.htm" title="Jerusalem - The Citadel ( Tower Of David)
+http://jerusalemiloveyou.com:80/Jerusalem%20citadel.htm" data-wayback="https://web.archive.org/web/20021230022220/http://jerusalemiloveyou.com:80/Jerusalem%20citadel.htm"><span class="f">jerusalem citadel.htm</span> <span class="t">Jerusalem - The Citadel ( Tower Of David)</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20geographyl.htm" title="Jerusalem - The Citadel ( Tower Of David)
+http://www.jerusalemiloveyou.com:80/Jerusalem%20Geographyl.htm" data-wayback="https://web.archive.org/web/20030204091319/http://www.jerusalemiloveyou.com:80/Jerusalem%20Geographyl.htm"><span class="f">jerusalem geographyl.htm</span> <span class="t">Jerusalem - The Citadel ( Tower Of David)</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20haram.html" title="Haram El-Sharif
+http://jerusalemiloveyou.com:80/jerusalem%20haram.html" data-wayback="https://web.archive.org/web/20030104101348/http://jerusalemiloveyou.com:80/jerusalem%20haram.html"><span class="f">jerusalem haram.html</span> <span class="t">Haram El-Sharif</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20holysep.html" title="The Holy Sepulchre
+http://jerusalemiloveyou.com:80/jerusalem%20holysep.html" data-wayback="https://web.archive.org/web/20030104101334/http://jerusalemiloveyou.com:80/jerusalem%20holysep.html"><span class="f">jerusalem holysep.html</span> <span class="t">The Holy Sepulchre</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20my%20home.html" title="Jerusalem My Home - June 99
+http://jerusalemiloveyou.com:80/jerusalem%20my%20home.html" data-wayback="https://web.archive.org/web/20030402125535/http://jerusalemiloveyou.com:80/jerusalem%20my%20home.html"><span class="f">jerusalem my home.html</span> <span class="t">Jerusalem My Home - June 99</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20through%20history.html" title="Jerusalem Through History - June 99
+http://jerusalemiloveyou.com:80/jerusalem%20through%20history.html" data-wayback="https://web.archive.org/web/20030402130120/http://jerusalemiloveyou.com:80/jerusalem%20through%20history.html"><span class="f">jerusalem through history.html</span> <span class="t">Jerusalem Through History - June 99</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20via%20dolorosa.html" title="The Via Dolorosa - The Way of the Cross
+http://jerusalemiloveyou.com:80/jerusalem%20via%20dolorosa.html" data-wayback="https://web.archive.org/web/20030104103035/http://jerusalemiloveyou.com:80/jerusalem%20via%20dolorosa.html"><span class="f">jerusalem via dolorosa.html</span> <span class="t">The Via Dolorosa - The Way of the Cross</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20wailingwall.html" title="The Western Wall - The last remnants of the great Jewish Temple
+http://jerusalemiloveyou.com:80/jerusalem%20wailingwall.html" data-wayback="https://web.archive.org/web/20030104102149/http://jerusalemiloveyou.com:80/jerusalem%20wailingwall.html"><span class="f">jerusalem wailingwall.html</span> <span class="t">The Western Wall - The last remnants of the great Jewish Temple</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem%20walls.html" title="Jerusalems Walls and Gates - June 99
+http://www.jerusalemiloveyou.com:80/jerusalem%20Walls.html" data-wayback="https://web.archive.org/web/20030506011645/http://www.jerusalemiloveyou.com:80/jerusalem%20Walls.html"><span class="f">jerusalem walls.html</span> <span class="t">Jerusalems Walls and Gates - June 99</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem-kidron.htm" title="Places to Visit -- Jerusalem - The Kidron Valley
+http://www.jerusalemiloveyou.com:80/jerusalem-kidron.htm" data-wayback="https://web.archive.org/web/20010424044936/http://www.jerusalemiloveyou.com:80/jerusalem-kidron.htm"><span class="f">jerusalem-kidron.htm</span> <span class="t">Places to Visit -- Jerusalem - The Kidron Valley</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem-mount-of-olives.htm" title="Jerusalem - Mount of Olives
+http://www.jerusalemiloveyou.com:80/Jerusalem-Mount-of-Olives.htm" data-wayback="https://web.archive.org/web/20010423065854/http://www.jerusalemiloveyou.com:80/Jerusalem-Mount-of-Olives.htm"><span class="f">jerusalem-mount-of-olives.htm</span> <span class="t">Jerusalem - Mount of Olives</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalem.html" title="Jerusalem - Cradle of the Holy Land
+http://www.jerusalemiloveyou.com:80/jerusalem.html" data-wayback="https://web.archive.org/web/20010119101900/http://www.jerusalemiloveyou.com:80/jerusalem.html"><span class="f">jerusalem.html</span> <span class="t">Jerusalem - Cradle of the Holy Land</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/jerusalemnizar.htm" title="Jerusalem
+http://jerusalemiloveyou.com:80/jerusalemNizar.htm" data-wayback="https://web.archive.org/web/20030104095903/http://jerusalemiloveyou.com:80/jerusalemNizar.htm"><span class="f">jerusalemnizar.htm</span> <span class="t">Jerusalem</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/nablus.htm" title="Visit Nablus
+http://www.jerusalemiloveyou.com:80/nablus.htm" data-wayback="https://web.archive.org/web/20010119101000/http://www.jerusalemiloveyou.com:80/nablus.htm"><span class="f">nablus.htm</span> <span class="t">Visit Nablus</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/nazareth.html" title="Nazareth
+http://www.jerusalemiloveyou.com:80/nazareth.html" data-wayback="https://web.archive.org/web/20010119101800/http://www.jerusalemiloveyou.com:80/nazareth.html"><span class="f">nazareth.html</span> <span class="t">Nazareth</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/ramallah.htm" title="Visit Ramallah
+http://www.jerusalemiloveyou.com:80/ramallah.htm" data-wayback="https://web.archive.org/web/20010119101700/http://www.jerusalemiloveyou.com:80/ramallah.htm"><span class="f">ramallah.htm</span> <span class="t">Visit Ramallah</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/the%20lords%20prayer.htm" title="Our Father Who Art in Heaven
+http://jerusalemiloveyou.com:80/The%20Lords%20Prayer.htm" data-wayback="https://web.archive.org/web/20021204195504/http://jerusalemiloveyou.com:80/The%20Lords%20Prayer.htm"><span class="f">the lords prayer.htm</span> <span class="t">Our Father Who Art in Heaven</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/this_page_is_dedicated_to_the_me.htm" title="This Page is dedicated to the Memory of My Brother Stawri Nicola Khayat 1961
+http://www.jerusalemiloveyou.com:80/this_page_is_dedicated_to_the_me.htm" data-wayback="https://web.archive.org/web/20010406215500/http://www.jerusalemiloveyou.com:80/this_page_is_dedicated_to_the_me.htm"><span class="f">this_page_is_dedicated_to_the_me.htm</span> <span class="t">This Page is dedicated to the Memory of My Brother Stawri Nicola Khayat 1961</span></a></li>
+<li><a href="/sites/jerusalemiloveyou.com/tour.html" title="Explore the Holy Land
+http://www.jerusalemiloveyou.com:80/Tour.html" data-wayback="https://web.archive.org/web/20010119094900/http://www.jerusalemiloveyou.com:80/Tour.html"><span class="f">tour.html</span> <span class="t">Explore the Holy Land</span></a></li>
+</ul>
+</details>
+<details>
 <summary>jrshotel.com <span class="count">41</span></summary>
 <ul>
 <li><a href="/sites/jrshotel.com/index.html" title="Jerusalem Hotel
@@ -5699,6 +6132,158 @@ http://www.nativity-church.com:80/sweet_dove.htm" data-wayback="https://web.arch
 http://www.nativity-church.com:80/tear.htm" data-wayback="https://web.archive.org/web/20040907182129/http://www.nativity-church.com:80/tear.htm"><span class="f">tear.htm</span> <span class="t">Nativity Church</span></a></li>
 <li><a href="/sites/nativity-church.com/trininty.htm" title="Nativity Church
 http://www.nativity-church.com:80/Trininty.htm" data-wayback="https://web.archive.org/web/20040413104309/http://www.nativity-church.com:80/Trininty.htm"><span class="f">trininty.htm</span> <span class="t">Nativity Church</span></a></li>
+</ul>
+</details>
+<details>
+<summary>nazareth.muni.il <span class="count">74</span></summary>
+<ul>
+<li><a href="/sites/nazareth.muni.il/index.html" title="Nazareth City Official Website 1999
+http://www.nazareth.muni.il:80/" data-wayback="https://web.archive.org/web/20040208043652/http://www.nazareth.muni.il:80/"><span class="f">index.html</span> <span class="t">Nazareth City Official Website 1999</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/arabic.files/page0001.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/arabic.files/page0001.htm" data-wayback="https://web.archive.org/web/20040421113227/http://www.nazareth.muni.il:80/dover/arabic.files/page0001.htm"><span class="f">dover/arabic.files/page0001.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/arabic.files/page0002.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/arabic.files/page0002.htm" data-wayback="https://web.archive.org/web/20040215200457/http://www.nazareth.muni.il:80/dover/arabic.files/page0002.htm"><span class="f">dover/arabic.files/page0002.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/arabic.files/page0003.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/arabic.files/page0003.htm" data-wayback="https://web.archive.org/web/20040215201024/http://www.nazareth.muni.il:80/dover/arabic.files/page0003.htm"><span class="f">dover/arabic.files/page0003.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/arabic.files/pubmaster001.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/arabic.files/pubmaster001.htm" data-wayback="https://web.archive.org/web/20040813202844/http://www.nazareth.muni.il:80/dover/arabic.files/pubmaster001.htm"><span class="f">dover/arabic.files/pubmaster001.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/arabic.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/arabic.htm" data-wayback="https://web.archive.org/web/20040421105752/http://www.nazareth.muni.il:80/dover/arabic.htm"><span class="f">dover/arabic.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/hebrew.files/page0001.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/hebrew.files/page0001.htm" data-wayback="https://web.archive.org/web/20040215202325/http://www.nazareth.muni.il:80/dover/hebrew.files/page0001.htm"><span class="f">dover/hebrew.files/page0001.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/hebrew.files/page0002.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/hebrew.files/page0002.htm" data-wayback="https://web.archive.org/web/20040215202721/http://www.nazareth.muni.il:80/dover/hebrew.files/page0002.htm"><span class="f">dover/hebrew.files/page0002.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/hebrew.files/page0003.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/hebrew.files/page0003.htm" data-wayback="https://web.archive.org/web/20040421105959/http://www.nazareth.muni.il:80/dover/hebrew.files/page0003.htm"><span class="f">dover/hebrew.files/page0003.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/hebrew.files/pubmaster001.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/hebrew.files/pubmaster001.htm" data-wayback="https://web.archive.org/web/20040813202840/http://www.nazareth.muni.il:80/dover/hebrew.files/pubmaster001.htm"><span class="f">dover/hebrew.files/pubmaster001.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/dover/hebrew.htm" title="כותרת דף
+http://www.nazareth.muni.il:80/dover/hebrew.htm" data-wayback="https://web.archive.org/web/20040215204132/http://www.nazareth.muni.il:80/dover/hebrew.htm"><span class="f">dover/hebrew.htm</span> <span class="t">כותרת דף</span></a></li>
+<li><a href="/sites/nazareth.muni.il/guestbook/guestbook.html" title="http://www.nazareth.muni.il:80/Guestbook/guestbook.html" data-wayback="https://web.archive.org/web/20040215195358/http://www.nazareth.muni.il:80/Guestbook/guestbook.html"><span class="f">guestbook/guestbook.html</span></a></li>
+<li><a href="/sites/nazareth.muni.il/home.html" title="HOME
+http://www.nazareth.muni.il:80/home.html" data-wayback="https://web.archive.org/web/20040405004804/http://www.nazareth.muni.il:80/home.html"><span class="f">home.html</span> <span class="t">HOME</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/2nd_page.html" title="2nd page
+http://www.nazareth.muni.il:80/html/2nd_page.html" data-wayback="https://web.archive.org/web/20040215204748/http://www.nazareth.muni.il:80/html/2nd_page.html"><span class="f">html/2nd_page.html</span> <span class="t">2nd page</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/3rd_page.html" title="3rd page
+http://www.nazareth.muni.il:80/html/3rd_page.html" data-wayback="https://web.archive.org/web/20040225060711/http://www.nazareth.muni.il:80/html/3rd_page.html"><span class="f">html/3rd_page.html</span> <span class="t">3rd page</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/a_letter_from_the_mayor_of_naz.html" title="A letter from the Mayor of Nazareth
+http://www.nazareth.muni.il:80/html/a_letter_from_the_mayor_of_naz.html" data-wayback="https://web.archive.org/web/20040221101757/http://www.nazareth.muni.il:80/html/a_letter_from_the_mayor_of_naz.html"><span class="f">html/a_letter_from_the_mayor_of_naz.html</span> <span class="t">A letter from the Mayor of Nazareth</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/a_marketable_market.html" title="A Marketable Market
+http://www.nazareth.muni.il:80/html/a_marketable_market.html" data-wayback="https://web.archive.org/web/20040225043607/http://www.nazareth.muni.il:80/html/a_marketable_market.html"><span class="f">html/a_marketable_market.html</span> <span class="t">A Marketable Market</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/a_marketable_market2.html" title="A Marketable Market2
+http://www.nazareth.muni.il:80/html/a_marketable_market2.html" data-wayback="https://web.archive.org/web/20040322025446/http://www.nazareth.muni.il:80/html/a_marketable_market2.html"><span class="f">html/a_marketable_market2.html</span> <span class="t">A Marketable Market2</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/architectural_and_urban.html" title="Architectural and urban
+http://www.nazareth.muni.il:80/html/architectural_and_urban.html" data-wayback="https://web.archive.org/web/20040618093501/http://www.nazareth.muni.il:80/html/architectural_and_urban.html"><span class="f">html/architectural_and_urban.html</span> <span class="t">Architectural and urban</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/contact_us.html" title="Contact us
+http://www.nazareth.muni.il:80/html/contact_us.html" data-wayback="https://web.archive.org/web/20040215101407/http://www.nazareth.muni.il:80/html/contact_us.html"><span class="f">html/contact_us.html</span> <span class="t">Contact us</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/current_investment.html" title="current investment
+http://www.nazareth.muni.il:80/html/current_investment.html" data-wayback="https://web.archive.org/web/20040221161825/http://www.nazareth.muni.il:80/html/current_investment.html"><span class="f">html/current_investment.html</span> <span class="t">current investment</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/dwellings.html" title="DWELLINGS
+http://www.nazareth.muni.il:80/html/dwellings.html" data-wayback="https://web.archive.org/web/20040203164006/http://www.nazareth.muni.il:80/html/dwellings.html"><span class="f">html/dwellings.html</span> <span class="t">DWELLINGS</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/education.html" title="Education
+http://www.nazareth.muni.il:80/html/education.html" data-wayback="https://web.archive.org/web/20040410143538/http://www.nazareth.muni.il:80/html/education.html"><span class="f">html/education.html</span> <span class="t">Education</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/employment.html" title="EMPLOYMENT
+http://www.nazareth.muni.il:80/html/employment.html" data-wayback="https://web.archive.org/web/20040203165026/http://www.nazareth.muni.il:80/html/employment.html"><span class="f">html/employment.html</span> <span class="t">EMPLOYMENT</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/english1.html" title="english
+http://www.nazareth.muni.il:80/html/english1.html" data-wayback="https://web.archive.org/web/20040215205942/http://www.nazareth.muni.il:80/html/english1.html"><span class="f">html/english1.html</span> <span class="t">english</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/estimated_cost_of_project.html" title="Estimated Cost of Project
+http://www.nazareth.muni.il:80/html/estimated_cost_of_project.html" data-wayback="https://web.archive.org/web/20040203165519/http://www.nazareth.muni.il:80/html/estimated_cost_of_project.html"><span class="f">html/estimated_cost_of_project.html</span> <span class="t">Estimated Cost of Project</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/financial.html" title="Financial
+http://www.nazareth.muni.il:80/html/financial.html" data-wayback="https://web.archive.org/web/20040221161153/http://www.nazareth.muni.il:80/html/financial.html"><span class="f">html/financial.html</span> <span class="t">Financial</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/getting_started.html" title="Getting Started
+http://www.nazareth.muni.il:80/html/getting_started.html" data-wayback="https://web.archive.org/web/20040421040843/http://www.nazareth.muni.il:80/html/getting_started.html"><span class="f">html/getting_started.html</span> <span class="t">Getting Started</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/guestbook.html" title="Guestbook
+http://www.nazareth.muni.il:80/html/guestbook.html" data-wayback="https://web.archive.org/web/20040203111314/http://www.nazareth.muni.il:80/html/guestbook.html"><span class="f">html/guestbook.html</span> <span class="t">Guestbook</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/historical_core_map.html" title="historical core map
+http://www.nazareth.muni.il:80/html/historical_core_map.html" data-wayback="https://web.archive.org/web/20040322130256/http://www.nazareth.muni.il:80/html/historical_core_map.html"><span class="f">html/historical_core_map.html</span> <span class="t">historical core map</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/historical_core.html" title="historical_core
+http://www.nazareth.muni.il:80/html/historical_core.html" data-wayback="https://web.archive.org/web/20040306074626/http://www.nazareth.muni.il:80/html/historical_core.html"><span class="f">html/historical_core.html</span> <span class="t">historical_core</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/history.html" title="History
+http://www.nazareth.muni.il:80/html/history.html" data-wayback="https://web.archive.org/web/20040221102240/http://www.nazareth.muni.il:80/html/history.html"><span class="f">html/history.html</span> <span class="t">History</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/hotels.html" title="Hotels
+http://www.nazareth.muni.il:80/html/hotels.html" data-wayback="https://web.archive.org/web/20040502205519/http://www.nazareth.muni.il:80/html/hotels.html"><span class="f">html/hotels.html</span> <span class="t">Hotels</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/households.html" title="HOUSEHOLDS
+http://www.nazareth.muni.il:80/html/households.html" data-wayback="https://web.archive.org/web/20040411091150/http://www.nazareth.muni.il:80/html/households.html"><span class="f">html/households.html</span> <span class="t">HOUSEHOLDS</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/houses_on_the_hill.html" title="Houses on the Hill
+http://www.nazareth.muni.il:80/html/houses_on_the_hill.html" data-wayback="https://web.archive.org/web/20040502210235/http://www.nazareth.muni.il:80/html/houses_on_the_hill.html"><span class="f">html/houses_on_the_hill.html</span> <span class="t">Houses on the Hill</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/how_to_invest_in_nazareth.html" title="How to invest in Nazareth
+http://www.nazareth.muni.il:80/html/how_to_invest_in_nazareth.html" data-wayback="https://web.archive.org/web/20040221102539/http://www.nazareth.muni.il:80/html/how_to_invest_in_nazareth.html"><span class="f">html/how_to_invest_in_nazareth.html</span> <span class="t">How to invest in Nazareth</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/impressive_vies.html" title="Impressive Vies
+http://www.nazareth.muni.il:80/html/impressive_vies.html" data-wayback="https://web.archive.org/web/20040215210547/http://www.nazareth.muni.il:80/html/impressive_vies.html"><span class="f">html/impressive_vies.html</span> <span class="t">Impressive Vies</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/investments.html" title="Investments
+http://www.nazareth.muni.il:80/html/investments.html" data-wayback="https://web.archive.org/web/20040203112459/http://www.nazareth.muni.il:80/html/investments.html"><span class="f">html/investments.html</span> <span class="t">Investments</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/labor.html" title="LABOR
+http://www.nazareth.muni.il:80/html/labor.html" data-wayback="https://web.archive.org/web/20040411091516/http://www.nazareth.muni.il:80/html/labor.html"><span class="f">html/labor.html</span> <span class="t">LABOR</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/lighting_plan.html" title="lighting plan
+http://www.nazareth.muni.il:80/html/lighting_plan.html" data-wayback="https://web.archive.org/web/20040203113522/http://www.nazareth.muni.il:80/html/lighting_plan.html"><span class="f">html/lighting_plan.html</span> <span class="t">lighting plan</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/loosing_the_arteries.html" title="Loosing the Arteries
+http://www.nazareth.muni.il:80/html/loosing_the_arteries.html" data-wayback="https://web.archive.org/web/20040225041327/http://www.nazareth.muni.il:80/html/loosing_the_arteries.html"><span class="f">html/loosing_the_arteries.html</span> <span class="t">Loosing the Arteries</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/marriott.html" title="Marriott
+http://www.nazareth.muni.il:80/html/marriott.html" data-wayback="https://web.archive.org/web/20040221110634/http://www.nazareth.muni.il:80/html/marriott.html"><span class="f">html/marriott.html</span> <span class="t">Marriott</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/museum-releated_activities.html" title="Museum-Releated Activities
+http://www.nazareth.muni.il:80/html/museum-releated_activities.html" data-wayback="https://web.archive.org/web/20040502205923/http://www.nazareth.muni.il:80/html/museum-releated_activities.html"><span class="f">html/museum-releated_activities.html</span> <span class="t">Museum-Releated Activities</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/museum.html" title="Museum
+http://www.nazareth.muni.il:80/html/museum.html" data-wayback="https://web.archive.org/web/20040203113911/http://www.nazareth.muni.il:80/html/museum.html"><span class="f">html/museum.html</span> <span class="t">Museum</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/nazareth2000.html" title="Nazareth2000
+http://www.nazareth.muni.il:80/html/nazareth2000.html" data-wayback="https://web.archive.org/web/20040215211202/http://www.nazareth.muni.il:80/html/nazareth2000.html"><span class="f">html/nazareth2000.html</span> <span class="t">Nazareth2000</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/news.html" title="NEWS
+http://www.nazareth.muni.il:80/html/news.html" data-wayback="https://web.archive.org/web/20040421043142/http://www.nazareth.muni.il:80/html/news.html"><span class="f">html/news.html</span> <span class="t">NEWS</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/old_city_ight.html" title="Old city ight
+http://www.nazareth.muni.il:80/html/old_city_ight.html" data-wayback="https://web.archive.org/web/20040215211341/http://www.nazareth.muni.il:80/html/old_city_ight.html"><span class="f">html/old_city_ight.html</span> <span class="t">Old city ight</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/pdf_arabic.html" title="pdf arabic
+http://www.nazareth.muni.il:80/html/pdf_arabic.html" data-wayback="https://web.archive.org/web/20040215211900/http://www.nazareth.muni.il:80/html/pdf_arabic.html"><span class="f">html/pdf_arabic.html</span> <span class="t">pdf arabic</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/pdf_hebrew.html" title="pdf hebrew
+http://www.nazareth.muni.il:80/html/pdf_hebrew.html" data-wayback="https://web.archive.org/web/20040215212448/http://www.nazareth.muni.il:80/html/pdf_hebrew.html"><span class="f">html/pdf_hebrew.html</span> <span class="t">pdf hebrew</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/photo_galerry.html" title="Photo Galerry
+http://www.nazareth.muni.il:80/html/photo_galerry.html" data-wayback="https://web.archive.org/web/20040215213230/http://www.nazareth.muni.il:80/html/photo_galerry.html"><span class="f">html/photo_galerry.html</span> <span class="t">Photo Galerry</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/plot.html" title="Plot
+http://www.nazareth.muni.il:80/html/plot.html" data-wayback="https://web.archive.org/web/20040306073747/http://www.nazareth.muni.il:80/html/plot.html"><span class="f">html/plot.html</span> <span class="t">Plot</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/population.html" title="POPULATION
+http://www.nazareth.muni.il:80/html/population.html" data-wayback="https://web.archive.org/web/20040411091932/http://www.nazareth.muni.il:80/html/population.html"><span class="f">html/population.html</span> <span class="t">POPULATION</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/pressrelease.html" title="Pressrelease
+http://www.nazareth.muni.il:80/html/pressrelease.html" data-wayback="https://web.archive.org/web/20040410072529/http://www.nazareth.muni.il:80/html/pressrelease.html"><span class="f">html/pressrelease.html</span> <span class="t">Pressrelease</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/recountrications.html" title="Recountrications
+http://www.nazareth.muni.il:80/html/recountrications.html" data-wayback="https://web.archive.org/web/20040225041631/http://www.nazareth.muni.il:80/html/recountrications.html"><span class="f">html/recountrications.html</span> <span class="t">Recountrications</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/restaurants.html" title="Restaurants
+http://www.nazareth.muni.il:80/html/restaurants.html" data-wayback="https://web.archive.org/web/20040221081105/http://www.nazareth.muni.il:80/html/restaurants.html"><span class="f">html/restaurants.html</span> <span class="t">Restaurants</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/signs___wonders.html" title="Signs &amp; Wonders
+http://www.nazareth.muni.il:80/html/signs___wonders.html" data-wayback="https://web.archive.org/web/20040225041830/http://www.nazareth.muni.il:80/html/signs___wonders.html"><span class="f">html/signs___wonders.html</span> <span class="t">Signs &amp; Wonders</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/sound_investment.html" title="Sound Investment
+http://www.nazareth.muni.il:80/html/sound_investment.html" data-wayback="https://web.archive.org/web/20040410012305/http://www.nazareth.muni.il:80/html/sound_investment.html"><span class="f">html/sound_investment.html</span> <span class="t">Sound Investment</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/sponsors.html" title="Sponsors
+http://www.nazareth.muni.il:80/html/sponsors.html" data-wayback="https://web.archive.org/web/20040411042324/http://www.nazareth.muni.il:80/html/sponsors.html"><span class="f">html/sponsors.html</span> <span class="t">Sponsors</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/statistics_information.html" title="Statistics&amp;Information
+http://www.nazareth.muni.il:80/html/statistics_information.html" data-wayback="https://web.archive.org/web/20040203123954/http://www.nazareth.muni.il:80/html/statistics_information.html"><span class="f">html/statistics_information.html</span> <span class="t">Statistics&amp;Information</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/the_complete_nazareth.html" title="The complete Nazareth
+http://www.nazareth.muni.il:80/html/the_complete_nazareth.html" data-wayback="https://web.archive.org/web/20040225042115/http://www.nazareth.muni.il:80/html/the_complete_nazareth.html"><span class="f">html/the_complete_nazareth.html</span> <span class="t">The complete Nazareth</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/the_museum_building__saraya_.html" title="The Museum Building (Saraya)
+http://www.nazareth.muni.il:80/html/the_museum_building__saraya_.html" data-wayback="https://web.archive.org/web/20040502210126/http://www.nazareth.muni.il:80/html/the_museum_building__saraya_.html"><span class="f">html/the_museum_building__saraya_.html</span> <span class="t">The Museum Building (Saraya)</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/the_nazareth_museum.html" title="The Nazareth Museum
+http://www.nazareth.muni.il:80/html/the_nazareth_museum.html" data-wayback="https://web.archive.org/web/20040221073759/http://www.nazareth.muni.il:80/html/the_nazareth_museum.html"><span class="f">html/the_nazareth_museum.html</span> <span class="t">The Nazareth Museum</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/the_tale_of_the_city.html" title="The Tale of the City
+http://www.nazareth.muni.il:80/html/the_tale_of_the_city.html" data-wayback="https://web.archive.org/web/20040221074120/http://www.nazareth.muni.il:80/html/the_tale_of_the_city.html"><span class="f">html/the_tale_of_the_city.html</span> <span class="t">The Tale of the City</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/tourism.html" title="Tourism
+http://www.nazareth.muni.il:80/html/tourism.html" data-wayback="https://web.archive.org/web/20040203124554/http://www.nazareth.muni.il:80/html/tourism.html"><span class="f">html/tourism.html</span> <span class="t">Tourism</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/tourist_agency.html" title="Tourist Agency
+http://www.nazareth.muni.il:80/html/tourist_agency.html" data-wayback="https://web.archive.org/web/20040502205504/http://www.nazareth.muni.il:80/html/tourist_agency.html"><span class="f">html/tourist_agency.html</span> <span class="t">Tourist Agency</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/town_center.html" title="Town Center
+http://www.nazareth.muni.il:80/html/town_center.html" data-wayback="https://web.archive.org/web/20040216000106/http://www.nazareth.muni.il:80/html/town_center.html"><span class="f">html/town_center.html</span> <span class="t">Town Center</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/town_planning.html" title="Town Planning
+http://www.nazareth.muni.il:80/html/town_planning.html" data-wayback="https://web.archive.org/web/20040203133757/http://www.nazareth.muni.il:80/html/town_planning.html"><span class="f">html/town_planning.html</span> <span class="t">Town Planning</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/urban_network.html" title="Urban Network
+http://www.nazareth.muni.il:80/html/urban_network.html" data-wayback="https://web.archive.org/web/20040502211144/http://www.nazareth.muni.il:80/html/urban_network.html"><span class="f">html/urban_network.html</span> <span class="t">Urban Network</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/water.html" title="water
+http://www.nazareth.muni.il:80/html/water.html" data-wayback="https://web.archive.org/web/20040203125152/http://www.nazareth.muni.il:80/html/water.html"><span class="f">html/water.html</span> <span class="t">water</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/where_to_invest_in_nazareth.html" title="Where to invest in Nazareth
+http://www.nazareth.muni.il:80/html/where_to_invest_in_nazareth.html" data-wayback="https://web.archive.org/web/20040410012543/http://www.nazareth.muni.il:80/html/where_to_invest_in_nazareth.html"><span class="f">html/where_to_invest_in_nazareth.html</span> <span class="t">Where to invest in Nazareth</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/why_invest_in_nazareth.html" title="Why invest in Nazareth
+http://www.nazareth.muni.il:80/html/why_invest_in_nazareth.html" data-wayback="https://web.archive.org/web/20040410072644/http://www.nazareth.muni.il:80/html/why_invest_in_nazareth.html"><span class="f">html/why_invest_in_nazareth.html</span> <span class="t">Why invest in Nazareth</span></a></li>
+<li><a href="/sites/nazareth.muni.il/html/wide-open_spaces.html" title="Wide-open spaces
+http://www.nazareth.muni.il:80/html/wide-open_spaces.html" data-wayback="https://web.archive.org/web/20040225042227/http://www.nazareth.muni.il:80/html/wide-open_spaces.html"><span class="f">html/wide-open_spaces.html</span> <span class="t">Wide-open spaces</span></a></li>
+<li><a href="/sites/nazareth.muni.il/isurvey.htm" title="بعد ان تم ايداع الخارطة الهيكلية للمنطقة الصناعية الجديدة في شمال الناصرة
+http://www.nazareth.muni.il:80/ISurvey.htm" data-wayback="https://web.archive.org/web/20040421024726/http://www.nazareth.muni.il:80/ISurvey.htm"><span class="f">isurvey.htm</span> <span class="t">بعد ان تم ايداع الخارطة الهيكلية للمنطقة الصناعية الجديدة في شمال الناصرة</span></a></li>
+<li><a href="/sites/nazareth.muni.il/seker.htm" title="Page Title
+http://www.nazareth.muni.il:80/seker.htm" data-wayback="https://web.archive.org/web/20040502210202/http://www.nazareth.muni.il:80/seker.htm"><span class="f">seker.htm</span> <span class="t">Page Title</span></a></li>
 </ul>
 </details>
 <details>
@@ -13203,6 +13788,19 @@ http://www.sofnet.co.il:80/literary/t_ziad/index.htm" data-wayback="https://web.
 </ul>
 </details>
 <details>
+<summary>student.nada.kth.se/~t97_aif <span class="count">4</span></summary>
+<ul>
+<li><a href="/sites/student.nada.kth.se/~t97_aif/index.html" title="JOSEF ARANKI
+http://www.student.nada.kth.se:80/~t97_aif/index.html" data-wayback="https://web.archive.org/web/20021003165447/http://www.student.nada.kth.se:80/~t97_aif/index.html"><span class="f">index.html</span> <span class="t">JOSEF ARANKI</span></a></li>
+<li><a href="/sites/student.nada.kth.se/~t97_aif/music.html" title="Josef Aranki ´s JukeBox-Arabia
+http://www.student.nada.kth.se:80/~t97_aif/music.html" data-wayback="https://web.archive.org/web/20020206050948/http://www.student.nada.kth.se:80/~t97_aif/music.html"><span class="f">music.html</span> <span class="t">Josef Aranki ´s JukeBox-Arabia</span></a></li>
+<li><a href="/sites/student.nada.kth.se/~t97_aif/vqf.html" title="JOSEF ARANKI `s Jukebox-Arabia VQF page
+http://www.student.nada.kth.se:80/~t97_aif/vqf.html" data-wayback="https://web.archive.org/web/20020202201110/http://www.student.nada.kth.se:80/~t97_aif/vqf.html"><span class="f">vqf.html</span> <span class="t">JOSEF ARANKI `s Jukebox-Arabia VQF page</span></a></li>
+<li><a href="/sites/student.nada.kth.se/~t97_aif/vqf1.html" title="JOSEF ARANKI `s Jukebox-Arabia VQF page
+http://www.student.nada.kth.se:80/~t97_aif/vqf1.html" data-wayback="https://web.archive.org/web/20020206074512/http://www.student.nada.kth.se:80/~t97_aif/vqf1.html"><span class="f">vqf1.html</span> <span class="t">JOSEF ARANKI `s Jukebox-Arabia VQF page</span></a></li>
+</ul>
+</details>
+<details>
 <summary>uk.geocities.com/palestinegaza <span class="count">18</span></summary>
 <ul>
 <li><a href="/sites/uk.geocities.com/palestinegaza/aljera.htm" title="Gaza Strip
@@ -13922,8 +14520,7 @@ http://www.zaytona.com:80/services.html" data-wayback="https://web.archive.org/w
 </details>
   </nav>
   <main>
-    <p id="frame-label">Select a page from the tree.</p>
-    <p id="frame-source"><a id="wayback-link" href="" target="_blank" rel="noopener">View on the Wayback Machine</a></p>
+    <p id="frame-label"><a id="wayback-link" target="_blank" rel="noopener">Select a page from the tree.</a></p>
     <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
   </main>
 </div>
@@ -13931,8 +14528,6 @@ http://www.zaytona.com:80/services.html" data-wayback="https://web.archive.org/w
   // Anchors keep real hrefs so middle-click and "open in new tab" still work; only a
   // plain left click is redirected into the frame.
   var frame = document.getElementById('frame');
-  var label = document.getElementById('frame-label');
-  var source = document.getElementById('frame-source');
   var waybackLink = document.getElementById('wayback-link');
   var active = null;
 
@@ -13943,19 +14538,15 @@ http://www.zaytona.com:80/services.html" data-wayback="https://web.archive.org/w
 
     event.preventDefault();
     frame.src = link.getAttribute('href');
-    label.textContent = link.getAttribute('title') || link.textContent;
 
-    // Hidden rather than emptied for pages whose log entry carried no timestamp, so
-    // the frame does not jump when moving between rows that have one and rows that
-    // do not.
+    // The source line is the link: its text names the page, its href points at the
+    // snapshot. A row whose log entry carried no timestamp keeps the text and drops
+    // the href, so the line stays put and simply stops being clickable.
+    waybackLink.textContent = link.getAttribute('title') || link.textContent;
+
     var wayback = link.getAttribute('data-wayback');
-    if (wayback) {
-      waybackLink.href = wayback;
-      source.style.visibility = 'visible';
-    } else {
-      waybackLink.removeAttribute('href');
-      source.style.visibility = 'hidden';
-    }
+    if (wayback) waybackLink.href = wayback;
+    else waybackLink.removeAttribute('href');
 
     if (active) active.classList.remove('active');
     link.classList.add('active');
