@@ -646,7 +646,7 @@ function clickSwapImg() {}
       <td width="9%" bgcolor="#E6E6E6" valign="top" align="left"><font face="Verdana" size="1">970-2-2405756</font></td>
       <td width="9%" bgcolor="#E6E6E6" valign="top" align="left"><font face="Verdana" size="1">970-2-2401039</font></td>
       <td width="15%" bgcolor="#E6E6E6" valign="top" align="left"><font face="Verdana" size="1">info@noursoft.com</font></td>
-      <td width="5%" bgcolor="#E6E6E6" valign="top" align="left"><font face="Verdana" size="1"><a href="http://www.noursoft.com" class="dead" aria-disabled="true">http://www.noursoft.com</a>&nbsp;</font></td>
+      <td width="5%" bgcolor="#E6E6E6" valign="top" align="left"><font face="Verdana" size="1"><a href="/sites/noursoft.com/index.html" class="dead" aria-disabled="true">http://www.noursoft.com</a>&nbsp;</font></td>
     </tr>
     
 

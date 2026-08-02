@@ -451,7 +451,7 @@ Members List</font>
       <td width="10%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000">970-2-2405756</font></td>
       <td width="10%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000">970-2-2401039</font></td>
       <td width="15%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000"><a href="mailto:info@noursoft.com" style="pointer-events: none;">info@noursoft.com</a></font></td>
-      <td width="20%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000"><a href="http://www.noursoft.com" class="dead" aria-disabled="true">http://www.noursoft.com</a>&nbsp;</font></td>
+      <td width="20%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000"><a href="/sites/noursoft.com/index.html" class="dead" aria-disabled="true">http://www.noursoft.com</a>&nbsp;</font></td>
     </tr>
          <tr>
       <td width="5%" height="30" valign="top" align="center"><font face="Verdana" size="1" color="#000000">48</font></td>
