@@ -40,6 +40,7 @@
         "start": "node src/main.js",
         "scrape": "node src/cdx-scraper.js",
         "archive": "node --env-file-if-exists=.env src/archive.js",
+        "index": "node src/build-index.js",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
         "crawl": "node src/wayback-crawler.js",
         "server": "http-server processed-output"
