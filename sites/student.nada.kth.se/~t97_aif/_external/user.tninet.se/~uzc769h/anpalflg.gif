@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<DOCTYPE EN? Transitional 4.0 HTML DTD W3C ?- PUBLIC>
+<HTML>
+<HEAD>
+<TITLE>Glocalnet</TITLE>
+<STYLE>.normal {
+	color: #000000;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.normalbold {
+	color: #000000;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.high {
+	color: #000000;
+	line-height: 15px;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.highbold {
+	color: #000000;
+	line-height: 15px;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+.inverted {
+	color: #ffffff;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.invertedlight {
+	color: #ffffff;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.invertedlighthighjustify {
+	color: #ffffff;
+	font-size: 10px;
+	text-align : justify;
+	line-height: 15px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.invertedlighthigh {
+	color: #ffffff;
+	font-size: 10px;
+	line-height: 15px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+.href {
+	color: #ff6600;
+	text-decoration: none;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.hreflight {
+	color: #ff6600;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.orange {
+	color: #ff6600;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.hrefinvertedlight {
+	color: #ffffff;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+.qlink {
+	color: #666666;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+.menu {
+	color: #666666;
+	line-height: 13px;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.menuselected {
+	color: #ff6600;
+	line-height: 13px;
+	text-decoration: none;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+.bottommenu {
+	color: #999999;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+.bottommenuselected {
+	color: #999999;
+	text-decoration: none;
+	font-size: 10px;
+	font-weight: bold;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+.sitemap {
+	color: #666666;
+	text-decoration: none;
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+input, select, textarea {
+	font-size: 10px;
+	font-family: verdana, arial, geneva, sans-serif;
+}
+
+#small {
+	width: 70px;
+}
+#medium {
+	width: 145px;
+}
+#large {
+	width: 230px;
+}
+</STYLE>
+
+</HEAD>
+<BODY bgColor=#ff6600>
+<CENTER>
+<TABLE height="100%" cellSpacing=0 cellPadding=0 width=600 border=0>
+  <TR>
+    <TD vAlign=center>
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TR>
+          <TD><IMG height=248 alt="Glocalnet" src="http://error.glocalnet.net/g.gif" width=248 border=0></TD>
+          <TD><IMG height=1 alt="" src="" width=20 border=0></TD>
+          <TD class=invertedlighthigh vAlign=top>
+            <TABLE cellSpacing=0 cellPadding=0 border=0>
+              <TR>
+                <TD></TD>
+              </TR>
+              <TR>
+                <TD><IMG height=20 alt="" src="" width=1 border=0></TD></TR>
+              <TR>
+                <TD class=invertedlighthigh><B>Sidan saknas!</B><BR><BR>
+                Sidan du försöker titta på är inte tillgänglig för tillfället. 
+                  <BR><BR>Du kan kontakta vår kundservice på e-post 
+                  <A class=hrefinvertedlight href="mailto:kundservice@glocalnet.se"><B>kundservice@glocalnet.se</B></A> 
+                  eller på telefon 0200 - 88 88 88 om du vill berätta om 
+                  problemet. <BR><BR><B>Vi ber dig prova igen lite senare!</B><BR>Glocalnet
+                </TD>
+              </TR>
+            </TABLE>
+          </TD>
+        </TR>
+      </TABLE>
+    </TD>
+  </TR>
+</TABLE>
+</CENTER>
+</BODY>
+</HTML>
