@@ -1,0 +1,284 @@
+
+<html>
+<head>
+
+<meta name="Description"
+content="birzeit.edu - Palestinian University in the West Bank. Palestine's best source for news about Palestine and the Israeli Pal
+estinian Conflict.">
+<meta name="keywords"
+content="Birzeit University, Bir Zeit University, Palestine, Jerusalem, Alquds, Ramallah, Birzeit, Bir Zeit,  Israeli Palestinian co
+nflict, Israel, Palistine, Peace Process,  Hebron, Bethlehem, International Programme, International Program, Palestinian Legislativ
+e Council, PLO, Palestine Liberation Organisation, Palestinian National Authority, Palestinian Authority, PNA, PA, Palestinian, Isra
+elis,  Oslo Agreements, West Bank, Gaza, Gaza Strip, Middle East, Al-Quds, Palestinian Culture, Arab World, Oslo, Al Quds, Palestini
+an Refugees, Al-Nakba, Edward Said, Naji Ali, Egypt, Jordan, Arabic">
+
+<title>Page Not Found : Birzeit University : Palestine</title>
+ <link rel="stylesheet" type="text/css" href="/css/cs.css" media="all"> 
+
+
+  <link rel="stylesheet" type="text/css" href="/resources/acs-templating/lists.css" media="all">
+
+  <link rel="stylesheet" type="text/css" href="/resources/acs-templating/forms.css" media="all">
+
+  <link rel="stylesheet" type="text/css" href="/resources/acs-subsite/default-master.css" media="all">
+
+</head>
+<body bgcolor="#FFFCEC" text="black" leftMargin="0" topMargin="0" marginheight="0" marginwidth="0">
+
+
+
+<!-- Header -->
+
+<SCRIPT type="text/javascript">
+
+
+var NoOffFirstLineMenus=6;
+var MenuTextCentered="left";
+var StartLeft=-309;
+var RightToLeft=0;
+var ar="right.gif";
+var ChildOverlap=-0.01;
+var url="";
+var FontFamily="Arial, Helvetica, sans-serif";
+
+var FontBold=0;
+var LowBgColor="#ffffff";
+var HighBgColor="#5A7B39";
+var FontLowColor="#5A7B39";
+var FontHighColor="#ffffff";
+var BorderColor="#006600";
+var BorderWidthMain=1;
+var BorderWidthSub=1;
+var BorderBtwnMain=0;
+var BorderBtwnSub=0;
+var FontSize=10;
+var FontItalic=0;
+var MenuCentered="center";
+var MenuVerticalCentered="top";
+var ChildVerticalOverlap=0.01;
+var StartTop=170;
+var VerCorrect=0;
+var HorCorrect=0;
+var LeftPaddng=5;
+var TopPaddng=3;
+var FirstLineHorizontal=0;
+var MenuFramesVertical=1;
+var DissapearDelay=200;
+var UnfoldDelay=15;
+var TakeOverBgColor=100;
+var FirstLineFrame="";
+var SecLineFrame="";
+var DocTargetFrame="";
+var TargetLoc="";
+var MenuWrap=0;
+var BottomUp=0;
+var UnfoldsOnClick=0;
+var BaseHrefI="images/";
+var BaseHref="http://www.birzeit.edu/";
+var ShowArrow=1;
+var Arrws=[BaseHref+"images/"+ar,5,10,BaseHref+"images/"+ar,5,10,BaseHref+"images/"+ar,5,10,BaseHref+"images/"+ar,5,10];
+var MenuUsesFrames=1;
+var RememberStatus=0;
+var PartOfWindow=0;
+var BuildOnDemand=0;
+var MenuSlide="";
+var MenuSlide="progid:DXImageTransform.Microsoft.RevealTrans(duration=100, transition=10)";
+var MenuSlide="progid:DXImageTransform.Microsoft.GradientWipe(duration=100, wipeStyle=10)";
+var MenuShadow="";var MenuShadow="";var MenuShadow="";
+var MenuOpacity="";
+
+function BeforeStart(){return}
+function AfterBuild(){return}
+function BeforeFirstOpen(){return}
+function AfterCloseAll(){return}
+
+Menu1=new Array("-- عربي --","acs-lang/locale-set?locale=AR_LB&amp;redirect_url=/NotFound?","",0,22,150,"","","","","","Tahoma",-1,-1,-1,"CENTER","");
+
+Menu2=new Array("About BZU",url+"about/","",11,22,150,"","","","","","",-1,-1,-1,"","");
+ Menu2_1=new Array("University Profile",url+"about/profile","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_2=new Array("History - Narrative",url+"about/history1","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_3=new Array("History - Chronological",url+"about/history2","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_4=new Array("The BZU Campus",url+"about/campus","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_5=new Array("Who's Who @ BZU",url+"about/who","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_6=new Array("BZU Facts and Figures",url+"about/facts","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_7=new Array("BZU Alumni",url+"about/alumni","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_8=new Array("Friends of BZU",url+"about/fobzu","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_9=new Array("Public Relations",url+"about/pr","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_10=new Array("BZU Map",url+"about/map","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu2_11=new Array("Contact Information",url+"about/contact","",0,20,200,"","","","","","",-1,-1,-1,"","");
+Menu3=new Array("Community Groups","community_groups/","",3,22,150,"","","","","","",-1,-1,-1,"","");
+ Menu3_1=new Array("BZU Alumni","about/alumni","",1,20,200,"","","","","","",-1,-1,-1,"","");
+  Menu3_1_1=new Array("Alumni NewsLetters","community_groups/students/alumni/","",0,20,150,"","","","","","",-1,-1,-1,"","");
+ Menu3_2=new Array("Giving to BZU","community_groups/giving/","",6,20,200,"","","","","","",-1,-1,-1,"","");
+  Menu3_2_1=new Array("Scholarships","community_groups/giving/scholarships","",0,20,150,"","","","","","",-1,-1,-1,"","");
+  Menu3_2_2=new Array("Information Technology","community_groups/giving/it","",0,20,150,"","","","","","",-1,-1,-1,"","");
+  Menu3_2_3=new Array("Library","community_groups/giving/library","",0,20,150,"","","","","","",-1,-1,-1,"","");
+  Menu3_2_4=new Array("General Donations","community_groups/giving/generaldonations","",0,20,150,"","","","","","",-1,-1,-1,"","");
+  Menu3_2_5=new Array("How to Make A Gift","community_groups/giving/gift","",0,20,150,"","","","","","",-1,-1,-1,"","");
+  Menu3_2_6=new Array("Contact Information","community_groups/giving/contact","",0,20,150,"","","","","","",-1,-1,-1,"","");
+  Menu3_3=new Array("Student Affairs","community_groups/students/","",0,20,200,"","","","","","",-1,-1,-1,"","");
+Menu4=new Array("Admission","admission/","",8,22,150,"","","","","","",-1,-1,-1,"","");
+ Menu4_1=new Array("Admission Requirements","admission/req","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_2=new Array("Student Classification","admission/students","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_3=new Array("Graduation Requirements","admission/gradreqs","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_4=new Array("Academic Programs","admission/progs","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_5=new Array("Graduate Studies","admission/grad","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_6=new Array("Fees","admission/fees","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_7=new Array("Financial Aid","admission/faid","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_8=new Array("International Students","admission/intl","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu4_9=new Array("Course Catalog","admission/catalog","",0,20,200,"","","","","","",-1,-1,-1,"","");
+Menu5=new Array("Academics","academics/","",3,22,150,"","","","","","",-1,-1,-1,"","");
+ Menu5_1=new Array("Faculties & Departments","academics/faculties/","",7,20,200,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_1=new Array("Faculty of Arts","academics/faculties/arts","",0,20,300,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_2=new Array("Faculty of Commerce and Economics","academics/faculties/econcom","",0,20,140,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_3=new Array("Faculty of Engineering","academics/faculties/eng","",0,20,140,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_4=new Array("Faculty of Graduate Studies","academics/faculties/graduate","",0,20,140,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_5=new Array("Faculty of Science","academics/faculties/science","",0,20,140,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_6=new Array("International Students - Palestine and Arabic Studies Program","academics/faculties/pas","",0,20,300,"","","","","","",-1,-1,-1,"","");
+  Menu5_1_7=new Array("Faculty of Law and Public Administration","academics/faculties/law.pdf","",0,20,300,"","","","","","",-1,-1,-1,"","");
+ Menu5_2=new Array("Publications & Research","academics/research/","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu5_3=new Array("Resources & Facilities","academics/facilities/","",1,20,200,"","","","","","",-1,-1,-1,"","");
+  Menu5_3_1=new Array("Helen Kattan Computer Center","academics/facilities/HKCC","",0,20,200,"","","","","","",-1,-1,-1,"","");
+
+Menu6=new Array("Institutes & Centers","centers/","",11,22,150,"","","","","","",-1,-1,-1,"","");
+ Menu6_1=new Array("Institute of Community & Public Health","centers/icph","",0,20,270,"","","","","","",-1,-1,-1,"","");
+ Menu6_2=new Array("Institute of Law","centers/iol","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_3=new Array("Institute of Women's Studies","centers/iws","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_4=new Array("Institute of International Studies","centers/ialiis","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_5=new Array("Media Institute","centers/media","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_6=new Array("Institute of Water Studies","centers/water","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_7=new Array("Center for Environmental & Occupational Health Sciences","centers/ceohs","",0,20,300,"","","","","","",-1,-1,-1,"","");
+ Menu6_8=new Array("Center for Continuing Education","centers/ced","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_9=new Array("Development Studies Programme","centers/dsp","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_10=new Array("Birzeit Information Technology Unit","centers/bit","",0,20,200,"","","","","","",-1,-1,-1,"","");
+ Menu6_11=new Array("Birzeit, Culture & the Arts","centers/bca","",0,20,200,"","","","","","",-1,-1,-1,"","");
+</SCRIPT>
+<SCRIPT src="/script/menu_com.js" type=text/javascript></SCRIPT>
+
+<table width="770" border="0" align="center" cellpadding="0" cellspacing="0">
+<tr>
+ <td>
+ <table width="770" border="0" cellspacing="0" cellpadding="0">
+ <tr> 
+  <td width="595"><img src="/images/pic7.jpg" width="494" height="87"></td>
+  <td width="175"><a href="/"><img src="/images/logo1.gif" alt="BZU Home" width="175" height="82" border="0"></a></td></tr>
+ <tr> 
+  <td colspan="2" height=2 bgColor=#006600><img height="2" src="/images/trans.gif"></td></tr>
+ </table></td></tr>
+</table>
+<br>
+<!-- end Header -->
+
+<table width="770" border="0" height="70%" cellpadding="0" cellspacing="0" align="center" dir=ltr >
+<tr>
+<td width="150" valign="top">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" >
+<tr> 
+ <td valign="top">
+  <form action=http://www.google.com/u/ritaj method=get >
+  <b>Search:</b><br>
+  <INPUT size=9 name=q type="text">
+  <INPUT class=bt type=submit value="Go!" name=sa><br>
+  <INPUT type=hidden CHECKED value=birzeit.edu name=sitesearch>
+  <INPUT type=hidden value=birzeit.edu name=domains>
+  </form>
+ </td></tr>
+<tr>
+ <td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+  <noscript><a href="/arabic/">Arabic</a></noscript></td></tr>
+<tr> 
+ <td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+  <noscript><a href="/about/">About BZU</a></noscript></td></tr>
+<tr> 
+ <td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+ <noscript><a href="/community_groups/">Community Groups</a></noscript></td></tr>
+<tr>
+ <td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+ <noscript><a href="/admission/">Admission</a></noscript></td></tr>
+<tr>
+ <td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+ <noscript><a href="/academics/">Academics</a></noscript></td></tr>
+<tr> 
+<td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+ <noscript><a href="/centers/">Institutes &amp; Centers</a></noscript></td></tr>
+<tr>
+ <td height="22"><img width="1" height="22" src="/images/trans.gif"> 
+  <noscript><a href="/news/">News &amp; Events</a></noscript></td></tr>
+<tr>
+ <td height="22">
+
+   
+
+ </td></tr>
+</table></td>
+ <td width="620" valign="top" height="100%">
+<table width=95% align=center >
+<tr> <td>
+
+
+
+<br>
+
+<P align=center><b>The page you're trying to reach is unavailable or no longer exist.</b></P>
+
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+   <tr>
+       <td>Try one of the following:
+           <ul>
+               <li>Click the <a onCLick="history.go(-1)" href=#><b>Back</b></a> 
+			button on your browser toolbar to return to the previous page.
+               <li>Go to <a href="/">Birzeit home page</a>.
+           </ul></td>
+   </tr>
+</table>
+
+<table cellspacing=0 cellpadding=2 class=bordered>
+<tr><td align=center><b>Search</b></td></tr>
+</table>
+<table cellspacing=2 cellpadding=4 width="100%" class=bordered>
+<!-- Search Google -->
+<FORM method=GET action=http://www.google.com/u/ritaj>
+<tr valign=middle>
+        <td><INPUT TYPE=text name=q size=25 maxlength=200 value=""></td></tr>
+<tr> <td>
+        <input type=radio name=sitesearch value="birzeit.edu" checked> Birzeit Sites
+        <input type=radio name=sitesearch value=""> The Web
+     </td>
+</tr>
+<tr> <td>
+        <INPUT class=bt type=submit name=sa VALUE="Google Search">
+        <input type=hidden name=domains value="birzeit.edu">
+      </td>
+</tr>
+</FORM>
+</TABLE>
+
+
+</td></td>
+</table>
+ </td></tr>
+</table>
+<br>
+<!-- Footer -->
+<TABLE width="770" border=0 align="center" cellPadding=0 cellSpacing=0>
+  <TBODY>
+    <TR> 
+      <td width="100%" height=2 bgColor=#006600><img height="2" src="/images/trans.gif"></td>
+    </TR>
+    <TR vAlign=center> 
+      <td align="center">1996-2004, BIRZEIT UNIVERSITY | Disclaimer | Privacy 
+          Statement | <a href="/about/contact">Contact Information</a></td>
+    </TR>
+  </TBODY>
+</TABLE>
+
+
+
+
+
+
+</body>
+
+
+
+</html>
