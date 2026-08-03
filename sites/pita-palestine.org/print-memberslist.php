@@ -478,7 +478,7 @@ Members List</font>
       <td width="10%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000">972-2-2981103</font></td>
       <td width="10%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000">972-2-2984167</font></td>
       <td width="15%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000"><a href="mailto:info@p-ol.com" style="pointer-events: none;">info@p-ol.com</a></font></td>
-      <td width="20%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000"><a href="http://www.p-ol.com" class="dead" aria-disabled="true">http://www.p-ol.com</a>&nbsp;</font></td>
+      <td width="20%" height="30" valign="top" align="left"><font face="Verdana" size="1" color="#000000"><a href="/sites/p-ol.com/index.html" class="">http://www.p-ol.com</a>&nbsp;</font></td>
     </tr>
          <tr>
       <td width="5%" height="30" valign="top" align="center"><font face="Verdana" size="1" color="#000000">51</font></td>
