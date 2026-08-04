@@ -1114,10 +1114,32 @@ async function rewriteSavedPages(seeds) {
     // globals up front covers inline handlers, external scripts, and body onload
     // alike -- more reliable than trying to grep every script for `window.open`.
     // Injected as the first element in <head> so it runs before any page script.
-    if (!$('#wayback-guard').length) {
+    //
+    // `window.open` is only stubbed out for *pop-ups*. A call naming a frame target is
+    // in-page navigation and gets honoured, because that is how Flash reaches other
+    // pages: Ruffle implements getURL-with-a-target as window.open(url, target), so a
+    // blanket stub silently killed every Flash nav bar in the archive -- bethlehem2000's
+    // header.swf drives its whole frameset through target `_bottom`. Same-document
+    // targets are resolved against window.parent.frames and navigated directly;
+    // `_blank`/`_new` stay blocked, which is the pop-up case the guard is here for.
+    //
+    // Rewritten unconditionally rather than skipped when present, so a change here
+    // reaches pages that already carry an older guard from a previous run.
+    $('#wayback-guard').remove();
+    {
       const guard =
         '<script id="wayback-guard">' +
-        'window.open=function(){return null};' +
+        'window.open=function(u,t){' +
+        'if(!u)return null;' +
+        'try{' +
+        "if(t&&t!=='_blank'&&t!=='_new'){" +
+        "var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:" +
+        '(window.parent&&window.parent.frames[t]);' +
+        'if(w){w.location=u;return w}' +
+        '}' +
+        '}catch(e){}' +
+        'return null' +
+        '};' +
         'window.alert=function(){};' +
         'window.confirm=function(){return false};' +
         'window.prompt=function(){return null};' +
@@ -1271,10 +1293,31 @@ async function rewriteSavedPages(seeds) {
     // Injected only on pages that actually reference a SWF. It pulls a ~14MB wasm core
     // on first use, and only 6 pages in this archive are Flash pages -- putting the tag
     // on all 6000 would make every unrelated page pay for a feature it never uses.
-    if (ruffleReady && hasFlash($) && !$('#ruffle-js').length) {
-      $('head').append(
-        `<script id="ruffle-js" src="${assetBase}/ruffle/ruffle.js"></script>`
-      );
+    //
+    // The config tag ahead of the loader is what makes the movie start on its own.
+    // Ruffle defaults to `autoplay: "auto"`, which plays only when the page's
+    // AudioContext is already running -- never true on a fresh load with no user
+    // gesture, so every Flash page opened to a play button instead of the animation.
+    // `unmuteOverlay: "hidden"` drops the speaker icon that would otherwise sit on top
+    // of the movie; Ruffle still unmutes on the first click into the player either way.
+    if (ruffleReady && hasFlash($)) {
+      // Ruffle reads window.RufflePlayer.config at load time, so on a page that already
+      // carries the loader from an earlier run the config has to be spliced in ahead of
+      // it rather than appended after.
+      if (!$('#ruffle-config').length) {
+        const config =
+          '<script id="ruffle-config">window.RufflePlayer=window.RufflePlayer||{};' +
+          'window.RufflePlayer.config={autoplay:"on",unmuteOverlay:"hidden"};</script>';
+        const loader = $('#ruffle-js');
+        if (loader.length) loader.before(config);
+        else $('head').append(config);
+      }
+
+      if (!$('#ruffle-js').length) {
+        $('head').append(
+          `<script id="ruffle-js" src="${assetBase}/ruffle/ruffle.js"></script>`
+        );
+      }
       flashPages += 1;
     }
 
