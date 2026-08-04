@@ -1,4 +1,4 @@
-<html><head><script id="wayback-guard">window.open=function(){return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8"><title>File List</title>
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8"><title>File List</title>
 <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
 <body bgcolor="#C0C0C0" text="#000000" data-wayback-url="https://web.archive.org/web/20020815104837id_/http://www.palestinehistory.com:80/cgi-bin/websearch/websearch.pl">
 <center>

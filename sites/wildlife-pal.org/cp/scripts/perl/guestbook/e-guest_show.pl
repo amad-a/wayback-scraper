@@ -1,4 +1,4 @@
-<!-- E-Guest guestbook system 1.1 --><!-- powered by leungeric.com --><html><head><script id="wayback-guard">window.open=function(){return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8"><title>E-Guest Demo (Perl CGI Guestbook System)</title><style>
+<!-- E-Guest guestbook system 1.1 --><!-- powered by leungeric.com --><html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8"><title>E-Guest Demo (Perl CGI Guestbook System)</title><style>
 A:link {text-decoration: none; color: #003388}
 A:visited {text-decoration: none; color: #003388}
 A:hover {text-decoration: underline; color: #2255AA}
