@@ -5,9 +5,5 @@
 .env
 .env.*
 dist/
-sites/
-sites-v2/
-sites-og/
-cdx-output/
 node_modules
 storage/
