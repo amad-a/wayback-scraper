@@ -120,19 +120,20 @@ function readDeck() {
 	}
 }
 
-async function nextRandomPath() {
-	let deck = readDeck();
+// Encoded per segment, not whole: archived filenames carry spaces, and one directory
+// name contains a literal newline, but the separators have to stay separators.
+function sitesUrl(path) {
+	return '/sites/' + path.split('/').map(encodeURIComponent).join('/');
+}
 
-	// Fetch on first use, and again once the deck runs out -- a fresh shuffle, so the
-	// next pass through the archive is in a different order.
-	if (!deck || deck.cursor >= deck.paths.length) {
-		const res = await fetch('/api/random/deck');
-		if (!res.ok) return null; // 503 before the first `npm run db`
-		const { paths } = await res.json();
-		if (!paths.length) return null;
-		deck = { paths, cursor: 0 };
-	}
+async function fetchDeck() {
+	const res = await fetch('/api/random/deck');
+	if (!res.ok) return null; // 503 before the first `npm run db`
+	const { paths } = await res.json();
+	return paths.length ? { paths, cursor: 0 } : null;
+}
 
+function takeNext(deck) {
 	const path = deck.paths[deck.cursor];
 	deck.cursor += 1;
 	try {
@@ -141,6 +142,37 @@ async function nextRandomPath() {
 		// Full or disabled: the click still works, it just will not remember.
 	}
 	return path;
+}
+
+async function stillOnDisk(path) {
+	try {
+		return (await fetch(sitesUrl(path), { method: 'HEAD' })).ok;
+	} catch {
+		return false;
+	}
+}
+
+async function nextRandomPath() {
+	let deck = readDeck();
+
+	// Fetch on first use, and again once the deck runs out -- a fresh shuffle, so the
+	// next pass through the archive is in a different order.
+	if (!deck || deck.cursor >= deck.paths.length) deck = await fetchDeck();
+	if (!deck) return null;
+
+	const path = takeNext(deck);
+	if (await stillOnDisk(path)) return path;
+
+	// The deck outlived the pool it was dealt from: `npm run db` recreated archive.db,
+	// or a crawl was re-run, while this tab held the old shuffle. One stale path is
+	// enough to know the whole deck is suspect, so throw it away rather than limping
+	// through it a 404 at a time. Bounded to a single retry -- if a freshly fetched
+	// deck also misses, something is wrong that another round trip will not fix.
+	deck = await fetchDeck();
+	if (!deck) return null;
+
+	const fresh = takeNext(deck);
+	return (await stillOnDisk(fresh)) ? fresh : null;
 }
 
 // Jumps the frame to the next page in the shuffled deck.
@@ -157,9 +189,7 @@ export async function openRandomPage() {
 	}
 	if (!path) return;
 
-	// Encoded per segment, not whole: archived filenames carry spaces and other literal
-	// characters, but the separators have to stay separators.
-	iframe.src = '/sites/' + path.split('/').map(encodeURIComponent).join('/');
+	iframe.src = sitesUrl(path);
 }
 
 export function refreshFrame() {
