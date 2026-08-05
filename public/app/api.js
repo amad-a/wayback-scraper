@@ -724,6 +724,12 @@ function readFavorites() {
 
 let favorites = readFavorites();
 
+// Which page the star is currently describing, so a click knows what to remove without
+// re-deriving it, and markCurrent knows which row to light up. Set by syncStar on every
+// navigation. Declared here rather than beside syncStar because the first render reads it
+// before that point in the file is reached.
+let starredPath = '';
+
 // Written on every change rather than at beforeunload, which does not reliably fire on
 // iOS Safari and never fires at all if the tab is killed -- a whole list of favorites is
 // too much to lose to a page the browser decided to reclaim. Changes are clicks, so there
@@ -738,6 +744,13 @@ function writeFavorites() {
 
 const favoritesEntries = document.querySelector('.favorites-entries');
 
+favoritesEntries?.setAttribute('role', 'listbox');
+favoritesEntries?.setAttribute('aria-label', 'Favorites');
+
+function openFavorite(path) {
+	iframe.src = sitesUrl(path);
+}
+
 function renderFavorites() {
 	if (!favoritesEntries) return;
 
@@ -746,16 +759,78 @@ function renderFavorites() {
 	for (const entry of favorites) {
 		const row = document.createElement('div');
 		row.className = 'bookmark-list-entry';
+		row.dataset.path = entry.path;
+		row.setAttribute('role', 'option');
+		// -1 rather than 0: focusable when something calls focus() on it, but skipped by
+		// Tab, which would otherwise walk through every bookmark on the way past the
+		// panel. Opening the panel puts focus here, and the arrows take it from there.
+		row.tabIndex = -1;
 		// The address leads because this archive is full of untitled and mangled titles,
 		// and the address is the half that always identifies the page.
 		const address = entry.url || entry.path;
 		row.textContent = entry.title ? `${address} - ${entry.title}` : address;
-		row.addEventListener('click', () => {
-			iframe.src = sitesUrl(entry.path);
-		});
+		row.addEventListener('click', () => openFavorite(entry.path));
 		favoritesEntries.appendChild(row);
 	}
+
+	markCurrent();
 }
+
+// Shows which entry the frame is currently on, and puts the tab stop there.
+//
+// Called on navigation rather than folded into renderFavorites, because the list only
+// changes when you star something while the current page changes constantly.
+function markCurrent() {
+	for (const row of favoritesEntries?.children || []) {
+		const isCurrent = row.dataset.path === starredPath;
+		row.classList.toggle('current', isCurrent);
+		row.setAttribute('aria-selected', String(isCurrent));
+	}
+}
+
+// Where the arrows should start: the page you are already looking at, or the top of the
+// list when you are somewhere that is not in it.
+function firstFavoriteRow() {
+	return favoritesEntries?.querySelector('.bookmark-list-entry.current')
+		|| favoritesEntries?.firstElementChild;
+}
+
+// Arrows walk the list, Enter and Space open, Escape closes. Bound to the container rather
+// than each row, so it survives every re-render without rebinding.
+favoritesEntries?.addEventListener('keydown', (event) => {
+	const rows = [...favoritesEntries.children];
+	if (!rows.length) return;
+
+	const index = rows.indexOf(document.activeElement);
+
+	const focusRow = (next) => {
+		event.preventDefault();
+		rows[next].focus();
+	};
+
+	// With focus on the container rather than a row, treat it as sitting just past the
+	// end, so Down enters at the top and Up enters at the bottom.
+	const from = index === -1 ? (event.key === 'ArrowUp' ? 0 : rows.length - 1) : index;
+
+	switch (event.key) {
+		case 'ArrowDown':
+			return focusRow((from + 1) % rows.length);
+		case 'ArrowUp':
+			return focusRow((from - 1 + rows.length) % rows.length);
+		case 'Home':
+			return focusRow(0);
+		case 'End':
+			return focusRow(rows.length - 1);
+		case 'Enter':
+		case ' ':
+			if (index === -1) return;
+			event.preventDefault();
+			return openFavorite(rows[index].dataset.path);
+		case 'Escape':
+			event.preventDefault();
+			return hideBookmarksPanel();
+	}
+});
 
 renderFavorites();
 
@@ -779,13 +854,10 @@ function refreshFavorite(page) {
 	renderFavorites();
 }
 
-// Which page the star is currently describing, so a click knows what to remove without
-// re-deriving it. Set by syncStar on every navigation.
-let starredPath = '';
-
 function syncStar(localPath) {
 	starredPath = localPath;
 	favoriteStar?.classList.toggle('toggled', favorites.some((e) => e.path === localPath));
+	markCurrent();
 }
 
 // The page a star click should act on, which is not always the page on screen: starring a
@@ -852,11 +924,23 @@ export async function addFavorite() {
 export function toggleFavorites() {
 	favoritesPanel?.classList.toggle('hidden');
 
+	if (favoritesPanel?.classList.contains('hidden')) return;
+
 	// The panel and the address dropdown occupy the same corner of the window, so opening
 	// one closes the other.
-	if (!favoritesPanel?.classList.contains('hidden')) dropdown?.classList.add('hidden');
+	dropdown?.classList.add('hidden');
+
+	// Focus goes in with the panel. Tab cannot reach the rows, so this is the only way in
+	// and the arrows would have nothing to move from without it.
+	firstFavoriteRow()?.focus();
 }
 
 export function hideBookmarksPanel() {
+	const wasOpen = !favoritesPanel?.classList.contains('hidden');
 	favoritesPanel?.classList.add('hidden');
+
+	// Hiding the panel destroys whatever inside it had focus, and the browser drops focus
+	// to the body -- which strands a keyboard user at the top of the document rather than
+	// on the button they just used.
+	if (wasOpen) document.getElementById('favorites')?.focus();
 }

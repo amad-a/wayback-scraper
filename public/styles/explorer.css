@@ -520,7 +520,11 @@ button:not(.lightweight):focus::before {
 	white-space: nowrap;
 }
 
-.bookmark-list-entry:hover {
+/* .current is the page the frame is showing. It gets the hover treatment and keeps it, so
+   the panel answers "which of these am I looking at" without needing a pointer on it. */
+.bookmark-list-entry:hover,
+.bookmark-list-entry:focus-visible,
+.bookmark-list-entry.current {
 	/* text-overflow: ellipsis;
 	overflow: ; */
 	white-space: inherit;
@@ -534,11 +538,20 @@ button:not(.lightweight):focus::before {
 	padding-right: 2px;
 }
 
-.bookmark-list-entry:hover {
+.bookmark-list-entry:hover,
+.bookmark-list-entry:focus-visible,
+.bookmark-list-entry.current {
 	background-color: var(--ActiveTitle);
 	color: white;
 	cursor: pointer;
 	text-decoration: underline;
+}
+
+/* Focus and current look the same otherwise, so the focused row carries the dotted rect
+   Windows put on whatever the keyboard was pointing at. */
+.bookmark-list-entry:focus-visible {
+	outline: 1px dotted white;
+	outline-offset: -2px;
 }
 
 mark.exact {
