@@ -9,7 +9,7 @@
 <font size="+1"> 
 احمد العجمي <br>
 شاعر <br>    عضو أسرة الأدباء والكتاب البحرينية 
-<br>   البريد الإلكتروني : <a href="mailto:ajmi_bh@yahoo.com" style="pointer-events: none;">ajmi_bh@yahoo.com</a></font></p><p><font size="+1">  
+<br>   البريد الإلكتروني : <a href="mailto:ajmi_bh@yahoo.com" class="dead" aria-disabled="true">ajmi_bh@yahoo.com</a></font></p><p><font size="+1">  
 صدر لي:  
 </font></p><ul><font size="+1">
 <li>   إنما هي جلوة ورؤى - شعر – المطبعة الشرقية – البحرين – 1987م . 

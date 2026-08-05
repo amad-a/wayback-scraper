@@ -144,6 +144,11 @@ const EXTERNAL_DIR = '_external';
 
 const NON_NAVIGATIONAL = /^(mailto:|tel:|javascript:|data:|about:|ftp:|news:)/i;
 
+// Matched with a regex rather than an [href^="mailto:"] selector, which compares the
+// attribute value case-sensitively: 923 links in this archive are written MAILTO: and
+// three Mailto:, and every one of them slipped past the selector and stayed live.
+const MAILTO = /^mailto:/i;
+
 // Image-like string literals inside inline scripts. FrontPage hover buttons preload
 // their rollover image only in JS -- `MSFPnav1h=MSFPpreload("..._vbtn_a.gif")` -- so
 // the swapped-in image never appears in an HTML attribute and is missed otherwise.
@@ -1186,11 +1191,37 @@ async function rewriteSavedPages(seeds) {
     $('a.dead, area.dead')
       .removeClass('dead dead-img dead-img-map')
       .removeAttr('aria-disabled');
+
+    // Earlier runs disabled mailto links with an inline pointer-events instead of the
+    // class below. Cleared, or the link stays unhoverable and so cannot show the
+    // not-allowed cursor the class is what gives it.
+    $('a[style*="pointer-events"]').each((_, el) => {
+      const $el = $(el);
+      const style = ($el.attr('style') || '')
+        .replace(/\s*pointer-events\s*:[^;]*;?/gi, '')
+        .trim();
+      if (style) $el.attr('style', style);
+      else $el.removeAttr('style');
+    });
+
     $('a[href], area[href]').each((_, el) => {
       const $el = $(el);
       const href = ($el.attr('href') || '').trim();
-      if (!href || href.startsWith('#') || NON_NAVIGATIONAL.test(href)) return;
-      if (localTargetExists(href)) return;
+      if (!href || href.startsWith('#')) return;
+
+      // A mailto is dead in the same sense as the rest: the address stopped being read
+      // two decades ago, so a click that opens a mail client to write to it is a worse
+      // answer than one that visibly goes nowhere. Marked rather than merely disabled,
+      // because a link that looks live and does nothing reads as a broken page.
+      //
+      // The other non-navigational schemes are left alone. javascript: is how pages of
+      // this era drive their own menus and rollovers, and striking those through would
+      // condemn the parts of the page that still work.
+      if (!MAILTO.test(href)) {
+        if (NON_NAVIGATIONAL.test(href)) return;
+        if (localTargetExists(href)) return;
+      }
+
       $el.addClass('dead').attr('aria-disabled', 'true');
       // Image links get the not-allowed cursor but keep their normal look --
       // fading/striking through a picture reads as broken image, not dead link.
@@ -1237,7 +1268,8 @@ async function rewriteSavedPages(seeds) {
       if (/\.(mid|midi|rmi)(\?|#|$)/.test(ref)) $el.remove();
     });
 
-    $('a[href^="mailto:"]').css('pointer-events', 'none');
+    // mailto links are handled by the dead-link pass above, which blocks the click
+    // through the same delegated handler as every other dead link.
     $('form').each((_, el) => {
       $(el)
         .removeAttr('action')

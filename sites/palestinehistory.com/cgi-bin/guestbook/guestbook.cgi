@@ -37,7 +37,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Andrey</b>
 			
-					| <a href="mailto:meaty@hotbox.ru" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:meaty@hotbox.ru" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -64,7 +64,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Kim Lesouef</b>
 			
-					| <a href="mailto:lesouef@upnaway.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:lesouef@upnaway.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -91,7 +91,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>بيسان</b>
 			
-					| <a href="mailto:BEESANR@HOTMAIL.COM" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:BEESANR@HOTMAIL.COM" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -118,7 +118,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Bud</b>
 			
-					| <a href="mailto:arabisraelites@yahoo.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:arabisraelites@yahoo.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="http://www.arabisraelites.com" target="new" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>
@@ -146,7 +146,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>روعه</b>
 			
-					| <a href="mailto:candy_girl111@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:candy_girl111@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -173,7 +173,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Sahar Jadallah</b>
 			
-					| <a href="mailto:palestinianqueen87@yahoo.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:palestinianqueen87@yahoo.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -200,7 +200,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Gary Smith</b>
 			
-					| <a href="mailto:gsmith14@triad.rr.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:gsmith14@triad.rr.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -281,7 +281,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Rabah Muhatseb</b>
 			
-					| <a href="mailto:r_muhtaseb@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:r_muhtaseb@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -308,7 +308,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>falasteenea</b>
 			
-					| <a href="mailto:victory_palestine@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:victory_palestine@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="http://_" target="new" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>
@@ -336,7 +336,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>االمنشد عماد رامي</b>
 			
-					| <a href="mailto:imadrame@shuf.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:imadrame@shuf.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -363,7 +363,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>رائد</b>
 			
-					| <a href="mailto:pioneer2000@maktoob.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:pioneer2000@maktoob.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -390,7 +390,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>julie</b>
 			
-					| <a href="mailto:julz968@yahoo.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:julz968@yahoo.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -417,7 +417,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>miloud</b>
 			
-					| <a href="mailto:bendimia@naseej.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:bendimia@naseej.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -448,7 +448,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Assem Chabti</b>
 			
-					| <a href="mailto:achabti@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:achabti@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -475,7 +475,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Andria </b>
 			
-					| <a href="mailto:Amoora127@aol.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:Amoora127@aol.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -528,7 +528,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Bud</b>
 			
-					| <a href="mailto:arabisraelites@juno.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:arabisraelites@juno.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="http://www.arabisraelites.com" target="new" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>
@@ -556,7 +556,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>motaz shazly</b>
 			
-					| <a href="mailto:motazshazly@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:motazshazly@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="http://www.shazly.vze.com" target="new" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>
@@ -584,7 +584,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Aya Heshmat</b>
 			
-					| <a href="mailto:July212@cs.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:July212@cs.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -615,7 +615,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Fayez Muhammad Shaldoum</b>
 			
-					| <a href="mailto:fshaldoum@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:fshaldoum@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -667,7 +667,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Yahya Ben Jlassi</b>
 			
-					| <a href="mailto:noubou@web.de" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:noubou@web.de" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -698,7 +698,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>abokaled</b>
 			
-					| <a href="mailto:abokaled22@hotmail.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:abokaled22@hotmail.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="http://www.annda.jeeran.com" target="new" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>
@@ -726,7 +726,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>hatim muafy</b>
 			
-					| <a href="mailto:hatim_68@yahoo.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:hatim_68@yahoo.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -757,7 +757,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>N. Eaisha Pressimone</b>
 			
-					| <a href="mailto:npress3@Bellsouth.net" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:npress3@Bellsouth.net" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 		</font></td></tr>
 		
@@ -788,7 +788,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>عبدالرحمن محمد احمد على</b>
 			
-					| <a href="mailto:akuwait@ akuwait.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:akuwait@ akuwait.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="http://1" target="new" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>
@@ -841,7 +841,7 @@ a:hover {text-decoration: none; color: #0000ff }
 			<td width="600">
 			<font face="Arial" size="2" color="#000000"><b>Esam Shashaa</b>
 			
-					| <a href="mailto:info@palestinehistory.com" style="pointer-events: none;"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
+					| <a href="mailto:info@palestinehistory.com" class="dead dead-img" aria-disabled="true"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/mail.gif"></font></a>
 					
 				        | <a href="/sites/palestinehistory.com/index.html" target="new"><font color="#000000"><img border="0" src="/sites/palestinehistory.com/cgi-bin/guestbook/url.gif"></font></a>
 		</font></td></tr>

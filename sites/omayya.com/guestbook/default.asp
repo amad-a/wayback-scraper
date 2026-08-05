@@ -62,7 +62,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:ayman37sa@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:ayman37sa@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   السيد أيمن الشخص </a></b><font color="#000000"> on 
                   Friday, June 07, 2002
@@ -81,7 +81,7 @@
                   Country:Saudi Arabia</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:ayman37sa@hotmail.com" style="pointer-events: none;">ayman37sa@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:ayman37sa@hotmail.com" class="dead" aria-disabled="true">ayman37sa@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -96,7 +96,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   AHMAD ARAFA</a></b><font color="#000000"> on 
                   Thursday, June 06, 2002
@@ -115,7 +115,7 @@
                   Country:Egypt</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -130,7 +130,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   ARABI</a></b><font color="#000000"> on 
                   Thursday, June 06, 2002
@@ -149,7 +149,7 @@
                   Country:United States</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -164,7 +164,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   talalsukkar</a></b><font color="#000000"> on 
                   Thursday, June 06, 2002
@@ -183,7 +183,7 @@
                   Country:Jordan</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.talalsukkar288@hotmail.com" class="dead" aria-disabled="true">http://www.talalsukkar288@hotmail.com</a></font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.talalsukkar288@hotmail.com" class="dead" aria-disabled="true">http://www.talalsukkar288@hotmail.com</a></font>
                 </td>
               </tr>
             </tbody></table>
@@ -198,7 +198,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   Rami LeCaim</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -217,7 +217,7 @@
                   Country:Germany</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -232,7 +232,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:bombom1989@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:bombom1989@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   ToOoOoOoTaH</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -251,7 +251,7 @@
                   Country:Kuwait</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:bombom1989@hotmail.com" style="pointer-events: none;">bombom1989@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.tootah.com" class="dead" aria-disabled="true">http://www.tootah.com</a></font>
+                  Email:<a href="mailto:bombom1989@hotmail.com" class="dead" aria-disabled="true">bombom1989@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.tootah.com" class="dead" aria-disabled="true">http://www.tootah.com</a></font>
                 </td>
               </tr>
             </tbody></table>
@@ -266,7 +266,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:bombom1989@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:bombom1989@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   ToOoOoOoTaH</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -285,7 +285,7 @@
                   Country:Kuwait</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:bombom1989@hotmail.com" style="pointer-events: none;">bombom1989@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.tootah.com" class="dead" aria-disabled="true">http://www.tootah.com</a></font>
+                  Email:<a href="mailto:bombom1989@hotmail.com" class="dead" aria-disabled="true">bombom1989@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:<a href="http://www.tootah.com" class="dead" aria-disabled="true">http://www.tootah.com</a></font>
                 </td>
               </tr>
             </tbody></table>
@@ -300,7 +300,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   maryoma</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -319,7 +319,7 @@
                   Country:Bahrain</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -334,7 +334,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:yma1966@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:yma1966@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   JENINE ES-SOUMOUD</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -353,7 +353,7 @@
                   Country:Algeria</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:yma1966@hotmail.com" style="pointer-events: none;">yma1966@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:yma1966@hotmail.com" class="dead" aria-disabled="true">yma1966@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -368,7 +368,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:yma1966@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:yma1966@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   JENINE ES-SOUMOUD</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -387,7 +387,7 @@
                   Country:Algeria</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:yma1966@hotmail.com" style="pointer-events: none;">yma1966@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:yma1966@hotmail.com" class="dead" aria-disabled="true">yma1966@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -402,7 +402,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:yma1966@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:yma1966@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   JENINE ES-SOUMOUD</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -421,7 +421,7 @@
                   Country:Algeria</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:yma1966@hotmail.com" style="pointer-events: none;">yma1966@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:yma1966@hotmail.com" class="dead" aria-disabled="true">yma1966@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -436,7 +436,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   Mohannad</a></b><font color="#000000"> on 
                   Wednesday, June 05, 2002
@@ -455,7 +455,7 @@
                   Country:Algeria</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -470,7 +470,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:" class="dead" aria-disabled="true"> 
                    
                   salaahudein</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -489,7 +489,7 @@
                   Country:United States</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:" style="pointer-events: none;"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:" class="dead" aria-disabled="true"></a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -504,7 +504,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:a_b_s_h@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:a_b_s_h@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   abed</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -523,7 +523,7 @@
                   Country:Palestine</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:a_b_s_h@hotmail.com" style="pointer-events: none;">a_b_s_h@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:a_b_s_h@hotmail.com" class="dead" aria-disabled="true">a_b_s_h@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -538,7 +538,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:MESSAOUDO@YAHOO.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:MESSAOUDO@YAHOO.com" class="dead" aria-disabled="true"> 
                    
                   Messaoud OUDINA</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -557,7 +557,7 @@
                   Country:Algeria</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:MESSAOUDO@YAHOO.com" style="pointer-events: none;">MESSAOUDO@YAHOO.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:MESSAOUDO@YAHOO.com" class="dead" aria-disabled="true">MESSAOUDO@YAHOO.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -572,7 +572,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:sweeryhala@hotmail.cm" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:sweeryhala@hotmail.cm" class="dead" aria-disabled="true"> 
                    
                   h</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -591,7 +591,7 @@
                   Country:Qatar</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:sweeryhala@hotmail.cm" style="pointer-events: none;">sweeryhala@hotmail.cm</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:sweeryhala@hotmail.cm" class="dead" aria-disabled="true">sweeryhala@hotmail.cm</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -606,7 +606,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:almohalheel@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:almohalheel@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   marwan</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -625,7 +625,7 @@
                   Country:Jordan</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:almohalheel@hotmail.com" style="pointer-events: none;">almohalheel@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:almohalheel@hotmail.com" class="dead" aria-disabled="true">almohalheel@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -640,7 +640,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:m.mahoozi@bahrain.gov.bh" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:m.mahoozi@bahrain.gov.bh" class="dead" aria-disabled="true"> 
                    
                    mahdi mahoozi</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -659,7 +659,7 @@
                   Country:Bahrain</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:m.mahoozi@bahrain.gov.bh" style="pointer-events: none;">m.mahoozi@bahrain.gov.bh</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:m.mahoozi@bahrain.gov.bh" class="dead" aria-disabled="true">m.mahoozi@bahrain.gov.bh</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -674,7 +674,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:mariem_karem@hotmail.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:mariem_karem@hotmail.com" class="dead" aria-disabled="true"> 
                    
                   كارم محمود السيد</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -693,7 +693,7 @@
                   Country:Egypt</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:mariem_karem@hotmail.com" style="pointer-events: none;">mariem_karem@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:mariem_karem@hotmail.com" class="dead" aria-disabled="true">mariem_karem@hotmail.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>
@@ -708,7 +708,7 @@
             <table width="100%" border="0" cellpadding="2" cellspacing="0">
               <tbody><tr bgcolor="#EAEBEE"> 
                 <td colspan="2"><font size="2" face="Tahoma">
-                <font color="#000000">Comments by </font> <b><a href="mailto:amoonsat@yahoo.com" style="pointer-events: none;"> 
+                <font color="#000000">Comments by </font> <b><a href="mailto:amoonsat@yahoo.com" class="dead" aria-disabled="true"> 
                    
                   ابو حسين</a></b><font color="#000000"> on 
                   Tuesday, June 04, 2002
@@ -727,7 +727,7 @@
                   Country:Lebanon</font>
                 </td></tr>
                 <tr><td width="50%" bgcolor="#CCCCCC"><font size="2" color="#000000" face="Tahoma">
-                  Email:<a href="mailto:amoonsat@yahoo.com" style="pointer-events: none;">amoonsat@yahoo.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
+                  Email:<a href="mailto:amoonsat@yahoo.com" class="dead" aria-disabled="true">amoonsat@yahoo.com</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     Homepage:no URL given</font>
                 </td>
               </tr>
             </tbody></table>

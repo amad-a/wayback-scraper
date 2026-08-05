@@ -107,7 +107,7 @@ Search The Net</h2></center>
 <p>
 <a href="http://www.albawaba.com" class="dead dead-img" aria-disabled="true"><img src="/sites/barghouti.com/images/bawaba.gif" border="0"></a> 
 </p><hr size="5" width="50%"><b>If you would like your page to be
-listed, please let us know at <a href="mailto:webmaster@barghouti.com" style="pointer-events: none;">webmaster@barghouti.com</a></b>
+listed, please let us know at <a href="mailto:webmaster@barghouti.com" class="dead" aria-disabled="true">webmaster@barghouti.com</a></b>
 <hr size="5" width="50%">
 <p>You are visitor<img src="/sites/barghouti.com/_external/counter.digits.com/wc/-rz/-d/4/-c/13/-f/000000/-b/6699ff/-e/6699ff/rabt.gif" hspace="4" border="0" height="20" width="60" align="CENTER">
 

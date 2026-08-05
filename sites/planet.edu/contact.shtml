@@ -117,9 +117,9 @@
         <b>Tel: 6563269/7</b><br>
         <b>Fax: </b></font><b><font color="#333399">6563270</font></b></td>
       <td width="8%">&nbsp;</td>
-      <td width="46%"><b><font color="#333399">Office Manager: </font></b><font color="#333399"><a href="mailto:mngmt@planet.edu" style="pointer-events: none;"><b> mngmt@planet.edu</b></a></font><br>
-        <b><font color="#333399">Webmaster: <a href="mailto:webmaster@planet.edu" style="pointer-events: none;">webmaster@planet.edu</a></font></b><font color="#333399"><br>
-        <b><font color="#333399">Support: <a href="mailto:support@planet.edu" style="pointer-events: none;">support@planet.edu</a></font></b><b></b> 
+      <td width="46%"><b><font color="#333399">Office Manager: </font></b><font color="#333399"><a href="mailto:mngmt@planet.edu" class="dead" aria-disabled="true"><b> mngmt@planet.edu</b></a></font><br>
+        <b><font color="#333399">Webmaster: <a href="mailto:webmaster@planet.edu" class="dead" aria-disabled="true">webmaster@planet.edu</a></font></b><font color="#333399"><br>
+        <b><font color="#333399">Support: <a href="mailto:support@planet.edu" class="dead" aria-disabled="true">support@planet.edu</a></font></b><b></b> 
         <p></p>
       </font></td>
     </tr>
@@ -144,7 +144,7 @@
     <font color="black"><b><font size="2">CopyRight © 1998 - Palestinian Academic 
     Network<br>
     <a href="http://www.alquds.edu" class="dead" aria-disabled="true"><font color="#3366CC"> Al-Quds University </font></a></font></b></font><font color="#000000">- <font size="2"><b> Jerusalem <br>
-    contact <font color="#3333FF"><a href="mailto:webmaster@planet.edu" style="pointer-events: none;"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
+    contact <font color="#3333FF"><a href="mailto:webmaster@planet.edu" class="dead" aria-disabled="true"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
     this page </b></font></font> 
   </center>
  </center>

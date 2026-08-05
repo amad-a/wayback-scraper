@@ -142,7 +142,7 @@
               </a> <img src="/sites/planet.edu/im/hosted2.gif" width="20" height="15" align="top"><br>
               <a href="/sites/jwu.org/index.html" class="">Jerusalem Water Undertaking</a> <img src="/sites/planet.edu/im/hosted2.gif" width="20" height="15" align="top"> 
               <br>
-              <a href="/sites/multaqa.org/index.html" class="">Arab Thought forum (Multaqa)</a><br>
+              <a href="/sites/multaqa.org/index.html" class="dead" aria-disabled="true">Arab Thought forum (Multaqa)</a><br>
               <a href="http://www.cprs-palestine.org/" class="dead" aria-disabled="true">Center for Palestine Research 
               and Studies </a><br>
               <a href="/sites/ramallah-city.org/index.html" class="">Ramalla </a><img src="/sites/planet.edu/im/hosted2.gif" width="20" height="15" align="top"><br>
@@ -376,7 +376,7 @@
     <font color="black"><b><font size="2">CopyRight © 1998 - Palestinian Academic 
     Network<br>
     <a href="http://www.alquds.edu" class="dead" aria-disabled="true"><font color="#3366CC"> Al-Quds University </font></a></font></b></font><font color="#000000">- <font size="2"><b> Jerusalem <br>
-    contact <font color="#3333FF"><a href="mailto:webmaster@planet.edu" style="pointer-events: none;"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
+    contact <font color="#3333FF"><a href="mailto:webmaster@planet.edu" class="dead" aria-disabled="true"><font color="#3366CC">webmaster</font></a></font> with questions or comments regarding 
     this page </b></font></font> 
   </center>
  </center>
