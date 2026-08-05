@@ -29,15 +29,193 @@ function injectScrollbars(doc) {
 	(doc.head || doc.documentElement)?.appendChild(link);
 }
 
+// --- zoom -------------------------------------------------------------------
+
+const ZOOM_KEY = 'palestine-online:zoom';
+const ZOOM_MIN = 0.25;
+const ZOOM_MAX = 5;
+const ZOOM_BOUND = '__palestineOnlineZoomBound';
+
+const clampZoom = (v) => Math.min(ZOOM_MAX, Math.max(ZOOM_MIN, v));
+
+function readZoom() {
+	try {
+		const stored = Number.parseFloat(localStorage.getItem(ZOOM_KEY));
+		if (Number.isFinite(stored)) return clampZoom(stored);
+	} catch {
+		// storage disabled; fall through to the default
+	}
+	return 1;
+}
+
+// One level for the whole archive, like a browser's own zoom, rather than per page --
+// re-pinching after every navigation would make it useless for reading a whole site.
+let zoom = readZoom();
+
+// Sets the level on a document. Cleared rather than set to '1' at the default, so pages
+// that were never zoomed carry no trace of us.
+function setScale(doc) {
+	doc.documentElement.style.zoom = zoom === 1 ? '' : String(zoom);
+}
+
+// `zoom` rather than `transform: scale`.
+//
+// Both scroll correctly -- Chrome counts a transformed root element's overflow in the
+// scrollable area -- and both keep text sharp, since a transform re-rasterises at the
+// final scale rather than stretching a bitmap. The difference is reflow. `zoom` relayouts
+// at the new size so text rewraps; `scale` magnifies the layout untouched. On one page at
+// 2x that is 25725x1056 against 23522x1780.
+//
+// Magnifying is the more faithful treatment of a fixed-width 2001 layout, but it forces
+// horizontal panning in proportion to the scale, and panning left and right to read a
+// single line costs more than the rewrap does. Reflow keeps the reading column inside the
+// window. Swapping back is one line in setScale.
+function applyZoom(win, depth = 0) {
+	if (!win || depth > 3) return;
+
+	try {
+		setScale(win.document);
+	} catch {
+		return; // cross-origin
+	}
+
+	for (let i = 0; i < win.frames.length; i++) {
+		try {
+			applyZoom(win.frames[i], depth + 1);
+		} catch {
+			// cross-origin; carry on with its siblings
+		}
+	}
+}
+
+// The level asked for, which runs ahead of `zoom`, the level actually applied. Steps
+// accumulate here so a burst of events inside one frame is not lost when only the last
+// one gets painted.
+let targetZoom = zoom;
+let pendingAnchor = null;
+let frameQueued = false;
+let persistTimer = 0;
+
+// Moves toward a new level, keeping whatever sits under the pointer where it is.
+//
+// Coalesced to one relayout per animation frame. `zoom` triggers a full relayout of the
+// document, which costs a median 7.6ms in Chrome and 11ms in Safari on a table-heavy
+// archived page. A pinch delivers events faster than that, so applying each one
+// synchronously does the work several times per frame and the engine falls behind --
+// which is why Safari, 45% slower to lay out, stuttered first. One frame, one layout.
+function zoomTo(next, win, clientX, clientY) {
+	targetZoom = clampZoom(next);
+	pendingAnchor = { win, clientX, clientY };
+
+	if (frameQueued) return;
+	frameQueued = true;
+	requestAnimationFrame(flushZoom);
+}
+
+function flushZoom() {
+	frameQueued = false;
+
+	const { win, clientX, clientY } = pendingAnchor;
+	const previous = zoom;
+	if (targetZoom === previous) return; // already at a limit
+
+	// Read the anchor before the change, against the level and scroll still in effect.
+	// Without this the page grows from its top-left and what you were reading slides off.
+	const anchorX = (win.scrollX + clientX) / previous;
+	const anchorY = (win.scrollY + clientY) / previous;
+
+	zoom = targetZoom;
+	applyZoom(iframe.contentWindow);
+	win.scrollTo(anchorX * zoom - clientX, anchorY * zoom - clientY);
+
+	// Debounced: a synchronous storage write on every frame of a pinch is exactly the
+	// kind of thing that makes one stutter.
+	clearTimeout(persistTimer);
+	persistTimer = setTimeout(() => {
+		try {
+			localStorage.setItem(ZOOM_KEY, String(zoom));
+		} catch {
+			// storage disabled: zoom still works, it just will not persist
+		}
+	}, 250);
+}
+
+// A trackpad pinch is delivered as a wheel event with ctrlKey set -- there is no pinch
+// event to bind. Ctrl+scroll on a mouse produces the same thing, so that works too.
+//
+// The browser's own response to this is to zoom the visual viewport, which is the whole
+// window by definition and cannot be scoped to an element. So it has to be cancelled and
+// replaced, which is only possible with passive: false -- wheel listeners default to
+// passive, where preventDefault is ignored and you would get both zooms at once.
+function onZoomWheel(event) {
+	if (!event.ctrlKey) return;
+	event.preventDefault();
+
+	const win = event.currentTarget.defaultView;
+	if (!win) return;
+
+	// A pinch arrives as a stream of small deltas, a mouse wheel as one notch of 100 or
+	// 120. Both land here as deltaY in pixels with no flag to tell them apart, so the
+	// step is capped: a pinch delta passes through untouched and stays smooth, while a
+	// notch saturates at ~10% per click instead of e^1 -- nearly tripling per click.
+	const step = Math.max(-10, Math.min(10, event.deltaY));
+
+	// Exponential, so a step is the same ratio in as out. Compounded on targetZoom
+	// rather than zoom, or events arriving inside one frame would each be measured from
+	// the same stale applied level and all but the last would be thrown away.
+	zoomTo(targetZoom * Math.exp(-step * 0.01), win, event.clientX, event.clientY);
+}
+
+// Safari's pinch.
+//
+// Chrome and Firefox report a trackpad pinch as ctrl+wheel; Safari does not, and reports
+// it through these non-standard gesture events instead. Without them a pinch on Safari
+// falls through to the browser and zooms the whole window -- the exact thing this is
+// meant to prevent. Ctrl+scroll on a mouse is a real wheel event, so that path already
+// works there.
+//
+// event.scale is cumulative from the start of the gesture, not incremental, so the level
+// is computed against where the gesture began rather than compounding per event.
+let gestureBaseZoom = 1;
+
+function onGestureStart(event) {
+	event.preventDefault();
+	gestureBaseZoom = targetZoom;
+}
+
+function onGestureChange(event) {
+	event.preventDefault();
+	const win = event.currentTarget.defaultView;
+	if (!win) return;
+	zoomTo(gestureBaseZoom * event.scale, win, event.clientX, event.clientY);
+}
+
+function bindZoom(doc) {
+	if (!doc || doc[ZOOM_BOUND]) return;
+	doc[ZOOM_BOUND] = true;
+
+	doc.addEventListener('wheel', onZoomWheel, { passive: false });
+
+	// No-ops on Chrome and Firefox, which never fire these.
+	doc.addEventListener('gesturestart', onGestureStart, { passive: false });
+	doc.addEventListener('gesturechange', onGestureChange, { passive: false });
+	doc.addEventListener('gestureend', (event) => event.preventDefault(), { passive: false });
+}
+
+// --- applying both to a frame ----------------------------------------------
+
 // 166 of the archived pages are framesets. Those documents do not scroll -- their child
-// frames do -- so styling only the top document would miss exactly the pages where a
-// scrollbar is most visible, the nav sidebars. Children may not have loaded yet, hence
-// both the immediate pass and the listener.
-function injectScrollbarsDeep(win, depth = 0) {
+// frames do -- so dressing only the top document would miss exactly the pages where a
+// scrollbar is most visible, the nav sidebars, and would leave a pinch over a nav pane
+// doing nothing. Children may not have loaded yet, hence both the immediate pass and the
+// listener.
+function prepareFrame(win, depth = 0) {
 	if (!win || depth > 3) return; // framesets nest, but not indefinitely
 
 	try {
 		injectScrollbars(win.document);
+		bindZoom(win.document);
+		setScale(win.document);
 	} catch {
 		return; // a cross-origin child: nothing we can or should do
 	}
@@ -47,8 +225,8 @@ function injectScrollbarsDeep(win, depth = 0) {
 	for (let i = 0; i < win.frames.length; i++) {
 		try {
 			const child = win.frames[i];
-			injectScrollbarsDeep(child, depth + 1);
-			child.addEventListener('load', () => injectScrollbarsDeep(child, depth + 1), {
+			prepareFrame(child, depth + 1);
+			child.addEventListener('load', () => prepareFrame(child, depth + 1), {
 				once: true,
 			});
 		} catch {
@@ -83,7 +261,7 @@ async function applyChrome() {
 
 	// Before anything awaits, so the scrollbars are styled on first paint rather than
 	// flicking from the browser default a moment later.
-	injectScrollbarsDeep(iframe.contentWindow);
+	prepareFrame(iframe.contentWindow);
 
 	const stamped = doc?.body?.dataset.waybackUrl;
 	setChrome({
@@ -143,7 +321,7 @@ export function watchFrame() {
 	iframe.addEventListener('load', () => {
 		// Re-injected because pages of this era use document.write, which can replace
 		// the whole document after we styled it. Idempotent, so this is cheap.
-		injectScrollbarsDeep(iframe.contentWindow);
+		prepareFrame(iframe.contentWindow);
 
 		// Only re-runs when the early pass came up empty -- it happens before <body>
 		// necessarily exists, so the wayback stamp may not have been readable yet and

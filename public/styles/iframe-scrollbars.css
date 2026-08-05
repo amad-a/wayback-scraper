@@ -1,7 +1,7 @@
 /* Win98 scrollbars for the archived pages inside the frame.
  *
  * The frame is a separate document, so nothing in the shell's stylesheets reaches it --
- * these rules have to be injected into each archived page as it loads (see injectChrome
+ * these rules have to be injected into each archived page as it loads (see prepareFrame
  * in app/api.js).
  *
  * Extracted verbatim from windows-98.css rather than retyped, together with the ten
