@@ -339,7 +339,8 @@
               ></div>
             </button>
             <button
-              class="toolbar-button lightweight toggle history-button hidden"
+              id="history"
+              class="toolbar-button lightweight toggle history-button"
             >
               <span class="label-text">History</span>
               <div
@@ -429,6 +430,22 @@
             </button>
           </div>
           <div class="favorites-entries"></div>
+        </div>
+      </div>
+      <div class="history hidden">
+        <div class="history-list inset-deep">
+          <div class="history-toolbar toolbars">
+            <div class="toolbar">History</div>
+            <button
+              id="history-exit"
+              style="margin-left: auto; height: 16px"
+              class="window-close-button window-action-close window-button"
+              aria-label="Close window"
+            >
+              <span class="window-button-icon"></span>
+            </button>
+          </div>
+          <div class="history-entries"></div>
         </div>
       </div>
       <div id="content" class="inset-deep">

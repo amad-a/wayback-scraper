@@ -359,12 +359,19 @@ async function applyChrome() {
 	prepareFrame(iframe.contentWindow);
 
 	const stamped = doc?.body?.dataset.waybackUrl;
+	const stampedUrl = stamped
+		? stamped.replace(/^.*?\/web\/\d+id_\//, '').replace(/(\/\/[^/]+):80(?=\/|$)/, '$1')
+		: '';
 	setChrome({
 		title: doc?.title || '',
 		// Strip the archive prefix back off to recover the address the page had
 		// originally; without a stamp there is nothing honest to show yet.
-		url: stamped ? stamped.replace(/^.*?\/web\/\d+id_\//, '').replace(/(\/\/[^/]+):80(?=\/|$)/, '$1') : '',
+		url: stampedUrl,
 	});
+
+	// Filed from the DOM first, so a page the database has never heard of still lands in
+	// history. The database pass below files it again with better labels.
+	recordVisit(localPath.replace(/^\/sites\//, ''), doc?.title || '', stampedUrl);
 
 	let page;
 	try {
@@ -390,6 +397,7 @@ async function applyChrome() {
 	// for the rare document that turns out to be a frame.
 	syncStar(page.frame_parent || page.local_path);
 	refreshFavorite(page);
+	recordVisit(page.local_path, page.display_title, page.display_url);
 }
 
 // The path the chrome currently describes, so a document is only processed once.
@@ -742,12 +750,65 @@ function writeFavorites() {
 	}
 }
 
+// --- panel keyboard ---------------------------------------------------------
+
+// Arrows walk a panel's rows, Home and End jump to its ends, Enter and Space act on a
+// row, Escape closes. Bound to the container rather than to each row, so it survives
+// every re-render without rebinding, and the rows are re-queried on each key because
+// both lists change underneath it -- one as you star, the other as you browse.
+//
+// `tree` is optional and takes (row, expand): the history panel uses it for Left and
+// Right on a day, which a flat list has no use for.
+function bindPanelKeys(container, { rows: selector, activate, close, tree }) {
+	container?.addEventListener('keydown', (event) => {
+		const rows = [...container.querySelectorAll(selector)];
+		if (!rows.length) return;
+
+		const index = rows.indexOf(document.activeElement);
+
+		const focusRow = (next) => {
+			event.preventDefault();
+			rows[next].focus();
+		};
+
+		// With focus on the container rather than a row, treat it as sitting just past the
+		// end, so Down enters at the top and Up enters at the bottom.
+		const from = index === -1 ? (event.key === 'ArrowUp' ? 0 : rows.length - 1) : index;
+
+		switch (event.key) {
+			case 'ArrowDown':
+				return focusRow((from + 1) % rows.length);
+			case 'ArrowUp':
+				return focusRow((from - 1 + rows.length) % rows.length);
+			case 'Home':
+				return focusRow(0);
+			case 'End':
+				return focusRow(rows.length - 1);
+			case 'ArrowRight':
+			case 'ArrowLeft':
+				if (!tree || index === -1) return;
+				event.preventDefault();
+				return tree(rows[index], event.key === 'ArrowRight');
+			case 'Enter':
+			case ' ':
+				if (index === -1) return;
+				event.preventDefault();
+				return activate(rows[index]);
+			case 'Escape':
+				event.preventDefault();
+				return close();
+		}
+	});
+}
+
 const favoritesEntries = document.querySelector('.favorites-entries');
 
 favoritesEntries?.setAttribute('role', 'listbox');
 favoritesEntries?.setAttribute('aria-label', 'Favorites');
 
-function openFavorite(path) {
+// Both panels open a page the same way, and assigning src rather than replacing the
+// location leaves a history entry so Back walks the trail you actually took.
+function openPath(path) {
 	iframe.src = sitesUrl(path);
 }
 
@@ -769,19 +830,20 @@ function renderFavorites() {
 		// and the address is the half that always identifies the page.
 		const address = entry.url || entry.path;
 		row.textContent = entry.title ? `${address} - ${entry.title}` : address;
-		row.addEventListener('click', () => openFavorite(entry.path));
+		row.addEventListener('click', () => openPath(entry.path));
 		favoritesEntries.appendChild(row);
 	}
 
 	markCurrent();
 }
 
-// Shows which entry the frame is currently on, and puts the tab stop there.
+// Shows which rows the frame is currently on, across both panels -- a page can be in
+// favorites and in today's history at once, and it should read the same in each.
 //
-// Called on navigation rather than folded into renderFavorites, because the list only
-// changes when you star something while the current page changes constantly.
+// Called on navigation rather than folded into the renders, because the lists only change
+// when you star or visit something while the current page changes constantly.
 function markCurrent() {
-	for (const row of favoritesEntries?.children || []) {
+	for (const row of document.querySelectorAll('.bookmark-list-entry')) {
 		const isCurrent = row.dataset.path === starredPath;
 		row.classList.toggle('current', isCurrent);
 		row.setAttribute('aria-selected', String(isCurrent));
@@ -795,41 +857,10 @@ function firstFavoriteRow() {
 		|| favoritesEntries?.firstElementChild;
 }
 
-// Arrows walk the list, Enter and Space open, Escape closes. Bound to the container rather
-// than each row, so it survives every re-render without rebinding.
-favoritesEntries?.addEventListener('keydown', (event) => {
-	const rows = [...favoritesEntries.children];
-	if (!rows.length) return;
-
-	const index = rows.indexOf(document.activeElement);
-
-	const focusRow = (next) => {
-		event.preventDefault();
-		rows[next].focus();
-	};
-
-	// With focus on the container rather than a row, treat it as sitting just past the
-	// end, so Down enters at the top and Up enters at the bottom.
-	const from = index === -1 ? (event.key === 'ArrowUp' ? 0 : rows.length - 1) : index;
-
-	switch (event.key) {
-		case 'ArrowDown':
-			return focusRow((from + 1) % rows.length);
-		case 'ArrowUp':
-			return focusRow((from - 1 + rows.length) % rows.length);
-		case 'Home':
-			return focusRow(0);
-		case 'End':
-			return focusRow(rows.length - 1);
-		case 'Enter':
-		case ' ':
-			if (index === -1) return;
-			event.preventDefault();
-			return openFavorite(rows[index].dataset.path);
-		case 'Escape':
-			event.preventDefault();
-			return hideBookmarksPanel();
-	}
+bindPanelKeys(favoritesEntries, {
+	rows: '.bookmark-list-entry',
+	activate: (row) => openPath(row.dataset.path),
+	close: hideBookmarksPanel,
 });
 
 renderFavorites();
@@ -926,8 +957,9 @@ export function toggleFavorites() {
 
 	if (favoritesPanel?.classList.contains('hidden')) return;
 
-	// The panel and the address dropdown occupy the same corner of the window, so opening
-	// one closes the other.
+	// The panels and the address dropdown occupy the same corner of the window, so opening
+	// one closes the others.
+	historyPanel?.classList.add('hidden');
 	dropdown?.classList.add('hidden');
 
 	// Focus goes in with the panel. Tab cannot reach the rows, so this is the only way in
@@ -943,4 +975,267 @@ export function hideBookmarksPanel() {
 	// to the body -- which strands a keyboard user at the top of the document rather than
 	// on the button they just used.
 	if (wasOpen) document.getElementById('favorites')?.focus();
+}
+
+// --- history ----------------------------------------------------------------
+
+const HISTORY_KEY = 'palestine-online:history';
+
+// The only bound. An entry averages 159 bytes of JSON against this archive's real paths,
+// addresses and titles, and the longest page in it would make 548, so 500 entries is
+// around 78KB typical and 148KB with every title at the cap below -- measured at 1ms to
+// write, against a 5MB origin budget already shared with the zoom level and the favorites
+// list.
+//
+// No age cap to go with it: a visit is only dropped when 500 newer ones have pushed it
+// out, so a day you have not browsed since stays reachable for as long as it takes.
+const HISTORY_MAX_ENTRIES = 500;
+
+// 184 pages carry a title over 100 characters and six run past 200, the longest 440. Every
+// row is one line in the panel, so the rest of it is quota spent on text no one sees.
+const HISTORY_TITLE_MAX = 120;
+
+const DAY_MS = 86400000;
+
+const historyPanel = document.querySelector('.history');
+const historyEntries = document.querySelector('.history-entries');
+
+historyEntries?.setAttribute('role', 'tree');
+historyEntries?.setAttribute('aria-label', 'History');
+
+// Local rather than UTC: the grouping is "what did I look at today", and a day ends when
+// it ends where you are, not in Greenwich.
+function dayKey(ms) {
+	const d = new Date(ms);
+	const month = String(d.getMonth() + 1).padStart(2, '0');
+	return `${d.getFullYear()}-${month}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function dayLabel(key) {
+	if (key === dayKey(Date.now())) return 'Today';
+	if (key === dayKey(Date.now() - DAY_MS)) return 'Yesterday';
+
+	const [year, month, day] = key.split('-').map(Number);
+	return new Date(year, month - 1, day).toLocaleDateString(undefined, {
+		weekday: 'long',
+		day: 'numeric',
+		month: 'long',
+		year: 'numeric',
+	});
+}
+
+// Newest first, and applied on the way in as well as on the way out, so a list written by
+// an older build with a different cap comes back trimmed rather than growing from wherever
+// it happened to be.
+function pruneVisits(entries) {
+	return entries.filter((e) => e?.path && e.at).slice(0, HISTORY_MAX_ENTRIES);
+}
+
+function readVisits() {
+	try {
+		const stored = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+		return Array.isArray(stored) ? pruneVisits(stored) : [];
+	} catch {
+		return []; // storage disabled, or holding something we did not write
+	}
+}
+
+// Named visits rather than history: `history` is the window's own, which syncShareUrl
+// calls replaceState on a few hundred lines up.
+let visits = readVisits();
+
+function writeVisits() {
+	try {
+		localStorage.setItem(HISTORY_KEY, JSON.stringify(visits));
+	} catch {
+		// Quota, or storage disabled. Trim hard and try once more -- losing the older half
+		// of the list is better than losing the write and with it today's browsing.
+		visits = visits.slice(0, Math.floor(HISTORY_MAX_ENTRIES / 2));
+		try {
+			localStorage.setItem(HISTORY_KEY, JSON.stringify(visits));
+		} catch {
+			// Nothing left to do; the list still works for this session.
+		}
+	}
+}
+
+// Records a visit, or updates the one already filed for this page today.
+//
+// Every navigation the frame makes passes through syncChrome -- a link clicked inside a
+// page, a Random draw, a favorite, a shared ?p= link, Back and Forward, and the _top links
+// the retarget handler sends here -- so applyChrome is the one place that sees all of
+// them, and nothing else has to know history exists.
+//
+// It is called twice per navigation by design, matching applyChrome's two passes: once
+// from the DOM with whatever the document says about itself, then again once the database
+// answers with the corrected title and the real address. The second call updates the first
+// rather than filing a second row.
+//
+// A frameset records as itself, not as its panes. Clicking around inside one does not
+// change the frame's own address, which is also what stops a nav sidebar filing a visit
+// every time it is used.
+function recordVisit(path, title, url) {
+	if (!path) return;
+
+	const at = Date.now();
+	const today = dayKey(at);
+
+	// One row per page per day. Revisiting moves it to the top of that day rather than
+	// filling the panel with the page you keep coming back to.
+	const index = visits.findIndex((e) => e.path === path && dayKey(e.at) === today);
+	const previous = index === -1 ? null : visits[index];
+	if (index !== -1) visits.splice(index, 1);
+
+	visits.unshift({
+		path,
+		// Keep the better of the two passes: the database answer arrives second and wins,
+		// but a page the database does not have must not lose the title the document gave.
+		title: (title || previous?.title || '').slice(0, HISTORY_TITLE_MAX),
+		url: url || previous?.url || '',
+		at,
+	});
+
+	visits = pruneVisits(visits);
+	writeVisits();
+	refreshHistory();
+}
+
+// Which days are open. Seeded on first sight rather than defaulted at render, so today
+// starts expanded and stays however you last left it.
+const dayOpen = new Map();
+
+function isDayOpen(key) {
+	if (!dayOpen.has(key)) dayOpen.set(key, key === dayKey(Date.now()));
+	return dayOpen.get(key);
+}
+
+function renderHistory() {
+	if (!historyEntries) return;
+
+	historyEntries.replaceChildren();
+
+	if (!visits.length) {
+		const empty = document.createElement('div');
+		empty.className = 'history-empty';
+		empty.textContent = 'Nothing visited yet.';
+		historyEntries.appendChild(empty);
+		return;
+	}
+
+	// visits is already newest-first, so days come out in order and so do the pages
+	// inside them without sorting anything.
+	const days = new Map();
+	for (const entry of visits) {
+		const key = dayKey(entry.at);
+		if (!days.has(key)) days.set(key, []);
+		days.get(key).push(entry);
+	}
+
+	for (const [key, entries] of days) {
+		const group = document.createElement('div');
+		group.className = 'history-group';
+
+		const open = isDayOpen(key);
+
+		const day = document.createElement('div');
+		day.className = 'history-day';
+		day.dataset.day = key;
+		day.setAttribute('role', 'treeitem');
+		day.setAttribute('aria-expanded', String(open));
+		day.tabIndex = -1;
+
+		const twisty = document.createElement('span');
+		twisty.className = 'twisty';
+		twisty.textContent = open ? '▾' : '▸';
+		day.appendChild(twisty);
+		day.appendChild(
+			document.createTextNode(`${dayLabel(key)} (${entries.length})`),
+		);
+		day.addEventListener('click', () => setDayOpen(key, !isDayOpen(key)));
+
+		const pages = document.createElement('div');
+		pages.className = open ? 'history-day-pages' : 'history-day-pages collapsed';
+
+		for (const entry of entries) {
+			const row = document.createElement('div');
+			row.className = 'bookmark-list-entry';
+			row.dataset.path = entry.path;
+			row.setAttribute('role', 'treeitem');
+			row.tabIndex = -1;
+			const address = entry.url || entry.path;
+			row.textContent = entry.title ? `${address} - ${entry.title}` : address;
+			row.addEventListener('click', () => openPath(entry.path));
+			pages.appendChild(row);
+		}
+
+		group.append(day, pages);
+		historyEntries.appendChild(group);
+	}
+
+	markCurrent();
+}
+
+function setDayOpen(key, open) {
+	dayOpen.set(key, open);
+	renderHistory();
+	// Rendering replaced the row that was focused, so put focus back on its replacement.
+	historyEntries?.querySelector(`.history-day[data-day="${key}"]`)?.focus();
+}
+
+// Rendering 500 rows on every navigation would be work nobody asked for, since the panel
+// is shut almost all the time. Redraw when it is open, and mark it stale when it is not.
+let historyStale = true;
+
+function refreshHistory() {
+	if (historyPanel?.classList.contains('hidden')) {
+		historyStale = true;
+		return;
+	}
+	renderHistory();
+	historyStale = false;
+}
+
+// Only the pages of an open day are reachable: a collapsed day's rows are display:none,
+// and walking onto something invisible is how a keyboard user gets lost.
+const HISTORY_ROWS = '.history-day, .history-day-pages:not(.collapsed) .bookmark-list-entry';
+
+bindPanelKeys(historyEntries, {
+	rows: HISTORY_ROWS,
+	activate: (row) =>
+		row.dataset.day ? setDayOpen(row.dataset.day, !isDayOpen(row.dataset.day)) : openPath(row.dataset.path),
+	close: hideHistoryPanel,
+	// Right opens a day, Left closes it. On a page row, Left goes up to the day holding
+	// it, which is the only way back to a parent once you have arrowed down into a long one.
+	tree: (row, expand) => {
+		if (row.dataset.day) {
+			if (expand === isDayOpen(row.dataset.day)) return;
+			return setDayOpen(row.dataset.day, expand);
+		}
+		if (!expand) row.closest('.history-group')?.querySelector('.history-day')?.focus();
+	},
+});
+
+export function toggleHistory() {
+	historyPanel?.classList.toggle('hidden');
+
+	if (historyPanel?.classList.contains('hidden')) return;
+
+	// All three of these live in the same corner of the window.
+	favoritesPanel?.classList.add('hidden');
+	dropdown?.classList.add('hidden');
+
+	if (historyStale) {
+		renderHistory();
+		historyStale = false;
+	}
+
+	// Focus goes in with the panel, since Tab cannot reach the rows.
+	(historyEntries?.querySelector('.bookmark-list-entry.current')
+		|| historyEntries?.querySelector('.history-day'))?.focus();
+}
+
+export function hideHistoryPanel() {
+	const wasOpen = !historyPanel?.classList.contains('hidden');
+	historyPanel?.classList.add('hidden');
+	if (wasOpen) document.getElementById('history')?.focus();
 }

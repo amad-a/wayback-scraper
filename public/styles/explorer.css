@@ -462,7 +462,8 @@ button:not(.lightweight):focus::before {
 	zoom: 1.3;
 }
 
-.favorites {
+.favorites,
+.history {
 	width: 300px;
 	height: 100%;
 	position: fixed;
@@ -479,7 +480,8 @@ button:not(.lightweight):focus::before {
 	min-width: 250px;
 }
 
-.favorites-list {
+.favorites-list,
+.history-list {
 	width: calc(100% - 8px);
 	height: calc(100% - 6px);
 	background-color: white;
@@ -489,7 +491,8 @@ button:not(.lightweight):focus::before {
 	flex-direction: column;
 }
 
-.favorites-toolbar.toolbars {
+.favorites-toolbar.toolbars,
+.history-toolbar.toolbars {
 	background-color: silver;
 	top: -2px;
 	width: -webkit-fill-available;
@@ -507,7 +510,8 @@ button:not(.lightweight):focus::before {
 	padding-right: 2px;
 }
 
-.favorites-entries {
+.favorites-entries,
+.history-entries {
 	height: -webkit-fill-available;
 	display: flex;
 	flex-direction: column;
@@ -552,6 +556,67 @@ button:not(.lightweight):focus::before {
 .bookmark-list-entry:focus-visible {
 	outline: 1px dotted white;
 	outline-offset: -2px;
+}
+
+/* A day's worth of visits. The calendar stands in for the folder a Favorites entry gets,
+   so the two panels read as the same kind of tree with different contents. */
+.history-day {
+	padding: 1px 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	cursor: pointer;
+	user-select: none;
+}
+
+.history-day::before {
+	content: url('../assets/icons/calendar-5.png');
+	position: relative;
+	bottom: -2px;
+	padding-right: 2px;
+}
+
+/* The twisty, ahead of the calendar: a collapsed day points right, an open one points
+   down, which is the one part of the row that says it can be opened at all. */
+.history-day .twisty {
+	display: inline-block;
+	width: 9px;
+	font-size: 9px;
+	line-height: 9px;
+	text-align: center;
+}
+
+.history-day:hover,
+.history-day:focus-visible {
+	background-color: var(--ActiveTitle);
+	color: white;
+	text-decoration: underline;
+}
+
+.history-day:focus-visible {
+	outline: 1px dotted white;
+	outline-offset: -2px;
+}
+
+.history-day-pages.collapsed {
+	display: none;
+}
+
+/* Indented under their day, far enough to clear the calendar rather than by a round
+   number, so the page icons line up with the day label's text. */
+.history-entries .bookmark-list-entry {
+	padding-left: 22px;
+}
+
+.history-entries .bookmark-list-entry:hover,
+.history-entries .bookmark-list-entry:focus-visible,
+.history-entries .bookmark-list-entry.current {
+	padding-left: 22px;
+}
+
+.history-empty {
+	padding: 4px 6px;
+	color: var(--GrayText, gray);
 }
 
 mark.exact {

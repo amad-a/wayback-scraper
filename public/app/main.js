@@ -5,6 +5,7 @@ import {
   addFavorite,
   addressBar,
   hideBookmarksPanel,
+  hideHistoryPanel,
   historyNav,
   iframe,
   onAddressInput,
@@ -15,6 +16,7 @@ import {
   setFrame,
   sharePage,
   toggleFavorites,
+  toggleHistory,
   watchFrame,
 } from './api.js';
 
@@ -42,8 +44,16 @@ document
   .addEventListener('click', () => sharePage());
 
 document
+  .getElementById('history')
+  .addEventListener('click', () => toggleHistory());
+
+document
   .getElementById('favorites-exit')
   .addEventListener('click', () => hideBookmarksPanel());
+
+document
+  .getElementById('history-exit')
+  .addEventListener('click', () => hideHistoryPanel());
 
 document
   .getElementById('favorite-star')
