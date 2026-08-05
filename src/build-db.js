@@ -24,6 +24,7 @@ import {
   destDir,
   displayUrl,
   findLogs,
+  framedPaths,
   replayUrl,
   stampedTimestamp,
   titleFromHtml,
@@ -67,11 +68,16 @@ CREATE TABLE pages (
   title         TEXT NOT NULL,      -- extracted <title>, '' when the page has none
   byte_length   INTEGER,            -- compressed WARC record size, not the on-disk size
   digest        TEXT,
-  capture_count INTEGER NOT NULL    -- distinct timestamps logged for this URL
+  capture_count INTEGER NOT NULL,   -- distinct timestamps logged for this URL
+  -- NULL for a page that stands on its own -- including a frameset, which is a whole
+  -- page made of parts. Otherwise the container that frames this one, which is both the
+  -- "do not serve this alone" flag and somewhere to send a reader who lands here anyway.
+  frame_parent  TEXT
 );
 
 CREATE INDEX pages_host ON pages(host);
 CREATE INDEX pages_captured_at ON pages(captured_at);
+CREATE INDEX pages_frame_parent ON pages(frame_parent);
 
 -- Not dropped above. Rebuilds only INSERT OR IGNORE into it.
 CREATE TABLE IF NOT EXISTS page_meta (
@@ -134,6 +140,10 @@ async function collectPages() {
   const rows = [];
   let missing = 0;
   let stampPicked = 0;
+  // child local_path -> the container that frames it. Filled as the loop reads each file
+  // and applied afterwards, since a container is as likely to be read after its children
+  // as before.
+  const framedBy = new Map();
 
   for (const [localPath, { crawlRoot, entries }] of byPath) {
     const file = path.join(destDir, localPath);
@@ -153,6 +163,20 @@ async function collectPages() {
 
     const timestamp = stamp || chosen.timestamp || '';
 
+    for (const child of framedPaths(html)) {
+      // A page can frame itself: wildlife-pal.org's phpchat.php drives its panes with
+      // `phpchat.php?action=...`, and dropping the query to get a local path collapses
+      // those onto the file itself. It is the container, so leaving it flagged would both
+      // hide a whole page and point a reader at the page they are already on.
+      if (child === localPath) continue;
+
+      // 28 children sit inside more than one frameset, and either parent is a truthful
+      // answer. Lowest path wins so the choice is stable -- a rebuild that picked a
+      // different one each time would churn the column for no reason.
+      const previous = framedBy.get(child);
+      if (previous === undefined || localPath < previous) framedBy.set(child, localPath);
+    }
+
     rows.push({
       local_path: localPath,
       host: localPath.split('/')[0],
@@ -166,10 +190,20 @@ async function collectPages() {
       byte_length: Number(chosen.length) || null,
       digest: chosen.digest || null,
       capture_count: new Set(entries.map((e) => e.timestamp)).size,
+      frame_parent: null,
     });
   }
 
-  return { rows, missing, stampPicked };
+  // Only pages that made it into `rows` get flagged. A frame src pointing at something
+  // never fetched, or fetched but absent from any log, has no row to flag and needs no
+  // handling here.
+  let framed = 0;
+  for (const row of rows) {
+    row.frame_parent = framedBy.get(row.local_path) ?? null;
+    if (row.frame_parent) framed++;
+  }
+
+  return { rows, missing, stampPicked, framed };
 }
 
 // ---------------------------------------------------------------------------
@@ -187,7 +221,7 @@ async function main() {
     process.exit(1);
   }
 
-  const { rows, missing, stampPicked } = await collectPages();
+  const { rows, missing, stampPicked, framed } = await collectPages();
   if (!rows.length) {
     console.error('No pages found. Has the scraper run?');
     process.exit(1);
@@ -199,9 +233,9 @@ async function main() {
 
   const insert = db.prepare(`
     INSERT INTO pages (local_path, host, crawl_root, original_url, display_url, timestamp, captured_at,
-                       replay_url, title, byte_length, digest, capture_count)
+                       replay_url, title, byte_length, digest, capture_count, frame_parent)
     VALUES (@local_path, @host, @crawl_root, @original_url, @display_url, @timestamp, @captured_at,
-            @replay_url, @title, @byte_length, @digest, @capture_count)
+            @replay_url, @title, @byte_length, @digest, @capture_count, @frame_parent)
   `);
   db.transaction((rs) => rs.forEach((r) => insert.run(r)))(rows);
 
@@ -223,7 +257,8 @@ async function main() {
 
   console.log(
     `Wrote ${opts.db}: ${rows.length} pages, ${stampPicked} matched to their on-disk capture` +
-      `${missing ? `, ${missing} logged but not on disk` : ''}.`,
+      `${missing ? `, ${missing} logged but not on disk` : ''}` +
+      `${framed ? `, ${framed} framed by another page` : ''}.`,
   );
   if (imported) console.log(`Restored ${imported} rows from ${opts.tags} (${tagged} pages tagged).`);
   if (orphanMeta) console.log(`${orphanMeta} meta rows have no matching page -- kept, not deleted.`);

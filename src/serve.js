@@ -60,7 +60,7 @@ app.get('/api/page', (req, res) => {
   const row = handle
     .prepare(
       `SELECT local_path, host, display_url, replay_url, captured_at, timestamp,
-              display_title, tags, notes, capture_count
+              display_title, tags, notes, capture_count, frame_parent
        FROM page_view WHERE local_path = ?`,
     )
     .get(localPath);
@@ -76,16 +76,22 @@ app.get('/api/page', (req, res) => {
 // fragments, single images with a caption, pages that are one line of a frameset. An
 // index page is a front door, so it establishes what site you just arrived at.
 //
-// Two things are excluded beyond that:
+// Three things are excluded beyond that:
 //
+//   framed            a page with a frame_parent is one pane of a frameset, so serving it
+//                     alone gives you a bare nav strip or a body with no way out. The
+//                     index-page heuristic already caught nearly all of these by accident;
+//                     this catches them on purpose, and keeps doing so if the pool ever
+//                     widens past index pages.
 //   untitled          21 index pages have no <title>, leaving the window chrome blank.
 //   directory listings 44 are auto-generated Apache/IIS listings, titled 'host - /path'.
 //                      An index of an images folder is not a destination.
 //
-// Both tests run against display_title rather than title, so a title_override is a way
-// to pull a page into the pool -- correct the title and it becomes eligible.
+// The title tests run against display_title rather than title, so a title_override is a
+// way to pull a page into the pool -- correct the title and it becomes eligible.
 const RANDOM_POOL = `
   local_path LIKE '%/index.%'
+  AND frame_parent IS NULL
   AND display_title <> ''
   AND NOT (display_title LIKE '% - /%'
         OR display_title LIKE 'Index of %'

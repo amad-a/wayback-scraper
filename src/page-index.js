@@ -77,6 +77,36 @@ export function titleFromHtml(html) {
   return (text || '').replace(/[\s ]+/g, ' ').trim();
 }
 
+// ---------------------------------------------------------------------------
+// Frames
+// ---------------------------------------------------------------------------
+
+// The pages a document pulls into itself: its <frame> and <iframe> targets, as local
+// paths.
+//
+// Resolution is a string slice because the scraper already did the work -- every src it
+// rewrote is absolute and already in local-path form (`/sites/host/dir/page.html`), so
+// there is no relative path, no <base href>, and no URL joining to get wrong. Lowercased
+// to match toLocalPath, which lowercases too; without it the geocities captures miss,
+// since their srcs are lowercase and their directories on disk are not.
+//
+// Parsed rather than regexed for the same reason as titleFromHtml: one tripod page builds
+// an <iframe> tag inside a document.write string, and a regex reads that as a real frame.
+export function framedPaths(html) {
+  let $;
+  try {
+    $ = cheerio.load(html);
+  } catch {
+    return [];
+  }
+
+  return $('frame[src], iframe[src]')
+    .map((_, el) => $(el).attr('src') || '')
+    .get()
+    .filter((src) => src.startsWith(`/${DEST_PATH}/`))
+    .map((src) => src.slice(DEST_PATH.length + 2).split('#')[0].split('?')[0].toLowerCase());
+}
+
 export async function readTitle(localPath) {
   try {
     return titleFromHtml(await fs.readFile(path.join(destDir, localPath), 'utf-8'));
