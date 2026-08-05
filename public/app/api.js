@@ -380,6 +380,16 @@ async function applyChrome() {
 	if (decodeURIComponent(iframe.contentWindow.location.pathname) !== localPath) return;
 
 	setChrome({ title: page.display_title, url: page.display_url });
+
+	// Held for the favorites star, which wants the corrected title and the real address
+	// rather than what the document happens to claim about itself.
+	currentPage = page;
+
+	// Now that frame_parent is known, the star can describe the page that would actually
+	// be bookmarked. syncChrome already guessed from the path alone; this is the refinement
+	// for the rare document that turns out to be a frame.
+	syncStar(page.frame_parent || page.local_path);
+	refreshFavorite(page);
 }
 
 // The path the chrome currently describes, so a document is only processed once.
@@ -399,6 +409,11 @@ function syncChrome(force = false) {
 	if (path === chromeFor && !force) return;
 
 	chromeFor = path;
+	currentPage = null;
+
+	// Straight away, from the path alone: the database pass in applyChrome is a round trip
+	// away and the star should not spend it showing the last page's state.
+	syncStar(path.slice('/sites/'.length));
 	applyChrome();
 }
 
@@ -581,8 +596,167 @@ export function printIframe() {
 
 // --- favorites -------------------------------------------------------------
 
-export function toggleFavorites() {}
+// localStorage rather than sessionStorage, unlike the Random deck: a favorite is meant to
+// outlive the tab. It is the same trade the zoom level makes, and the same failure mode --
+// a browser with storage disabled keeps working and simply forgets.
+const FAVORITES_KEY = 'palestine-online:favorites';
 
-export function hideBookmarksPanel() {}
+// The database row for whatever the frame is showing, or null before applyChrome's fetch
+// lands and for anything not in the archive.
+let currentPage = null;
 
-export function addFavorite() {}
+// An entry is { path, title, url }.
+//
+// The path is the durable half -- it is the primary key in the database and the thing the
+// frame is pointed at. Title and address are a cache of what the database said when the
+// page was starred, kept so the panel can be drawn without a request per entry, and
+// refreshed whenever you visit a page you have starred. That leaves one stale case: a
+// title_override corrected for a page you never open again. Cheap to accept, and it costs
+// nothing to be wrong about.
+function readFavorites() {
+	try {
+		const stored = JSON.parse(localStorage.getItem(FAVORITES_KEY) || '[]');
+		return Array.isArray(stored) ? stored.filter((e) => e?.path) : [];
+	} catch {
+		return []; // storage disabled, or holding something we did not write
+	}
+}
+
+let favorites = readFavorites();
+
+// Written on every change rather than at beforeunload, which does not reliably fire on
+// iOS Safari and never fires at all if the tab is killed -- a whole list of favorites is
+// too much to lose to a page the browser decided to reclaim. Changes are clicks, so there
+// is no burst here worth debouncing.
+function writeFavorites() {
+	try {
+		localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+	} catch {
+		// Full or disabled: the list still works for this session.
+	}
+}
+
+const favoritesEntries = document.querySelector('.favorites-entries');
+
+function renderFavorites() {
+	if (!favoritesEntries) return;
+
+	favoritesEntries.replaceChildren();
+
+	for (const entry of favorites) {
+		const row = document.createElement('div');
+		row.className = 'bookmark-list-entry';
+		// The address leads because this archive is full of untitled and mangled titles,
+		// and the address is the half that always identifies the page.
+		const address = entry.url || entry.path;
+		row.textContent = entry.title ? `${address} - ${entry.title}` : address;
+		row.addEventListener('click', () => {
+			iframe.src = sitesUrl(entry.path);
+		});
+		favoritesEntries.appendChild(row);
+	}
+}
+
+renderFavorites();
+
+// Brings a starred page's cached label back in line with the database, so correcting a
+// title_override and then opening the page is enough to fix how it reads in the panel.
+//
+// Skipped for a frame, whose entry describes its parent -- a page we do not have the row
+// for here, and would need a request to describe.
+function refreshFavorite(page) {
+	if (page.frame_parent) return;
+
+	const entry = favorites.find((e) => e.path === page.local_path);
+	if (!entry) return;
+
+	const title = page.display_title || '';
+	if (entry.title === title && entry.url === page.display_url) return;
+
+	entry.title = title;
+	entry.url = page.display_url;
+	writeFavorites();
+	renderFavorites();
+}
+
+// Which page the star is currently describing, so a click knows what to remove without
+// re-deriving it. Set by syncStar on every navigation.
+let starredPath = '';
+
+function syncStar(localPath) {
+	starredPath = localPath;
+	favoriteStar?.classList.toggle('toggled', favorites.some((e) => e.path === localPath));
+}
+
+// The page a star click should act on, which is not always the page on screen: starring a
+// frame would save one pane of a frameset, and reopening it later would show the bare nav
+// strip that frame_parent exists to keep out of the archive's front doors.
+//
+// Falls back to what the frame itself reports for anything the database does not have --
+// a page hand-added to /sites, or a request that failed while the server was restarting.
+async function favoriteTarget() {
+	if (!currentPage) {
+		return starredPath
+			? { path: starredPath, title: iframe.contentDocument?.title || '', url: starredPath }
+			: null;
+	}
+
+	if (!currentPage.frame_parent) {
+		return {
+			path: currentPage.local_path,
+			title: currentPage.display_title || '',
+			url: currentPage.display_url,
+		};
+	}
+
+	// One request, and only when starring a page that turns out to be a frame -- rare
+	// enough that carrying the parent's row around for every navigation would cost more.
+	try {
+		const res = await fetch(`/api/page?path=${encodeURIComponent(currentPage.frame_parent)}`);
+		if (res.ok) {
+			const parent = await res.json();
+			return {
+				path: parent.local_path,
+				title: parent.display_title || '',
+				url: parent.display_url,
+			};
+		}
+	} catch {
+		// fall through and star the parent under its path alone
+	}
+
+	return { path: currentPage.frame_parent, title: '', url: currentPage.frame_parent };
+}
+
+export async function addFavorite() {
+	const target = await favoriteTarget();
+	if (!target) return;
+
+	// The list is the state; the star only reports it. Reading the class instead would let
+	// a star that got out of step -- starring a frame stars its parent, not the path the
+	// star was last synced to -- add a duplicate.
+	const existing = favorites.findIndex((e) => e.path === target.path);
+	if (existing === -1) {
+		// Newest first: the last thing you starred is the thing you are most likely to
+		// want back.
+		favorites.unshift(target);
+	} else {
+		favorites.splice(existing, 1);
+	}
+
+	writeFavorites();
+	renderFavorites();
+	syncStar(starredPath);
+}
+
+export function toggleFavorites() {
+	favoritesPanel?.classList.toggle('hidden');
+
+	// The panel and the address dropdown occupy the same corner of the window, so opening
+	// one closes the other.
+	if (!favoritesPanel?.classList.contains('hidden')) dropdown?.classList.add('hidden');
+}
+
+export function hideBookmarksPanel() {
+	favoritesPanel?.classList.add('hidden');
+}
