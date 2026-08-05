@@ -16,11 +16,15 @@
 
 import fs from 'fs/promises';
 import { existsSync } from 'fs';
-import path from 'path';
-import * as cheerio from 'cheerio';
 
-const DEST_PATH = 'sites';
-const destDir = path.join(process.cwd(), DEST_PATH);
+import {
+  DEST_PATH,
+  destDir,
+  displayUrl,
+  findLogs,
+  readCrawl,
+  replayUrl,
+} from './page-index.js';
 
 function parseArgs(argv) {
   const outFlag = argv.indexOf('--out');
@@ -38,163 +42,11 @@ function parseArgs(argv) {
 const opts = parseArgs(process.argv.slice(2));
 
 // ---------------------------------------------------------------------------
-// Paths
-//
-// This mirrors toLocalPath in cdx-scraper.js. It is duplicated rather than imported
-// because that module runs its crawl on import -- it has no exports and a top-level
-// await on main(). The duplication is guarded by checking every path against the disk
-// and reporting the miss count, so if the two ever drift the next run says so loudly
-// instead of quietly emitting a tree of broken links.
-// ---------------------------------------------------------------------------
-
-function sanitizeSegment(segment) {
-  if (segment === '.' || segment === '..') return '';
-  return segment.replace(/[:*?"<>|\\]/g, '_');
-}
-
-// Every log.json entry is a seeded HTML page, so the document rules always apply:
-// an extensionless or trailing-slash URL is a directory index.
-function toLocalPath(originalUrl) {
-  let clean = originalUrl
-    .replace(/^https?:\/\//i, '')
-    .replace(/:\d+/, '')
-    .replace(/^www\d?\./, '')
-    .split('#')[0]
-    .split('?')[0]
-    .toLowerCase();
-
-  try {
-    clean = decodeURIComponent(clean);
-  } catch {
-    // Leave malformed escapes as-is, same as the scraper.
-  }
-
-  clean = clean.split('/').map(sanitizeSegment).filter(Boolean).join('/');
-
-  const trailingSlash = originalUrl.split('#')[0].split('?')[0].endsWith('/');
-  const hostOnly = !clean.includes('/');
-
-  if (trailingSlash || hostOnly || !path.posix.basename(clean).includes('.')) {
-    clean = path.posix.join(clean, 'index.html');
-  }
-
-  return clean;
-}
-
-// ---------------------------------------------------------------------------
-// Titles
+// Render
 // ---------------------------------------------------------------------------
 
 // Longer than this and one row swamps the tree. The full text stays in the tooltip.
 const TITLE_MAX = 120;
-
-// The page's <title>, or '' if it has none worth showing.
-//
-// Parsed rather than regexed: 158 titles in the current archive carry HTML entities,
-// and cheerio decodes them where a regex capture would print the raw `&amp;`. The whole
-// corpus costs a few seconds, which is fine for a generator.
-async function readTitle(localPath) {
-  let html;
-  try {
-    html = await fs.readFile(path.join(destDir, localPath), 'utf-8');
-  } catch {
-    return '';
-  }
-
-  let text;
-  try {
-    text = cheerio.load(html)('title').first().text();
-  } catch {
-    return '';
-  }
-
-  // Archived titles are full of hard-wrapped whitespace and non-breaking spaces.
-  return (text || '').replace(/[\s ]+/g, ' ').trim();
-}
-
-// ---------------------------------------------------------------------------
-// Collection
-// ---------------------------------------------------------------------------
-
-async function findLogs(dir) {
-  const out = [];
-
-  async function walk(d) {
-    let entries;
-    try {
-      entries = await fs.readdir(d, { withFileTypes: true });
-    } catch {
-      return;
-    }
-    for (const entry of entries) {
-      const full = path.join(d, entry.name);
-      if (entry.isDirectory()) await walk(full);
-      else if (entry.name === 'log.json') out.push(full);
-    }
-  }
-
-  await walk(dir);
-  return out.sort();
-}
-
-// One crawl: the directory its log.json sits in, plus every page it recorded.
-async function readCrawl(logPath) {
-  const root = path.relative(destDir, path.dirname(logPath)).split(path.sep).join('/');
-
-  let entries;
-  try {
-    entries = JSON.parse(await fs.readFile(logPath, 'utf-8'));
-  } catch (error) {
-    console.warn(`⚠️  skipping unreadable ${logPath}: ${error.message}`);
-    return null;
-  }
-
-  if (!Array.isArray(entries)) {
-    console.warn(`⚠️  skipping ${logPath}: expected an array`);
-    return null;
-  }
-
-  const pages = [];
-  const seen = new Set();
-
-  for (const entry of entries) {
-    if (!entry?.originalUrl) continue;
-
-    const localPath = toLocalPath(entry.originalUrl);
-    // A log can list the same page under several timestamps; the tree wants one row.
-    if (seen.has(localPath)) continue;
-    seen.add(localPath);
-
-    const exists = existsSync(path.join(destDir, localPath));
-    if (!exists && !opts.all) continue;
-
-    pages.push({
-      localPath,
-      exists,
-      title: exists ? await readTitle(localPath) : '',
-      timestamp: entry.timestamp || '',
-      originalUrl: entry.originalUrl,
-      // Label relative to the crawl root, so a deep crawl reads as `poets/darwish.html`
-      // rather than repeating the host on every row.
-      label:
-        (localPath.startsWith(root + '/') ? localPath.slice(root.length + 1) : localPath) ||
-        'index.html',
-    });
-  }
-
-  // Index pages first, then alphabetical -- the entry point is what you want to click.
-  pages.sort((a, b) => {
-    const ai = a.label === 'index.html' ? 0 : 1;
-    const bi = b.label === 'index.html' ? 0 : 1;
-    return ai - bi || a.label.localeCompare(b.label);
-  });
-
-  return { root, pages, total: entries.length };
-}
-
-// ---------------------------------------------------------------------------
-// Render
-// ---------------------------------------------------------------------------
 
 function escapeHtml(value) {
   return String(value)
@@ -210,18 +62,6 @@ function pageHref(localPath) {
   return `/${DEST_PATH}/` + localPath.split('/').map(encodeURIComponent).join('/');
 }
 
-// The snapshot this page came from, on web.archive.org.
-//
-// Deliberately without the `id_` suffix the scraper uses. That suffix asks for the raw
-// original bytes, which is what a scraper wants and what a reader does not: it strips
-// the toolbar, the date banner and the surrounding navigation, and it is why Flash
-// pages arrive without a player. The plain form is the one worth linking a human to.
-function waybackUrl(timestamp, originalUrl) {
-  if (!timestamp) return '';
-  const bare = originalUrl.replace(/^https?:\/\//i, '');
-  return `https://web.archive.org/web/${timestamp}/http://${bare}`;
-}
-
 function renderCrawl(crawl) {
   const rows = crawl.pages
     .map((page) => {
@@ -235,8 +75,8 @@ function renderCrawl(crawl) {
       // Full title in the tooltip alongside the archived URL, since the visible one is
       // truncated and many of these pages differ only past the cut.
       const tooltip = page.title
-        ? `${page.title}\n${page.originalUrl}`
-        : page.originalUrl;
+        ? `${page.title}\n${displayUrl(page.originalUrl)}`
+        : displayUrl(page.originalUrl);
 
       const titleSpan = shortened
         ? ` <span class="t">${escapeHtml(shortened)}</span>`
@@ -244,7 +84,7 @@ function renderCrawl(crawl) {
 
       // Carried on the row so the click handler can surface it above the frame without
       // needing a lookup table of every page in the archive.
-      const wayback = waybackUrl(page.timestamp, page.originalUrl);
+      const wayback = replayUrl(page.timestamp, page.originalUrl);
 
       return (
         `<li><a href="${escapeHtml(pageHref(page.localPath))}"` +
@@ -452,7 +292,7 @@ async function main() {
   let titled = 0;
 
   for (const logPath of logs) {
-    const crawl = await readCrawl(logPath);
+    const crawl = await readCrawl(logPath, { all: opts.all });
     if (!crawl || !crawl.pages.length) continue;
     crawls.push(crawl);
     for (const page of crawl.pages) {

@@ -7,3 +7,9 @@
 dist/
 node_modules
 storage/
+
+# Rebuildable from sites/ via `npm run db`. The hand-edited columns live in
+# tags.csv, which IS committed.
+archive.db
+archive.db-wal
+archive.db-shm

@@ -44,7 +44,9 @@
         "index": "node src/build-index.js",
         "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
         "crawl": "node src/wayback-crawler.js",
-        "server": "http-server processed-output"
+        "server": "http-server processed-output",
+        "db": "node src/build-db.js",
+        "tags:export": "node src/export-tags.js"
     },
     "author": "It's not you it's me",
     "license": "ISC"
