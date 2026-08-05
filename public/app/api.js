@@ -336,7 +336,7 @@ const TITLE_SUFFIX = 'Palestine Online';
 
 function setChrome({ title, url }) {
 	document.querySelector('.window-title').textContent = title
-		? `${title} - ${TITLE_SUFFIX}`
+		? `${title}`
 		: TITLE_SUFFIX;
 	if (url) addressBar.value = url;
 }
