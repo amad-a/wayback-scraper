@@ -411,10 +411,115 @@ function syncChrome(force = false) {
 	chromeFor = path;
 	currentPage = null;
 
+	const localPath = path.slice('/sites/'.length);
+	syncShareUrl(localPath);
 	// Straight away, from the path alone: the database pass in applyChrome is a round trip
 	// away and the star should not spend it showing the last page's state.
-	syncStar(path.slice('/sites/'.length));
+	syncStar(localPath);
 	applyChrome();
+}
+
+// --- shareable URL ----------------------------------------------------------
+
+const PAGE_PARAM = 'p';
+
+// Puts the page you are looking at into the shell's own address, so the link in your
+// browser bar is the link you send someone.
+//
+// replaceState, never pushState. An iframe navigation already creates a history entry --
+// that is what makes the Back button work -- so pushing another would cost two entries
+// per page and Back would need two presses. This relabels the entry that already exists.
+//
+// The path is encoded per segment and dropped in by hand rather than through
+// URLSearchParams, which would percent-encode the slashes into %2F. A slash is legal in
+// a query string, and a readable link was the whole reason for preferring a path over an
+// opaque hash.
+function syncShareUrl(localPath) {
+	const others = new URLSearchParams(location.search);
+	others.delete(PAGE_PARAM);
+	const rest = others.toString();
+
+	const encoded = localPath.split('/').map(encodeURIComponent).join('/');
+	const query = `?${PAGE_PARAM}=${encoded}` + (rest ? `&${rest}` : '');
+
+	history.replaceState(history.state, '', location.pathname + query);
+}
+
+function sharedPath() {
+	const match = /[?&]p=([^&]*)/.exec(location.search);
+	if (!match) return '';
+
+	let path;
+	try {
+		path = decodeURIComponent(match[1]);
+	} catch {
+		return ''; // malformed escape
+	}
+
+	// The value becomes a URL under /sites, so it must not be able to climb out of it or
+	// name an absolute path of its own.
+	if (!path || path.startsWith('/') || path.split('/').includes('..')) return '';
+	return path;
+}
+
+// The status bar's left pane, used for transient messages. Nothing else writes to it.
+const statusText = document.getElementById('status-bar-left-text');
+let statusTimer = 0;
+
+function flashStatus(message) {
+	if (!statusText) return;
+	statusText.textContent = message;
+	clearTimeout(statusTimer);
+	statusTimer = setTimeout(() => {
+		statusText.textContent = '';
+	}, 2500);
+}
+
+// Hands the current page's link to the OS share sheet, or copies it if there isn't one.
+//
+// location.href already carries ?p= for whatever the frame is showing, kept current by
+// syncShareUrl, so there is nothing to assemble here.
+//
+// navigator.share must be reached without awaiting anything first. It requires transient
+// user activation, and an await before the call spends the activation the click gave us,
+// so the sheet would be refused.
+export async function sharePage() {
+	const url = location.href;
+	const title = document.querySelector('.window-title')?.textContent || document.title;
+
+	if (navigator.share) {
+		try {
+			await navigator.share({ title, url });
+			return;
+		} catch (error) {
+			// A cancelled sheet is a completed action, not a failure. Anything else --
+			// no share target, a platform that advertises the API and then refuses --
+			// falls through to copying, which is the point of the button either way.
+			if (error?.name === 'AbortError') return;
+		}
+	}
+
+	try {
+		await navigator.clipboard.writeText(url);
+		flashStatus('Link copied to clipboard');
+	} catch {
+		// Clipboard access needs a secure context; over plain http on something other
+		// than localhost there is nowhere left to go.
+		flashStatus('Could not copy link');
+	}
+}
+
+// Opens whatever ?p= names, if it still exists.
+//
+// Checked before navigating rather than after, because the alternative is showing
+// someone else's dead link as a 404 inside the frame with the chrome describing nothing.
+// Falls back to leaving the default page alone.
+async function openSharedPage() {
+	const path = sharedPath();
+	if (!path) return;
+	if (!(await stillOnDisk(path))) return;
+
+	iframe.src = sitesUrl(path);
 }
 
 // Keeps the title bar and address bar tracking the frame.
@@ -426,6 +531,11 @@ function syncChrome(force = false) {
 // string 20 times a second is far cheaper than that wait, and it also catches
 // navigations started by the user clicking a link inside the frame.
 export function watchFrame() {
+	// Before the poll starts, so a shared link replaces the default page rather than
+	// briefly showing it. Not awaited: the frame's own src is already loading, and this
+	// simply overrides it a moment later if ?p= names something that still exists.
+	openSharedPage();
+
 	setInterval(() => syncChrome(), 50);
 
 	iframe.addEventListener('load', () => {
@@ -483,10 +593,6 @@ export function openWaybackSource() {
 	window.open(waybackSourceUrl(raw), '_blank', 'noopener');
 }
 
-// Jumps to the top of the page currently in the frame. Deliberately does not
-// re-fetch: the archived pages are static, so there is nothing to re-fetch,
-// and a real reload would cost a round trip and lose the scroll position it
-// was supposed to control.
 // The shuffled pool, dealt one page per Random click so a session never repeats.
 //
 // sessionStorage rather than a variable, so the deck survives a reload of the shell, and
@@ -573,12 +679,6 @@ export async function openRandomPage() {
 	if (!path) return;
 
 	iframe.src = sitesUrl(path);
-}
-
-export function refreshFrame() {
-	// 'instant' rather than the default: an archived page setting
-	// scroll-behavior: smooth would otherwise animate the jump.
-	iframe.contentWindow.scrollTo({ top: 0, left: 0, behavior: 'instant' });
 }
 
 // Iframe navigations land in the parent's joint session history, so the shell's

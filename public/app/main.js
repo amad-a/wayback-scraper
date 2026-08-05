@@ -11,9 +11,9 @@ import {
   openRandomPage,
   openWaybackSource,
   printIframe,
-  refreshFrame,
   render,
   setFrame,
+  sharePage,
   toggleFavorites,
   watchFrame,
 } from './api.js';
@@ -38,6 +38,10 @@ document
   .addEventListener('click', () => openRandomPage());
 
 document
+  .getElementById('share')
+  .addEventListener('click', () => sharePage());
+
+document
   .getElementById('favorites-exit')
   .addEventListener('click', () => hideBookmarksPanel());
 
@@ -54,10 +58,6 @@ document
 document
   .querySelectorAll('.forward-button')[1]
   .addEventListener('click', () => historyNav(window, 'forward'));
-
-document
-  .querySelector('.refresh-button')
-  .addEventListener('click', () => refreshFrame());
 
 document
   .querySelector('.print-button')
