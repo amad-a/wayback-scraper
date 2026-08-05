@@ -229,6 +229,10 @@ button {
 	height: 20px;
 	position: absolute;
 	top: 2px;
+	/* The sprite is 20px-per-cell pixel art. At 1:1 this changes nothing, but on a
+	   high-DPI display the browser scales the bitmap up and smooths it by default,
+	   which turns hard 1998 edges into mush. */
+	image-rendering: pixelated;
 }
 
 .toolbar-button .icon {

@@ -69,6 +69,50 @@ app.get('/api/page', (req, res) => {
   res.json(row);
 });
 
+// One page at random, for the toolbar's Random button.
+//
+// Drawn from index pages only -- 569 of the 11,074 rows. Landing somewhere at random is
+// only worth doing if where you land is a place, and most of the corpus is not: nav
+// fragments, single images with a caption, pages that are one line of a frameset. An
+// index page is a front door, so it establishes what site you just arrived at.
+//
+// Two things are excluded beyond that:
+//
+//   untitled          21 index pages have no <title>, leaving the window chrome blank.
+//   directory listings 44 are auto-generated Apache/IIS listings, titled 'host - /path'.
+//                      An index of an images folder is not a destination.
+//
+// Both tests run against display_title rather than title, so a title_override is a way
+// to pull a page into the pool -- correct the title and it becomes eligible.
+const RANDOM_POOL = `
+  local_path LIKE '%/index.%'
+  AND display_title <> ''
+  AND NOT (display_title LIKE '% - /%'
+        OR display_title LIKE 'Index of %'
+        OR display_title LIKE 'Directory Listing%')
+`;
+
+// ORDER BY random() is a full scan, which would be the wrong call on a large table but
+// costs nothing at this size and keeps the draw honest -- the OFFSET tricks that avoid
+// the scan all skew towards whichever rows happen to sit early in the b-tree.
+app.get('/api/random', (req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+
+  // Excluding the current page, so clicking Random twice in a row always moves.
+  const not = decodeURIComponent(String(req.query.not || '')).replace(/^\/?sites\//, '');
+
+  const row = handle
+    .prepare(
+      `SELECT local_path, display_url, display_title
+       FROM page_view WHERE ${RANDOM_POOL} AND local_path <> ? ORDER BY random() LIMIT 1`,
+    )
+    .get(not);
+
+  if (!row) return res.status(404).json({ error: 'no pages indexed' });
+  res.json(row);
+});
+
 // The archived pages are 2001-era and full of odd filenames; serve them as-is
 // rather than letting express guess at extensions.
 app.use('/sites', express.static(path.join(ROOT, 'sites')));

@@ -104,6 +104,34 @@ export function openWaybackSource() {
 // re-fetch: the archived pages are static, so there is nothing to re-fetch,
 // and a real reload would cost a round trip and lose the scroll position it
 // was supposed to control.
+// Jumps the frame to a random archived page.
+//
+// Assigning src rather than replacing the location, so each jump leaves a history entry
+// and Back walks the trail you actually took. onFrameLoad then updates the chrome, the
+// same as any other navigation.
+export async function openRandomPage() {
+	let current = '';
+	try {
+		current = decodeURIComponent(iframe.contentWindow.location.pathname);
+	} catch {
+		// Nothing loaded yet, or a document we cannot read into. The server treats an
+		// empty exclusion as "anything will do".
+	}
+
+	let page;
+	try {
+		const res = await fetch(`/api/random?not=${encodeURIComponent(current)}`);
+		if (!res.ok) return; // 503 before the first `npm run db`
+		page = await res.json();
+	} catch {
+		return; // server not running
+	}
+
+	// Encoded per segment, not whole: archived filenames carry spaces and other literal
+	// characters, but the separators have to stay separators.
+	iframe.src = '/sites/' + page.local_path.split('/').map(encodeURIComponent).join('/');
+}
+
 export function refreshFrame() {
 	// 'instant' rather than the default: an archived page setting
 	// scroll-behavior: smooth would otherwise animate the jump.

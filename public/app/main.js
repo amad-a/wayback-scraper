@@ -9,6 +9,7 @@ import {
   iframe,
   onAddressInput,
   onFrameLoad,
+  openRandomPage,
   openWaybackSource,
   printIframe,
   refreshFrame,
@@ -31,6 +32,10 @@ document
 document
   .getElementById('favorites')
   .addEventListener('click', () => toggleFavorites());
+
+document
+  .getElementById('random')
+  .addEventListener('click', () => openRandomPage());
 
 document
   .getElementById('favorites-exit')
