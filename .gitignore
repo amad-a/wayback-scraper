@@ -13,3 +13,6 @@ storage/
 archive.db
 archive.db-wal
 archive.db-shm
+
+# Output of the sheets export; regenerated, not source.
+sheets-output/
