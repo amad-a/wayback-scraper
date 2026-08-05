@@ -9,6 +9,54 @@ export const dropdown = document.getElementById('dropdown');
 export const favoritesPanel = document.querySelector('.favorites');
 export const favoriteStar = document.getElementById('favorite-star');
 
+// --- injected into the archived pages --------------------------------------
+
+const SCROLLBAR_CSS = '/styles/iframe-scrollbars.css';
+const INJECTED_ID = 'palestine-online-scrollbars';
+
+// Give an archived document the shell's scrollbars.
+//
+// A <link> rather than inlining the rules: the browser caches one request across every
+// page you visit, and it keeps the CSS in a file you can edit instead of a string here.
+// Appended to <head>, or to documentElement for the pages old enough to have no <head>.
+function injectScrollbars(doc) {
+	if (!doc || doc.getElementById(INJECTED_ID)) return;
+
+	const link = doc.createElement('link');
+	link.id = INJECTED_ID;
+	link.rel = 'stylesheet';
+	link.href = SCROLLBAR_CSS;
+	(doc.head || doc.documentElement)?.appendChild(link);
+}
+
+// 166 of the archived pages are framesets. Those documents do not scroll -- their child
+// frames do -- so styling only the top document would miss exactly the pages where a
+// scrollbar is most visible, the nav sidebars. Children may not have loaded yet, hence
+// both the immediate pass and the listener.
+function injectScrollbarsDeep(win, depth = 0) {
+	if (!win || depth > 3) return; // framesets nest, but not indefinitely
+
+	try {
+		injectScrollbars(win.document);
+	} catch {
+		return; // a cross-origin child: nothing we can or should do
+	}
+
+	// Indexed rather than for...of: window.frames is a WindowProxy with a length and
+	// numeric keys, not an iterable, and iterating it throws.
+	for (let i = 0; i < win.frames.length; i++) {
+		try {
+			const child = win.frames[i];
+			injectScrollbarsDeep(child, depth + 1);
+			child.addEventListener('load', () => injectScrollbarsDeep(child, depth + 1), {
+				once: true,
+			});
+		} catch {
+			// cross-origin; skip it and carry on with its siblings
+		}
+	}
+}
+
 // --- chrome ----------------------------------------------------------------
 
 const TITLE_SUFFIX = 'Palestine Online';
@@ -29,9 +77,13 @@ function setChrome({ title, url }) {
 //
 // The database pass fills those in, and is the only source of your title_override, so a
 // page with a mangled <title> shows the one you corrected rather than the original.
-export async function onFrameLoad() {
+async function applyChrome() {
 	const doc = iframe.contentDocument;
 	const localPath = decodeURIComponent(iframe.contentWindow.location.pathname);
+
+	// Before anything awaits, so the scrollbars are styled on first paint rather than
+	// flicking from the browser default a moment later.
+	injectScrollbarsDeep(iframe.contentWindow);
 
 	const stamped = doc?.body?.dataset.waybackUrl;
 	setChrome({
@@ -55,6 +107,49 @@ export async function onFrameLoad() {
 	if (decodeURIComponent(iframe.contentWindow.location.pathname) !== localPath) return;
 
 	setChrome({ title: page.display_title, url: page.display_url });
+}
+
+// The path the chrome currently describes, so a document is only processed once.
+let chromeFor = '';
+
+function syncChrome(force = false) {
+	let path;
+	try {
+		path = decodeURIComponent(iframe.contentWindow.location.pathname);
+	} catch {
+		return; // mid-navigation, or a document we cannot read into
+	}
+
+	// about:blank sits between navigations; describing it would blank the chrome and
+	// then immediately refill it, which reads as a flicker.
+	if (!path.startsWith('/sites/')) return;
+	if (path === chromeFor && !force) return;
+
+	chromeFor = path;
+	applyChrome();
+}
+
+// Keeps the title bar and address bar tracking the frame.
+//
+// Polling rather than the load event alone, because load waits for every subresource --
+// and 568 archived pages reference images on hosts that stopped existing two decades
+// ago, so the browser sits through each failure first. On one such page the title is
+// readable at 17ms and load does not fire until 419ms. Reading location and comparing a
+// string 20 times a second is far cheaper than that wait, and it also catches
+// navigations started by the user clicking a link inside the frame.
+export function watchFrame() {
+	setInterval(() => syncChrome(), 50);
+
+	iframe.addEventListener('load', () => {
+		// Re-injected because pages of this era use document.write, which can replace
+		// the whole document after we styled it. Idempotent, so this is cheap.
+		injectScrollbarsDeep(iframe.contentWindow);
+
+		// Only re-runs when the early pass came up empty -- it happens before <body>
+		// necessarily exists, so the wayback stamp may not have been readable yet and
+		// the database may not have had the page either.
+		if (!addressBar.value) syncChrome(true);
+	});
 }
 
 // --- address bar -----------------------------------------------------------

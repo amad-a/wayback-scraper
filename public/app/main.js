@@ -2,13 +2,12 @@
 // each one calls straight into api.js, where the bodies are still empty.
 // Add behaviour there, not here.
 import {
-  addressBar,
   addFavorite,
+  addressBar,
   hideBookmarksPanel,
   historyNav,
   iframe,
   onAddressInput,
-  onFrameLoad,
   openRandomPage,
   openWaybackSource,
   printIframe,
@@ -16,10 +15,11 @@ import {
   render,
   setFrame,
   toggleFavorites,
+  watchFrame,
 } from './api.js';
 
-// Fires for the initial src too, so the chrome is populated on first paint.
-iframe.addEventListener('load', () => onFrameLoad());
+// Tracks the frame: title bar, address bar, and the injected scrollbars.
+watchFrame();
 
 addressBar.addEventListener('input', (e) =>
   onAddressInput(e.target.value.trim()),
