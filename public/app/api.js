@@ -202,6 +202,100 @@ function bindZoom(doc) {
 	doc.addEventListener('gestureend', (event) => event.preventDefault(), { passive: false });
 }
 
+// --- link targets -----------------------------------------------------------
+
+const TARGET_BOUND = '__palestineOnlineTargetBound';
+
+// The window an archived link means, or null to let the browser handle the click.
+//
+// Every one of these is a navigation the sandbox on #frame forbids. A sandboxed document
+// may navigate itself and its descendants and nothing else, so a nav pane can no longer
+// reach the pane beside it -- and reaching the pane beside it is what a frameset is. What
+// the sandbox is there to stop is only the last case.
+//
+//   target="main"   the sibling pane, on 498 pages: the ordinary frameset idiom.
+//   _parent         the frameset holding this pane, on 254.
+//   _top            in 1999 the frameset, on 1,562. The shell put a browsing context
+//                   above that, so today the browser reads it as the Explorer window.
+//
+// _self and an absent target navigate the pane itself, which a sandboxed document is
+// always allowed to do. _blank opens a tab, which allow-popups already permits. Both are
+// left alone. So is a name matching no frame -- the browser opens a window for it, and
+// second-guessing that would change behaviour the sandbox never broke.
+function targetWindow(win, name) {
+	const root = iframe.contentWindow;
+
+	if (!name || name === '_self' || name === '_blank') return null;
+	if (name === '_top') return root;
+
+	// Clamped at the root: for a pane _parent is the frameset, which is what its author
+	// meant, but for a page sitting directly in #frame it is the Explorer window.
+	if (name === '_parent') return win === root ? root : win.parent;
+
+	return findFrame(root, name);
+}
+
+// Depth-first, because a name can belong to a pane of a nested frameset. Bounded like
+// prepareFrame: framesets nest, but not indefinitely.
+function findFrame(win, name, depth = 0) {
+	if (!win || depth > 3) return null;
+
+	for (let i = 0; i < win.frames.length; i++) {
+		try {
+			const child = win.frames[i];
+			if (child.name === name) return child;
+
+			const found = findFrame(child, name, depth + 1);
+			if (found) return found;
+		} catch {
+			// cross-origin; skip it and carry on with its siblings
+		}
+	}
+
+	return null;
+}
+
+// Performs the navigation the sandbox refused.
+//
+// This listener belongs to the shell, and the shell is not sandboxed. A navigation is
+// attributed to whoever runs the code rather than to the document the click happened in,
+// so assigning location here is permitted where the same assignment inside the pane is
+// not.
+//
+// Capturing, so a page that stops propagation in its own handler cannot swallow it.
+function onArchiveClick(event) {
+	const link = event.target?.closest?.('a[href], area[href]');
+	if (!link) return;
+
+	const doc = link.ownerDocument;
+	// <base target> sets the default for a whole document; two pages rely on it.
+	const name = (
+		link.getAttribute('target') ||
+		doc.querySelector('base[target]')?.getAttribute('target') ||
+		''
+	).toLowerCase();
+
+	const win = targetWindow(doc.defaultView, name);
+	if (!win) return;
+
+	// .href rather than the attribute: the DOM has resolved it against the document and
+	// its <base href> already, so relative links come out right. Schemes that do not
+	// navigate are left to the page -- the scraper rewrites mailto: to '#', but not every
+	// page went through it.
+	const { href } = link;
+	if (!href || /^(javascript|mailto):/i.test(href)) return;
+
+	event.preventDefault();
+	win.location.href = href;
+}
+
+function bindTargets(doc) {
+	if (!doc || doc[TARGET_BOUND]) return;
+	doc[TARGET_BOUND] = true;
+
+	doc.addEventListener('click', onArchiveClick, true);
+}
+
 // --- applying both to a frame ----------------------------------------------
 
 // 166 of the archived pages are framesets. Those documents do not scroll -- their child
@@ -215,6 +309,7 @@ function prepareFrame(win, depth = 0) {
 	try {
 		injectScrollbars(win.document);
 		bindZoom(win.document);
+		bindTargets(win.document);
 		setScale(win.document);
 	} catch {
 		return; // a cross-origin child: nothing we can or should do
