@@ -66,15 +66,16 @@ export function toLocalPath(originalUrl) {
 // and cheerio decodes them where a regex capture would print the raw `&amp;`. The whole
 // corpus costs a few seconds, which is fine for a generator.
 export function titleFromHtml(html) {
-  let text;
   try {
-    text = cheerio.load(html)('title').first().text();
+    return titleFrom(cheerio.load(html));
   } catch {
     return '';
   }
+}
 
+function titleFrom($) {
   // Archived titles are full of hard-wrapped whitespace and non-breaking spaces.
-  return (text || '').replace(/[\s ]+/g, ' ').trim();
+  return ($('title').first().text() || '').replace(/[\s ]+/g, ' ').trim();
 }
 
 // ---------------------------------------------------------------------------
@@ -92,19 +93,122 @@ export function titleFromHtml(html) {
 //
 // Parsed rather than regexed for the same reason as titleFromHtml: one tripod page builds
 // an <iframe> tag inside a document.write string, and a regex reads that as a real frame.
-export function framedPaths(html) {
-  let $;
-  try {
-    $ = cheerio.load(html);
-  } catch {
-    return [];
-  }
-
+function framesFrom($) {
   return $('frame[src], iframe[src]')
     .map((_, el) => $(el).attr('src') || '')
     .get()
     .filter((src) => src.startsWith(`/${DEST_PATH}/`))
     .map((src) => src.slice(DEST_PATH.length + 2).split('#')[0].split('?')[0].toLowerCase());
+}
+
+// ---------------------------------------------------------------------------
+// References
+// ---------------------------------------------------------------------------
+
+// Schemes that were never a fetch, so they cannot have failed to survive one. Mirrors
+// NON_NAVIGATIONAL in cdx-scraper.js, which decides the same question when it marks a
+// link dead.
+const NON_NAVIGATIONAL = /^(mailto:|tel:|javascript:|data:|about:|ftp:|news:)/i;
+
+// Every file under /sites, lowercased, for asking whether a rewritten reference actually
+// landed. The scraper builds the same set to decide which links to mark dead.
+export async function readFileSet() {
+  const files = new Set();
+
+  async function walk(d) {
+    let entries;
+    try {
+      entries = await fs.readdir(d, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const entry of entries) {
+      const full = path.join(d, entry.name);
+      if (entry.isDirectory()) await walk(full);
+      else files.add(path.relative(destDir, full).split(path.sep).join('/').toLowerCase());
+    }
+  }
+
+  await walk(destDir);
+  return files;
+}
+
+// Whether a reference points at something we actually hold.
+//
+// Anything still addressed to the live web is a miss by definition: the scraper rewrites
+// what it downloaded to `/sites/...` and leaves the rest pointing at hosts that have been
+// gone for twenty years. Mirrors localTargetExists in cdx-scraper.js.
+export function localResolver(files) {
+  return (ref) => {
+    if (!ref.startsWith(`/${DEST_PATH}/`)) return false;
+
+    let target = ref.slice(DEST_PATH.length + 2).split('#')[0].split('?')[0];
+    try {
+      target = decodeURIComponent(target);
+    } catch {
+      // Leave malformed escapes as-is, same as toLocalPath.
+    }
+
+    return files.has(target.toLowerCase());
+  };
+}
+
+// How much of what a page points at is still here.
+//
+// Links and images are counted apart because they fail differently: a dead link is a
+// path out of the archive that no longer goes anywhere, a broken image is a hole in the
+// page itself. Keeping them separate lets the two be weighed against each other later
+// without another pass over the corpus.
+//
+// Counted rather than read off the scraper's own `dead` class, which marks exactly the
+// same links: the two agree on 135,805 of 135,839, and every disagreement is inside the
+// four pages the scraper never processed, where recounting here is the better answer.
+//
+// Excluded: bare `#` fragments and the non-navigational schemes, which point nowhere to
+// begin with. Not counted: the 31 inline `style="...url()..."` references in the whole
+// archive, too few to move any page's score.
+function referencesFrom($, resolves) {
+  const stats = { linksTotal: 0, linksDead: 0, imagesTotal: 0, imagesBroken: 0 };
+
+  $('a[href], area[href]').each((_, el) => {
+    const href = ($(el).attr('href') || '').trim();
+    if (!href || href.startsWith('#') || NON_NAVIGATIONAL.test(href)) return;
+
+    stats.linksTotal++;
+    if (!resolves(href)) stats.linksDead++;
+  });
+
+  // `background` is the 90s idiom for a tiled backdrop and fails as visibly as an <img>.
+  $('img[src], input[type=image][src], [background]').each((_, el) => {
+    const $el = $(el);
+    const src = ($el.attr('src') || $el.attr('background') || '').trim();
+    if (!src || NON_NAVIGATIONAL.test(src)) return;
+
+    stats.imagesTotal++;
+    if (!resolves(src)) stats.imagesBroken++;
+  });
+
+  return stats;
+}
+
+// Everything build-db.js wants from a page, from one parse.
+//
+// Three separate helpers would each pay their own cheerio.load, and across 11,000 files
+// that parse is most of the build -- two passes already cost 13s. titleFromHtml stays
+// exported for build-index.js, which wants nothing else.
+export function inspectPage(html, resolves) {
+  let $;
+  try {
+    $ = cheerio.load(html);
+  } catch {
+    return {
+      title: '',
+      frames: [],
+      refs: { linksTotal: 0, linksDead: 0, imagesTotal: 0, imagesBroken: 0 },
+    };
+  }
+
+  return { title: titleFrom($), frames: framesFrom($), refs: referencesFrom($, resolves) };
 }
 
 export async function readTitle(localPath) {

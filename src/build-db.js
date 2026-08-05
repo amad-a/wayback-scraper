@@ -24,10 +24,11 @@ import {
   destDir,
   displayUrl,
   findLogs,
-  framedPaths,
+  inspectPage,
+  localResolver,
+  readFileSet,
   replayUrl,
   stampedTimestamp,
-  titleFromHtml,
   toLocalPath,
 } from './page-index.js';
 import { importTags } from './tags-csv.js';
@@ -72,12 +73,21 @@ CREATE TABLE pages (
   -- NULL for a page that stands on its own -- including a frameset, which is a whole
   -- page made of parts. Otherwise the container that frames this one, which is both the
   -- "do not serve this alone" flag and somewhere to send a reader who lands here anyway.
-  frame_parent  TEXT
+  frame_parent  TEXT,
+
+  -- How much of what this page points at survived the crawl. Counts are the evidence and
+  -- score is the reading of it, so a different reading is a rebuild rather than a recount.
+  links_total   INTEGER NOT NULL,   -- <a>/<area>, minus '#' fragments and mailto: and friends
+  links_dead    INTEGER NOT NULL,   -- of those, targets we do not hold
+  images_total  INTEGER NOT NULL,   -- <img>, <input type=image>, and the background attribute
+  images_broken INTEGER NOT NULL,
+  score         REAL NOT NULL       -- 0..1, see scorePages
 );
 
 CREATE INDEX pages_host ON pages(host);
 CREATE INDEX pages_captured_at ON pages(captured_at);
 CREATE INDEX pages_frame_parent ON pages(frame_parent);
+CREATE INDEX pages_score ON pages(score);
 
 -- Not dropped above. Rebuilds only INSERT OR IGNORE into it.
 CREATE TABLE IF NOT EXISTS page_meta (
@@ -110,6 +120,9 @@ function toIso(timestamp) {
 
 async function collectPages() {
   const logs = await findLogs(destDir);
+  // Built once for the whole run: every page asks the same question of it, several
+  // hundred thousand times over.
+  const resolves = localResolver(await readFileSet());
   // local_path -> { crawlRoot, entries: [...] }. A URL can appear in several logs and several
   // times within one, so everything is gathered before a capture is chosen.
   const byPath = new Map();
@@ -154,6 +167,7 @@ async function collectPages() {
     }
 
     const html = await fs.readFile(file, 'utf-8').catch(() => '');
+    const { title, frames, refs } = inspectPage(html, resolves);
     const stamp = stampedTimestamp(html);
 
     // Prefer the capture the file itself claims. Falling back to the first logged entry
@@ -163,7 +177,7 @@ async function collectPages() {
 
     const timestamp = stamp || chosen.timestamp || '';
 
-    for (const child of framedPaths(html)) {
+    for (const child of frames) {
       // A page can frame itself: wildlife-pal.org's phpchat.php drives its panes with
       // `phpchat.php?action=...`, and dropping the query to get a local path collapses
       // those onto the file itself. It is the container, so leaving it flagged would both
@@ -186,11 +200,16 @@ async function collectPages() {
       timestamp,
       captured_at: toIso(timestamp),
       replay_url: replayUrl(timestamp, chosen.originalUrl),
-      title: titleFromHtml(html),
+      title,
       byte_length: Number(chosen.length) || null,
       digest: chosen.digest || null,
       capture_count: new Set(entries.map((e) => e.timestamp)).size,
       frame_parent: null,
+      links_total: refs.linksTotal,
+      links_dead: refs.linksDead,
+      images_total: refs.imagesTotal,
+      images_broken: refs.imagesBroken,
+      score: 0,
     });
   }
 
@@ -204,6 +223,43 @@ async function collectPages() {
   }
 
   return { rows, missing, stampPicked, framed };
+}
+
+// ---------------------------------------------------------------------------
+// Score
+// ---------------------------------------------------------------------------
+
+// How intact a page is, from 0 to 1: the share of its links and images that are still
+// here, pulled toward the archive's own average by a few imaginary references.
+//
+// A plain ratio cannot be compared across pages, which is the one thing a score is for.
+// It puts a page holding a single working link at a flat 1.0, above a dense index page
+// with 195 of 200 references intact -- and 5,316 pages tie at 1.0, so the top of the
+// ranking is mostly pages too small to have had anything to lose. Nudging every page
+// toward the mean by PRIOR references costs a dense page almost nothing and holds a
+// two-reference page near the middle until it has shown more.
+//
+// It also answers the 439 pages with no links or images at all, which have no ratio to
+// take. They come out at exactly the corpus mean: no evidence, no opinion.
+//
+// The mean is measured per run rather than hardcoded, so re-crawling a site moves the
+// baseline with it.
+const PRIOR = 5;
+
+function scorePages(rows) {
+  const working = (r) => r.links_total - r.links_dead + (r.images_total - r.images_broken);
+  const total = (r) => r.links_total + r.images_total;
+
+  const refs = rows.reduce((n, r) => n + total(r), 0);
+  const mean = refs ? rows.reduce((n, r) => n + working(r), 0) / refs : 0;
+
+  for (const row of rows) {
+    // Rounded because the extra digits are noise dressed as precision, and a score you
+    // may end up reading in a GUI should be legible.
+    row.score = Number(((working(row) + PRIOR * mean) / (total(row) + PRIOR)).toFixed(4));
+  }
+
+  return mean;
 }
 
 // ---------------------------------------------------------------------------
@@ -227,15 +283,19 @@ async function main() {
     process.exit(1);
   }
 
+  const mean = scorePages(rows);
+
   const db = new Database(opts.db);
   db.pragma('journal_mode = WAL');
   db.exec(SCHEMA);
 
   const insert = db.prepare(`
     INSERT INTO pages (local_path, host, crawl_root, original_url, display_url, timestamp, captured_at,
-                       replay_url, title, byte_length, digest, capture_count, frame_parent)
+                       replay_url, title, byte_length, digest, capture_count, frame_parent,
+                       links_total, links_dead, images_total, images_broken, score)
     VALUES (@local_path, @host, @crawl_root, @original_url, @display_url, @timestamp, @captured_at,
-            @replay_url, @title, @byte_length, @digest, @capture_count, @frame_parent)
+            @replay_url, @title, @byte_length, @digest, @capture_count, @frame_parent,
+            @links_total, @links_dead, @images_total, @images_broken, @score)
   `);
   db.transaction((rs) => rs.forEach((r) => insert.run(r)))(rows);
 
@@ -259,6 +319,10 @@ async function main() {
     `Wrote ${opts.db}: ${rows.length} pages, ${stampPicked} matched to their on-disk capture` +
       `${missing ? `, ${missing} logged but not on disk` : ''}` +
       `${framed ? `, ${framed} framed by another page` : ''}.`,
+  );
+  console.log(
+    `${(100 * mean).toFixed(1)}% of all links and images survive; ` +
+      `${rows.filter((r) => r.links_total + r.images_total === 0).length} pages reference neither.`,
   );
   if (imported) console.log(`Restored ${imported} rows from ${opts.tags} (${tagged} pages tagged).`);
   if (orphanMeta) console.log(`${orphanMeta} meta rows have no matching page -- kept, not deleted.`);
