@@ -113,6 +113,26 @@ app.get('/api/random', (req, res) => {
   res.json(row);
 });
 
+// The whole pool in random order, dealt one page per click so a session never repeats.
+//
+// Shuffling once beats drawing one at a time and excluding what has been seen. By the
+// time 500 of the 569 are used up, a fresh draw lands on an unseen page about one time
+// in eight, so every click fires a burst of retries -- and the last page takes 569 of
+// them. Dealing from a shuffled deck is one request for the session and O(1) per click.
+//
+// Whole pool is ~20KB of JSON, which is cheaper than the handful of retries it replaces.
+app.get('/api/random/deck', (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+
+  const paths = handle
+    .prepare(`SELECT local_path FROM page_view WHERE ${RANDOM_POOL} ORDER BY random()`)
+    .all()
+    .map((r) => r.local_path);
+
+  res.json({ size: paths.length, paths });
+});
+
 // The archived pages are 2001-era and full of odd filenames; serve them as-is
 // rather than letting express guess at extensions.
 app.use('/sites', express.static(path.join(ROOT, 'sites')));

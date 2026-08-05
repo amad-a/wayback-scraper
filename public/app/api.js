@@ -104,32 +104,62 @@ export function openWaybackSource() {
 // re-fetch: the archived pages are static, so there is nothing to re-fetch,
 // and a real reload would cost a round trip and lose the scroll position it
 // was supposed to control.
-// Jumps the frame to a random archived page.
+// The shuffled pool, dealt one page per Random click so a session never repeats.
+//
+// sessionStorage rather than a variable, so the deck survives a reload of the shell, and
+// rather than localStorage, so closing the tab starts a fresh session -- which is what
+// "no repeats this session" ought to mean. Each tab deals its own deck.
+const DECK_KEY = 'palestine-online:random-deck';
+
+function readDeck() {
+	try {
+		const deck = JSON.parse(sessionStorage.getItem(DECK_KEY) || 'null');
+		return Array.isArray(deck?.paths) ? deck : null;
+	} catch {
+		return null; // storage disabled or holding something we did not write
+	}
+}
+
+async function nextRandomPath() {
+	let deck = readDeck();
+
+	// Fetch on first use, and again once the deck runs out -- a fresh shuffle, so the
+	// next pass through the archive is in a different order.
+	if (!deck || deck.cursor >= deck.paths.length) {
+		const res = await fetch('/api/random/deck');
+		if (!res.ok) return null; // 503 before the first `npm run db`
+		const { paths } = await res.json();
+		if (!paths.length) return null;
+		deck = { paths, cursor: 0 };
+	}
+
+	const path = deck.paths[deck.cursor];
+	deck.cursor += 1;
+	try {
+		sessionStorage.setItem(DECK_KEY, JSON.stringify(deck));
+	} catch {
+		// Full or disabled: the click still works, it just will not remember.
+	}
+	return path;
+}
+
+// Jumps the frame to the next page in the shuffled deck.
 //
 // Assigning src rather than replacing the location, so each jump leaves a history entry
 // and Back walks the trail you actually took. onFrameLoad then updates the chrome, the
 // same as any other navigation.
 export async function openRandomPage() {
-	let current = '';
+	let path;
 	try {
-		current = decodeURIComponent(iframe.contentWindow.location.pathname);
-	} catch {
-		// Nothing loaded yet, or a document we cannot read into. The server treats an
-		// empty exclusion as "anything will do".
-	}
-
-	let page;
-	try {
-		const res = await fetch(`/api/random?not=${encodeURIComponent(current)}`);
-		if (!res.ok) return; // 503 before the first `npm run db`
-		page = await res.json();
+		path = await nextRandomPath();
 	} catch {
 		return; // server not running
 	}
+	if (!path) return;
 
 	// Encoded per segment, not whole: archived filenames carry spaces and other literal
 	// characters, but the separators have to stay separators.
-	iframe.src = '/sites/' + page.local_path.split('/').map(encodeURIComponent).join('/');
+	iframe.src = '/sites/' + path.split('/').map(encodeURIComponent).join('/');
 }
 
 export function refreshFrame() {
