@@ -1,0 +1,8 @@
+You have made a request to http://p.moreover.com/cgi-local/page without any parameters.
+
+This is forbidden.
+
+If you would like our Top Stories newsfeed in HTML format please change the request to
+http://p.moreover.com/cgi-local/page?c=Top%20stories&o=html
+
+For further assistance please contact support@moreover.com

@@ -1,0 +1,207 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+<title> Open Distributed Library Services in Palestine</title>
+<style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+<body bgcolor="FFFFFF" text="000000" link="007F00" vlink="800000" alink="FFFFFF" data-wayback-url="https://web.archive.org/web/20000819005440id_/http://www.birzeit.edu:80/web/samerlib.html">
+<center>
+<a href="/sites/birzeit.edu/web/index.html">Birzeit and the Web</a><br><br><hr>                          
+
+<h2> Open Distributed Library Services in Palestine</h2></center>    
+  
+<p></p><blockquote><i>This paper was presented at the IT in Higher Education in Palestine Conference on 6 October, 1998 by Samer Qumsieh friom the Birzeit Computer Centre. It examines the different technologies necessary for building an Open Distributed Library System in Palestine. For more information, contact Birzeit University Computer Center director <a href="MAILTO:mtarazi@admin.birzeit.edu" class="dead" aria-disabled="true">Marwan Tarazi</a> or Samer Qumsieh at <a href="mailto:squmsieh@admin.birzeit.edu" class="dead" aria-disabled="true">squmsieh@admin.birzeit.edu</a> </i></blockquote>
+
+                                                                                              
+                  
+<h2>Introduction</h2>
+
+<p>Most of the Palestinian libraries are relatively dead storage areas. They spend thousands of dollars each year inefficiently. This paper
+describes different technologies relevant to build Open Distributed Library Services in Palestine, and will discuss the possibilities for building a modern Open Public Access Catalog (OPAC) system. 
+
+</p><h2>The Problem</h2>
+
+<p>The Internet is the most successful computer network. Porting library public services to the Internet is a challenge and can be of great benefits
+for researchers. One solution is to interface the library database to the World Wide Web, which have the following advantages: - 
+
+</p><ol>
+<li>   Low cost of application deployment and management.
+
+</li><li>  Universal access to library information to any institution that already has Internet access. Since information and applications are
+ accessible by virtually any Web browser, universal access is afforded to virtually all clients - Windows, Macintosh, UNIX, or Network
+Computers.
+</li><li>  Lower training costs. Web technology is easy to use. Users, who know how to use a Web browser, are well equipped to access and use  any of the library information or catalogues on the Internet or Intranet.
+</li></ol>
+
+<p>HTML forms are offering a very easy way to construct user interface that an untrained user finds easy to use. A much harder task is to interface the HTTP server to the library database.
+
+</p><p>Three different approaches have been used: -
+
+</p><ol>
+<li>  To copy the database into a different format
+
+</li><li>  Run an HTTP server gateway to communicate with the database engine.
+
+</li><li>   Run a special HTTP server that can perform database query within the same system
+
+</li></ol>
+<p>Does the web access to bibliographic database solve the problem? 
+</p><ol>
+
+<li>  Web searching is stateless. It’s not possible to perform an interactive, iterative search.
+
+</li><li>  No standard for query syntax. There are a lot of different search syntaxes
+
+</li><li>  Different user interfaces
+
+</li><li>   Searching simultaneously more than one library is not possible (same query cannot be sent to different systems)
+</li></ol>
+    <p> Z39.50 contains capabilities with which to solve these problems
+
+</p><h2>     Z39.50</h2>
+
+<h2>     Introduction</h2>
+
+    <p> ANSI/NISO Z39.50-1995 – Information Retrieval (Z39.50) is a protocol national standard for information retrieval. The Z39.50 standard was developed to overcome the traditional problems associated with searching multiple databases by defining a standard language which computer systems can interrogate remote databases and retrieve information records.
+
+     </p><p>Z39.50 is a client/server model for which two computers interact with each other over TCP/IP (the Internet protocol) in a relation where one computer (client) request services from the other (server).
+<img src="/sites/birzeit.edu/web/images/image11.gif" align="right">
+     </p><p>Searchers query the server by entering a query into their local system and the local system will translate (internally) the query into a Z39.50 format and send it to the server. The server in turn translates the Z39.50 request, performs the search, and then responds back to the searchers system which in turn displays the results on the screen
+
+</p><p>The major advantage of this system is that the user needs to know only the query language of his local system in order to search any Z39.50 database.
+
+    </p><h2> History</h2>
+
+<ul>
+<li>Development began in early 80's; Linked Systems Project by the Library of Congress and the Bibnett projects by BRODD gave important background knowledge about interaction of different library systems. 
+
+</li><li>Z39.50-1988, out-dated and incompatible with later Z39.50 versions; basis of the WAIS protocol Version 2, Z39.50-1992: several implementations; seven facilities 
+</li><li>Version 3, Z39.50-1995 (completed in July 1995): very few implementations; eleven facilities some of which have not been implemented
+by anyone yet 
+</li><li>Version 4, development began in Autumn 1995.
+</li></ul>
+      
+
+     <h2>Functions</h2>
+
+     <p>Initialization
+
+</p><ul>
+<li>Setting up Z39.50 session on top of TCP/IP connection
+
+</li><li>Optional user authentication
+
+</li><li>Determines Version
+</li></ul>
+
+     <p>Search
+
+</p><ul>
+<li>  Search request is send to the server
+
+</li><li>  The server responses with number of records found and optionally a range of records
+</li></ul>
+<p>Retrieve
+</p><ul>
+<li>  Retrieve a set of records
+</li></ul>
+<p>Access Control
+</p><ul>
+<li> Server request for authentication information (e.g., a password) after suspending a client request. Client response determines whether
+suspended operation will be resumed.
+</li></ul>
+<p>     Browse/Scan (Added in Version 3)
+</p><ul>
+<li>
+Fetching index terms
+</li></ul>
+<p> Explain (Added in Version 3)
+</p><ul>
+<li> Information about the server
+
+</li><li>  Database available
+
+</li><li>  Record syntax and specifications
+</li></ul>
+<p> Terminate 
+</p><ul><li>Close session
+</li></ul>
+<p>Accounting/Resource Control Facility (Three Services)
+</p><ul>
+<li>  22.Resource-Control
+
+</li><li>  23.Trigger-Resource-Control
+</li><li>  24.Resource-Report
+</li></ul>
+
+<h2>Web or Z39.50 or both?</h2>
+<img src="/sites/birzeit.edu/web/images/image12.gif" align="left">
+
+
+<h2>Z39.50 as a mime type</h2>
+
+<ul>
+<li>The web browser is configured to launch an external Z39.50 client giving it all necessary configuration parameters.
+
+</li></ul>
+<h2>Z39.50 URL</h2>
+
+<ul>
+<li>   1.Additional modules or plugins is necessary to handle Z39.50 information retrieval.
+
+</li><li>   2.Currently still under development
+</li></ul>
+
+<p></p><h2>Java</h2>
+
+<p>Java is an object oriented programming language that can be utilized to act as a z39.50 client. Java applets are Java programs that are downloaded from the HTTP server and executed by the web browser on the user’s machine. Java applets are complete interactive programs that enable users to interact with the Java page via the mouse or keyboard.
+
+</p><p>A Java Z39.50 applet can be written to access any number of Z39.50 server and can give a statefull user access to the library catalog. 
+
+</p><h2>Data Exchange</h2>
+
+<p>Data exchange between two different systems is also a hard task. A lot of conversion utility is required and most systems do no cooperate. A standard form for storing bibliographical data is required.
+</p><ul>
+
+<li>   ISO2709(MARC) was developed and adopted in 1968 by the Library of Congress
+
+</li><li>  However, due to the wide variety of information sources that are not restricted only to libraries and due to the complexities of international bibliographic  record keep, ISO2709 has been derived to about ten standards of variations of the MARC format. (USMARC, UKMARC, UNIMARC, etc …)
+</li></ul>
+
+<p></p><h2>USMARC</h2>
+
+<p>The USMARC formats are standards for the representation and communication of bibliographic and related information in machine-readable form. Its format is a set of codes and content designators defined for encoding machine-readable records. Formats are defined for five types of data: bibliographic, holdings, authority, classification, and community information.
+
+</p><p>The USMARC formats are communication formats, primarily designed to provide specifications for the exchange of bibliographic and related information between systems.
+
+</p><h2>Virtual Library Catalog in Palestine</h2>
+
+<p>Building a Virtual Library Catalog for libraries in Palestine can be established using
+</p><ul>
+  <li>Z39.50 for user access
+
+   </li><li>One or more Z39.50 can be established in sites that are directly connected or have permanent connection to the Internet
+
+   </li><li>Libraries that have no permanent connection to the Internet can send their data to be included on one of the Z39.50 servers.
+
+</li><li>Inter-linking Palestinian Universities will solely support this project
+
+
+</li><li>   MARC record formats for data exchange
+
+</li><li>   One of the variations of the MARC formats can be used (ex. USMARC) for data exchange.
+
+</li><li>   Various conversion utilities will be needed to convert data from different system that are being used in Palestinians libraries. Such as
+Minisis, CDS/ISIS, and general database applications (DBaseIII, Access, etc.)
+
+</li><li>  A WWW-Z39.50 gateway for non-Z39.50 clients
+
+</li><li>   CGI programs can be implemented to Interface the WWW to Z39.50 services.
+
+</li><li>  HTTP servers with special Z39.50 - built in module can be used such as apache with integrated Z39.50 module
+</li></ul>
+<br><hr>
+<p><a href="/sites/birzeit.edu/web/index.html">Birzeit &amp; the Web</a></p>
+<p><a href="/sites/birzeit.edu/index.html">Birzeit Homepage</a></p>
+<hr>
+<center><i>Page designed and maintained  by the Birzeit Webmaster, <a href="MAILTO:webmaster@birzeit.edu" class="dead" aria-disabled="true">webmaster@birzeit.edu</a>.</i></center>
+
+
+</body></html>

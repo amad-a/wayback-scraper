@@ -1,0 +1,506 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Palestine Online</title>
+
+    <link href="./styles/layout.css" rel="stylesheet" type="text/css" />
+    <link
+      href="./styles/windows-98.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link href="./styles/explorer.css" rel="stylesheet" type="text/css" />
+
+    <link
+      rel="icon"
+      href="./assets/icons/html-16x16.png"
+      sizes="16x16"
+      type="image/png"
+    />
+    <link
+      rel="icon"
+      href="./assets/icons/internet-explorer-32x32.png"
+      sizes="32x32"
+      type="image/png"
+    />
+
+    <!-- No user-scalable=no: iOS has ignored it since 10 and Chrome ignores it
+         too, so it only ever read as an intent. Double-tap zoom is turned off in
+         explorer.css with touch-action instead; pinch-zoom stays, deliberately. -->
+    <meta name="viewport" content="width=device-width" />
+
+    <script type="module" src="./app/main.js"></script>
+  </head>
+  <body class="">
+    <div class="window-container window os-window focused">
+      <div class="window-titlebar" style="touch-action: none">
+        <div class="window-title-area">
+          <span class="window-title"></span>
+        </div>
+        <button
+          class="window-minimize-button window-action-minimize window-button"
+          aria-label="Minimize window"
+        >
+          <span class="window-button-icon"></span></button
+        ><button
+          class="window-maximize-button window-action-maximize window-button"
+          aria-label="Maximize or restore window"
+        >
+          <span class="window-button-icon"></span></button
+        ><button
+          class="window-close-button window-action-close window-button"
+          aria-label="Close window"
+        >
+          <span class="window-button-icon"></span>
+        </button>
+      </div>
+
+      <div class="toolbars">
+        <div class="toolbar" id="menu-bar-toolbar">
+          <div class="toolbar-drag-handle"></div>
+        </div>
+        <div class="toolbar" id="standard-buttons-toolbar">
+          <div class="toolbar-drag-handle"></div>
+          <div id="standard-buttons" style="display: none">
+            <div class="toolbar-compound-button-wrapper">
+              <button
+                id="nav-back"
+                class="toolbar-button lightweight back-button"
+                disabled="disabled"
+              >
+                <span class="label-text">Back</span>
+                <div
+                  class="icon"
+                  style="background-position: 0px 0px"
+                ></div>
+              </button>
+              <button
+                class="toolbar-dropdown-button lightweight back-dropdown-button"
+                disabled="disabled"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="
+                    fill: currentColor;
+                    display: inline-block;
+                    vertical-align: middle;
+                  "
+                >
+                  <path
+                    style="
+                      transform: rotate(90deg);
+                      transform-origin: center;
+                    "
+                    d="m6 4 4 4-4 4z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="toolbar-compound-button-wrapper">
+              <button
+                id="nav-forward"
+                class="toolbar-button lightweight forward-button"
+              >
+                <span class="label-text">Forward</span>
+                <div
+                  class="icon"
+                  style="background-position: -20px 0px"
+                ></div>
+              </button>
+              <button
+                class="toolbar-dropdown-button lightweight forward-dropdown-button"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="
+                    fill: currentColor;
+                    display: inline-block;
+                    vertical-align: middle;
+                  "
+                >
+                  <path
+                    style="
+                      transform: rotate(90deg);
+                      transform-origin: center;
+                    "
+                    d="m6 4 4 4-4 4z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <button class="toolbar-button lightweight up-button">
+              <span class="label-text">Up</span>
+              <div
+                class="icon"
+                style="background-position: -880px 0px"
+              ></div>
+            </button>
+            <hr aria-orientation="vertical" />
+            <button class="toolbar-button lightweight cut-button">
+              <span class="label-text">Cut</span>
+              <div
+                class="icon"
+                style="background-position: -420px 0px"
+              ></div>
+            </button>
+            <button class="toolbar-button lightweight copy-button">
+              <span class="label-text">Copy</span>
+              <div
+                class="icon"
+                style="background-position: -440px 0px"
+              ></div>
+            </button>
+            <button class="toolbar-button lightweight paste-button">
+              <span class="label-text">Paste</span>
+              <div
+                class="icon"
+                style="background-position: -460px 0px"
+              ></div>
+            </button>
+            <hr aria-orientation="vertical" />
+            <button class="toolbar-button lightweight undo-button">
+              <span class="label-text">Undo</span>
+              <div
+                class="icon"
+                style="background-position: -480px 0px"
+              ></div>
+            </button>
+            <hr aria-orientation="vertical" />
+            <button class="toolbar-button lightweight delete-button">
+              <span class="label-text">Delete</span>
+              <div
+                class="icon"
+                style="background-position: -520px 0px"
+              ></div>
+            </button>
+            <button
+              class="toolbar-button lightweight properties-button"
+            >
+              <span class="label-text">Properties</span>
+              <div
+                class="icon"
+                style="background-position: -620px 0px"
+              ></div>
+            </button>
+            <hr aria-orientation="vertical" />
+            <div class="toolbar-compound-button-wrapper">
+              <button
+                class="toolbar-button lightweight cycle-view-mode-button"
+              >
+                <span class="label-text">Views</span>
+                <div
+                  class="icon"
+                  style="background-position: -760px 0px"
+                ></div>
+              </button>
+              <button
+                class="toolbar-dropdown-button lightweight views-dropdown-button"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="
+                    fill: currentColor;
+                    display: inline-block;
+                    vertical-align: middle;
+                  "
+                >
+                  <path
+                    style="
+                      transform: rotate(90deg);
+                      transform-origin: center;
+                    "
+                    d="m6 4 4 4-4 4z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div id="internet-buttons" style="">
+            <div class="toolbar-compound-button-wrapper">
+              <button class="toolbar-button lightweight back-button">
+                <span class="label-text">Back</span>
+                <div
+                  class="icon"
+                  style="background-position: 0px 0px"
+                ></div>
+              </button>
+              <button
+                class="toolbar-dropdown-button lightweight back-dropdown-button hidden"
+                disabled="disabled"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="
+                    fill: currentColor;
+                    display: inline-block;
+                    vertical-align: middle;
+                  "
+                >
+                  <path
+                    style="
+                      transform: rotate(90deg);
+                      transform-origin: center;
+                    "
+                    d="m6 4 4 4-4 4z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <div class="toolbar-compound-button-wrapper">
+              <button
+                class="toolbar-button lightweight forward-button"
+              >
+                <span class="label-text">Forward</span>
+                <div
+                  class="icon"
+                  style="background-position: -20px 0px"
+                ></div>
+              </button>
+              <button
+                class="toolbar-dropdown-button lightweight forward-dropdown-button hidden"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  xmlns="http://www.w3.org/2000/svg"
+                  style="
+                    fill: currentColor;
+                    display: inline-block;
+                    vertical-align: middle;
+                  "
+                >
+                  <path
+                    style="
+                      transform: rotate(90deg);
+                      transform-origin: center;
+                    "
+                    d="m6 4 4 4-4 4z"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+            <button class="toolbar-button lightweight hidden">
+              <span class="label-text">Stop</span>
+              <div
+                class="icon"
+                style="background-position: -40px 0px"
+              ></div>
+            </button>
+            <button class="toolbar-button lightweight home-button">
+              <span class="label-text">Home</span>
+              <div
+                class="icon"
+                style="background-position: -80px 0px"
+              ></div>
+            </button>
+            <hr aria-orientation="vertical" />
+            <button
+              id="favorites"
+              class="toolbar-button lightweight toggle favorites-button"
+            >
+              <span class="label-text">Favorites</span>
+              <div
+                class="icon"
+                style="background-position: -120px 0px"
+              ></div>
+            </button>
+            <button
+              id="history"
+              class="toolbar-button lightweight toggle history-button"
+            >
+              <span class="label-text">History</span>
+              <div
+                class="icon"
+                style="background-position: -240px 0px"
+              ></div>
+            </button>
+            <button
+              id="random"
+              class="toolbar-button lightweight random-button"
+            >
+              <span class="label-text">Random</span>
+              <div
+                class="icon"
+                style="background-position: -640px 0px"
+              ></div>
+            </button>
+            <hr aria-orientation="vertical" />
+            <button
+              id="source"
+              class="toolbar-button lightweight toggle search-button"
+            >
+              <span class="label-text">Source</span>
+              <div
+                class="icon"
+                style="background-position: -100px 0px"
+              ></div>
+            </button>
+            <button id="share" class="toolbar-button lightweight share-button">
+              <span class="label-text">Share</span>
+              <div
+                class="icon"
+                style="background-position: -260px 0px"
+              ></div>
+            </button>
+            <button class="toolbar-button lightweight print-button">
+              <span class="label-text">Print</span>
+              <div
+                class="icon"
+                style="background-position: -140px 0px"
+              ></div>
+            </button>
+          </div>
+        </div>
+        <div class="toolbar" id="address-bar-toolbar">
+          <div class="toolbar-drag-handle"></div>
+          <div id="address-bar">
+            <!-- @TODO: d access key -->
+            <label for="address">Address</label>
+            <div class="address-container">
+              <div id="address-compound-input" class="inset-deep">
+                <img
+                  id="address-icon"
+                  width="16"
+                  height="16"
+                  src="./assets/icons/page-16x16.png"
+                  alt=""
+                />
+                <input
+                  type="text"
+                  id="address-input"
+                  autocomplete="one-time-code"
+                />
+                <div id="favorite-star"></div>
+
+                <button id="address-dropdown-button">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style="
+                      fill: currentColor;
+                      display: inline-block;
+                      vertical-align: middle;
+                    "
+                  >
+                    <path
+                      style="
+                        transform: rotate(90deg);
+                        transform-origin: center;
+                      "
+                      d="m5 6 4 4-4 4z"
+                    ></path>
+                  </svg>
+                </button>
+                <!-- TODO: functional dropdown, autocompleting file/folder paths -->
+              </div>
+              <div id="dropdown" class="dropdown inset-deep hidden">
+                <div class="dropdown-content"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="favorites hidden">
+        <div class="favorites-list inset-deep">
+          <div class="favorites-toolbar toolbars">
+            <div class="toolbar">Favorites</div>
+            <button
+              id="favorites-exit"
+              style="margin-left: auto; height: 16px"
+              class="window-close-button window-action-close window-button"
+              aria-label="Close window"
+            >
+              <span class="window-button-icon"></span>
+            </button>
+          </div>
+          <div class="favorites-entries"></div>
+        </div>
+      </div>
+      <div class="history hidden">
+        <div class="history-list inset-deep">
+          <div class="history-toolbar toolbars">
+            <div class="toolbar">History</div>
+            <button
+              id="history-exit"
+              style="margin-left: auto; height: 16px"
+              class="window-close-button window-action-close window-button"
+              aria-label="Close window"
+            >
+              <span class="window-button-icon"></span>
+            </button>
+          </div>
+          <div class="history-entries"></div>
+        </div>
+      </div>
+      <div id="content" class="inset-deep">
+        <iframe
+          id="frame"
+          sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
+          src="/sites/chem.metu.edu.tr/~omara/index.html"
+          style="
+            min-width: 0px;
+            min-height: 0px;
+            flex: 1 1 1px;
+            border: 0px;
+          "
+        ></iframe>
+      </div>
+      <div id="status-bar">
+        <div
+          id="status-bar-left"
+          class="inset-shallow"
+          style="display: block"
+        >
+          <img
+            id="status-bar-left-icon"
+            style="display: none"
+            width="16"
+            height="16"
+            src="./assets/icons/folder-16x16.png"
+            alt=""
+          />
+          <span id="status-bar-left-text"></span>
+        </div>
+        <div
+          id="status-bar-middle"
+          class="inset-shallow"
+          style="display: block"
+        >
+          <span id="status-bar-middle-text"></span>
+        </div>
+        <div
+          id="status-bar-right"
+          class="inset-shallow"
+          style="display: flex"
+        >
+          <img
+            id="status-bar-right-icon"
+            style=""
+            width="16"
+            height="16"
+            src="./assets/icons/zone-internet-16x16.png"
+            alt=""
+          />
+          <span id="status-bar-right-text"></span>
+        </div>
+        <!-- for menu descriptions, replace left/middle/right layout with non-inset, singular area -->
+      </div>
+    </div>
+  </body>
+</html>

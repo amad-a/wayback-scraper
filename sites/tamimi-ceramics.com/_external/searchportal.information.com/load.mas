@@ -1,0 +1,262 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+
+<title>Information.com</title>
+<link href="/styles/index.css" rel="stylesheet" type="text/css">
+<link href="/styles/header.css" rel="stylesheet" type="text/css">
+<link href="/styles/common.css" rel="stylesheet" type="text/css">
+<script src="/javascript/objects/drag.js" type="text/javascript"></script>
+<script src="/javascript/dragable.js" type="text/javascript"></script>
+<script src="/javascript/header.js" type="text/javascript"></script>
+<script src="/javascript/util.js" type="text/javascript"></script>
+<script src="/__utm.js" type="text/javascript"></script>
+
+</head>
+<body onLoad="initDragable(Array('cats', 'brands'))"
+>
+<table width="707" align="center" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="707"><table width="100%%"  border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><table width="707" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td><a href="/index.html"><img src="/images/logo.gif" width="310" height="73" border="0"></a></td>
+              <td align="right" valign="bottom" width="100%" class="accountFunctions"><table border="0" cellpadding="0" cellspacing="2">
+                <tr>
+                  <td><a href="/user/login.html"><img src="/images/login.gif" width="52" height="21" border="0"></a></td>
+                  <td><a href="/user/signup.html"><img src="/images/join.gif" width="59" height="21" border="0"></a></td>
+                  <td><a href="/user/pref/navigation.html"><img src="/images/navigation.gif" width="100" height="21" border="0"></a></td>
+                </tr>
+</table>
+</td>
+            </tr>
+          </table></td>
+        </tr>
+        <tr>
+          <td background="/images/navbar_background.gif"><script language="JavaScript">
+
+	// sync tab ordering
+	catId = 1;
+	orderByTable['cats'] = new Array(0,1,2,3,4,5);
+	orderByTable['brands'] = new Array(0);
+
+</script>
+<table width="707" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+		<table id="cats" border="0" cellpadding="0" cellspacing="0" class="navCatBar">
+                    <tr>
+                      <td><img src="/images/spacer.gif" width="24" height="26"></td>
+                      <td><img src="/images/spacer.gif" width="2" height="1"></td>
+                      <td valign="top">
+			<div class="navCatBarOn">
+				<a onMouseOver="enableDrag('cats')" onMouseOut="disableDrag()" class="move" href="javascript: void(0)"><img alt="Drag Me" src="/images/spacer.gif" width="12" height="11" border="0"></a>
+                      <p>Web Search</p>
+			</div>
+			</td>
+                      <td><img src="/images/spacer.gif" width="2" height="1"></td>
+                      <td valign="top">
+			<div class="navCatBarOff">
+				<a onMouseOver="enableDrag('cats')" onMouseOut="disableDrag()" class="move" href="javascript: void(0)"><img alt="Drag Me" src="/images/spacer.gif" width="12" height="11" border="0"></a>
+                      <p><a href="javascript: carrySearch('/cat__2/search/index.html')">Encyclopedia</a></p>
+			</div>
+			</td>
+                      <td><img src="/images/spacer.gif" width="2" height="1"></td>
+                      <td valign="top">
+			<div class="navCatBarOff">
+				<a onMouseOver="enableDrag('cats')" onMouseOut="disableDrag()" class="move" href="javascript: void(0)"><img alt="Drag Me" src="/images/spacer.gif" width="12" height="11" border="0"></a>
+                      <p><a href="javascript: carrySearch('/cat__4/search/index.html')">Shopping</a></p>
+			</div>
+			</td>
+                      <td><img src="/images/spacer.gif" width="2" height="1"></td>
+                      <td valign="top">
+			<div class="navCatBarOff">
+				<a onMouseOver="enableDrag('cats')" onMouseOut="disableDrag()" class="move" href="javascript: void(0)"><img alt="Drag Me" src="/images/spacer.gif" width="12" height="11" border="0"></a>
+                      <p><a href="javascript: carrySearch('/cat__5/search/index.html')">Blogs</a></p>
+			</div>
+			</td>
+                      <td><img src="/images/spacer.gif" width="2" height="1"></td>
+                      <td valign="top">
+			<div class="navCatBarOff">
+				<a onMouseOver="enableDrag('cats')" onMouseOut="disableDrag()" class="move" href="javascript: void(0)"><img alt="Drag Me" src="/images/spacer.gif" width="12" height="11" border="0"></a>
+                      <p><a href="javascript: carrySearch('/cat__6/search/index.html')">Articles</a></p>
+			</div>
+			</td>
+                      <td><img src="/images/spacer.gif" width="2" height="1"></td>
+                      <td valign="top">
+			<div class="navCatBarOff">
+				<a onMouseOver="enableDrag('cats')" onMouseOut="disableDrag()" class="move" href="javascript: void(0)"><img alt="Drag Me" src="/images/spacer.gif" width="12" height="11" border="0"></a>
+                      <p><a href="javascript: carrySearch('/cat__8/search/index.html')">Groups</a></p>
+			</div>
+			</td>
+                    </tr>
+                  </table>
+</td>
+              </tr>
+              <tr>
+                <td><img src="/images/spacer.gif" width="1" height="10"></td>
+              </tr>
+              <tr>
+                <td><table id="brands" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td><img src="/images/spacer.gif" width="4" height="26"></td>
+			<td>
+			<div>
+			<table cellpadding="0" cellspacing="0" border="0" background="/images/brands/brand_1_on.gif">
+				<tr>
+					<td><a onMouseOver="enableDrag('brands')" onMouseOut="disableDrag()" href="javascript: void(0)" class="move"><img alt="Drag Me" src="/images/spacer.gif" border="0" width="12" height="11"></a><img src="/images/spacer.gif" border="0" width="77" height="11"></td>
+				</tr>
+				<tr>
+					<td><img src="/images/spacer.gif" border="0" width="89" height="15"></td>
+				</tr>
+			</table>
+			</div>
+			</td>
+                    </tr>
+                  </table></td>
+              </tr>
+              <tr>
+                <td class="header">
+		<form name="search" method="get" action="/search/index.html">
+                  <p>
+  <input name="keyword" type="text" size="65" value="">
+&nbsp;&nbsp;&nbsp;
+                    <input type="submit" value="Find Information"> 
+                  </p>
+                  <p>Search Results Will Never Be The Same. <!--<a target="_blank" href="/flash/tour.html">Take a Tour!</a>--></p>
+                </form></td>
+              </tr>
+              <tr>
+                <td class="headerLower" ><table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>
+		<a href="/forms/feedback.html">Feedback</a>&nbsp;&nbsp;|&nbsp;&nbsp;
+
+		<a href="/forms/suggest.html">Suggest A Source</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/help/about.html">About Information.com</a> </td>
+    <td><!--<a href="#"><img src="/images/help.gif" width="37" height="18" border="0"></a>--></td>
+  </tr>
+</table>
+</td>
+              </tr>
+            </table>
+</td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<!--
+<table border="0" cellspacing="0" cellpadding="0" width="100%">
+	<tr>
+		<td>&nbsp;</td>
+		<td width="702" class="indexBody">
+			<table border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="384" background="/images/index/left_col_background.gif" valign="top">
+					</td>
+					<td width="316" valign="top" class="rightCol">
+					
+					<table border="0" cellspacing="0" cellpadding="0">
+						<tr>
+							<table width="292" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td><img src="/images/spacer.gif" height="7" width="1"></td>
+	</tr>
+	<tr>
+		<td background="/images/index/pod_top.gif" class="rightColPodTop">
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td>Today's Headlines</td>
+					<td align="right"><a href="/user/pref/pods/news.html"><img src="/images/edit.gif" border="0" width="31" height="15"></a></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr>
+		<td class="rightLinks">
+		BBC&nbsp;&nbsp;
+		
+						<a href="/rss_source__7/old_rss_cat__2/rss_cat__2/old_rss_source__2/util/pods/news.html">USA Today</a>&nbsp;&nbsp;
+					<a href="/rss_source__3/old_rss_cat__2/rss_cat__1/old_rss_source__2/util/pods/news.html">Business Week Online</a>&nbsp;&nbsp;
+
+		</td>
+	</tr>
+	<tr>
+		<td class="popularOdd">
+		
+		</td>
+	</tr>
+	<tr>
+		<td bgcolor="#FFFFFF">
+		<img src="/images/spacer.gif" height="10" width="1">
+		</td>
+	</tr>
+</table>
+
+							</td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+-->
+<table width="100%" cellspacing="0" cellspadding="0" border="0">
+  <tr>
+    <td class="backgroundLine" align="center" nowrap>
+	<form name="form" method="GET" action="/search/index.html">
+		<input name="keyword" type="text" size="50">
+		<select name="cat">
+			<option value="1" selected>
+				Web Search
+			</option>
+			<option value="2">
+				Encyclopedia
+			</option>
+			<option value="4">
+				Shopping
+			</option>
+			<option value="5">
+				Blogs
+			</option>
+			<option value="6">
+				Articles
+			</option>
+			<option value="8">
+				Groups
+			</option>
+		</select>&nbsp;&nbsp;<input type="submit" value="Find Information">
+	</form>
+    </td>
+  </tr>
+  <tr>
+    <td class="footer" align="center">
+	<a href="/index.html">Information Home</a> 
+		| <a href="/forms/feedback.html">Feedback</a>
+	<p class="footerSmaller">	
+		<a href="/help/privacy.html">Privacy Policy</a> | 
+		<a href="/help/tos.html">Terms of Service</a> | 
+		<a href="/help/about.html">About Information.com</a> |
+		<a href="/help/mission.html">Our Mission</a> |
+		<a href="/user/login.html">Login</a> |
+		<a href="/user/signup.html">Join Now</a> |
+		<a href="/help/faq.html">Help</a>
+	</p>
+	<p class="footerSmaller">2004 Information.com</p>
+    </td>
+  </tr>
+</table>
+<iframe id="rpc" style="width:0px; height:0px; border: 0px"></iframe>
+</body>
+</html>
+

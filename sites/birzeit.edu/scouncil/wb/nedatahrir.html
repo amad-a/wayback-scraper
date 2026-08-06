@@ -1,0 +1,334 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+
+<meta name="Author" content="test">
+<meta name="Description" content="Al-Wa'i Bloc at Birzeit University is a group of muslim students   that take thethoughts of Islamic Liberation Party as   a basis for their missionary activity to Islam">
+<meta name="Keywords" content="Islam, Ideology, politics, political Islam, Wa'i Bloc, Birzeit University, Palestine, Israel,   Culture, Leaflets, students, muslim students, lectures, debates, khilafah,   khilafa, Islamic State, hizb tahrir, liberation party, hizb ut-tahreer, hizb ut-tahrir   nahdah, Islamic Ummah, Islamic Da'wah, Islamic Movements, Islamic Thought, Islamic Articles, HT, TH">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>The Call for Liberation</title>
+<style>
+.spanstyle {
+	position:absolute;
+	visibility:visible;
+	top:-10px;
+	font-size:20pt;
+	font-family:times new romans;
+	font-weight:bold;
+	color:Blue;
+	
+}
+</style>
+<script>
+
+
+
+var x,y
+var step=20
+var flag=0
+
+
+var message="Al-Waie Bloc "
+message=message.split("")
+
+var xpos=new Array()
+for (i=0;i<=message.length-1;i++) {
+	xpos[i]=-50
+}
+
+var ypos=new Array()
+for (i=0;i<=message.length-1;i++) {
+	ypos[i]=-50
+}
+
+function handlerMM(e){
+	x = (document.layers) ? e.pageX : document.body.scrollLeft+event.clientX
+	y = (document.layers) ? e.pageY : document.body.scrollTop+event.clientY
+	flag=1
+}
+
+function makesnake() {
+	if (flag==1 && document.all) {
+    	for (i=message.length-1; i>=1; i--) {
+   			xpos[i]=xpos[i-1]+step
+			ypos[i]=ypos[i-1]
+    	}
+		xpos[0]=x+step
+		ypos[0]=y
+	
+		for (i=0; i<message.length-1; i++) {
+    		var thisspan = eval("span"+(i)+".style")
+    		thisspan.posLeft=xpos[i]
+			thisspan.posTop=ypos[i]
+    	}
+	}
+	
+	else if (flag==1 && document.layers) {
+    	for (i=message.length-1; i>=1; i--) {
+   			xpos[i]=xpos[i-1]+step
+			ypos[i]=ypos[i-1]
+    	}
+		xpos[0]=x+step
+		ypos[0]=y
+	
+		for (i=0; i<message.length-1; i++) {
+    		var thisspan = eval("document.span"+i)
+    		thisspan.left=xpos[i]
+			thisspan.top=ypos[i]
+    	}
+	}
+		var timer=setTimeout("makesnake()",30)
+}
+
+</script>
+<style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+
+<body onload="makesnake()" style="width:100%;overflow-x:hidden;overflow-y:scroll" bgcolor="#000000" data-wayback-url="https://web.archive.org/web/20000824110037id_/http://www.birzeit.edu:80/scouncil/wb/nedatahrir.html">
+
+<script>
+<!-- Beginning of JavaScript -
+
+for (i=0;i<=message.length-1;i++) {
+    document.write("<span id='span"+i+"' class='spanstyle'>")
+	document.write(message[i])
+    document.write("</span>")
+}
+
+if (document.layers){
+	document.captureEvents(Event.MOUSEMOVE);
+}
+document.onmousemove = handlerMM;
+
+// - End of JavaScript - -->
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<script language="JavaScript" type="text/javascript">
+
+
+
+
+
+
+
+
+
+<!-- // a javascript rollover
+
+
+
+if (document.images) {
+
+            		var homeoff = new Image()
+
+            homeoff.src = "home.jpg"
+
+            var homeon = new Image()
+
+            homeon.src = "home1.jpg"
+			
+			var a_About_usoff = new Image()
+
+            a_About_usoff.src = "a-About_us.jpg"
+
+            var a_About_uson = new Image()
+
+            a_About_uson.src = "a-About_us1.jpg" 
+			
+	    		var e_About_usoff = new Image()
+
+            e_About_usoff.src = "e-About_us.jpg"
+
+            var e_About_uson = new Image()
+
+            e_About_uson.src = "e-About_us1.jpg"
+
+			var a_articlesoff = new Image()
+
+            a_articlesoff.src = "a-articles.jpg"
+
+            var a_articleson = new Image()
+
+            a_articleson.src = "a-articles1.jpg"
+						var e_arteclesoff = new Image()
+
+            e_arteclesoff.src = "e-artecles.jpg"
+
+            var e_artecleson = new Image()
+
+            e_artecleson.src = "e-artecles1.jpg"
+			
+			var a_activitiesoff = new Image()
+
+            a_activitiesoff.src = "a-activities.jpg"
+
+            var a_activitieson = new Image()
+
+            a_activitieson.src = "a-activities1.jpg"
+			
+			var e_activitiesoff = new Image()
+
+            e_activitiesoff.src = "e-activities.jpg"
+
+            var e_activitieson = new Image()
+
+            e_activitieson.src = "e-activities1.jpg"
+			
+			var a_neda_tahriroff = new Image()
+
+            a_neda_tahriroff.src = "a-neda_tahrir1.jpg"
+
+            var a_neda_tahriron = new Image()
+
+            a_neda_tahriron.src = "a-neda_tahrir.jpg"
+
+			var e_neda_tahriroff = new Image()
+
+            e_neda_tahriroff.src = "e-neda_tahrir1.jpg"
+
+            var e_neda_tahriron = new Image()
+
+            e_neda_tahriron.src = "e-neda_tahrir.jpg"
+	     
+	     var linksoff = new Image()
+
+            linksoff.src = "links.jpg"
+
+            var linkson = new Image()
+
+            linkson.src = "links1.jpg"
+
+  	    var Send_usoff = new Image()
+
+            Send_usoff.src = "Send-us.jpg"
+
+            var Send_uson = new Image()
+
+            Send_uson.src = "Send-us1.jpg"
+
+
+						}
+
+
+
+
+
+function img_act(imgName) {
+
+  if (document.images) 
+
+    document[imgName].src = eval(imgName + 'on.src')
+
+}
+
+
+
+function img_inact(imgName) {
+
+  if (document.images)
+
+    document[imgName].src = eval(imgName + 'off.src')
+
+}
+
+
+
+// -->
+</script>
+
+<table border="0" cellpadding="0" cellspacing="2" width="100%">
+    <tbody><tr>
+        <td align="center" valign="top" width="95" bgcolor="#00FF00"><a href="/sites/birzeit.edu/scouncil/wb/poster.htm"><img src="/sites/birzeit.edu/scouncil/wb/poster33.jpg" width="95" height="84"></a></td>
+        <td align="center" bgcolor="#00FF00"><marquee align="middle" bgcolor="#FFFFFF" height="19" scrolldelay="10" width="509" style="BACKGROUND-COLOR: rgb(0,255,0); COLOR: rgb(255,0,0); FONT-FAMILY: Times New Roman; FONT-SIZE: 25pt" border="0">"It is He who sent the Messenger with the guidance and the deen of truth, that it may prevail over all other deens." [TMQ 9:33]</marquee><p></p>
+        </td>
+    </tr>
+    <tr>
+        <td align="center" valign="top" width="95" bgcolor="#00FF00" bordercolor="#FF0000"><table border="1" bordercolorlight="#FF0000">
+            <tbody><tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/index.html" onmouseover="img_act('home');window.status='Al-Wai Bloc...'; return true;" onmouseout="img_inact('home')"><img src="/sites/birzeit.edu/scouncil/wb/home.jpg" alt="Home" border="0" width="89" height="33" name="home"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/id_a.htm" onmouseover="img_act('a_About_us');window.status='About Us'; return true;" onmouseout="img_inact('a_About_us')"><img src="/sites/birzeit.edu/scouncil/wb/a-about_us.jpg" alt="About Us-Arabic" border="0" width="89" height="33" name="a_About_us"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/e-id.htm" onmouseover="img_act('e_About_us');window.status='About Us'; return true;" onmouseout="img_inact('e_About_us')"><img src="/sites/birzeit.edu/scouncil/wb/e-about_us.jpg" alt="About Us-English" border="0" width="89" height="33" name="e_About_us"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/articles.html" onmouseover="img_act('a_articles');window.status='Articles...'; return true;" onmouseout="img_inact('a_articles')"><img src="/sites/birzeit.edu/scouncil/wb/a-articles.jpg" alt="Articles-Arabic" border="0" width="89" height="33" name="a_articles"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/articles.html" onmouseover="img_act('e_artecles');window.status='Articles...'; return true;" onmouseout="img_inact('e_artecles')"><img src="/sites/birzeit.edu/scouncil/wb/e-artecles.jpg" alt="Articles-English" border="0" width="89" height="33" name="e_artecles"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/activities.html" onmouseover="img_act('a_activities');window.status='Activities...'; return true;" onmouseout="img_inact('a_activities')"><img src="/sites/birzeit.edu/scouncil/wb/a-activities.jpg" alt="Activities-Arabic" border="0" width="89" height="33" name="a_activities"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/activities.html" onmouseover="img_act('e_activities');window.status='Activities...'; return true;" onmouseout="img_inact('e_activities')"><img src="/sites/birzeit.edu/scouncil/wb/e-activities.jpg" alt="Activities-English" border="0" width="89" height="33" name="e_activities"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir.html" onmouseover="img_act('a_neda_tahrir');window.status='Neda El-Tahrir...'; return true;" onmouseout="img_inact('a_neda_tahrir')"><img src="/sites/birzeit.edu/scouncil/wb/a-neda_tahrir1.jpg" alt="Neda El-Tahrir(Arabic)" border="0" width="89" height="33" name="a_neda_tahrir"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir.html" onmouseover="img_act('e_neda_tahrir');window.status='Neda El-Tahrir...'; return true;" onmouseout="img_inact('e_neda_tahrir')"><img src="/sites/birzeit.edu/scouncil/wb/e-neda_tahrir1.jpg" alt="Neda El-Tahrir(Arabic)" border="0" width="89" height="33" name="e_neda_tahrir"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="/sites/birzeit.edu/scouncil/wb/links.html" onmouseover="img_act('links');window.status='Links...'; return true;" onmouseout="img_inact('links')"><img src="/sites/birzeit.edu/scouncil/wb/links.jpg" alt="Links" border="0" width="89" height="33" name="links"></a></td>
+            </tr>
+            <tr>
+                <td align="center" bordercolorlight="#FF0000"><a href="mailto:%20wb_birzeit@yahoo.com" onmouseover="img_act('Send_us');window.status='Send Us...'; return true;" onmouseout="img_inact('Send_us')" class="dead dead-img" aria-disabled="true"><img src="/sites/birzeit.edu/scouncil/wb/send-us.jpg" alt="Send Us(wb_birzeit@yahoo.com)" border="0" width="89" height="33" name="Send_us"></a></td>
+            </tr>
+        </tbody></table>
+        </td>
+        <th valign="top" bgcolor="#FFFFFF" background="khilafah_bg.jpg"><palign="center"> <h2 align="left"><font size="6"><i>The Call for Liberation
+          (Nida' ut-tahrir)</i></font></h2>
+        <h2 align="left"><font size="4"><b>A periodical Leaflet published by
+        Al-Wai' Bloc and distributed inside Campus.</b></font></h2>
+          <ul>
+            <li>
+        <h2 align="left"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir/nida'1.htm" target="new"><font size="4"><b>Summer 1997.</b></font></a><font size="4"> : <i>Different subjects and news.</i></font></h2>
+            </li>
+            <li>
+        <h2 align="left"><a href="/sites/birzeit.edu/scouncil/wb/nida'2.htm" target="new" class="dead" aria-disabled="true"><font size="4"><b>First semester 1997-98: #
+        1 :</b><i> </i></font></a><font size="4"><i>Different
+        subjects and news.</i></font></h2>
+            </li>
+            <li>
+        <h2 align="left"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir_nida'4.htm" target="new" class="dead" aria-disabled="true"><font size="4"><b>First semester 1997-98: #2
+        </b>.:</font></a><font size="4"> <i>Different subjects
+        and news.</i></font></h2>
+            </li>
+            <li>
+        <h2 align="left"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir_nida.html" target="new" class="dead" aria-disabled="true"><font size="4"><b>Second Semester 1998-98: #</b>1
+        </font></a><font size="4">: <i>University Elections.</i></font></h2>
+            </li>
+          </ul>
+        <h2 align="left"><font size="2"><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </i></font><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir_nida.doc" class="dead" aria-disabled="true"><font size="2"><i>Download
+        File (Nida.doc, Word97 format, ~33K)</i></font></a></h2>
+          <ul>
+            <li>
+        <h2 align="left"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir_ned.htm" target="new" class="dead" aria-disabled="true"><font size="4"><b>Second semester 1997-98: # 1 </b></font></a><font size="4"><i>: Different subjects and news.</i></font></h2>
+            </li>
+            <li>
+        <h2 align="left"><a href="/sites/birzeit.edu/scouncil/wb/nedatahrir_nida-sum1998.htm" target="new" class="dead" aria-disabled="true"><font size="4"><b>Summer 1998. :</b></font></a><font size="4"><i>Different subjects and news.</i></font></h2>
+            </li>
+          </ul>
+ <p align="left">&nbsp;</p>
+        </palign="center"></th>
+    </tr>
+</tbody></table>
+
+
+
+
+
+
+</body></html>

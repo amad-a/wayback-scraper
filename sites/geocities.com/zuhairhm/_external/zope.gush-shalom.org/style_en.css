@@ -1,0 +1,215 @@
+body, table {font-family : arial, FreeSans, sans-serif}
+p,li,th,td { font-size: 12pt}
+p,li { margin-bottom: 0; margin-top: 8pt }
+.float_start { margin: 4pt 1.25em 0pt 0pt; float: left; clear: both }
+.float_end { margin: 4pt 0pt 0pt 1.25em; float: right; clear: both }
+.no_float { clear: both }
+.field-name {white-space: nowrap; text-align: left; padding-right: 4pt}
+.indent_content { position:relative; left:12px}
+
+.article_date { direction: ltr; font-size: 12px; text-align: left }
+
+
+h1 {margin-bottom: 0; font-size: 20px; text-decoration:none; font-weight:bold}
+h2 {margin-bottom: 0; font-size: 18px; text-decoration:none; font-weight:bold}
+h3 {margin-bottom: 0; font-size: 16px; text-decoration:none; font-weight:bold}
+h4 {margin-bottom: 0; font-size: 14px; text-decoration:none; font-weight:bold}
+a {text-decoration: none; color:#7f5f5f;}
+a:hover {color:#000000}
+.body-class {background-color:#ffffff; padding:0; margin:0; font-family : arial} 
+.body-color {background-color:#ffffff;}
+.warning { color: #ff7f7f}
+
+.print_header {font-size: 18px; font-weight: bold;}
+.form_label {font-size: 16px; }
+
+.item-title, a.item-title {font-size: 18px; font-weight: bold; color: #ff0000}
+
+/*------------------------ list ------------------------------*/
+
+.list-item-title, a.list-item-title {font-size: 16px; font-weight: bold; color: #3f3f3f}
+a.list-item-title:visited {color:#7f7f7f}
+a.list-item-title:hover {color:#000000}
+
+/*---------------------- future event ------------------------*/
+
+.future-event-title {font-size: 20px; font-weight: bold; color: #ff0000}
+.future-event-date {font-size: 14px; font-weight: 700; color: #ff0000}
+
+a.list-future-event-title {font-size: 14px; font-weight: bold; color: #ff0000}
+a.list-future-event-title:visited {color: #ff0000}
+a.list-future-event-title:hover {color:#000000}
+
+/*----------------------- past event ----------------------*/
+
+.past-event-title {font-size: 20px; font-weight: bold; color: #7f0000}
+.past-event-date {font-size: 14px; font-weight: 400; color: #7f0000}
+a.list-past-event-title {font-size: 14px; font-weight: bold; color: #7f0000}
+a.list-past-event-title:visited {color: #9f3f3f}
+a.list-past-event-title:hover {color:#000000}
+
+/*----------------------- titles and links ---------------------------*/
+
+.strip-title {font-weight: bold; font-size: 18px; color: #ff0000}
+
+a.strip-link {font-weight: bold; font-size: 16px; text-decoration:none; border: 1px dotted #7f7f7f; background-color: #cfcfcf; color: #000000}
+a.strip-link:hover {border: 1px dotted #000000; background-color:#efefef}
+
+a.more-link {font-size: 12px; font-weight: bold; text-decoration:none; color: #ff0000}
+a.more-link:visited {color:#7f7f7f}
+a.more-link:hover {color:#000000}
+
+/*----------------------- paging and gallery ---------------------------*/
+
+a.previous-page-link, a.previous-page-link:visited {font-size: 14px; color: #7f0000; font-weight: 600; font-stretch:ultra-condensed}
+a.next-page-link, a.next-page-link:visited {font-size: 14px; color: #7f0000; font-weight: 600; font-stretch:ultra-condensed}
+a.gallery-prev-link, a.gallery-prev-link:visited { font-size: 14px; color: #7f0000; font-weight: 600; font-stretch:ultra-condensed}
+a.gallery-next-link, a.gallery-next-link:visited { font-size: 14px; color: #7f0000; font-weight: 600; font-stretch:ultra-condensed}
+
+a.gallery-up-link, a.gallery-up-link:visited { font-size: smaller; font-stretch:ultra-condensed}
+.gallery-description {font-size: smaller;}
+.gallery-title {font-size: 100%; word-wrap: none; text-decoration:none; font-weight:bold}
+.gallery_background img {border: 3px solid #7f0000}
+.gallery_background_small img {border: 2px solid #000000}
+.gallery-thumbnail-text {font-size:13px; font-weight:bold; color:#3f0000; margin: 4px 2px 2px 2px }
+.gallery-reference {font-size:12px; font-weight:600}
+.see_also_title {font-size: 14px; font-weight: bold;}
+
+/*----------------------- reStructuredText ---------------*/
+
+/* overriding tags used by ReStructuredText */
+   em {font-style:normal; font-weight:bold; font-size: 90%}
+   strong {font-style:italic; font-weight:bold; font-size: 90%}
+.reference {}
+.footnote-reference {font-weight: bold}
+.fn-backref {font-weight: bold}
+/* ----- obsolete (we change the html to border="0")
+table.docutils, table.docutils td {border:none white 0px !important}
+----- */
+/* ---------- sidebar menus -------- */
+
+.z-language-item {
+        padding: 0;
+        margin: 0 0 0 10px;
+}
+
+.z-sidebar-item {
+        padding: 0;
+        margin: 0 0 16px 14px;
+}
+
+.z-text-menu-top {
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 0;
+     border-top: 1px dotted #c6c6c6;
+     border-right: 0;
+     border-spacing: 0;
+     margin: 0;
+     padding: 2px 0 2px 0;
+     font-size: 12px;
+     font-weight: bold;
+}
+
+.z-text-menu-top-current { 
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 0;
+     border-top: 1px dotted #c6c6c6;
+     border-right: 0;
+     border-spacing: 0;
+     margin: 0;
+     padding: 2px 0 2px 0;
+     font-size: 12px;
+     font-weight: bold;
+     background-color: #ff0000;
+     color: #ffffff
+}
+
+.z-text-menu {
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 0;
+     border-top: 0;
+     border-right: 0;
+     border-spacing: 0;
+     margin: 0;
+     padding: 2px 0 2px 0;
+     font-size: 12px;
+     font-weight: bold;
+}
+
+.z-text-menu-current { 
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 0;
+     border-top: 0;
+     border-right: 0;
+     border-spacing: 0;
+     margin: 0;
+     padding: 2px 0 2px 0;
+     font-size: 12px;
+     font-weight: bold;
+     background-color: #ff0000;
+     color: #ffffff
+}
+
+
+
+.sidebar_td_top {
+     border-top: 1px dotted #c6c6c6;
+     border-right: 0;
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 1px dotted #c6c6c6;
+     border-spacing: 0;
+     margin: 0;
+     padding: 0;
+}
+
+.sidebar_td_bottom {
+     border-top: 0;
+     border-right: 0;
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 1px dotted #c6c6c6;
+     border-spacing: 0;
+     margin: 0;
+     padding: 0;
+}
+
+.content_td {
+     border: 1px dotted #c6c6c6;
+     border-spacing: 0;
+     margin: 0;
+     padding: 0;
+}
+
+.popup_fg {background-color:#ccccff; direction:ltr}
+.popup_close_button, .popup_close_button a, .popup_close_button a:visited {text-align:right; color: #ffffff; font-size: 11px; font-weight: bold; font-family :Arial}
+
+
+.z_nav_menu {
+     border-top: 0;
+     border-right: 0;
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 1px dotted #c6c6c6;
+     border-spacing: 0;
+     margin: 0;
+     padding: 2px;
+     font-size: 12px;
+     font-weight: bold;
+}
+
+.z_nav_menu_current { 
+     border-top: 0;
+     border-right: 0;
+     border-bottom: 1px dotted #c6c6c6;
+     border-left: 1px dotted #c6c6c6;
+     border-spacing: 0;
+     margin: 0;
+     padding: 2px;
+     font-size: 12px;
+     font-weight: bold;
+     background-color: #ff0000;
+     color: #ffffff
+}
+
+
+.calendar_title {font-size:12px; font-weight:700; color:#171716}
+.calendar_month {font-size:13px; font-weight:bold; color:#ffffff}
+.calendar_dayname {font-size:13px; font-weight:bold; color:#443595; vertical-align:center}

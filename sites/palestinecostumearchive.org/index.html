@@ -1,0 +1,293 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+<style>#trailsprite1 {
+	HEIGHT: 10px; LEFT: 0px; POSITION: absolute; TOP: 1px; VISIBILITY: visible; WIDTH: 10px; Z-INDEX: 100
+}
+#trailsprite2 {
+	HEIGHT: 10px; LEFT: 0px; POSITION: absolute; TOP: 0px; VISIBILITY: visible; WIDTH: 10px; Z-INDEX: 10
+}
+#trailsprite3 {
+	HEIGHT: 10px; LEFT: 0px; POSITION: absolute; TOP: 0px; VISIBILITY: visible; WIDTH: 10px; Z-INDEX: 10
+}
+#trailsprite4 {
+	HEIGHT: 10px; LEFT: 0px; POSITION: absolute; TOP: 0px; VISIBILITY: visible; WIDTH: 10px; Z-INDEX: 10
+}
+#trailsprite5 {
+	HEIGHT: 10px; LEFT: 0px; POSITION: absolute; TOP: 0px; VISIBILITY: visible; WIDTH: 10px; Z-INDEX: 10
+}
+#trailsprite6 {
+	HEIGHT: 10px; LEFT: 0px; POSITION: absolute; TOP: 0px; VISIBILITY: visible; WIDTH: 10px; Z-INDEX: 10
+}
+OL {
+	FONT: 10pt arial, geneva, sans-serif
+}
+</style>
+<style>A {
+	TEXT-DECORATION: none
+}
+</style>
+<style>A:hover {
+	COLOR: red; TEXT-DECORATION: underline
+}
+</style>
+<meta name="Author" content="Iliya Englin - EnglinSolutions">
+<meta name="Description" content="palestine costume archive Web Site">
+<meta name="KeyWords" content="Palestine Costume Archive; Palestinian costume; Palestine – costume and textiles; Biblical costume; Costumes of the Levant; costumes – Holy Land; costumes and textiles – Middle East; Arab costumes and textiles; Islamic costume; Palestine – material culture; Jordan – costume and textiles; Syria – costume and textiles; Egypt – costume and textiles; Bedouin costume; Bedouin, Egypt – material culture; Palestine – costumes and textiles – bibliography; Australia – Palestinian embroidery; UNRWA – refugee camp embroidery projects; Palestinian costume - exhibitions; Palestinian costume – museum collections; Jeni Allenby.">
+<title>palestine costume archive</title>
+<script language="JavaScript">
+	<!-- Hide from browsers that don't know JavaScript
+	var version = 0;
+		if (navigator.userAgent.indexOf("MSIE 4") != -1)  version = 5;
+		else if
+		(navigator.userAgent.indexOf("MSIE 3") != -1)  version = 1;
+		else if
+		(navigator.userAgent.indexOf("Mozilla/4") != -1)  version = 4;
+		else if
+		(navigator.userAgent.indexOf("Mozilla/4.5") != -1)  version = 7;
+		else if
+		(navigator.userAgent.indexOf("Mozilla/3") != -1)  version = 3;
+		else if
+		(navigator.userAgent.indexOf("Mozilla/2") != -1)  version = 2;
+		else if
+		(navigator.userAgent.indexOf("MSIE 4.5") != -1)  version = 6;
+		else version = 8;
+	// -->
+	</script><script language="JavaScript1.1">
+	if (version > 3)
+		document.write('<div id="trailSprite1"><img src="trailgif5.gif" height="10" width="10" border="0" name="trailSprite1img"></div><div id="trailSprite2"><img src="trailgif5.gif" height="10" width="10" border="0" name="trailSprite2img"></div><div id="trailSprite3"><img src="trailgif5.gif" height="10" width="10" border="0" name="trailSprite3img"></div><div id="trailSprite4"><img src="trailgif5.gif" height="10" width="10" border="0" name="trailSprite4img"></div><div id="trailSprite5"><img src="trailgif5.gif" height="10" width="10" border="0" name="trailSprite5img"></div><div id="trailSprite6"><img src="trailgif5.gif" height="10" width="10" border="0" name="trailSprite6img"></div>')
+</script><script language="Javascript1.1"><!--
+	var isNS = (navigator.appName == "Netscape");
+	layerRef = (isNS) ? "document" : "document.all";
+	styleRef = (isNS) ? "" : ".style";
+
+	var queue = new Array();
+	var NUM_OF_TRAIL_PARTS = 6
+
+	for (x=1; x < 7; x++) {	 ///////////////Image Preload
+		eval("trailSpriteFrame" + x + " = new Image(10,10);");
+		eval("trailSpriteFrame" + x + ".src = 'trailgif" + x + ".gif';");
+	}
+
+	////////////////////////////////////////////////The trail Object
+
+	function trailSpriteObj(anID) {
+		this.trailSpriteID = "trailSprite" + anID; //as before
+		this.imgRef = "trailSprite" + anID + "img"; //reference to the sprites image name
+		this.currentFrame = 1; //the varible for looking after the frame
+		this.animateTrailSprite = animateTrailSprite; //declare the objects method cycle
+	}
+
+	function animateTrailSprite() {
+		if (this.currentFrame <7) {	//if there are animation frames left, the change sprites the current frame
+			if (isNS) { 			//Detect the browser and perform coresponding image switch
+				eval("document['"+ this.imgRef + "'].src  =  trailSpriteFrame" + this.currentFrame + ".src");
+			} else {
+				eval("document['" + this.imgRef + "'].src  =  trailSpriteFrame" + this.currentFrame + ".src");
+			}
+			this.currentFrame ++; 	//and increase the objects current frame
+		} else { 					//the current frame has reached its limit so hide the sprite
+			eval(layerRef + '.' + this.trailSpriteID +  styleRef + '.visibility = "hidden"');
+		}
+	}
+
+	/////////////////////////////////////////////////////////////////
+
+	function processAnim() {
+		for(x=0; x < NUM_OF_TRAIL_PARTS; x++)
+			queue[x].animateTrailSprite();
+	}
+
+	function processMouse(e) {
+		currentObj = shuffleQueue();
+		if (isNS) {
+			eval("document." + currentObj + ".left = e.pageX - 0 ;");
+			eval("document." + currentObj + ".top = e.pageY + 5;");
+		} else {
+			eval("document.all." + currentObj + ".style.pixelLeft = event.clientX + document.body.scrollLeft - 0 ;");
+			eval("document.all." + currentObj + ".style.pixelTop = event.clientY + document.body.scrollTop + 5;");
+		}
+	}
+
+	function shuffleQueue() {
+		lastItemPos = queue.length - 1;
+		lastItem = queue[lastItemPos];
+		for (i = lastItemPos; i>0; i--)
+			queue[i] = queue[i-1];
+		queue[0] = lastItem;
+
+		queue[0].currentFrame = 1;	//reset the objects frame number & make the sprite visible again
+		eval(layerRef + '.' + queue[0].trailSpriteID +  styleRef + '.visibility = "visible"');
+
+		return 	queue[0].trailSpriteID;
+	}
+
+	function init() {
+		for(x=0; x<NUM_OF_TRAIL_PARTS; x++) 	//fill array with trail objects
+			queue[x] = new trailSpriteObj(x+1) ;
+
+		if (isNS) { document.captureEvents(Event.MOUSEMOVE); }
+		document.onmousemove = processMouse;
+
+		setInterval("processAnim();",003);
+	}
+
+	if (version > 3)
+		window.onload = init;
+	// -->
+</script><script language="JavaScript">
+<!--
+function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+}
+MM_reloadPage(true);
+// -->
+</script><style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+
+
+
+
+
+
+<body link="#000000" background="/sites/palestinecostumearchive.org/bgd.jpg" data-wayback-url="https://web.archive.org/web/20040122075642id_/http://www.palestinecostumearchive.org:80/">
+
+<p align="center"><font face="Bookman Old Style" color="#000000" size="7"><strong>palestine
+costume archive </strong></font></p>
+
+<p align="center" style="margin-top: -18"><strong><font face="Bookman Old Style" color="#000000" size="6">canberra,
+australia</font> </strong></p>
+<div align="left">
+
+<table border="0" width="823" height="77">
+  <tbody><tr>
+    <td width="406" height="77" valign="top" style="font-size: 0;"><img border="0" src="/sites/palestinecostumearchive.org/galilee_girl.jpg" width="395" height="600"></td>
+    <td width="405" height="77" valign="top">
+    <font face="Bookman Old Style">
+    <ul>
+      <li><b><a href="/sites/palestinecostumearchive.org/press_release.htm"><font color="#FF0000">MISSING
+        EXHIBITION<br>
+        </font></a></b></li>
+      <li><b><a href="/sites/palestinecostumearchive.org/newsletter_summer_2003.htm"><font color="#000000">Newsletter
+        (Summer 2003)</font></a></b></li>
+      <li><b><a href="/sites/palestinecostumearchive.org/newsletter_winter_2002.htm">Newsletter (Winter 2002)</a></b></li>
+      </ul>
+    <ul>
+      <li><b><font color="black"><a href="/sites/palestinecostumearchive.org/background.htm" name="#Start">Information about the
+        Archive</a></font></b></li>
+        <b>
+      <li><font color="black"><a href="/sites/palestinecostumearchive.org/faq.htm">Frequently asked questions</a></font></li>
+      </b><li><b><a href="/sites/palestinecostumearchive.org/publications.htm"><font color="#000000">Archive publications</font></a></b>
+        <b></b></li><b>
+      </b><li><b><a href="/sites/palestinecostumearchive.org/exhibitions.htm"><font color="#000000">Archive exhibitions
+        available for loan </font></a></b>
+        <b></b></li><b>
+      <li><a href="/sites/palestinecostumearchive.org/other_services.htm"><font color="#000000">Other services
+        offered by the Archive</font></a>
+      </li>
+      <li><a href="/sites/palestinecostumearchive.org/donations.htm"><font color="#FF0000">Donations</font><font color="#000000">/how to help</font>
+        </a>
+      </li>
+      </b></ul><b>
+    <ul>
+      <li><a href="/sites/palestinecostumearchive.org/pc_background.htm"><font color="#000000">Palestinian costume - background</font></a></li>
+    </ul>
+    <ul>
+      <li><a href="/sites/palestinecostumearchive.org/regional.htm"><font color="#000000">Palestinian costume
+        before 1948</font></a><font color="#000000"> </font><a href="/sites/palestinecostumearchive.org/regional.htm"><font color="#000000"> - by region</font></a></li>
+    </ul>
+    <ul>
+      <li><a href="/sites/palestinecostumearchive.org/contemporary.htm"><font color="#000000"> Palestinian costume and
+        embroidery since 1948</font></a></li>
+    </ul>
+    <ul>
+        <li><font color="#000000"><a href="/sites/palestinecostumearchive.org/refugee_camps.htm">Refugee camp embroidery projects - history,
+        products, contact details</a></font></li>
+    </ul>
+    <ul>
+      <li><font color="#000000"><a href="/sites/palestinecostumearchive.org/oz.htm">Palestinian embroidery and
+        heritage material in Australia</a> </font></li>
+    </ul>
+    <ul>
+      <li><font color="#000000"><a href="/sites/palestinecostumearchive.org/bibliography.htm">Bibliography on Palestinian material
+        culture</a></font></li>
+    </ul>
+    </b></font><ul><font face="Bookman Old Style"><b>
+      </b></font><li><font face="Bookman Old Style"><b></b></font><p align="left"><font face="Bookman Old Style"><b><font color="#000000"><a href="/sites/palestinecostumearchive.org/collections.htm">World wide collections
+        of Palestinian costume</a></font><font color="#0000FF"> </font><font color="#FFFF00">(under
+        construction)</font></b>
+      </font></p>
+        <b><font face="Bookman Old Style"></font></b></li><b><font face="Bookman Old Style">
+      </font></b><li><b><font face="Bookman Old Style"></font></b><p align="left"><b><font face="Bookman Old Style"><a href="/sites/palestinecostumearchive.org/other_areas.htm"><font color="#000000">Costumes from other
+        areas of the Middle East held by the Archive </font></a></font></b></p>
+        </li>
+        <b><font face="Bookman Old Style">
+    </font></b></ul><b><font face="Bookman Old Style">
+        </font></b>
+    </td>
+  </tr>
+  <tr> <td colspan="2"> 
+        <b><font color="#008000" face="Bookman Old Style" size="2">Please allow several minutes for
+        the loading of some of these pages due to the high number of
+        images.&nbsp;</font></b>
+ </td> </tr>
+</tbody></table>
+</div><font face="Bookman Old Style">
+
+<hr color="#000000">
+<div align="left">
+
+<table border="0" width="821" height="89" cellspacing="1" cellpadding="0">
+  <tbody><tr>
+    <td width="81" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/pc_background.htm"><img src="/sites/palestinecostumearchive.org/pc112.jpg" alt="Traditional Palestinian costume - background" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/regional.htm"><img src="/sites/palestinecostumearchive.org/pc103.jpg" alt="Traditional Palestinian costume before 1948" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/contemporary.htm"><img src="/sites/palestinecostumearchive.org/pc24.jpg" alt="Traditional Palestinian costume since 1948" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/bibliography.htm"><img src="/sites/palestinecostumearchive.org/pc117.jpg" alt="Bibliography of Palestinian material culture" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/collections.htm"><img src="/sites/palestinecostumearchive.org/pc106.jpg" alt="World-wide collections of Palestinian costume" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/other_areas.htm"><img src="/sites/palestinecostumearchive.org/pc107.jpg" alt="Costume from other areas of the Middle East" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/exhibitions.htm"><img src="/sites/palestinecostumearchive.org/pc104.jpg" alt="Palestine Costume Archive - exhibitions for loan" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/other_services.htm"><img src="/sites/palestinecostumearchive.org/pc11x.jpg" width="70" height="70" alt="Other services offered by the Archive"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/oz.htm"><img src="/sites/palestinecostumearchive.org/port023.jpg" alt="Palestinian costume and embroidery in Australia" align="left" width="70" height="70"></a></td>
+    <td width="82" height="81" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/refugee_camps.htm"><img src="/sites/palestinecostumearchive.org/dolls-icon.jpg" align="left" valign="top" alt="Palestinian refugee camp embroidery projects - products" width="70" height="70"></a></td>
+  </tr>
+  <tr>
+    <td width="81" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/pc_background.htm"><small><small><strong>Costume
+    background</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/regional.htm"><strong><small><small>Costume
+      before 1948</small></small></strong></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/contemporary.htm"><small><small><strong>Costume
+      since 1948</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/bibliography.htm"><small><small><strong>Bibliography</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/collections.htm"><small><small><strong>Collections</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/other_areas.htm"><small><small><strong>Middle
+    East costume</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/exhibitions.htm"><small><small><strong>Archive
+    exhibitions</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><a href="/sites/palestinecostumearchive.org/other_services.htm"><small><small><strong>Archive
+    services</strong></small></small></a></td>
+    <td width="82" height="13" align="left" valign="top"><small><small><strong><a href="/sites/palestinecostumearchive.org/oz.htm">Costume and
+    embroidery in Australia</a></strong></small></small></td>
+    <td width="82" height="13" align="left" valign="top"><strong><small><small><a href="/sites/palestinecostumearchive.org/refugee_camps.htm">Refugee
+      embroidery products</a></small></small></strong></td>
+  </tr>
+</tbody></table>
+</div>
+
+<hr color="#000000">
+
+<p align="center"><strong><font color="#000000" face="Bookman Old Style" size="4">all enquiries to:<br>
+palestine costume
+archive, po box 98, lyneham, canberra, act 2602, australia&nbsp;&nbsp;&nbsp;</font></strong></p>
+</font>
+
+<p align="center"><strong><font face="Bookman Old Style" size="4"><font color="#000000">tel/fax: +612
+6248 0114
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+em</font>ail: <a href="mailto:info@palestinecostumearchive.org" class="dead" aria-disabled="true"><u>info@palestinecostumearchive.org</u></a></font></strong></p>
+<hr>
+<p align="center"><strong><font face="Bookman Old Style" size="2">The contents
+of this website, including all images and text, are for personal, educational
+and non commercial use only.&nbsp; The contents of this site may not be
+reproduced in any form without the permission of the Palestine Costume Archive.</font></strong></p>
+
+
+</body></html>

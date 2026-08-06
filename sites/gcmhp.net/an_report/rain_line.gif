@@ -1,0 +1,145 @@
+
+<html>
+<head>
+    <title>Error 404: Page not Found</title>
+    
+    <link REL="stylesheet" TYPE="text/css" HREF="../include/nz.css">
+<script language="JavaScript">
+<!--
+//-->
+</script>
+
+</head>
+
+<body background="/images/newbg.gif" bgproperties="fixed" bgcolor="#5F788D" marginwidth="0" marginheight="0" topmargin="0" leftmargin="0">
+
+<center>
+<img border="0" src="/images/clearsp.gif" alt="" width="100" height="5"><br>
+<table border="0" width="752" cellspacing="0" cellpadding="5">
+  <tr>
+    <td valign="middle" nowrap><img border="0" src="/images/logowhite.gif" alt="Welcome to Nayzak Online" border="0" WIDTH="163" HEIGHT="58"></td>
+  </tr>
+</table>
+
+<table border="0" width="750" cellspacing="1" cellpadding="0" bgcolor="#000000">
+<tr><td>
+
+<table border="0" width="750" cellspacing="0" cellpadding="0">
+  <tr>
+	<td width="100%" nowrap valign="top" bgcolor="#336699">
+	<table>
+	<tr>
+		<td width="100%" nowrap valign="middle">
+			<font size="1" color="FFFFFF" face="Verdana"><b><img src="/images/dotarrowyellow.gif" align="absmiddle" width="16" height="9" alt="" border="0"><a href="/home/default.asp"><font color="FFFFFF">Home</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" align="absmiddle" width="16" height="9" alt="" border="0"><a href="/home/solutions.asp"><font color="FFFFFF">Solutions</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" align="absmiddle" width="16" height="9" alt="" border="0"><a href="/casestudies"><font color="FFFFFF">Clients</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" align="absmiddle" width="16" height="9" alt="" border="0"><a href="/support"><font color="FFFFFF">Support</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" align="absmiddle" width="16" height="9" alt="" border="0"><a href="/home/contact.asp"><font color="FFFFFF">Contact Us</font></a>
+			</b></font></td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="100%" bgcolor="#000000" align="center" colspan="2"><img border="0" src="/images/clearsp.gif" alt="" width="1" height="1"></td>
+  </tr>
+</table>
+
+
+<table bgcolor="#FFFFFF" border="0" width="750" height="400" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="349" VALIGN="TOP" BGCOLOR="#F7F5EE">
+		<a href="/home/solutions.asp"><img SRC="/images/nav_solutions.gif" ALT="Solutions" BORDER="0" WIDTH="143" HEIGHT="21"></a><br>
+		<font face="Verdana" size="1">
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/consulting.asp">Consulting</a><br>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/webdevelopment.asp">Web Design</a><br>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/ecommerce.asp">E-Commerce</a><br>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/database.asp">Database Design</a><br>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/access.asp">Internet Access</a><br>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/hosting.asp">Web Hosting</a><br>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/network.asp">Network Consulting</a>
+		<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/products/">Products</a>
+		<!--img border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="/home/wmedia.asp">Windows Media</a-->
+		<table border="0" cellpadding="0" cellspacing="0">
+		<form method="POST" action="https://www.registerapi.com/rapi/style1/Registration/Step_01/CheckDomain.asp?siteid=14004">
+		<tr>
+			<td valign="top"><font face="Verdana" size="1">
+			<img SRC="/images/nav_reg.gif" ALT="Domain Registration" VSPACE="5" WIDTH="143" HEIGHT="21"><br>
+			<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="https://www.registerapi.com/rapi/style1/register/default.asp?siteid=14004">Search/Register</a><br>
+			<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="https://www.registerapi.com/rapi/style1/multilingual/default.asp?siteid=14004">Multilingual Reg.</a><br>
+			<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="https://www.registerapi.com/rapi/style1/register/NameSpin/default.asp?siteid=14004">Namespin</a><br>
+			<img alt="-" border="0" hspace="3" vspace="3" align="absmiddle" src="/images/dotarrowred.gif" WIDTH="16" HEIGHT="9"><a href="https://www.registerapi.com/rapi/style1/Account/default.asp?siteid=14004">Account Access</a><br>
+			<br><center>Need a Web Address?
+			<font color="#FF0000" size="1"><b>Now only $14.95!</font>
+			<input name="DomainName" class=clsInputBox size="15" maxlength="256">
+			<input type="image" SRC="/images/find_name.gif" alt="Find Name" HSPACE="15" VSPACE="5" WIDTH="75" HEIGHT="15"><br>
+			</center></font><hr noshade size=1 color="#000000">
+			</td>
+		</tr>
+		</form>
+		</table>
+		<p align="center">
+		<a HREF="http://www.ibm.com/" TARGET="_new"><img SRC="/images/ibmbp.gif" BORDER="0" ALT="IBM Business Partner" WIDTH="94" HEIGHT="46"></a><br><br>
+		<a HREF="http://www.cisco.com/" TARGET="_new"><img SRC="/images/cisco2.gif" BORDER="0" ALT="Cisco Systems Reseller" WIDTH="100" HEIGHT="67"></a><br><br>
+		<a HREF="http://www.hp.com/" TARGET="_new"><img SRC="/images/hplogo.gif" BORDER="0" ALT="Hewlett-Packard Reseller"></a><br><br>
+		<a HREF="http://www.microsoft.com/windows/windowsmedia/" TARGET="_new"><img SRC="/images/wmsp.jpg" BORDER="0" ALT="Microsoft Windows Media Service Provider" WIDTH="100" HEIGHT="133"></a><br><br>
+		<a HREF="http://www.microsoft.com/windows2000/dotcoms/" TARGET="_new"><img SRC="/images/PwdbyWinSrvr_anim.gif" BORDER="0" ALT="Powered by Windows 2000 Server" WIDTH="85" HEIGHT="90"></a><br><br>
+		<a HREF="/home/csi.asp"><img src="/home/images/csilogosm.gif" border="0" WIDTH="100" HEIGHT="60"></a><br><br>
+		</p>
+
+	</td>
+    <td bgcolor="#000000" align="center"><img border="0" src="/images/clearsp.gif" alt="" width="1" height="1"></td>
+	<td valign="top" width="100%" bgcolor="#F7F5EE">
+		<table width="100%" height="100%" cellpadding="2" cellspacing="0" border="0">
+		<tr>
+			<td height="20" background="/images/bkgd_section_titlebar.gif"><span class="clsSectionHeading">&nbsp;&nbsp;Error 404: Page Not Found&nbsp;&nbsp;</span></td>
+		</tr>
+		<tr>
+			<td valign="top" bgcolor="#F7F5EE"><br>
+				<blockquote><font face="Verdana" size="2">
+				<p><h1><font color="#FF0000" face="Impact,Verdana">404 PAGE NOT FOUND</font></h1>
+				<b>Sorry, the page you're trying to reach is temporarily unavailable or may no longer exist.</b>
+				<p>Please try one of the following:
+				<ul>
+					<li>Click your browser's <b>Refresh</b> button to try reconnecting.
+					<li>Check the spelling of the URL to make sure the address is
+						correct (capitalization and punctuation are important) and then
+						click your browser's <b>Refresh</b> button.
+					<li>Click your browser's <b>Back</b> button to return to the previous page.
+					<li>Click here to go to the <a href="http://www.nayzak.com">NAYZAK.COM home page</a>.</li>
+				</ul>
+				</font></blockquote>
+			</td>
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+
+<table border="0" width="750" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="100%" bgcolor="#000000" align="center" colspan="2"><img border="0" src="/images/clearsp.gif" alt="" width="1" height="1"></td>
+  </tr>
+  <tr>
+    <td width="100%" bgcolor="#000000">
+	<table>
+	<tr>
+		<td width="100%" nowrap valign="middle">
+			<font size="1" color="FFFFFF" face="Verdana"><b><img src="/images/dotarrowyellow.gif" alt=">" align="absmiddle" width="16" height="9" border="0"><a href="/home/news.asp"><font color="FFFFFF">Company News</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" alt=">" align="absmiddle" width="16" height="9" border="0"><a href="/home/profile.asp"><font color="FFFFFF">About Nayzak</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" alt=">" align="absmiddle" width="16" height="9" border="0"><a href="/home/terms.asp"><font color="FFFFFF">Terms of Service</font></a>&nbsp;<img src="/images/dotarrowyellow.gif" alt=">" align="absmiddle" width="16" height="9" border="0"><a href="/home/privacy.asp"><font color="FFFFFF">Privacy Statement</font></a>
+			</b></font></td>
+    </tr>
+    </table>
+    </td>
+  </tr>
+  <tr>
+    <td width="100%" bgcolor="#000000"><img border="0" src="/images/clearsp.gif" alt="" width="1" height="1"></td>
+  </tr>
+  <tr>
+    <td align="center" width="100%" bgcolor="#DEDEEF">
+      <font face="Verdana" size="1">&nbsp;
+        © 1995-2002 <a href="/home/terms.asp">Copyright</a> Nayzak Communications, Inc. All rights reserved.</font>
+    </td>
+  </tr>
+</table>
+
+</td></tr>
+</table>
+<BR>
+</body>
+</html>

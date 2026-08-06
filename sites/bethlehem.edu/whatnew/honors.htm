@@ -1,0 +1,480 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+
+<meta http-equiv="Content-Language" content="en-us">
+<title>Bethlehem University Main Page - Awards of Excellence</title>
+<script language="JavaScript1.1">
+
+
+var photos=new Array()
+var photoslink=new Array()
+var which=0
+
+var photosa=new Array()
+var photoslinka=new Array()
+var whicha=0
+
+
+//define images. You can have as many as you want. Images MUST be of the same dimensions (for NS's sake)
+photos[0]="images/image1.jpg"
+photos[1]="images/image2.jpg"
+photos[2]="images/image3.jpg"
+photos[3]="images/image4.jpg"
+photos[4]="images/image5.jpg"
+
+photosa[0]="images/after1.jpg"
+photosa[1]="images/after2.jpg"
+photosa[2]="images/after3.jpg"
+photosa[3]="images/after4.jpg"
+photosa[4]="images/after5.jpg"
+photosa[5]="images/after6.jpg"
+photosa[6]="images/after7.jpg"
+
+//Specify whether images should be linked or not (1=linked)
+var linkornot=0
+
+//Set corresponding URLs for above images. Define ONLY if variable linkornot equals "1"
+photoslink[0]=""
+photoslink[1]=""
+photoslink[2]=""
+photoslink[3]=""
+photoslink[4]=""
+
+//do NOT edit pass this line
+
+var preloadedimages=new Array()
+for (i=0;i<photos.length;i++){
+preloadedimages[i]=new Image()
+preloadedimages[i].src=photos[i]
+}
+
+var preloadedimagesa=new Array()
+for (i=0;i<photosa.length;i++){
+preloadedimagesa[i]=new Image()
+preloadedimagesa[i].src=photosa[i]
+}
+
+
+function applyeffect(){
+if (document.all){
+photoslider.filters.revealTrans.Transition=Math.floor(Math.random()*23)
+photoslider.filters.revealTrans.stop()
+photoslider.filters.revealTrans.apply()
+}
+}
+
+function applyeffecta(){
+if (document.all){
+photoslidera.filters.revealTrans.Transition=Math.floor(Math.random()*23)
+photoslidera.filters.revealTrans.stop()
+photoslidera.filters.revealTrans.apply()
+}
+}
+
+
+function playeffect(){
+if (document.all)
+photoslider.filters.revealTrans.play()
+}
+
+function playeffecta(){
+if (document.all)
+photoslidera.filters.revealTrans.play()
+}
+
+
+function keeptrack(){
+window.status="Image "+(which+1)+" of "+photos.length
+}
+
+function keeptracka(){
+window.status="Image "+(whicha+1)+" of "+photosa.length
+}
+
+
+function backward(){
+if (which>0){
+which--
+applyeffect()
+document.images.photoslider.src=photos[which]
+playeffect()
+keeptrack()
+}
+}
+
+function backwarda(){
+if (whicha>0){
+whicha--
+applyeffecta()
+document.images.photoslidera.src=photosa[whicha]
+playeffecta()
+keeptracka()
+}
+}
+
+
+function forward(){
+if (which<photos.length-1){
+which++
+applyeffect()
+document.images.photoslider.src=photos[which]
+playeffect()
+keeptrack()
+}
+}
+
+function forwarda(){
+if (whicha<photosa.length-1){
+whicha++
+applyeffecta()
+document.images.photoslidera.src=photosa[whicha]
+playeffecta()
+keeptracka()
+}
+}
+
+
+function transport(){
+window.location=photoslink[which]
+}
+
+</script>  
+<script language="JavaScript">
+
+i01_w = new Image(1,1);
+i01_w.src = "../images/main_on_01.jpg";
+i01 = new Image(1,1);
+i01.src = "../images/main_off_01.jpg";
+
+i02_w = new Image(1,1);
+i02_w.src = "../images/main_on_02.jpg";
+i02 = new Image(1,1);
+i02.src = "../images/main_off_02.jpg";
+
+i03_w = new Image(1,1);
+i03_w.src = "../images/main_on_03.jpg";
+i03 = new Image(1,1);
+i03.src = "../images/main_off_03.jpg";
+
+i04_w = new Image(1,1);
+i04_w.src = "../images/main_on_04.jpg";
+i04 = new Image(1,1);
+i04.src = "../images/main_off_04.jpg";
+
+i05_w = new Image(1,1);
+i05_w.src = "../images/main_on_05.jpg";
+i05 = new Image(1,1);
+i05.src = "../images/main_off_05.jpg";
+
+i06_w = new Image(1,1);
+i06_w.src = "../images/main_on_06.jpg";
+i06 = new Image(1,1);
+i06.src = "../images/main_off_06.jpg";
+
+i07_w = new Image(1,1);
+i07_w.src = "../images/main_on_07.jpg";
+i07 = new Image(1,1);
+i07.src = "../images/main_off_07.jpg";
+
+i08_w = new Image(1,1);
+i08_w.src = "../images/main_on_08.jpg";
+i08 = new Image(1,1);
+i08.src = "../images/main_off_08.jpg";
+
+i09_w = new Image(1,1);
+i09_w.src = "../images/main_on_09.jpg";
+i09 = new Image(1,1);
+i09.src = "../images/main_off_09.jpg";
+
+i10_w = new Image(1,1);
+i10_w.src = "../images/main_on_10.jpg";
+i10 = new Image(1,1);
+i10.src = "../images/main_off_10.jpg";
+
+i11_w = new Image(1,1);
+i11_w.src = "../images/main_on_11.jpg";
+i11 = new Image(1,1);
+i11.src = "../images/main_off_11.jpg";
+
+i12_w = new Image(1,1);
+i12_w.src = "../images/main_on_12.jpg";
+i12 = new Image(1,1);
+i12.src = "../images/main_off_12.jpg";
+
+function hiLite(imgDocID,imgObjName,txt) {
+
+// manages mouseOver animations
+//   imgDocID - the name or number of the document image to be replaced
+//   imgObjName - the name of the image object to be swapped in
+
+
+document.images[imgDocID].src = eval(imgObjName + ".src")
+
+
+}
+
+// end Script -->
+</script>
+
+<style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+
+<body link="#0080C0" vlink="#008080" alink="#FF0000" bgcolor="#FFFFFF" text="#008080" data-wayback-url="https://web.archive.org/web/20010614044712id_/http://www.bethlehem.edu:80/whatnew/honors.htm">
+
+<div align="center">
+<center>
+<table border="0" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td width="200" valign="top" align="center">
+<div align="center">
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+            <tbody><tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/main_page.html" onmouseover="hiLite('b_i01','i01_w')" onmouseout="hiLite('b_i01','i01')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_01.jpg" name="b_i01" border="0" alt="Main Page" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/inform/intro.htm" onmouseover="hiLite('b_i02','i02_w')" onmouseout="hiLite('b_i02','i02')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_02.jpg" name="b_i02" border="0" alt="Information" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/academic/academic.htm" onmouseover="hiLite('b_i03','i03_w')" onmouseout="hiLite('b_i03','i03')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_03.jpg" name="b_i03" border="0" alt="Academics" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/public/publica.htm" onmouseover="hiLite('b_i04','i04_w')" onmouseout="hiLite('b_i04','i04')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_04.jpg" name="b_i04" border="0" alt="General Public" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/staffdir/staffdir.htm" onmouseover="hiLite('b_i05','i05_w')" onmouseout="hiLite('b_i05','i05')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_05.jpg" name="b_i05" border="0" alt="Faculty &amp; Staff" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/studlife/studlife.htm" onmouseover="hiLite('b_i06','i06_w')" onmouseout="hiLite('b_i06','i06')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_06.jpg" name="b_i06" border="0" alt="Current Students" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/activity/activ.htm" onmouseover="hiLite('b_i07','i07_w')" onmouseout="hiLite('b_i07','i07')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_07.jpg" name="b_i07" border="0" alt="Activities" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/whatnew/whatnew.htm" onmouseover="hiLite('b_i08','i08_w')" onmouseout="hiLite('b_i08','i08')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_08.jpg" name="b_i08" border="0" alt="What's New" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/whatnew/current.html" onmouseover="hiLite('b_i09','i09_w')" onmouseout="hiLite('b_i09','i09')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_09.jpg" name="b_i09" border="0" alt="Current Event" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/frweb/frgen.htm" onmouseover="hiLite('b_i10','i10_w')" onmouseout="hiLite('b_i10','i10')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_10.jpg" name="b_i10" border="0" alt="In French" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/contact/contact.htm" onmouseover="hiLite('b_i11','i11_w')" onmouseout="hiLite('b_i11','i11')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_11.jpg" name="b_i11" border="0" alt="Contact Us" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><a href="/sites/bethlehem.edu/index.html" onmouseover="hiLite('b_i12','i12_w')" onmouseout="hiLite('b_i12','i12')">
+              <font face="Arial" size="3"><img src="/sites/bethlehem.edu/images/main_off_12.jpg" name="b_i12" border="0" alt="Home" width="200" height="36"></font></a></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center"><b>&nbsp;&nbsp;</b>
+                <p><b>&nbsp;&nbsp;</b></p></td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center">
+                <p align="center"><b>Highest Honor Students Receiving their
+                Awards</b><br>
+                </p><hr width="90%">
+              </td>
+            </tr>
+            <tr>
+              <td width="100%" valign="middle" align="center">
+              
+              
+<script language="JavaScript">
+<!--//
+
+var version = "other"
+browserName = navigator.appName;   
+browserVer = parseInt(navigator.appVersion);
+
+if (browserName == "Netscape" && browserVer >= 3) version = "n3";
+else if (browserName == "Netscape" && browserVer < 3) version = "n2";
+else if (browserName == "Microsoft Internet Explorer" && browserVer >= 4) version = "e4";
+else if (browserName == "Microsoft Internet Explorer" && browserVer < 4) version = "e3";
+
+function stopError()
+{
+	return true;
+}
+window.onerror = stopError;
+
+function wireOpen()
+{
+	if (version == "e4")
+	{
+		document.write("<marquee behavior=scroll direction=up  height=200 width=195 scrollamount=2 scrolldelay=2 onmouseover='this.stop()' onmouseout='this.start()'>")
+	}
+}
+
+function wireClose()
+{
+	if (version == "e4")
+	{
+		document.write("</marquee>")
+	}
+}
+
+//-->
+</script>
+
+
+<script language="JavaScript">
+	wireOpen();
+</script>
+<p><b>Ms. Shireen Suliman,</b><br>
+<b>Faculty of Arts</b>
+<br>
+
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st1.jpg" border="0" height="151" width="195"></p>
+<p><br>
+<b>Mr. Mohammad Budeir,</b><br>
+<b>Faculty of Arts<br>
+</b><img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st2.jpg" height="151" width="195"></p>
+<p><br>
+<b>Ms. Suher Lolas,</b><br>
+<b>Faculty of Science</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st3.jpg" height="151" width="195"></p>
+<p><br>
+<b>Mr. Mike Hazboun,</b><br>
+<b>Faculty of Science</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st4.jpg" height="151" width="195"></p>
+<p><br>
+<b>Ms. Shadia Issa,</b><br>
+<b>Faculty of Business Administration</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st5.jpg" height="151" width="195"></p>
+<p><br>
+<b>Ms. Amira Juha,</b><br>
+<b>Faculty of Business Administration</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st6.jpg" border="0" height="151" width="195"></p>
+<p><br>
+<b>Ms. Khitam Al-O'byat,</b><br>
+<b>Faculty of Nursing</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st7.jpg" height="151" width="195"></p>
+<p><br>
+<b>Ms. Iman Hilal,</b><br>
+<b>Faculty of Nursing</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st8.jpg" height="151" width="195"></p>
+<p><br>
+<b>Ms. Jumana Kharoufeh,</b><br>
+<b>Faculty of Education</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st9.jpg" height="151" width="195"></p>
+<p><br>
+<b>Mr. Elias Ghattas,</b><br>
+<b>Institute of Hotel Management and Tourism</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st10.jpg" height="151" width="195"></p>
+<p><br>
+<b>Mr. Ibrahim Salameh,</b><br>
+<b>Institute of Hotel Management and Tourism</b><br>
+<img src="/sites/bethlehem.edu/whatnew/honors_pics/honor-st11.jpg" height="151" width="195"><br>
+<br>
+<br>
+ <script language="JavaScript">
+	wireClose();
+</script> 
+
+
+
+              
+              
+</p>
+
+
+
+              
+              
+              </td>
+            </tr>
+          </tbody></table>
+</div>
+</td>
+<td width="550" valign="top" align="left">
+<font face="Arial" color="#008080" size="3">
+<img border="0" src="/sites/bethlehem.edu/images/bu.jpg" width="553" height="113"></font>
+
+
+
+
+<h1 align="center"><font color="#008080">Awards of Excellence<br>
+May 3, 2001</font></h1>
+
+
+
+
+<p align="center"><img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/shields.jpg" width="323" height="189"></p>
+<p class="MsoNormal">The Awards of Excellence Ceremony was held at Bethlehem
+University in honor of 367 students.<span style="mso-spacerun: yes">&nbsp; </span>It
+is interesting to note that 22% of those who received highest grades were
+females.</p>
+<p class="MsoNormal">In his opening remarks, Brother Neil Kieffe, FSC, Vice
+President for Academic Affairs stated that this is a very special day; the third
+time that the Award of Excellence Ceremony is being held, but this year the
+political circumstances are difficult, so he congratulated the students on being
+able to excel despite the shooting and bombardment.<span style="mso-spacerun: yes">&nbsp;
+</span>He announced that pictures of the honored students will be posted in two
+locations on campus; thus emphasizing the importance of academic excellence at
+Bethlehem University.</p>
+<p class="MsoNormal"><img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/br_neil.jpg" width="182" height="184" align="right">Brother
+Neil also acknowledged the financial contribution of donors who are making
+education possible at this University.<span style="mso-spacerun: yes">&nbsp; </span>He
+acknowledged with appreciation the financial help and all other aspects of
+assistance B.U. is receiving from its friends.</p>
+<p class="MsoNormal">He also noted the special donor who granted J.D. 1 per
+credit hour to every student, at an approximate total of J.D. 30 per student.<span style="mso-spacerun: yes">&nbsp;
+</span>An anonymous donor contributed J.D. 60,000 in order to help reduce the
+cost of education.</p>
+<p class="MsoNormal" align="center"><a href="/sites/bethlehem.edu/whatnew/neil_presentation.htm" class="dead" aria-disabled="true">
+<marquee width="342" height="18" behavior="alternate"><font color="#008000">Click Here for full text
+of Br. Neil's Presentation</font></marquee>
+</a></p>
+<p class="MsoNormal" align="center"><img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/table-group1.jpg" width="286" height="178">&nbsp;
+<img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/audience.jpg" width="234" height="178"></p>
+<p class="MsoNormal">This year, the Fareedeh Aby Dayyeh-Al Budeiri Nursing
+Scholarship was awarded to Mr. Mohammad Khleif.<span style="mso-spacerun:
+yes">&nbsp; </span><img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/al_budeiri.jpg" width="186" height="206" align="right">On
+behalf of Mr. Jamil Al Budeiri, Mr. Hani Abyu Dayyeh offered the Scholarship,
+and stated reading from a text written by Mr. Budeiri:</p>
+<p class="MsoNormal">A long time ago, I studied at the Arab College in
+Jerusalem, and I learnt to start my address with a positive note, but this time
+because of difficult circumstances I have to say that I am unable to be with
+you.<span style="mso-spacerun: yes">&nbsp; </span>He stated that the Scholarship
+is not about money but rather about accomplishment, and he expressed hope that
+God will lead the students into becoming leaders who promote a free and
+democratic Palestine.<span style="mso-spacerun: yes">&nbsp; </span>Mr. Al
+Budeiri added that his mother was a pioneer in her accomplishments; as a
+Palestinian Arab, and as a woman who traveled to Beirut in 1915 to study there.</p>
+<p class="MsoNormal" align="center"><img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/al-budeiri-grant.jpg" width="261" height="197"><b><br>
+Mr. Mohammad Khleif,<br>
+Receiving the Fareedeh Abu Dayyeh Al-Budeiri<br>
+Nursing Award</b></p>
+<p class="MsoNormal">&nbsp;</p>
+<span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;;mso-fareast-font-family:
+&quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:EN-US;
+mso-bidi-language:AR-SA">At the end of the Awards of Excellence Ceremony, the
+audience was entertained to a musical presentation by the University Choir led
+by Sister Patricia Crockford.</span>
+<p align="center"><img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/coral.jpg" width="258" height="136">&nbsp;
+<img border="0" src="/sites/bethlehem.edu/whatnew/honors_pics/coral1.jpg" width="217" height="135"></p>
+<p><a href="/sites/bethlehem.edu/whatnew/honor-list.htm" class="dead" aria-disabled="true">Names of the Honored Students</a></p>
+<p>&nbsp;</p>
+
+
+
+
+</td>
+</tr>
+</tbody></table>
+</center></div>
+
+
+
+
+</body></html>
