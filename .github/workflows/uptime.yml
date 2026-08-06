@@ -1,0 +1,98 @@
+name: uptime
+
+# Checks palestineonline.net from outside the server, since a check running on the
+# box itself cannot report that the box is down. GitHub emails the repo owner when
+# a scheduled run fails -- that email is the alert.
+#
+# Scheduled workflows are best-effort: GitHub delays them under load, so treat the
+# 5 minute interval as "roughly every 5-20 minutes", not a guarantee.
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: uptime
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Probe the live site
+        run: |
+          set -uo pipefail
+
+          SITE="https://palestineonline.net"
+          HOST="palestineonline.net"
+          KEYWORD="Palestine Online"
+          CERT_MIN_DAYS=14
+
+          FAILURES=()
+          fail() { FAILURES+=("$1"); echo "::error::$1"; }
+
+          # Transient blips are not outages. Only the last of three tries counts.
+          fetch() {
+            local url="$1" out="$2" code=""
+            for attempt in 1 2 3; do
+              code=$(curl -sS -o "$out" -w '%{http_code}' --max-time 20 "$url" 2>/dev/null || echo "000")
+              [ "$code" = "200" ] && break
+              [ "$attempt" -lt 3 ] && { echo "  attempt $attempt: HTTP $code, retrying in 10s"; sleep 10; }
+            done
+            echo "$code"
+          }
+
+          # 1. Homepage reachable.
+          BODY=$(mktemp)
+          CODE=$(fetch "$SITE/?cb=$RANDOM" "$BODY")
+          if [ "$CODE" = "200" ]; then
+            echo "homepage: HTTP 200"
+          else
+            fail "homepage returned HTTP $CODE (expected 200)"
+          fi
+
+          # 2. Correct app. A misrouted nginx can serve a healthy 200 from the wrong
+          #    application, which a status-code check alone reports as green.
+          if grep -qF "$KEYWORD" "$BODY"; then
+            echo "keyword: found \"$KEYWORD\""
+          else
+            fail "keyword \"$KEYWORD\" missing -- wrong app or empty render, despite HTTP $CODE"
+          fi
+
+          # 3. SQLite path. Static routes keep serving when archive.db is missing or
+          #    locked, so this is the only check that notices.
+          API=$(mktemp)
+          API_CODE=$(fetch "$SITE/api/random" "$API")
+          if [ "$API_CODE" = "200" ]; then
+            echo "api/random: HTTP 200 (database readable)"
+          else
+            fail "/api/random returned HTTP $API_CODE (expected 200) -- database may be unreadable"
+          fi
+
+          # 4. Certificate expiry. Renewal is automatic, but certbot's last renewal is
+          #    what broke the nginx config, so verify rather than assume.
+          END=$(echo | openssl s_client -servername "$HOST" -connect "$HOST:443" 2>/dev/null \
+                | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+          if [ -z "$END" ]; then
+            fail "could not read TLS certificate for $HOST"
+          else
+            DAYS=$(( ( $(date -d "$END" +%s) - $(date +%s) ) / 86400 ))
+            if [ "$DAYS" -lt "$CERT_MIN_DAYS" ]; then
+              fail "TLS certificate expires in $DAYS days ($END) -- renewal may have failed"
+            else
+              echo "certificate: $DAYS days remaining"
+            fi
+          fi
+
+          {
+            echo "### palestineonline.net"
+            if [ ${#FAILURES[@]} -eq 0 ]; then
+              echo "All checks passed."
+            else
+              echo "**${#FAILURES[@]} check(s) failed:**"
+              printf '-  %s\n' "${FAILURES[@]}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          [ ${#FAILURES[@]} -eq 0 ] || exit 1
