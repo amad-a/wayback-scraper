@@ -9,6 +9,23 @@ body {
 	align-items: center;
 	justify-content: center;
 
+	/* Kills iOS double-tap-to-zoom, which fires on every toolbar button pressed
+	   twice in a row and leaves the shell magnified and off-centre.
+	   `user-scalable=no` in the viewport meta used to be how you asked for this;
+	   iOS has ignored it since 10 and Chrome ignores it too, both on accessibility
+	   grounds, so it was removed as dead weight. This is the supported spelling,
+	   and it is honoured precisely because it is narrower: pinch-zoom still works.
+
+	   The property is not inherited, but it does not need to be -- allowed gestures
+	   are the intersection of this element's value and its ancestors', so declaring
+	   it here covers the whole tree. The stricter `touch-action: none` on the drag
+	   handles still wins for touches that start on them, and dragging is unaffected.
+
+	   Does not reach into #frame: touch-action does not cross a document boundary,
+	   so double-tap zoom stays alive on the archived pages, which is where it is
+	   actually wanted -- they are 800x600 layouts being read on a phone. */
+	touch-action: manipulation;
+
 	--ActiveTitle: rgb(0, 65, 10);
 	--GradientActiveTitle: rgb(12, 145, 18);
 }
@@ -677,6 +694,19 @@ li:before {
 
 @media (max-width: 480px) {
 
+	/* Everything is sized for a mouse: 40px buttons, 16px icons, 11px chrome.
+	   Zooming the body scales the whole shell at once -- toolbars, panels, status
+	   bar, the lot -- rather than retuning a dozen rules that were drawn to fit
+	   each other. The iframe's contents zoom with it, which is the point: these
+	   are 800x600 pages being read on a 375px screen.
+
+	   Every length below is in the zoomed coordinate space, so they read the same
+	   as the desktop rules they override. The media query is not: it tests the
+	   real viewport, so 480px still means 480 actual pixels. */
+	body {
+		zoom: 1.25;
+	}
+
 	/* Full height. The 3px gutter that gives the window its drop shadow and the
 	   750px cap both exist to make it read as a window sitting on a desktop --
 	   worth it at 900px wide, not worth the rows of page it costs on a phone. */
@@ -717,11 +747,19 @@ li:before {
 	   readable nor worth keeping -- so the panel takes the window and the exit
 	   button in its header is how you get back.
 
+	   Down to the bottom of the page, too. The desktop's 122px leaves the last
+	   22 to the status bar, which is the right trade when the panel is a 300px
+	   sidebar and the status bar is still telling you about the page beside it.
+	   At full width there is no page beside it, and those 22px are the difference
+	   between the last entry being reachable and being cut in half. 100px is the
+	   toolbars above, unchanged.
+
 	   No resize handle: it can only shrink from here, it lands under the list,
 	   and there is no mouse to drag it with. */
 	.favorites,
 	.history {
 		width: calc(100% - 6px);
+		height: calc(100% - 100px);
 		resize: none;
 	}
 }

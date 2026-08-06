@@ -25,10 +25,10 @@
       type="image/png"
     />
 
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no"
-    />
+    <!-- No user-scalable=no: iOS has ignored it since 10 and Chrome ignores it
+         too, so it only ever read as an intent. Double-tap zoom is turned off in
+         explorer.css with touch-action instead; pinch-zoom stays, deliberately. -->
+    <meta name="viewport" content="width=device-width" />
 
     <script type="module" src="./app/main.js"></script>
   </head>
