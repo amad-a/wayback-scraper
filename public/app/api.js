@@ -521,13 +521,24 @@ export async function sharePage() {
 //
 // Checked before navigating rather than after, because the alternative is showing
 // someone else's dead link as a 404 inside the frame with the chrome describing nothing.
-// Falls back to leaving the default page alone.
+// Falls back to leaving the home page alone.
+//
+// Normally this finds nothing to do: serve.js resolves ?p= into the frame's src before
+// the HTML is sent, so the right page is already loading by the time any of this runs.
+// Assigning the same URL again would reload it -- the exact stutter the server-side
+// resolution removes -- hence the comparison. What remains is the path for index.html
+// served without that handler, opened straight off disk say.
 async function openSharedPage() {
 	const path = sharedPath();
 	if (!path) return;
+
+	const url = sitesUrl(path);
+	const current = new URL(iframe.src, location.href).pathname;
+	if (current === new URL(url, location.href).pathname) return;
+
 	if (!(await stillOnDisk(path))) return;
 
-	iframe.src = sitesUrl(path);
+	iframe.src = url;
 }
 
 // Keeps the title bar and address bar tracking the frame.

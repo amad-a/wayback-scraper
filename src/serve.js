@@ -153,6 +153,92 @@ app.get('/archive-index.html', (_req, res) =>
   res.sendFile(path.join(ROOT, 'archive-index.html')),
 );
 
+// --- shareable links --------------------------------------------------------
+//
+// ?p= names a page under sites/, and resolving it here rather than in the browser is
+// what makes a shared link open on the right page immediately.
+//
+// The alternative -- letting the markup's default src load and having the shell swap
+// it afterwards -- always shows the wrong page first. The browser starts fetching a
+// src the moment it parses the tag, well before any module has run, so the default is
+// not a fallback but an unconditional first load. Measured against production that
+// left the wrong page on screen for roughly 700ms: ~500ms for the module graph, then
+// a further round trip to check the path existed before navigating.
+//
+// The query is parsed with the same regex the client uses rather than through
+// req.query, so both sides agree exactly. express would decode the value a second
+// time (corrupting a filename containing a literal %) and would read a '+' as a
+// space; these pages are full of odd 2001-era filenames, so neither is hypothetical.
+const INDEX_PATH = path.join(ROOT, 'public', 'index.html');
+const SITES_ROOT = path.join(ROOT, 'sites');
+const IFRAME_SRC = /(<iframe[^>]*\bid="frame"[^>]*\bsrc=")[^"]*(")/;
+
+// Reread when the file changes, so editing the shell does not need a restart.
+let indexHtml = '';
+let indexKey = '';
+function indexTemplate() {
+  const stat = fs.statSync(INDEX_PATH);
+  const key = `${stat.mtimeMs}:${stat.size}`;
+  if (key !== indexKey) {
+    indexHtml = fs.readFileSync(INDEX_PATH, 'utf8');
+    indexKey = key;
+  }
+  return indexHtml;
+}
+
+// The URL for ?p=, or '' if it names nothing servable. Checked against disk here, so
+// a link to a page that has since been rebuilt away falls back to the default rather
+// than opening a 404 inside the frame.
+function sharedSrc(originalUrl) {
+  const at = originalUrl.indexOf('?');
+  if (at === -1) return '';
+
+  const match = /[?&]p=([^&]*)/.exec(originalUrl.slice(at));
+  if (!match) return '';
+
+  let page;
+  try {
+    page = decodeURIComponent(match[1]);
+  } catch {
+    return ''; // malformed escape
+  }
+
+  // The value becomes a path under sites/, so it must not climb out of it or name an
+  // absolute path of its own.
+  if (!page || page.startsWith('/') || page.split('/').includes('..')) return '';
+
+  const abs = path.join(SITES_ROOT, page);
+  if (!abs.startsWith(SITES_ROOT + path.sep)) return '';
+
+  let stat;
+  try {
+    stat = fs.statSync(abs);
+  } catch {
+    return '';
+  }
+  if (!stat.isFile()) return '';
+
+  return '/sites/' + page.split('/').map(encodeURIComponent).join('/');
+}
+
+// Ahead of the static middleware, which would otherwise serve index.html for '/'
+// untouched.
+app.get('/', (req, res) => {
+  let html = indexTemplate();
+  const src = sharedSrc(req.originalUrl);
+
+  if (src) {
+    if (IFRAME_SRC.test(html)) {
+      html = html.replace(IFRAME_SRC, `$1${src}$2`);
+    } else {
+      // Silence here would look exactly like the bug this replaced.
+      console.warn('[serve] no #frame src in index.html; ?p= ignored');
+    }
+  }
+
+  res.type('html').send(html);
+});
+
 app.use(express.static(path.join(ROOT, 'public')));
 
 app.listen(PORT, HOST, () => {
