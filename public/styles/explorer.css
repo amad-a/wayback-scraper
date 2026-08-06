@@ -685,17 +685,43 @@ li:before {
 		max-height: none;
 	}
 
-	/* Four buttons: Home, Favorites, Random, Share.
+	/* Five buttons: Home, Favorites, History, Random, Share.
 	   Back and Forward duplicate gestures and a hardware button the phone
-	   already has. History, Source and Print are desk work -- reading back
-	   through a day, opening the Wayback original, putting it on paper -- and
-	   none of them are what a phone is being held up for.
+	   already has. Source and Print are desk work -- opening the Wayback
+	   original, putting it on paper -- and neither is what a phone is being
+	   held up for. History stays: reading back through the day is as much a
+	   phone thing as a desk thing.
 	   The dividers go with them: they separate groups that no longer exist. */
 	#internet-buttons .toolbar-compound-button-wrapper,
-	#internet-buttons #history,
 	#internet-buttons #source,
 	#internet-buttons .print-button,
 	#internet-buttons hr {
 		display: none;
+	}
+
+	/* The input already says what it is -- it is full of the URL. "Address" is
+	   a word from a screen with room to spare, and here it costs the field the
+	   width its longest paths need. */
+	label[for="address"] {
+		display: none;
+	}
+
+	/* Full width, matching the window rather than the viewport: the container
+	   keeps a 3px gutter on each side even here, and a panel spanning the whole
+	   screen would sit on top of the window's own border. Fixed positioning
+	   resolves this percentage against the viewport, so the arithmetic is the
+	   same one .window-container uses, and the left edge is already the window's.
+
+	   The 300px default is a sidebar next to the page. There is no next-to on a
+	   phone -- 300px of a 375px screen leaves a sliver of iframe that is neither
+	   readable nor worth keeping -- so the panel takes the window and the exit
+	   button in its header is how you get back.
+
+	   No resize handle: it can only shrink from here, it lands under the list,
+	   and there is no mouse to drag it with. */
+	.favorites,
+	.history {
+		width: calc(100% - 6px);
+		resize: none;
 	}
 }
