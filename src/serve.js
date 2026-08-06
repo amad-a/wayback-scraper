@@ -12,6 +12,11 @@ import Database from 'better-sqlite3';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = process.env.PORT || 8080;
+// Loopback by default: in production nginx is the only thing that should reach the
+// app directly, and binding 0.0.0.0 leaves it one firewall rule away from serving
+// unencrypted traffic to the internet. Set HOST=0.0.0.0 to reach it from another
+// device -- checking the mobile layout on a phone over the same wifi, say.
+const HOST = process.env.HOST || '127.0.0.1';
 const DB_PATH = path.join(ROOT, 'archive.db');
 
 const app = express();
@@ -150,7 +155,7 @@ app.get('/archive-index.html', (_req, res) =>
 
 app.use(express.static(path.join(ROOT, 'public')));
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log(`  shell   http://localhost:${PORT}/`);
   console.log(`  index   http://localhost:${PORT}/archive-index.html`);
   console.log(`  sites   http://localhost:${PORT}/sites/`);
