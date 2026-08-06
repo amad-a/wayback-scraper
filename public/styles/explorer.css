@@ -670,3 +670,32 @@ li:before {
 	font-family: "Pixelated MS Sans Serif" !important;
 
 } */
+/* --- phones ---------------------------------------------------------------
+
+   The desktop metaphor is the point of this shell, but on a 480px screen most
+   of it is a tax on the thing you actually came for: the archived page. */
+
+@media (max-width: 480px) {
+
+	/* Full height. The 3px gutter that gives the window its drop shadow and the
+	   750px cap both exist to make it read as a window sitting on a desktop --
+	   worth it at 900px wide, not worth the rows of page it costs on a phone. */
+	.window-container {
+		height: 100%;
+		max-height: none;
+	}
+
+	/* Four buttons: Home, Favorites, Random, Share.
+	   Back and Forward duplicate gestures and a hardware button the phone
+	   already has. History, Source and Print are desk work -- reading back
+	   through a day, opening the Wayback original, putting it on paper -- and
+	   none of them are what a phone is being held up for.
+	   The dividers go with them: they separate groups that no longer exist. */
+	#internet-buttons .toolbar-compound-button-wrapper,
+	#internet-buttons #history,
+	#internet-buttons #source,
+	#internet-buttons .print-button,
+	#internet-buttons hr {
+		display: none;
+	}
+}
