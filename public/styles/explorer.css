@@ -474,7 +474,11 @@ button:not(.lightweight):focus::before {
 	box-shadow: 0px 0px 0 rgb(255, 255, 255) inset, -1px 0px 0 rgb(128, 128, 128) inset;
 
 	resize: horizontal;
-	overflow: auto;
+	/* hidden, not auto: the scroll belongs to the list inside the white box, not to the
+	   panel. When the panel scrolled, a long list slid up out of the white and carried on
+	   over the silver. `resize` still works -- it only needs overflow to be something
+	   other than visible. */
+	overflow: hidden;
 
 	max-width: 900px;
 	min-width: 250px;
@@ -489,6 +493,9 @@ button:not(.lightweight):focus::before {
 	display: flex;
 	margin: 0px 0px 10px 0px;
 	flex-direction: column;
+	/* The white box is the boundary. Anything longer than it scrolls within it rather
+	   than drawing outside it. */
+	overflow: hidden;
 }
 
 .favorites-toolbar.toolbars,
@@ -512,9 +519,18 @@ button:not(.lightweight):focus::before {
 
 .favorites-entries,
 .history-entries {
-	height: -webkit-fill-available;
-	display: flex;
-	flex-direction: column;
+	/* Takes the space the toolbar leaves and no more. min-height: 0 is the part that
+	   makes it work: a flex child defaults to min-height: auto, which refuses to shrink
+	   below its content, so the list grew to its full length and pushed itself out of the
+	   white box instead of scrolling inside it. */
+	flex: 1 1 auto;
+	min-height: 0;
+	overflow-y: auto;
+	overflow-x: hidden;
+	/* Block, not a flex column. As flex items the rows inherited flex-shrink: 1 and were
+	   compressed to fit rather than overflowing -- 90 favorites squeezed each row from
+	   21px to 6px, so the list never scrolled because it never needed to. Stacking them
+	   as blocks keeps every row its own height and lets the overflow above do its job. */
 }
 
 .bookmark-list-entry {
