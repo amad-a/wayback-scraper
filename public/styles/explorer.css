@@ -403,6 +403,7 @@ button:not(.lightweight):focus::before {
 .address-container {
 	display: flex;
 	width: -webkit-fill-available;
+	width: -moz-available;
 	flex-direction: column;
 }
 
