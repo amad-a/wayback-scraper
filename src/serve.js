@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
+import khajistan from './khajistan/routes.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = process.env.PORT || 8080;
@@ -238,6 +239,11 @@ app.get('/', (req, res) => {
 
   res.type('html').send(html);
 });
+
+// The Khajistan archive browser: self-contained under one prefix, reading a
+// different database (see src/khajistan/db.js). Mounted before the static
+// middleware so /khajistan/media/* hits the R2 proxy instead of 404ing.
+app.use('/khajistan', khajistan);
 
 app.use(express.static(path.join(ROOT, 'public')));
 
