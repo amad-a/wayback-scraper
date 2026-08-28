@@ -171,7 +171,6 @@ main > * { overflow-y: auto; }
     linear-gradient(to bottom, rgba(0,0,0,.09) 1px, transparent 1px);
   background-size: 28px 28px;
 }
-#board-empty[hidden] { display: none; }
 #board-empty {
   position: absolute; inset: 0; display: flex;
   align-items: center; justify-content: center; text-align: center;
@@ -183,9 +182,7 @@ main > * { overflow-y: auto; }
   padding: 3px; cursor: grab; touch-action: none;
   box-shadow: 3px 3px 0 var(--ink);
 }
-.chip:active, .chip.dragging { cursor: grabbing; }
-/* Lifts the chip being dragged above its neighbours for the duration. */
-.chip.dragging { z-index: 3; box-shadow: 5px 5px 0 var(--ink); }
+.chip:active { cursor: grabbing; }
 .chip img { width: 100%; display: block; background: var(--bg); }
 .chip.on { border-color: var(--accent); outline: 2px solid var(--accent); }
 .chip .badge {
