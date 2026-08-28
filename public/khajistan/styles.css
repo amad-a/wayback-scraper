@@ -30,15 +30,38 @@ h1 { font-size: 1rem; font-weight: 700; margin: 0; letter-spacing: .02em; }
 .muted { color: var(--dim); }
 .small { font-size: 12px; }
 
-/* filters | feed | detail */
+/* browse (filters + feed) | board | detail */
 main {
   display: grid;
-  grid-template-columns: 230px minmax(0, 1fr) 340px;
+  grid-template-columns: 300px minmax(0, 1fr) 340px;
   height: calc(100vh - 49px);
 }
 main > * { overflow-y: auto; }
 
-#filters { border-right: 1px solid var(--line); padding: .5rem; }
+/* The whole left column scrolls as one, with the filter menu pinned to its top.
+   #board is the exception: it must not scroll, or dragged items would move
+   relative to a shifting surface. */
+#left { border-right: 1px solid var(--line); }
+#board { overflow: hidden; }
+
+/* Collapsible filter menu, stickied to the top of the feed it filters. */
+#filters {
+  position: sticky; top: 0; z-index: 4;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+#filters > summary {
+  display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
+  padding: .5rem .75rem; cursor: pointer; list-style: none;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700;
+  user-select: none;
+}
+#filters > summary::-webkit-details-marker { display: none; }
+/* A caret drawn in text so the menu needs no asset and no JS. */
+#filters > summary span:first-child::before { content: "\25B8 "; display: inline-block; }
+#filters[open] > summary span:first-child::before { content: "\25BE "; }
+#filters > summary:hover { background: var(--ink); color: var(--on-accent); }
+#filters > summary:hover .muted { color: var(--on-accent); }
+#filter-body { padding: .5rem; border-top: 1px solid var(--line); }
 #filters section { margin-bottom: 1.25rem; }
 #filters h2 {
   font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
@@ -83,9 +106,11 @@ main > * { overflow-y: auto; }
 
 #feed-wrap { padding: .5rem .75rem 2rem; }
 #feed-meta { padding: .25rem; font-size: 12px; }
+/* Single column: the feed is now a column of things to pick up, not a grid to
+   scan. One per row keeps each thumbnail big enough to recognise. */
 #feed {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: 1fr;
   gap: 4px;
 }
 .card {
@@ -106,6 +131,54 @@ main > * { overflow-y: auto; }
    from sitting flush under the last row. */
 #sentinel { height: 1px; }
 #feed-end { text-align: center; padding: 1rem 0; }
+
+/* --- board ---------------------------------------------------------------
+   The middle surface. Items are absolutely positioned and moved by can-move,
+   which writes a transform; #board-surface is their containing block and the
+   bounds they are clamped to. */
+#board { display: flex; flex-direction: column; }
+#board-bar {
+  display: flex; justify-content: space-between; align-items: baseline; gap: .5rem;
+  padding: .5rem .75rem; border-bottom: 1px solid var(--line);
+  background: var(--bg); flex: none;
+}
+#board-surface {
+  position: relative; flex: 1; overflow: hidden;
+  /* Faint grid so an empty table reads as a surface rather than dead space, and
+     so dragging has something to register motion against. */
+  background-image:
+    linear-gradient(to right, rgba(0,0,0,.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,.09) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+#board-empty {
+  position: absolute; inset: 0; display: flex;
+  align-items: center; justify-content: center; text-align: center;
+  margin: 0; padding: 1rem; pointer-events: none;
+}
+.chip {
+  position: absolute; top: 0; left: 0; margin: 0;
+  width: 150px; background: var(--bg); border: 1px solid var(--line);
+  padding: 3px; cursor: grab; touch-action: none;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+.chip:active { cursor: grabbing; }
+.chip img { width: 100%; display: block; background: var(--bg); }
+.chip.on { border-color: var(--accent); outline: 2px solid var(--accent); }
+.chip .badge {
+  position: absolute; right: 6px; bottom: 6px; font-size: 10px;
+  background: var(--accent); color: var(--on-accent); padding: 1px 5px; line-height: 1.4;
+}
+/* Sits above the image, so it needs its own stacking context to stay clickable
+   while the parent is being dragged. */
+.chip .drop {
+  position: absolute; top: -1px; right: -1px; z-index: 2;
+  background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+  font: inherit; font-size: 11px; line-height: 1; padding: 2px 5px;
+  cursor: pointer; opacity: 0;
+}
+.chip:hover .drop, .chip:focus-within .drop { opacity: 1; }
+.chip .drop:hover { background: var(--ink); color: var(--on-accent); }
 
 #detail { border-left: 1px solid var(--line); padding: .75rem; }
 #detail.empty { display: flex; align-items: center; justify-content: center; }
@@ -137,7 +210,9 @@ main > * { overflow-y: auto; }
 @media (max-width: 1000px) {
   main { grid-template-columns: 1fr; height: auto; }
   main > * { overflow: visible; }
-  #filters, #detail { border: 0; border-bottom: 1px solid var(--line); }
+  #left, #detail { border: 0; border-bottom: 1px solid var(--line); }
+  /* Stacked, the board has no row height to fill, so it needs its own. */
+  #board { overflow: hidden; height: 70vh; border-bottom: 1px solid var(--line); }
 }
 
 /* Account byline above the media -- a filter chip, but sized as a heading
