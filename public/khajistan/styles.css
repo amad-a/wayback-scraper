@@ -186,6 +186,12 @@ main > * { overflow-y: auto; }
 .chip:active, .chip.dragging { cursor: grabbing; }
 /* Lifts the chip being dragged above its neighbours for the duration. */
 .chip.dragging { z-index: 3; box-shadow: 5px 5px 0 var(--ink); }
+/* Someone else is holding this one. Presence arrives at their frame rate, not
+   ours, so a short linear tween bridges the gaps instead of stepping. */
+.chip.remote-dragging {
+  z-index: 2; box-shadow: 5px 5px 0 var(--ink);
+  transition: left 90ms linear, top 90ms linear;
+}
 .chip img { width: 100%; display: block; background: var(--bg); }
 .chip.on { border-color: var(--accent); outline: 2px solid var(--accent); }
 .chip .badge {
