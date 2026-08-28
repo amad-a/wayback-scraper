@@ -325,14 +325,16 @@ async function openItem(key) {
 
 // --- board -----------------------------------------------------------------
 //
-// The shared table. Two pieces of state, deliberately split:
+// The shared table. One piece of state: a playhtml page-data channel holding an
+// object keyed by media_key, where each value carries both what the item is
+// (src, kind, dimensions) and where it sits (x, y).
 //
-//   * which items are on it -- one playhtml page-data channel, an object keyed
-//     by media_key. An object rather than an array because two people adding at
-//     once merge cleanly by key, where array indices would collide.
-//   * where each one sits -- can-move's own per-element data, keyed by the
-//     chip's element id. Position is never written to the channel, so dragging
-//     one chip does not rewrite the whole roster.
+// An object rather than an array because two people adding at once merge
+// cleanly by key, where array indices would collide.
+//
+// Position lived in can-move's per-element data until writes from chips created
+// during the session turned out never to reach the document; see the drag
+// section below.
 
 let board = null;                    // page-data channel, null until connected
 const chipId = (key) => `board-${key}`;
