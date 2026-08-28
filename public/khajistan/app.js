@@ -363,6 +363,7 @@ async function initBoard() {
 
   renderPresence(playhtml.users.getAll());
   playhtml.users.onChange(renderPresence);
+  watchRemoteDrags();
 
   setBoardStatus('live');
 }
@@ -405,7 +406,10 @@ function renderBoard(data) {
     }
     // Someone else moved it. Skip the chip being dragged right now, or the
     // remote echo of our own throttled writes would fight the pointer.
-    if (!existing.classList.contains('dragging')) placeChip(existing, entries[key]);
+    if (!existing.classList.contains('dragging') &&
+        !existing.classList.contains('remote-dragging')) {
+      placeChip(existing, entries[key]);
+    }
   }
 
   const n = want.size;
@@ -453,14 +457,17 @@ function placeChip(fig, entry) {
 // and, unlike per-element capability data, writes from a chip created during
 // this session actually reach the document.
 //
-// Local style updates on every move keep the drag smooth; the shared write is
-// throttled and repeated once on release, so other people see it move without
-// a write per pixel.
-const COMMIT_MS = 120;
+// Two channels, by lifetime. The board channel is persistent and takes exactly
+// one write, on release. The in-flight motion goes over presence, which is
+// ephemeral and built for cursor-rate updates -- the same path playhtml moves
+// cursors on. Writing intermediate positions to the persistent channel instead
+// is what made this choppy for everyone else: they received a throttled stream
+// of stills and replayed them as jumps.
+const DRAG_CHANNEL = 'drag';
 
 function wireChipDrag(fig, key) {
   let startX = 0, startY = 0, originX = 0, originY = 0;
-  let dragging = false, lastCommit = 0;
+  let dragging = false, pending = null, frame = 0;
 
   fig.addEventListener('pointerdown', (e) => {
     if (e.button !== 0 || e.target.closest('.drop')) return;
@@ -480,14 +487,22 @@ function wireChipDrag(fig, key) {
     const { x, y } = clampToSurface(fig, originX + e.clientX - startX, originY + e.clientY - startY);
     fig.style.left = `${x}px`;
     fig.style.top = `${y}px`;
-    const now = Date.now();
-    if (now - lastCommit > COMMIT_MS) { lastCommit = now; commitPosition(key, x, y); }
+    // Coalesce to one publish per frame: pointermove can outpace the display,
+    // and nobody can see more positions than they have frames.
+    pending = { key, x, y };
+    if (!frame) frame = requestAnimationFrame(() => {
+      frame = 0;
+      if (pending) publishDrag(pending);
+    });
   });
 
   const finish = (e) => {
     if (!dragging) return;
     dragging = false;
     fig.classList.remove('dragging');
+    if (frame) { cancelAnimationFrame(frame); frame = 0; }
+    pending = null;
+    publishDrag(null);
     if (fig.hasPointerCapture?.(e.pointerId)) fig.releasePointerCapture(e.pointerId);
 
     // Under the slop threshold this was a click, not a move: show the metadata
@@ -512,6 +527,46 @@ function clampToSurface(fig, x, y) {
     x: Math.round(Math.max(0, Math.min(x, s.clientWidth - fig.offsetWidth))),
     y: Math.round(Math.max(0, Math.min(y, s.clientHeight - fig.offsetHeight))),
   };
+}
+
+// Publishing null clears the channel: presence has replace semantics, so one
+// call ends the gesture for everyone watching.
+function publishDrag(value) {
+  try {
+    playhtml.presence?.setMyPresence(DRAG_CHANNEL, value);
+  } catch {
+    // Presence is a nicety here. If it is unavailable the drag still works;
+    // peers just see the result on release rather than the movement.
+  }
+}
+
+// Applies other people's in-flight drags. A chip under someone else's pointer
+// is marked so renderBoard leaves it alone -- otherwise the persistent position
+// would keep yanking it back to where it was before they picked it up.
+function watchRemoteDrags() {
+  playhtml.presence.onPresenceChange(DRAG_CHANNEL, (presences) => {
+    const surface = $('#board-surface');
+    const active = new Set();
+
+    for (const [, p] of presences) {
+      const d = p?.isMe ? null : p?.[DRAG_CHANNEL];
+      if (!d || typeof d.key !== 'string') continue;
+      active.add(d.key);
+      const fig = surface.querySelector(`.chip[data-key="${CSS.escape(d.key)}"]`);
+      if (!fig || fig.classList.contains('dragging')) continue;   // ours wins locally
+      fig.classList.add('remote-dragging');
+      fig.style.left = `${d.x}px`;
+      fig.style.top = `${d.y}px`;
+    }
+
+    // Anyone who let go: stop tracking, and settle onto the committed position.
+    for (const fig of surface.querySelectorAll('.chip.remote-dragging')) {
+      if (active.has(fig.dataset.key)) continue;
+      fig.classList.remove('remote-dragging');
+      const entry = board?.getData()?.[fig.dataset.key];
+      if (entry) placeChip(fig, entry);
+    }
+  });
 }
 
 function commitPosition(key, x, y) {
