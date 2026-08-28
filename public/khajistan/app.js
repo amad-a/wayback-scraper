@@ -392,13 +392,18 @@ function renderBoard(data) {
 
   for (const node of [...surface.querySelectorAll('.chip')]) {
     if (want.has(node.dataset.key)) continue;
-    playhtml.removePlayElement(node);   // detach handlers before dropping the node
     node.remove();
   }
 
   for (const key of want) {
-    if (surface.querySelector(`.chip[data-key="${CSS.escape(key)}"]`)) continue;
-    addChipNode(key, entries[key]);
+    const existing = surface.querySelector(`.chip[data-key="${CSS.escape(key)}"]`);
+    if (!existing) {
+      addChipNode(key, entries[key]);
+      continue;
+    }
+    // Someone else moved it. Skip the chip being dragged right now, or the
+    // remote echo of our own throttled writes would fight the pointer.
+    if (!existing.classList.contains('dragging')) placeChip(existing, entries[key]);
   }
 
   const n = want.size;
@@ -412,17 +417,14 @@ function addChipNode(key, entry) {
   const fig = el('figure', { className: 'chip' });
   fig.id = chipId(key);
   fig.dataset.key = key;
-  fig.setAttribute('can-move', '');
-  // Keeps a dragged chip inside the surface instead of letting it be shoved
-  // under the neighbouring panels where nobody can retrieve it.
-  fig.setAttribute('can-move-bounds', '#board-surface');
+  placeChip(fig, entry);
 
   const img = el('img', {
     src: mediaUrl(entry?.src || ''),
     alt: '',
     loading: 'lazy',
     decoding: 'async',
-    draggable: false,   // otherwise the browser's native image drag fights can-move
+    draggable: false,   // otherwise the browser's native image drag fights ours
   });
   // Reserve the right box before the image decodes, so chips don't jump.
   if (entry?.w && entry?.h) img.style.aspectRatio = `${entry.w} / ${entry.h}`;
@@ -435,21 +437,88 @@ function addChipNode(key, entry) {
   fig.append(drop);
 
   $('#board-surface').append(fig);
-  // Added after init(), so the startup DOM walk never saw it.
-  playhtml.setupPlayElement(fig, { ignoreIfAlreadySetup: true });
-  wireChipClick(fig, key);
+  wireChipDrag(fig, key);
   return fig;
 }
 
-// can-move owns the drag; we only need to tell a click apart from one. Measuring
-// pointer travel is what distinguishes them -- a plain click listener would fire
-// at the end of every drag too.
-function wireChipClick(fig, key) {
-  let sx = 0, sy = 0;
-  fig.addEventListener('pointerdown', (e) => { sx = e.clientX; sy = e.clientY; });
-  fig.addEventListener('pointerup', (e) => {
-    if (e.target.closest('.drop')) return;   // the remove button owns its own click
-    if (Math.hypot(e.clientX - sx, e.clientY - sy) <= DRAG_SLOP) openItem(key);
+function placeChip(fig, entry) {
+  fig.style.left = `${Number.isFinite(entry?.x) ? entry.x : 0}px`;
+  fig.style.top = `${Number.isFinite(entry?.y) ? entry.y : 0}px`;
+}
+
+// Dragging is ours rather than can-move's. Position is one more field on the
+// board channel, which keeps the whole board in a single shared structure --
+// and, unlike per-element capability data, writes from a chip created during
+// this session actually reach the document.
+//
+// Local style updates on every move keep the drag smooth; the shared write is
+// throttled and repeated once on release, so other people see it move without
+// a write per pixel.
+const COMMIT_MS = 120;
+
+function wireChipDrag(fig, key) {
+  let startX = 0, startY = 0, originX = 0, originY = 0;
+  let dragging = false, lastCommit = 0;
+
+  fig.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || e.target.closest('.drop')) return;
+    const surface = $('#board-surface');
+    startX = e.clientX; startY = e.clientY;
+    originX = parseFloat(fig.style.left) || 0;
+    originY = parseFloat(fig.style.top) || 0;
+    dragging = true;
+    // Whatever you just touched belongs on top.
+    surface.append(fig);
+    fig.setPointerCapture(e.pointerId);
+    fig.classList.add('dragging');
+  });
+
+  fig.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const { x, y } = clampToSurface(fig, originX + e.clientX - startX, originY + e.clientY - startY);
+    fig.style.left = `${x}px`;
+    fig.style.top = `${y}px`;
+    const now = Date.now();
+    if (now - lastCommit > COMMIT_MS) { lastCommit = now; commitPosition(key, x, y); }
+  });
+
+  const finish = (e) => {
+    if (!dragging) return;
+    dragging = false;
+    fig.classList.remove('dragging');
+    if (fig.hasPointerCapture?.(e.pointerId)) fig.releasePointerCapture(e.pointerId);
+
+    // Under the slop threshold this was a click, not a move: show the metadata
+    // and leave the position alone.
+    if (Math.hypot(e.clientX - startX, e.clientY - startY) <= DRAG_SLOP) {
+      fig.style.left = `${originX}px`;
+      fig.style.top = `${originY}px`;
+      openItem(key);
+      return;
+    }
+    commitPosition(key, parseFloat(fig.style.left) || 0, parseFloat(fig.style.top) || 0);
+  };
+  fig.addEventListener('pointerup', finish);
+  fig.addEventListener('pointercancel', finish);
+}
+
+// Keeps a chip inside the surface, so nothing can be shoved under the
+// neighbouring panels where it could never be retrieved.
+function clampToSurface(fig, x, y) {
+  const s = $('#board-surface');
+  return {
+    x: Math.round(Math.max(0, Math.min(x, s.clientWidth - fig.offsetWidth))),
+    y: Math.round(Math.max(0, Math.min(y, s.clientHeight - fig.offsetHeight))),
+  };
+}
+
+function commitPosition(key, x, y) {
+  if (!board) return;
+  board.setData((draft) => {
+    const entry = draft[key];
+    if (!entry) return;      // removed from under us by someone else
+    entry.x = x;
+    entry.y = y;
   });
 }
 
@@ -458,28 +527,22 @@ function addToBoard(it) {
   const key = it.media_key;
   if (board.getData()[key]) return;          // already down; leave its position alone
 
-  board.setData((draft) => {
-    draft[key] = { src: it.r2_small, kind: it.kind, w: it.width, h: it.height };
-  });
-
-  // setData notifies asynchronously; render now so the chip exists and can be
-  // positioned in the same gesture. renderBoard is idempotent, so the later
-  // notification is a no-op.
-  renderBoard(board.getData());
-
-  // Only the client that placed it chooses where. Everyone else takes the
-  // position from can-move, so this never fights a remote drag.
   const spot = freeSpot();
-  playhtml.getHandle(chipId(key), 'can-move')?.setData(spot);
+  board.setData((draft) => {
+    draft[key] = {
+      src: it.r2_small, kind: it.kind, w: it.width, h: it.height,
+      x: spot.x, y: spot.y,
+    };
+  });
+  // setData notifies on a microtask; render now so the chip appears on the same
+  // click. renderBoard is idempotent, so the later notification is a no-op.
+  renderBoard(board.getData());
 }
 
 function removeFromBoard(key) {
   if (!board) return;
   board.setData((draft) => { delete draft[key]; });
   renderBoard(board.getData());
-  // Without this the old coordinates survive, and putting the item back later
-  // would drop it wherever it used to be rather than in a fresh spot.
-  playhtml.deleteElementData('can-move', chipId(key));
 }
 
 // A cascade rather than pure random: overlapping is fine and expected on a
@@ -487,10 +550,9 @@ function removeFromBoard(key) {
 // click failed. Jitter keeps repeat placements from forming a rigid staircase.
 function freeSpot() {
   const surface = $('#board-surface');
-  const rect = surface.getBoundingClientRect();
   const n = surface.querySelectorAll('.chip').length;
-  const maxX = Math.max(0, rect.width - 160);
-  const maxY = Math.max(0, rect.height - 140);
+  const maxX = Math.max(0, surface.clientWidth - 160);
+  const maxY = Math.max(0, surface.clientHeight - 140);
   return {
     x: Math.round(Math.min(maxX, 20 + (n % 8) * 36 + Math.random() * 20)),
     y: Math.round(Math.min(maxY, 20 + (n % 6) * 40 + Math.random() * 20)),
