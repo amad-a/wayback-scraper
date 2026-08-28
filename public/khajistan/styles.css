@@ -61,7 +61,14 @@ main > * { overflow-y: auto; }
 #filters[open] > summary span:first-child::before { content: "\25BE "; }
 #filters > summary:hover { background: var(--ink); color: var(--on-accent); }
 #filters > summary:hover .muted { color: var(--on-accent); }
-#filter-body { padding: .5rem; border-top: 1px solid var(--line); }
+/* The menu owns its scrolling. Without a bound it grows past the viewport and,
+   being sticky, buries the feed; without overscroll-behavior a wheel over the
+   filters chains into #left the moment the menu bottoms out, so the feed
+   scrolls under a menu the pointer never left. */
+#filter-body {
+  padding: .5rem; border-top: 1px solid var(--line);
+  max-height: min(60vh, 26rem); overflow-y: auto; overscroll-behavior: contain;
+}
 #filters section { margin-bottom: 1.25rem; }
 #filters h2 {
   font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
@@ -87,7 +94,10 @@ main > * { overflow-y: auto; }
 
 /* Account and tag lists run long; cap them so all four axes stay reachable
    without scrolling the whole column. */
-#accounts, #tags { max-height: 16rem; overflow-y: auto; align-content: flex-start; }
+#accounts, #tags {
+  max-height: 16rem; overflow-y: auto; align-content: flex-start;
+  overscroll-behavior: contain;
+}
 
 .facet-btn {
   display: inline-flex; align-items: baseline; gap: .35rem;
@@ -142,6 +152,16 @@ main > * { overflow-y: auto; }
   padding: .5rem .75rem; border-bottom: 1px solid var(--line);
   background: var(--bg); flex: none;
 }
+/* Live presence. Square rather than round: the flat black-line language here
+   has no circles in it except the filter pills, which are buttons. */
+#board-right { display: inline-flex; align-items: center; gap: .6rem; }
+#board-presence { display: inline-flex; align-items: center; gap: 4px; }
+#board-presence .who {
+  width: 9px; height: 9px; border: 1px solid var(--line);
+  background: var(--pip); flex: none;
+}
+#board-presence .who[data-me="true"] { outline: 1px solid var(--line); outline-offset: 1px; }
+
 #board-surface {
   position: relative; flex: 1; overflow: hidden;
   /* Faint grid so an empty table reads as a surface rather than dead space, and

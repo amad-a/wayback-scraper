@@ -342,7 +342,14 @@ function setBoardStatus(text) { $('#board-status').textContent = text; }
 async function initBoard() {
   setBoardStatus('connecting…');
   try {
-    await playhtml.init({ host: PLAY_HOST, room: PLAY_ROOM });
+    await playhtml.init({
+      host: PLAY_HOST,
+      room: PLAY_ROOM,
+      // No `room` key inside cursors on purpose: giving cursors their own room
+      // opens a second Y.Doc and a second socket. Omitting it reuses the table's
+      // provider, which is the same set of people anyway.
+      cursors: { enabled: true },
+    });
   } catch (err) {
     setBoardStatus('offline');
     console.error('[khajistan] playhtml init failed', err);
@@ -351,7 +358,29 @@ async function initBoard() {
   board = playhtml.createPageData('table', {});
   board.onUpdate(renderBoard);
   renderBoard(board.getData());
+
+  renderPresence(playhtml.users.getAll());
+  playhtml.users.onChange(renderPresence);
+
   setBoardStatus('live');
+}
+
+// One pip per person, in their cursor colour, so the count in the bar and the
+// cursors moving over the page are visibly the same set of people.
+function renderPresence(users) {
+  const box = $('#board-presence');
+  box.replaceChildren();
+  for (const user of users) {
+    const pip = el('span', { className: 'who' });
+    pip.style.setProperty('--pip', user.color);
+    pip.dataset.me = String(user.isMe);
+    // Names come from other visitors, so this is an attribute, never markup.
+    pip.title = user.isMe ? 'you' : (user.name || 'someone');
+    box.append(pip);
+  }
+  box.append(el('span', {
+    textContent: users.length === 1 ? 'just you' : `${users.length} here`,
+  }));
 }
 
 // Reconciles the DOM against the channel. Runs on every remote change, so it
