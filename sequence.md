@@ -48,6 +48,9 @@
 - Palestine Yellow pages Homepage
 - Palestine Yellow pages dir
 
+- Palnet icard
+- palnet cafe
+
 ## Place
 - Palestine Net big Map
 - Palestine Net Destroyed Villages single page
