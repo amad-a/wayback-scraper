@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Khajistan Gallery</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <!-- Standalone page only; inside the archive the host page owns body. -->
+    <style>html, body { margin: 0; background: #F3FB04; }</style>
+    <script type="module" src="js/main.js"></script>
+  </head>
+  <body>
+    <div class="kjg is-offline">
+      <header class="kjg-bar">
+        <h1 class="kjg-title">Khajistan Gallery</h1>
+        <nav class="kjg-nav" aria-label="Views">
+          <a href="#pile">Pile</a>
+          <a href="#chest">Chest<span class="kjg-count"></span></a>
+          <a href="#museum">Museum</a>
+        </nav>
+        <p class="kjg-presence" aria-live="polite">Connecting…</p>
+      </header>
+
+      <main class="kjg-viewport" data-view="pile">
+        <div class="kjg-world">
+          <div class="kjg-cards"></div>
+          <div class="kjg-cursors"></div>
+        </div>
+      </main>
+
+      <!-- Overlay for animations that cross the table's edge (cards tossed into the chest). -->
+      <div class="kjg-fx"></div>
+
+      <section class="kjg-chest" data-view="chest" hidden>
+        <div class="kjg-chest-main">
+          <p class="kjg-empty">Your chest is empty. Click an image on the pile to keep it.</p>
+          <div class="kjg-chest-grid"></div>
+        </div>
+        <aside class="kjg-detail" aria-label="Item details" hidden>
+          <div class="kjg-detail-bar">
+            <button type="button" class="kjg-button" data-action="hang">Hang in museum</button>
+            <button type="button" class="kjg-button" data-action="remove">Remove from chest</button>
+            <span class="kjg-detail-nav">
+              <button type="button" class="kjg-button" data-action="prev" aria-label="Earlier item" title="Earlier (←)">←</button>
+              <button type="button" class="kjg-button" data-action="next" aria-label="Later item" title="Later (→)">→</button>
+            </span>
+            <button type="button" class="kjg-button" data-action="close">Close ×</button>
+          </div>
+          <div class="kjg-detail-body"></div>
+        </aside>
+      </section>
+
+      <section class="kjg-museum-view" data-view="museum" hidden>
+        <div class="kjg-museum-bar" hidden>
+          <span class="kjg-museum-bar-text"></span>
+          <button type="button" class="kjg-button" data-action="cancel">Cancel</button>
+        </div>
+        <p class="kjg-museum-note" hidden></p>
+        <div class="kjg-museum">
+          <div class="kjg-wall"></div>
+        </div>
+        <aside class="kjg-detail kjg-museum-detail" aria-label="Item details" hidden>
+          <div class="kjg-detail-bar">
+            <span class="kjg-detail-note"></span>
+            <span class="kjg-detail-nav">
+              <button type="button" class="kjg-button" data-action="prev" aria-label="Earlier item" title="Earlier (←)">←</button>
+              <button type="button" class="kjg-button" data-action="next" aria-label="Later item" title="Later (→)">→</button>
+            </span>
+            <button type="button" class="kjg-button" data-action="close">Close ×</button>
+          </div>
+          <div class="kjg-detail-body"></div>
+        </aside>
+      </section>
+    </div>
+  </body>
+</html>

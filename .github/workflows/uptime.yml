@@ -70,7 +70,17 @@ jobs:
             fail "/api/random returned HTTP $API_CODE (expected 200) -- database may be unreadable"
           fi
 
-          # 4. Certificate expiry. Renewal is automatic, but certbot's last renewal is
+          # 4. Khajistan Gallery, a static copy under public/gallery/ whose rooms run on
+          #    a Cloudflare Worker. Only the page is checked here, not the Worker.
+          GALLERY=$(mktemp)
+          GALLERY_CODE=$(fetch "$SITE/gallery/" "$GALLERY")
+          if [ "$GALLERY_CODE" = "200" ] && grep -qF "Khajistan Gallery" "$GALLERY"; then
+            echo "gallery: HTTP 200"
+          else
+            fail "/gallery/ returned HTTP $GALLERY_CODE or is missing \"Khajistan Gallery\""
+          fi
+
+          # 5. Certificate expiry. Renewal is automatic, but certbot's last renewal is
           #    what broke the nginx config, so verify rather than assume.
           END=$(echo | openssl s_client -servername "$HOST" -connect "$HOST:443" 2>/dev/null \
                 | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
