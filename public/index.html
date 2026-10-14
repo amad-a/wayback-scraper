@@ -27,8 +27,12 @@
 
     <!-- No user-scalable=no: iOS has ignored it since 10 and Chrome ignores it
          too, so it only ever read as an intent. Double-tap zoom is turned off in
-         explorer.css with touch-action instead; pinch-zoom stays, deliberately. -->
-    <meta name="viewport" content="width=device-width" />
+         explorer.css with touch-action instead; pinch-zoom stays, deliberately.
+
+         maximum-scale=1 stops iPhone Safari zooming in when the address bar is
+         tapped, which it does to any text box under 16px. iOS still lets you
+         pinch-zoom past it; Chrome on Android honours it, and loses page pinch-zoom. -->
+    <meta name="viewport" content="width=device-width, maximum-scale=1" />
 
     <script type="module" src="./app/main.js"></script>
   </head>
