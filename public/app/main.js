@@ -18,9 +18,13 @@ import {
   toggleHistory,
   watchFrame,
 } from './api.js';
+import { initWallpaper } from './wallpaper.js';
 
 // Tracks the frame: title bar, address bar, and the injected scrollbars.
 watchFrame();
+
+// The tiled background, and clicking it for the next tile.
+initWallpaper();
 
 addressBar.addEventListener('input', (e) =>
   onAddressInput(e.target.value.trim()),

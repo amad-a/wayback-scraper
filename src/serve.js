@@ -353,6 +353,23 @@ app.get('/api/entries', (_req, res) => {
   res.json(rows);
 });
 
+// The wallpaper tiles the shell cycles through when the background is clicked, in name
+// order, ignoring case. Read from the folder on each request, so a tile dropped into
+// public/assets/tiles joins the cycle without a restart.
+const TILES_DIR = path.join(ROOT, 'public', 'assets', 'tiles');
+const TILE_FILE = /\.(gif|jpe?g|png|webp)$/i;
+
+app.get('/api/tiles', (_req, res) => {
+  let names;
+  try {
+    names = fs.readdirSync(TILES_DIR).filter((name) => TILE_FILE.test(name));
+  } catch {
+    names = [];
+  }
+  names.sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }));
+  res.json(names);
+});
+
 // Replaces one page's whole tag list. Whole-list rather than add/remove calls, so a
 // retried request lands in the same state and two tabs cannot interleave half an edit.
 //
