@@ -186,10 +186,14 @@ const destDir = path.join(process.cwd(), opts.destPath);
 // rewrite pass walks an empty directory.
 const siteDir = normalizeSitePath(opts.webPath || '');
 
-// Normalize only the host segment; a webPath may carry a path prefix after it.
+// A webPath may carry a path prefix after the host. The whole thing is lowercased, not
+// just the host, because `toLocalPath` lowercases every path it writes and every link it
+// rewrites. A root left as `geocities.com/SiliconValley` only works on a case-insensitive
+// filesystem: macOS quietly files the lowercase writes into the capitalized directory,
+// and a Linux server then 404s every link into it.
 function normalizeSitePath(webPath) {
   const [host, ...rest] = webPath.replace(/^https?:\/\//i, '').split('/');
-  return [normalizeHost(host), ...rest].join('/');
+  return [normalizeHost(host), ...rest].join('/').toLowerCase();
 }
 
 // ---------------------------------------------------------------------------
