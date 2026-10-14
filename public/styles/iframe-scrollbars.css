@@ -29,6 +29,15 @@
 	--scrollbar-button-inner-size: 9px;
 }
 
+/* No rubber-band bounce at either end of an archived page, and no scroll chaining out to
+   the shell when a page or frame hits its end. Set on both html and body because which
+   of them scrolls depends on the page's mode: html in standards mode, body in the quirks
+   mode most of these 1990s pages are in. */
+html,
+body {
+	overscroll-behavior: none;
+}
+
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-button {
