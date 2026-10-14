@@ -225,7 +225,13 @@ ${tree}
           <a id="wayback-link" target="_blank" rel="noopener"></a>
         </div>
         <div class="frame-well">
-          <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
+          <!-- Sandboxed the way the shell's frame is, and for the same reason: without
+               allow-top-navigation an archived page cannot replace this one. 35 pages carry
+               2001-era frame-busters -- palestinehistory.com's front page runs
+               if(top!=self){top.location.href=self.location.href} the moment it loads.
+               Scripts, forms and popups still work; target="_top" links are kept in the frame
+               by the click handler below. -->
+          <iframe id="frame" name="archive-frame" title="Archived page" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"></iframe>
         </div>
         <div class="tag-bar">
           <span>Tags</span>
