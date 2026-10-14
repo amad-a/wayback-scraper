@@ -213,12 +213,82 @@ function sharedSrc(originalUrl) {
   try {
     stat = fs.statSync(abs);
   } catch {
-    return '';
+    // Not under this spelling; a link from before a rename may still find it.
+    page = caseInsensitivePath(page);
+    if (!page) return '';
+    stat = fs.statSync(path.join(SITES_ROOT, page));
   }
   if (!stat.isFile()) return '';
 
+  return sitesHref(page);
+}
+
+function sitesHref(page) {
   return '/sites/' + page.split('/').map(encodeURIComponent).join('/');
 }
+
+// The on-disk spelling of a path under sites/ that only matches when case is ignored, or
+// '' if it matches nothing, or more than one thing, in some directory along the way.
+//
+// Every saved path is lowercase now, but shared links and bookmarks from before the crawl
+// roots were lowercased still carry the old capitals -- geocities.com/SiliconValley and
+// friends. Linux matches case exactly, so those would 404 without this. Only reached on a
+// miss, so the directory reads cost nothing on the normal path.
+function caseInsensitivePath(page) {
+  const segments = page.split('/');
+  if (segments.some((s) => !s || s === '.' || s === '..')) return '';
+
+  let dir = SITES_ROOT;
+  const found = [];
+  for (const segment of segments) {
+    let names;
+    try {
+      names = fs.readdirSync(dir);
+    } catch {
+      return '';
+    }
+    const name = names.includes(segment)
+      ? segment
+      : (() => {
+          const lower = segment.toLowerCase();
+          const matches = names.filter((n) => n.toLowerCase() === lower);
+          // Two names differing only in case: no way to know which was meant.
+          return matches.length === 1 ? matches[0] : '';
+        })();
+    if (!name) return '';
+    found.push(name);
+    dir = path.join(dir, name);
+  }
+  return found.join('/');
+}
+
+// A request under /sites that the static handler missed. If the file exists under
+// different capitals, redirect to it, so the browser's address and every relative link
+// inside the page resolve against the real spelling from then on.
+//
+// 302 rather than 301: a 301 is cached by the browser indefinitely, and a page that is
+// later re-crawled or renamed again should not stay pinned to a stale redirect.
+app.use('/sites', (req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+
+  let page;
+  try {
+    page = decodeURIComponent(req.path).replace(/^\/+/, '').replace(/\/+$/, '');
+  } catch {
+    return next(); // malformed escape
+  }
+  if (!page) return next();
+
+  const real = caseInsensitivePath(page);
+  if (!real || real === page) return next();
+
+  const query = req.originalUrl.includes('?')
+    ? req.originalUrl.slice(req.originalUrl.indexOf('?'))
+    : '';
+  // A directory keeps its trailing slash, so express.static serves its index.html.
+  const slash = req.path.endsWith('/') ? '/' : '';
+  res.redirect(302, sitesHref(real) + slash + query);
+});
 
 // The page with ?p= already in its frame, for either viewer.
 function withSharedPage(file, req) {
