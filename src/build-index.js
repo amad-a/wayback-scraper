@@ -469,7 +469,11 @@ ${tree}
 
   // Every word must appear somewhere in the row, in any order, so "addameer jericho"
   // finds the Jericho pages of that one crawl.
-  function applyFilter(query) {
+  //
+  // A new search opens every crawl with a match, which is what you want while typing.
+  // keepOpen re-runs the same search without that -- for when a tag edit changes which
+  // rows match, and expanding the tree you had collapsed would be the wrong answer to it.
+  function applyFilter(query, keepOpen) {
     var terms = parseQuery(query);
     var filtering = terms.words.length > 0 || terms.tags.length > 0;
 
@@ -493,8 +497,9 @@ ${tree}
       crawl.item.hidden = matches === 0;
       crawl.count.textContent = filtering ? matches + ' / ' + crawl.rows.length : crawl.rows.length;
 
-      if (filtering) crawl.details.open = matches > 0;
-      else if (openBeforeFilter) crawl.details.open = openBeforeFilter[i];
+      if (filtering) {
+        if (!keepOpen) crawl.details.open = matches > 0;
+      } else if (openBeforeFilter) crawl.details.open = openBeforeFilter[i];
 
       pages += matches;
       if (matches) sites += 1;
@@ -675,8 +680,9 @@ ${tree}
           renderTags();
           tagInput.value = '';
         }
-        // A page that gained or lost the tag being filtered on moves in or out of the tree.
-        if (currentQuery) applyFilter(currentQuery);
+        // A page that gained or lost the tag being filtered on moves in or out of the tree,
+        // without reopening crawls you collapsed.
+        if (currentQuery) applyFilter(currentQuery, true);
       })
       .catch(function (err) {
         tagError.textContent = 'Could not save: ' + err.message;
