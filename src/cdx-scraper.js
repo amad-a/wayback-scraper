@@ -668,6 +668,10 @@ function enqueueAssets(html, page, queue) {
   // Anchors and image maps that point straight at an image file. Not documents, so
   // this can't recurse into other pages -- only the linked image is pulled down, and
   // the rewrite pass then relinks the anchor to the local copy instead of disabling it.
+  //
+  // Linked audio and video (.rm, .ram, .mp3, ...) is deliberately not fetched here: it
+  // needs truncation checks, pointer-file resolution and conversion to a format a
+  // browser plays. Run `npm run media` after a crawl to restore those links.
   $('a[href], area[href]').each((_, el) => {
     const value = $(el).attr('href');
     if (value && IMAGE_EXTENSIONS.test(value.split('#')[0])) {
