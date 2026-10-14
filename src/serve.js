@@ -264,6 +264,74 @@ app.get('/api/tags', (_req, res) => {
   res.json(Object.fromEntries(rows.map((r) => [r.local_path, splitTags(r.tags)])));
 });
 
+// --- search -----------------------------------------------------------------
+
+// What the address bar searches as you type: every page's address and title. All ~11k
+// rows are read once per database file and kept in memory, so a keystroke is a filter
+// over an array rather than a query; reread when `npm run db` replaces the file, the same
+// way the read handle is reopened.
+const SEARCH_LIMIT = 50;
+let searchRows = null;
+let searchHandle = null;
+
+// An address as people type it: no scheme, no www, lowercase.
+function bareUrl(url) {
+  return String(url || '').replace(/^\s*https?:\/\/(www\d?\.)?/i, '').replace(/^www\d?\./i, '').toLowerCase();
+}
+
+function searchIndex(handle) {
+  if (searchHandle !== handle) {
+    // Frames are left out, as the random pool leaves them out: a pane of a frameset on
+    // its own is a nav strip or a body with no way out, not somewhere to go.
+    searchRows = handle
+      .prepare(
+        `SELECT local_path, display_url, display_title FROM page_view WHERE frame_parent IS NULL`,
+      )
+      .all()
+      .map((r) => ({ ...r, url: bareUrl(r.display_url), title: (r.display_title || '').toLowerCase() }));
+    searchHandle = handle;
+  }
+  return searchRows;
+}
+
+// Every word must appear somewhere in the address or title. Ranked: addresses that start
+// with what was typed, then addresses containing it whole, then by how many of the words
+// are in the address itself -- so "birzeit news" puts birzeit.edu/bzunews/ above the bare
+// home page whose title happens to mention news -- then shorter addresses first.
+app.get('/api/search', (req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+
+  const query = bareUrl(String(req.query.q || '')).trim();
+  if (!query) return res.json({ query, total: 0, results: [] });
+  const words = query.split(/\s+/);
+
+  const scored = [];
+  for (const row of searchIndex(handle)) {
+    if (!words.every((w) => row.url.includes(w) || row.title.includes(w))) continue;
+    const rank = row.url.startsWith(query) ? 0 : row.url.includes(query) ? 1 : 2;
+    const inUrl = words.filter((w) => row.url.includes(w)).length;
+    scored.push({ rank, inUrl, row });
+  }
+  scored.sort(
+    (a, b) =>
+      a.rank - b.rank
+      || b.inUrl - a.inUrl
+      || a.row.url.length - b.row.url.length
+      || a.row.url.localeCompare(b.row.url),
+  );
+
+  res.json({
+    query,
+    total: scored.length,
+    results: scored.slice(0, SEARCH_LIMIT).map(({ row: { local_path, display_url, display_title } }) => ({
+      local_path,
+      display_url,
+      display_title,
+    })),
+  });
+});
+
 // Every page tagged "entry" -- the front doors you picked -- with the address and
 // title the shell's address bar dropdown lists them by, sorted by address so a site's
 // pages sit together. Read on each open of the dropdown, so a page tagged a moment ago

@@ -638,11 +638,6 @@ button:not(.lightweight):focus::before {
 	image-rendering: pixelated;
 }
 
-.dropdown-empty {
-	padding: 4px 6px;
-	color: var(--GrayText, grey);
-}
-
 ::-webkit-scrollbar,
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-button {

@@ -359,6 +359,8 @@ function setChrome({ title, url }) {
 		? `${title}`
 		: TITLE_SUFFIX;
 	if (url) addressBar.value = url;
+	// A new page in the frame: whatever was typed before it is no longer worth restoring.
+	addressBeforeTyping = null;
 }
 
 // Runs on every iframe navigation, in two passes.
@@ -602,42 +604,35 @@ export function watchFrame() {
 // Fires on every keystroke. Was a Fuse.js lookup over a prebuilt page index;
 // that index is gone, so this needs a new source of pages -- most likely
 // generated from src/build-index.js, which already walks /sites.
-export function onAddressInput(query) {}
-
-// The ▼ at the end of the address bar: the pages tagged "entry", as the list a browser
-// of the era kept of addresses typed before. Fetched on every open, so a page tagged a
-// moment ago is already there.
+// The address bar's dropdown, opened two ways. The ▼ button lists the pages tagged
+// "entry" -- the list a browser of the era kept of addresses typed before. Typing searches
+// every page in the archive by address and title (see /api/search), the list following
+// each keystroke. Both are fetched fresh, so a page tagged or rebuilt a moment ago is
+// already there.
 const dropdownContent = dropdown?.querySelector('.dropdown-content');
 const dropdownButton = document.getElementById('address-dropdown-button');
 
 dropdownContent?.setAttribute('role', 'listbox');
-dropdownContent?.setAttribute('aria-label', 'Entry pages');
+dropdownContent?.setAttribute('aria-label', 'Pages');
 
-// Paints the entry pages into the dropdown. Rows look and behave like the Favorites and
-// History panels' -- the same class, so markCurrent lights up the page you are on -- and
-// carry their own listeners, which is what lets setFrame stop being a global.
-export function render(entries) {
+// Paints rows into the dropdown. They look and behave like the Favorites and History
+// panels' -- the same class, so markCurrent lights up the page you are on -- and carry
+// their own listeners, which is what lets setFrame stop being a global.
+export function render(pages) {
 	if (!dropdownContent) return;
 	dropdownContent.replaceChildren();
 
-	for (const entry of entries) {
+	for (const page of pages) {
 		const row = document.createElement('div');
 		row.className = 'bookmark-list-entry';
-		row.dataset.path = entry.local_path;
+		row.dataset.path = page.local_path;
 		row.setAttribute('role', 'option');
 		row.tabIndex = -1;
-		const address = entry.display_url || entry.local_path;
-		row.textContent = entry.display_title ? `${address} - ${entry.display_title}` : address;
+		const address = page.display_url || page.local_path;
+		row.textContent = page.display_title ? `${address} - ${page.display_title}` : address;
 		row.title = row.textContent;
-		row.addEventListener('click', () => setFrame(entry.local_path));
+		row.addEventListener('click', () => setFrame(page.local_path));
 		dropdownContent.appendChild(row);
-	}
-
-	if (!entries.length) {
-		const empty = document.createElement('div');
-		empty.className = 'dropdown-empty';
-		empty.textContent = 'No pages tagged "entry" yet.';
-		dropdownContent.appendChild(empty);
 	}
 
 	markCurrent();
@@ -649,46 +644,164 @@ export function setFrame(path) {
 	openPath(path);
 }
 
-// Set while the entries for an open are being fetched, so a second click on the button
-// in that moment cancels the open rather than starting another.
-let dropdownLoading = null;
-
-export async function toggleAddressDropdown() {
-	if (!dropdown) return;
-	if (!dropdown.classList.contains('hidden') || dropdownLoading) {
-		dropdownLoading = null;
-		hideAddressDropdown();
-		return;
-	}
-
-	// Fetched before showing, so the slide-open animation runs on the finished list
-	// rather than on an empty box that then jumps to full height.
-	const loading = (dropdownLoading = {});
-	let entries = [];
+async function fetchJson(url, fallback) {
 	try {
-		const res = await fetch('/api/entries');
-		if (res.ok) entries = await res.json();
+		const res = await fetch(url);
+		return res.ok ? await res.json() : fallback;
 	} catch {
-		// server not running: an empty list says so better than a stale one
+		return fallback; // server not running: an empty list says so better than a stale one
 	}
-	if (dropdownLoading !== loading) return; // cancelled while loading
-	dropdownLoading = null;
-	render(entries);
+}
 
+async function loadEntries() {
+	return fetchJson('/api/entries', []);
+}
+
+// Shows the dropdown, already filled in -- so the slide-open animation runs on the finished
+// list rather than on an empty box that then grows. Already open, it just stays open:
+// re-rendering while typing must not replay the slide on every keystroke.
+function showDropdown() {
+	if (!dropdown) return;
 	// The panels share this corner of the window, so only one is open at a time.
 	favoritesPanel?.classList.add('hidden');
 	historyPanel?.classList.add('hidden');
 	dropdown.classList.remove('hidden');
 	dropdownButton?.setAttribute('aria-expanded', 'true');
-
-	// Focus goes in with the list, on the page you are on if it is an entry, so the
-	// arrows start from somewhere.
-	(dropdownContent?.querySelector('.bookmark-list-entry.current')
-		|| dropdownContent?.querySelector('.bookmark-list-entry'))?.focus();
 }
 
+// Each open or search takes a ticket; a response is only used if its ticket is still the
+// latest. That drops a slow search for "bir" arriving after the one for "birzeit", and a
+// load that was cancelled by closing the dropdown in the meantime.
+let ticket = 0;
+
+export async function toggleAddressDropdown() {
+	if (!dropdown) return;
+	if (!dropdown.classList.contains('hidden') || pendingOpen) {
+		hideAddressDropdown();
+		return;
+	}
+
+	await openEntries({ focusList: true });
+}
+let pendingOpen = false;
+
+// The entry pages, shown: from the ▼ button, with focus going into the list (on the page
+// you are on if it is an entry, so the arrows start from somewhere), or while the box
+// holds nothing worth searching, with focus left in the box.
+async function openEntries({ focusList }) {
+	const mine = ++ticket;
+	pendingOpen = true;
+	const pages = await loadEntries();
+	if (mine !== ticket) return;
+	pendingOpen = false;
+	// Nothing tagged "entry" yet: nothing to show, so it stays closed.
+	if (!pages.length) return;
+	render(pages);
+	showDropdown();
+
+	if (focusList) {
+		(dropdownContent?.querySelector('.bookmark-list-entry.current')
+			|| dropdownContent?.querySelector('.bookmark-list-entry'))?.focus();
+	}
+}
+
+// A click in the address box brings back what was typed into it showed: its matches, or
+// the entries if it was cleared down to nothing worth searching. While the box still
+// holds the page's address, nothing has been typed, and a click opens nothing.
+addressBar?.addEventListener('click', () => {
+	if (dropdown && !dropdown.classList.contains('hidden')) return;
+	if (addressBeforeTyping === null) return;
+	search(addressBar.value.trim());
+});
+
+// The first click into the box selects the whole address, as a browser's does, so typing
+// replaces it rather than searching for "http://www.addameer.org/jericho". Clicks after
+// that place the caret as normal.
+let addressFocusedByMouse = false;
+addressBar?.addEventListener('mousedown', () => {
+	addressFocusedByMouse = document.activeElement !== addressBar;
+});
+addressBar?.addEventListener('mouseup', (event) => {
+	if (!addressFocusedByMouse) return;
+	addressFocusedByMouse = false;
+	event.preventDefault(); // or the mouseup collapses the selection back to a caret
+	addressBar.select();
+});
+
+// Nothing worth searching: an empty box, or only the start of an address -- "www.",
+// "http://", "http://www." and the letters on the way to them. Those would match every
+// page in the archive, so the entries are shown instead.
+function isTrivial(query) {
+	const q = query.trim().toLowerCase();
+	if (!q.replace(/^(https?:\/\/)?(www\d?\.)?/, '')) return true;
+	return ['http://www.', 'https://www.', 'www.'].some((prefix) => prefix.startsWith(q));
+}
+
+// The address bar as it was before typing started, put back if the dropdown is dismissed
+// with Escape, so the bar goes on naming the page in the frame. Taken on focus, before
+// the first keystroke has changed it.
+let addressBeforeTyping = null;
+let addressOnFocus = '';
+addressBar?.addEventListener('focus', () => {
+	addressOnFocus = addressBar.value;
+});
+
+let searchTimer = 0;
+
+// Fires on every keystroke (wired in main.js). Debounced, so a fast typist pays for the
+// last keystroke only.
+export function onAddressInput(query) {
+	if (addressBeforeTyping === null) addressBeforeTyping = addressOnFocus;
+	clearTimeout(searchTimer);
+	searchTimer = setTimeout(() => search(query), 120);
+}
+
+async function search(query) {
+	// Nothing worth searching: the entries, as the ▼ button shows them, without moving
+	// focus out of the box.
+	if (isTrivial(query)) {
+		await openEntries({ focusList: false });
+		return;
+	}
+	const mine = ++ticket;
+	pendingOpen = false;
+	const found = await fetchJson(`/api/search?q=${encodeURIComponent(query)}`, { results: [] });
+	if (mine !== ticket) return;
+	// No matches: the dropdown closes rather than standing open and empty.
+	if (!found.results.length) {
+		hideAddressDropdown();
+		return;
+	}
+	render(found.results);
+	showDropdown();
+}
+
+// Keys in the address box itself: Down moves into the list, Enter opens the top match,
+// Escape closes the list and gives the bar back its address.
+addressBar?.addEventListener('keydown', (event) => {
+	const open = dropdown && !dropdown.classList.contains('hidden');
+	const first = dropdownContent?.querySelector('.bookmark-list-entry');
+	if (event.key === 'ArrowDown' && open && first) {
+		event.preventDefault();
+		first.focus();
+	} else if (event.key === 'Enter' && open && first) {
+		event.preventDefault();
+		addressBeforeTyping = null;
+		setFrame(first.dataset.path);
+		addressBar.blur();
+	} else if (event.key === 'Escape' && (open || addressBeforeTyping !== null)) {
+		event.preventDefault();
+		clearTimeout(searchTimer);
+		hideAddressDropdown();
+		if (addressBeforeTyping !== null) addressBar.value = addressBeforeTyping;
+		addressBeforeTyping = null;
+	}
+});
+
 export function hideAddressDropdown() {
-	dropdownLoading = null;
+	ticket++; // anything still loading is for a dropdown that is no longer wanted
+	pendingOpen = false;
+	clearTimeout(searchTimer);
 	if (!dropdown || dropdown.classList.contains('hidden')) return;
 	const hadFocus = dropdown.contains(document.activeElement);
 	dropdown.classList.add('hidden');
@@ -699,15 +812,22 @@ export function hideAddressDropdown() {
 
 bindPanelKeys(dropdownContent, {
 	rows: '.bookmark-list-entry',
-	activate: (row) => setFrame(row.dataset.path),
+	activate: (row) => {
+		addressBeforeTyping = null;
+		setFrame(row.dataset.path);
+	},
 	close: hideAddressDropdown,
 });
 
-// A click anywhere outside the dropdown and its button closes it, as a menu would.
-// Clicks inside the archived page land in the frame's document and never reach this
-// one, so leaving the frame focused closes it too.
+// A click anywhere outside the dropdown, its button and the address box closes it, as a
+// menu would. Clicks inside the archived page land in the frame's document and never
+// reach this one, so leaving the frame focused closes it too.
 document.addEventListener('mousedown', (event) => {
-	if (dropdown?.contains(event.target) || dropdownButton?.contains(event.target)) return;
+	if (
+		dropdown?.contains(event.target)
+		|| dropdownButton?.contains(event.target)
+		|| addressBar?.contains(event.target)
+	) return;
 	hideAddressDropdown();
 });
 window.addEventListener('blur', () => {
