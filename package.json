@@ -47,7 +47,8 @@
         "serve": "node src/serve.js",
         "server": "http-server processed-output",
         "db": "node src/build-db.js",
-        "tags:export": "node src/export-tags.js"
+        "tags:export": "node src/export-tags.js",
+        "tags:pull": "node src/pull-tags.js"
     },
     "author": "It's not you it's me",
     "license": "ISC"

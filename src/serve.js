@@ -10,6 +10,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
 
+import { ensureUpdatedAt, selectTagged, toCsv } from './tags-csv.js';
+
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = process.env.PORT || 8080;
 // Loopback by default: in production nginx is the only thing that should reach the
@@ -142,6 +144,136 @@ app.get('/api/random/deck', (_req, res) => {
     .map((r) => r.local_path);
 
   res.json({ size: paths.length, paths });
+});
+
+// --- tags -------------------------------------------------------------------
+//
+// Tags are public to read and writable only through the admin port: ADMIN_PORT, bound
+// to loopback and never proxied by nginx, so the only way to reach it from outside the
+// box is an SSH tunnel (the `palindex` shell alias does this) --
+//
+//   ssh -N -L 18081:127.0.0.1:8081 deploy@167.233.141.19
+//   open http://localhost:18081/archive-index.html
+//
+// 18081 on your side, not 8081, which is the admin port of a local `npm run serve`. The
+// two must not share a port, or a tunnel that failed to bind would leave you tagging the
+// local database while believing it was production.
+//
+// The port the request arrived on is the whole check. Not the remote address, which is
+// 127.0.0.1 for nginx's proxied traffic too, and not a header, which a client can set.
+// So nothing secret is held in a page, where the archived pages' own scripts -- running
+// on this same origin -- could read it.
+
+const ADMIN_PORT = Number(process.env.ADMIN_PORT || 8081);
+
+function isAdmin(req) {
+  return req.socket.localPort === ADMIN_PORT;
+}
+
+// Writes reject anything but a same-origin JSON request. That shuts out a site you happen
+// to visit while the tunnel is open: a cross-origin JSON POST needs a CORS preflight this
+// server never answers, and a form post cannot set the content type.
+function adminOnly(req, res, next) {
+  if (!isAdmin(req)) return res.status(404).json({ error: 'not found' });
+  if (req.method !== 'GET') {
+    if (!req.is('application/json')) return res.status(415).json({ error: 'JSON only' });
+    const origin = req.get('origin');
+    if (origin && !sameHost(origin, req.get('host'))) {
+      return res.status(403).json({ error: 'cross-origin' });
+    }
+  }
+  next();
+}
+
+// An Origin of 'null' (sandboxed frames, file://) is not a URL, and is not us either.
+function sameHost(origin, host) {
+  try {
+    return new URL(origin).host === host;
+  } catch {
+    return false;
+  }
+}
+
+// Tags are stored comma-separated, so a comma cannot be part of one. Whitespace is
+// collapsed, and a tag repeated in different case is kept once, as first spelled.
+const TAG_MAX = 60;
+const TAGS_MAX = 50;
+
+function cleanTags(input) {
+  if (!Array.isArray(input)) return null;
+  const seen = new Set();
+  const tags = [];
+  for (const raw of input) {
+    if (typeof raw !== 'string') return null;
+    const tag = raw.replace(/,/g, ' ').replace(/\s+/g, ' ').trim().slice(0, TAG_MAX);
+    if (!tag || seen.has(tag.toLowerCase())) continue;
+    seen.add(tag.toLowerCase());
+    tags.push(tag);
+  }
+  return tags.length > TAGS_MAX ? null : tags;
+}
+
+function splitTags(value) {
+  return String(value || '')
+    .split(',')
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+// Whether this is the admin port, so a page knows to show the editing controls. Public
+// pages get a 404 like any unknown route, and show tags read-only.
+app.get('/api/admin', adminOnly, (_req, res) => res.json({ admin: true }));
+
+// Every tagged page, for the index to show and filter on. Small: one row per tagged page.
+app.get('/api/tags', (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+
+  const rows = handle.prepare("SELECT local_path, tags FROM page_meta WHERE tags <> ''").all();
+  res.json(Object.fromEntries(rows.map((r) => [r.local_path, splitTags(r.tags)])));
+});
+
+// Replaces one page's whole tag list. Whole-list rather than add/remove calls, so a
+// retried request lands in the same state and two tabs cannot interleave half an edit.
+//
+// A connection of its own, opened per write: the shared handle is read-only, and writes
+// are rare enough that holding a second handle open (and reopening it whenever the file
+// is rebuilt) is not worth it. updated_at marks the row as edited here, which is what
+// stops `npm run db` re-importing an older tags.csv over it -- see importTags.
+app.post('/api/tags', adminOnly, express.json({ limit: '16kb' }), (req, res) => {
+  const localPath = String(req.body?.path || '');
+  const tags = cleanTags(req.body?.tags);
+  if (!localPath || !tags) return res.status(400).json({ error: 'path and tags[] required' });
+
+  let rw;
+  try {
+    rw = new Database(DB_PATH, { fileMustExist: true });
+  } catch {
+    return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  }
+
+  try {
+    ensureUpdatedAt(rw);
+    const known = rw.prepare('SELECT 1 FROM pages WHERE local_path = ?').get(localPath);
+    if (!known) return res.status(404).json({ error: 'not indexed', local_path: localPath });
+
+    rw.prepare(
+      `INSERT INTO page_meta (local_path, tags, updated_at) VALUES (@path, @tags, @now)
+       ON CONFLICT(local_path) DO UPDATE SET tags = excluded.tags, updated_at = excluded.updated_at`,
+    ).run({ path: localPath, tags: tags.join(', '), now: new Date().toISOString() });
+
+    res.json({ local_path: localPath, tags });
+  } finally {
+    rw.close();
+  }
+});
+
+// The hand-edited columns as tags.csv, for `npm run tags:pull` to bring down and commit.
+// Admin-only: notes are not meant for the public site.
+app.get('/api/tags.csv', adminOnly, (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  res.type('text/csv').send(toCsv(selectTagged(handle)));
 });
 
 // The archived pages are 2001-era and full of odd filenames; serve them as-is
@@ -326,4 +458,11 @@ app.listen(PORT, HOST, () => {
   console.log(`  shell   http://localhost:${PORT}/`);
   console.log(`  index   http://localhost:${PORT}/archive-index.html`);
   console.log(`  sites   http://localhost:${PORT}/sites/`);
+});
+
+// The same app again on the admin port, which is what unlocks tag editing (see isAdmin).
+// Always loopback, whatever HOST says: HOST=0.0.0.0 exists to reach the public site from
+// a phone, and must never put the admin port on the network with it.
+app.listen(ADMIN_PORT, '127.0.0.1', () => {
+  console.log(`  admin   http://localhost:${ADMIN_PORT}/archive-index.html  (tag editing; loopback only)`);
 });

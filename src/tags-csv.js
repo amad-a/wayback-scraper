@@ -78,7 +78,22 @@ export function selectTagged(db) {
     .all();
 }
 
+// When a row was last edited through the site's admin port, '' if never. Added to
+// page_meta after the fact, so older databases get it here rather than from the schema.
+export function ensureUpdatedAt(db) {
+  const columns = db.prepare('PRAGMA table_info(page_meta)').all().map((c) => c.name);
+  if (!columns.includes('updated_at')) {
+    db.exec("ALTER TABLE page_meta ADD COLUMN updated_at TEXT NOT NULL DEFAULT ''");
+  }
+}
+
+// tags.csv is a backup of page_meta, so it fills rows in but never overwrites one edited
+// through the site (updated_at set). On the server those edits are newer than any
+// committed tags.csv until the next `npm run tags:pull`, and a rebuild in between must
+// not put the old tags back. Rows never touched that way take the CSV as before, so
+// editing tags.csv by hand still works for them.
 export async function importTags(db, file) {
+  ensureUpdatedAt(db);
   if (!existsSync(file)) return 0;
 
   const records = parseCsv(await fs.readFile(file, 'utf-8')).filter((r) => r.local_path);
@@ -86,7 +101,8 @@ export async function importTags(db, file) {
     `INSERT INTO page_meta (local_path, tags, notes, title_override)
      VALUES (@local_path, @tags, @notes, @title_override)
      ON CONFLICT(local_path) DO UPDATE SET
-       tags = excluded.tags, notes = excluded.notes, title_override = excluded.title_override`,
+       tags = excluded.tags, notes = excluded.notes, title_override = excluded.title_override
+     WHERE page_meta.updated_at = ''`,
   );
 
   db.transaction((rs) => {

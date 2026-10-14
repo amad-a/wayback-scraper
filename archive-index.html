@@ -62,12 +62,25 @@
   .frame-well { padding: 2px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; }
   iframe { display: block; width: 100%; max-width: 800px; height: 600px; border: 0; background: #fff; }
   .status-bar-field { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* The page's tags, between the frame and the status bar. Each tag is a button that
+     filters the tree to it; on the admin port each also gets a remove button, and the
+     add field appears. 98.css sizes buttons for dialogs (75x23 minimum), too big here. */
+  .tag-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; margin-top: 6px; min-height: 23px; }
+  .tag-bar button { min-width: 0; min-height: 0; padding: 2px 6px; }
+  .tag { display: inline-flex; }
+  .tag .tag-remove { padding: 2px 4px; }
+  .tag-empty { color: grey; }
+  #tag-form { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+  #tag-form[hidden] { display: none; }
+  #tag-input { width: 160px; }
+  #tag-error { color: #a00; }
   #frame-captured { flex: 0 0 150px; }
 </style>
 </head>
 <body>
   <nav>
-    <input id="search" type="search" placeholder="Filter by site, file, title or address  ( / )" aria-label="Filter pages" autocomplete="off" spellcheck="false">
+    <input id="search" type="search" placeholder="Filter by site, file, title, address or #tag  ( / )" aria-label="Filter pages" autocomplete="off" spellcheck="false">
     <div class="nav-tools">
       <p id="search-status" aria-live="polite">80 crawls, 11399 pages</p>
       <span>
@@ -22594,6 +22607,15 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
         <div class="frame-well">
           <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
         </div>
+        <div class="tag-bar">
+          <span>Tags</span>
+          <span id="tag-list"></span>
+          <span id="tag-error" role="alert"></span>
+          <form id="tag-form" hidden>
+            <input id="tag-input" type="text" placeholder="Add tags, comma-separated" aria-label="Add tags" maxlength="200" autocomplete="off" spellcheck="false">
+            <button type="submit">Add</button>
+          </form>
+        </div>
       </div>
       <div class="status-bar">
         <p class="status-bar-field" id="frame-path">No page open</p>
@@ -22619,6 +22641,7 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
   // here so a keystroke only has to do substring checks across ~11k rows.
   var crawls = [];
   var byPath = {};
+  var rowByPath = {};
 
   Array.prototype.forEach.call(document.querySelectorAll('#tree details'), function (details) {
     var root = (details.getAttribute('data-root') || '').toLowerCase();
@@ -22627,8 +22650,12 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
     Array.prototype.forEach.call(details.querySelectorAll('li'), function (li) {
       var link = li.querySelector('a');
       var text = root + ' ' + li.textContent + ' ' + (link ? link.getAttribute('title') || '' : '');
-      rows.push({ li: li, text: text.toLowerCase() });
-      if (link) byPath[link.getAttribute('data-path')] = link;
+      var row = { li: li, text: text.toLowerCase(), tags: [], tagText: '' };
+      rows.push(row);
+      if (link) {
+        byPath[link.getAttribute('data-path')] = link;
+        rowByPath[link.getAttribute('data-path')] = row;
+      }
     });
 
     crawls.push({
@@ -22734,6 +22761,7 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
     framePathField.textContent = path;
     framePathField.title = path;
 
+    renderTags();
     syncUrl();
   }
 
@@ -22802,11 +22830,40 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
   // searching does not leave the whole tree expanded.
   var openBeforeFilter = null;
 
+  // Splits a query into what each row must match: plain words, which must appear
+  // somewhere in the row or its tags, and #tag (or #"two words") terms, which must be one
+  // of its tags exactly. Quotes also keep a plain phrase together.
+  function parseQuery(query) {
+    var words = [];
+    var tags = [];
+    (query.toLowerCase().match(/#"[^"]*"|"[^"]*"|\S+/g) || []).forEach(function (token) {
+      if (token.indexOf('#"') === 0) tags.push(token.slice(2, -1).trim());
+      else if (token.charAt(0) === '#' && token.length > 1) tags.push(token.slice(1));
+      else if (token.charAt(0) === '"') words.push(token.slice(1, -1));
+      else words.push(token);
+    });
+    return {
+      words: words.filter(Boolean),
+      tags: tags.filter(Boolean),
+    };
+  }
+
+  function rowMatches(row, terms) {
+    for (var i = 0; i < terms.tags.length; i++) {
+      if (row.tags.indexOf(terms.tags[i]) === -1) return false;
+    }
+    for (var j = 0; j < terms.words.length; j++) {
+      var word = terms.words[j];
+      if (row.text.indexOf(word) === -1 && row.tagText.indexOf(word) === -1) return false;
+    }
+    return true;
+  }
+
   // Every word must appear somewhere in the row, in any order, so "addameer jericho"
   // finds the Jericho pages of that one crawl.
   function applyFilter(query) {
-    var words = query.toLowerCase().split(/\s+/).filter(Boolean);
-    var filtering = words.length > 0;
+    var terms = parseQuery(query);
+    var filtering = terms.words.length > 0 || terms.tags.length > 0;
 
     if (filtering && !openBeforeFilter) {
       openBeforeFilter = crawls.map(function (c) { return c.details.open; });
@@ -22818,7 +22875,7 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
     crawls.forEach(function (crawl, i) {
       var matches = 0;
       crawl.rows.forEach(function (row) {
-        var hit = words.every(function (w) { return row.text.indexOf(w) !== -1; });
+        var hit = rowMatches(row, terms);
         // Only touched when it changes: writing 11k attributes per keystroke is what
         // would make this lag, not the substring checks.
         if (row.li.hidden === hit) row.li.hidden = !hit;
@@ -22906,6 +22963,146 @@ http://www.zaytona.com/services.html" data-wayback="https://web.archive.org/web/
     search.focus();
     search.select();
   });
+
+  // --- tags ----------------------------------------------------------------------
+
+  // Tags come from the server rather than being baked into this file, so a tag added a
+  // minute ago shows up without rebuilding the index. Everyone can read and filter by
+  // them; only the admin port (see serve.js) can change them, and only there do the
+  // remove buttons and the add field appear.
+  var tagList = document.getElementById('tag-list');
+  var tagForm = document.getElementById('tag-form');
+  var tagInput = document.getElementById('tag-input');
+  var tagError = document.getElementById('tag-error');
+  var tagsByPath = {};
+  var isAdmin = false;
+  var saving = false;
+
+  function setRowTags(path, tags) {
+    if (tags.length) tagsByPath[path] = tags;
+    else delete tagsByPath[path];
+
+    var row = rowByPath[path];
+    if (!row) return;
+    row.tags = tags.map(function (t) { return t.toLowerCase(); });
+    row.tagText = row.tags.join(' ');
+  }
+
+  // The search term for one tag: #tag, or #"two words" when it has a space in it.
+  function tagTerm(tag) {
+    return '#' + (/\s/.test(tag) ? '"' + tag + '"' : tag);
+  }
+
+  function renderTags() {
+    tagList.replaceChildren();
+    tagError.textContent = '';
+
+    // Tags belong to pages in the index; anything else the frame can reach (an image, a
+    // page the logs never listed) has no row to hang them on.
+    var indexed = !!rowByPath[currentPath];
+    var tags = tagsByPath[currentPath] || [];
+
+    tags.forEach(function (tag) {
+      var chip = document.createElement('span');
+      chip.className = 'tag';
+
+      var name = document.createElement('button');
+      name.type = 'button';
+      name.textContent = tag;
+      name.title = 'Show pages tagged ' + tag;
+      name.addEventListener('click', function () {
+        search.value = tagTerm(tag);
+        runFilter();
+      });
+      chip.appendChild(name);
+
+      if (isAdmin) {
+        var remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'tag-remove';
+        remove.textContent = '×';
+        remove.title = 'Remove ' + tag;
+        remove.setAttribute('aria-label', 'Remove tag ' + tag);
+        remove.addEventListener('click', function () {
+          saveTags(currentPath, tags.filter(function (t) { return t !== tag; }));
+        });
+        chip.appendChild(remove);
+      }
+
+      tagList.appendChild(chip);
+    });
+
+    if (!tags.length) {
+      var empty = document.createElement('span');
+      empty.className = 'tag-empty';
+      empty.textContent = !currentPath ? '' : indexed ? 'None' : 'Not in the index';
+      tagList.appendChild(empty);
+    }
+
+    tagForm.hidden = !(isAdmin && indexed);
+  }
+
+  // Sends the page's whole tag list; the server answers with what it stored, after its
+  // own clean-up (commas, whitespace, case-insensitive duplicates), and that is what is
+  // shown -- never the list as typed.
+  function saveTags(path, tags) {
+    if (saving) return;
+    saving = true;
+    tagError.textContent = '';
+
+    fetch('/api/tags', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ path: path, tags: tags }),
+    })
+      .then(function (res) {
+        return res.json().then(function (body) {
+          if (!res.ok) throw new Error(body.error || 'HTTP ' + res.status);
+          return body;
+        });
+      })
+      .then(function (body) {
+        setRowTags(body.local_path, body.tags);
+        if (path === currentPath) {
+          renderTags();
+          tagInput.value = '';
+        }
+        // A page that gained or lost the tag being filtered on moves in or out of the tree.
+        if (currentQuery) applyFilter(currentQuery);
+      })
+      .catch(function (err) {
+        tagError.textContent = 'Could not save: ' + err.message;
+      })
+      .then(function () {
+        saving = false;
+      });
+  }
+
+  tagForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var added = tagInput.value.split(',').map(function (t) { return t.trim(); }).filter(Boolean);
+    if (!added.length || !currentPath) return;
+    saveTags(currentPath, (tagsByPath[currentPath] || []).concat(added));
+  });
+
+  fetch('/api/tags')
+    .then(function (res) { return res.ok ? res.json() : {}; })
+    .then(function (all) {
+      Object.keys(all).forEach(function (path) { setRowTags(path, all[path]); });
+      renderTags();
+      // A shared ?q= naming a tag could not match anything until the tags arrived.
+      if (currentQuery) applyFilter(currentQuery);
+    })
+    .catch(function () {
+      // No server behind this file (opened some other way): the tree works without tags.
+    });
+
+  fetch('/api/admin')
+    .then(function (res) {
+      isAdmin = res.ok;
+      renderTags();
+    })
+    .catch(function () {});
 
   // --- opening a shared link -------------------------------------------------------
 
