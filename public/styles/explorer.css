@@ -736,6 +736,7 @@ button:not(.lightweight):focus::before {
 
 .bookmark-list-entry::before {
 	content: url('../assets/icons/page-16x16.png');
+	image-rendering: pixelated;
 	position: relative;
 	bottom: -2px;
 	padding-right: 2px;
@@ -770,6 +771,7 @@ button:not(.lightweight):focus::before {
 
 .history-day::before {
 	content: url('../assets/icons/calendar-5.png');
+	image-rendering: pixelated;
 	position: relative;
 	bottom: -2px;
 	padding-right: 2px;
