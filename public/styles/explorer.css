@@ -286,13 +286,31 @@ button {
 	user-select: none;
 }
 
+/* Takes the spare width, so the capture date sits in a fixed field at the right as it
+   does in the archive index's status bar. */
 #status-bar-left {
-	width: 250px;
-	/* estimated */
+	flex: 1;
+	min-width: 0;
 }
 
 #status-bar-middle {
 	flex: 1;
+}
+
+/* The capture date, drawn like the archive index's status bar fields (98.css's
+   .status-bar-field): sans-serif at 11px rather than the pixel font, and a 1px sunken
+   shadow in place of the inset-shallow border. Kept to the shell's 16px row. */
+#status-bar #status-bar-middle {
+	flex: 0 0 150px;
+	box-sizing: border-box;
+	border: none;
+	box-shadow: inset -1px -1px #dfdfdf, inset 1px 1px #808080;
+	padding: 2px 3px;
+	font-family: sans-serif;
+	font-size: 11px;
+	line-height: 12px;
+	color: #222;
+	-webkit-font-smoothing: auto;
 }
 
 #status-bar-right {
@@ -680,10 +698,6 @@ li:before {
 	padding: 0px 5px 0px 1px;	
 }
 
-#status-bar {
-	display: none;
-}
-
 /* .toolbar-button {
 	font-family: "Pixelated MS Sans Serif" !important;
 
@@ -706,6 +720,12 @@ li:before {
 	   real viewport, so 480px still means 480 actual pixels. */
 	body {
 		zoom: 1.25;
+	}
+
+	/* Hidden on phones: its row is worth more as page than as a capture date and a
+	   zone icon. Shown on desktop, where it carries the capture date. */
+	#status-bar {
+		display: none;
 	}
 
 	/* Full height. The 3px gutter that gives the window its drop shadow and the

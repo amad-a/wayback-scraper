@@ -334,6 +334,20 @@ function prepareFrame(win, depth = 0) {
 
 const TITLE_SUFFIX = 'Palestine Online';
 
+// The status bar's middle pane: when the page in the frame was captured, read off its
+// Wayback timestamp. Blank for anything without one -- a page the database has never
+// heard of and the scraper never stamped -- rather than a guess.
+const capturedText = document.getElementById('status-bar-middle-text');
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function setCaptured(timestamp) {
+	if (!capturedText) return;
+	const match = /^(\d{4})(\d{2})(\d{2})/.exec(timestamp || '');
+	capturedText.textContent = match
+		? `Captured ${Number(match[3])} ${MONTHS[Number(match[2]) - 1]} ${match[1]}`
+		: '';
+}
+
 function setChrome({ title, url }) {
 	document.querySelector('.window-title').textContent = title
 		? `${title}`
@@ -368,6 +382,9 @@ async function applyChrome() {
 		// originally; without a stamp there is nothing honest to show yet.
 		url: stampedUrl,
 	});
+	// The stamp carries the capture time too, so the date shows before the database
+	// answers -- and, for a page it has never heard of, instead of it.
+	setCaptured(/\/web\/(\d{8,14})/.exec(stamped || '')?.[1]);
 
 	// Filed from the DOM first, so a page the database has never heard of still lands in
 	// history. The database pass below files it again with better labels.
@@ -387,6 +404,7 @@ async function applyChrome() {
 	if (decodeURIComponent(iframe.contentWindow.location.pathname) !== localPath) return;
 
 	setChrome({ title: page.display_title, url: page.display_url });
+	setCaptured(page.timestamp);
 
 	// Held for the favorites star, which wants the corrected title and the real address
 	// rather than what the document happens to claim about itself.
