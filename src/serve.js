@@ -146,6 +146,37 @@ app.get('/api/random/deck', (_req, res) => {
   res.json({ size: paths.length, paths });
 });
 
+// --- media ------------------------------------------------------------------
+
+// How long each restored recording is, from media-manifest.json (written by
+// `npm run media`), keyed by the URL its links now point at. The main page's player
+// passes these to Webamp, which otherwise downloads part of every queued file just to
+// measure it -- 51 requests to open the Out Loud archive.
+const MEDIA_MANIFEST = path.join(ROOT, 'media-manifest.json');
+let mediaDurations = {};
+let mediaKey = '';
+
+app.get('/api/media', (_req, res) => {
+  let stat;
+  try {
+    stat = fs.statSync(MEDIA_MANIFEST);
+  } catch {
+    return res.json({});
+  }
+  const key = `${stat.mtimeMs}:${stat.size}`;
+  if (key !== mediaKey) {
+    const manifest = JSON.parse(fs.readFileSync(MEDIA_MANIFEST, 'utf8'));
+    mediaDurations = {};
+    for (const entry of Object.values(manifest)) {
+      if (entry.playable && entry.seconds) {
+        mediaDurations[sitesHref(entry.playable)] = entry.seconds;
+      }
+    }
+    mediaKey = key;
+  }
+  res.json(mediaDurations);
+});
+
 // --- tags -------------------------------------------------------------------
 //
 // Tags are public to read and writable only through the admin port: ADMIN_PORT, bound

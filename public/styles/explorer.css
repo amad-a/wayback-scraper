@@ -313,6 +313,58 @@ button {
 	-webkit-font-smoothing: auto;
 }
 
+/* Play audio: only on pages with recordings. Compact, to sit in the 16px row, in the
+   same type as the capture date beside it. The only thing in the status bar that takes
+   clicks, so it opts back into pointer events. */
+#status-bar #status-bar-audio {
+	flex: 0 0 auto;
+	box-sizing: border-box;
+	min-width: 0;
+	min-height: 0;
+	height: 16px;
+	padding: 0 8px;
+	font-family: sans-serif;
+	font-size: 11px;
+	line-height: 14px;
+	color: #222;
+	-webkit-font-smoothing: auto;
+	pointer-events: auto;
+	cursor: pointer;
+}
+
+#status-bar #status-bar-audio[hidden] {
+	display: none;
+}
+
+/* Webamp (app/webamp.js) trimmed to what an archive page's playlist needs: no Eject
+   (it opens a file picker for your own music) and no equalizer toggle. About is only a
+   hotspot over the lightning-bolt logo, which is painted into the skin -- hiding it
+   leaves the logo in place and just stops the click. Webamp's own stylesheet uses ID
+   selectors, hence !important. */
+#webamp #eject,
+#webamp #equalizer-button,
+#webamp #about {
+	display: none !important;
+}
+
+/* While a Webamp drag is in progress (see app/webamp.js), the archived page must not
+   swallow the mouse, or the drag ends wherever the cursor crosses into it. */
+.webamp-dragging iframe {
+	pointer-events: none !important;
+}
+
+/* Left in view but inert: the Winamp menu in the title bar and the playlist's grey
+   ADD / REM / SEL / MISC / LIST OPTS menus. All of them lead to adding your own files,
+   editing the list or skin options -- nothing an archive page's playlist needs. */
+#webamp #option-context,
+#webamp #playlist-add-menu,
+#webamp #playlist-remove-menu,
+#webamp #playlist-selection-menu,
+#webamp #playlist-misc-menu,
+#webamp #playlist-list-menu {
+	pointer-events: none !important;
+}
+
 #status-bar-right {
 	flex-basis: fit-content;
 	/* estimated */

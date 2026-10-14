@@ -3,6 +3,8 @@
 // Fill them in one at a time; main.js should not need to change.
 //
 // Shared handles, so implementations don't each re-query the DOM.
+import { bindAudioLinks, updateAudio } from './webamp.js';
+
 export const iframe = document.getElementById('frame');
 export const addressBar = document.getElementById('address-input');
 export const dropdown = document.getElementById('dropdown');
@@ -309,6 +311,10 @@ function prepareFrame(win, depth = 0) {
 	try {
 		injectScrollbars(win.document);
 		bindZoom(win.document);
+		// Before bindTargets: both listen in the capture phase on the same document, so
+		// registration order decides, and an audio link with target="main" must open the
+		// player rather than send a pane to the raw file.
+		bindAudioLinks(win.document);
 		bindTargets(win.document);
 		setScale(win.document);
 	} catch {
@@ -438,6 +444,9 @@ function syncChrome(force = false) {
 	currentPage = null;
 
 	const localPath = path.slice('/sites/'.length);
+	// A first look, so the last page's Play button goes as soon as the frame moves on;
+	// the load handler looks again once the whole page, frames and all, is there.
+	updateAudio(iframe.contentWindow, localPath);
 	syncShareUrl(localPath);
 	// Straight away, from the path alone: the database pass in applyChrome is a round trip
 	// away and the star should not spend it showing the last page's state.
@@ -579,6 +588,7 @@ export function watchFrame() {
 		// Re-injected because pages of this era use document.write, which can replace
 		// the whole document after we styled it. Idempotent, so this is cheap.
 		prepareFrame(iframe.contentWindow);
+		if (chromeFor) updateAudio(iframe.contentWindow, chromeFor.slice('/sites/'.length));
 
 		// Only re-runs when the early pass came up empty -- it happens before <body>
 		// necessarily exists, so the wayback stamp may not have been readable yet and
