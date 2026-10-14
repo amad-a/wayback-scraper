@@ -705,27 +705,14 @@ async function openEntries({ focusList }) {
 	}
 }
 
-// A click in the address box brings back what was typed into it showed: its matches, or
-// the entries if it was cleared down to nothing worth searching. While the box still
-// holds the page's address, nothing has been typed, and a click opens nothing.
+// A click in the address box searches for what is in it. Holding the page's address,
+// that lists the pages under it -- addresses starting with the text rank first -- so
+// clicking on http://art.net/~samia/ shows the rest of art.net/~samia/, and editing the
+// address down a folder narrows it. Typed text brings back its matches, or the entries if
+// it was cleared down to nothing worth searching.
 addressBar?.addEventListener('click', () => {
 	if (dropdown && !dropdown.classList.contains('hidden')) return;
-	if (addressBeforeTyping === null) return;
 	search(addressBar.value.trim());
-});
-
-// The first click into the box selects the whole address, as a browser's does, so typing
-// replaces it rather than searching for "http://www.addameer.org/jericho". Clicks after
-// that place the caret as normal.
-let addressFocusedByMouse = false;
-addressBar?.addEventListener('mousedown', () => {
-	addressFocusedByMouse = document.activeElement !== addressBar;
-});
-addressBar?.addEventListener('mouseup', (event) => {
-	if (!addressFocusedByMouse) return;
-	addressFocusedByMouse = false;
-	event.preventDefault(); // or the mouseup collapses the selection back to a caret
-	addressBar.select();
 });
 
 // Nothing worth searching: an empty box, or only the start of an address -- "www.",
