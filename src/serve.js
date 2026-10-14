@@ -270,7 +270,7 @@ app.get('/api/tags', (_req, res) => {
 // rows are read once per database file and kept in memory, so a keystroke is a filter
 // over an array rather than a query; reread when `npm run db` replaces the file, the same
 // way the read handle is reopened.
-const SEARCH_LIMIT = 50;
+const SEARCH_LIMIT = 100;
 let searchRows = null;
 let searchHandle = null;
 
