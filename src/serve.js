@@ -264,6 +264,27 @@ app.get('/api/tags', (_req, res) => {
   res.json(Object.fromEntries(rows.map((r) => [r.local_path, splitTags(r.tags)])));
 });
 
+// Every page tagged "entry" -- the front doors you picked -- with the address and
+// title the shell's address bar dropdown lists them by, sorted by address so a site's
+// pages sit together. Read on each open of the dropdown, so a page tagged a moment ago
+// is already in it.
+app.get('/api/entries', (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+
+  const rows = handle
+    .prepare(
+      `SELECT local_path, display_url, display_title, tags FROM page_view WHERE tags <> ''`,
+    )
+    .all()
+    .filter((r) => splitTags(r.tags).some((t) => t.toLowerCase() === 'entry'))
+    .map(({ local_path, display_url, display_title }) => ({ local_path, display_url, display_title }));
+
+  const key = (r) => r.display_url.replace(/^https?:\/\/(www\.)?/i, '').toLowerCase();
+  rows.sort((a, b) => key(a).localeCompare(key(b)));
+  res.json(rows);
+});
+
 // Replaces one page's whole tag list. Whole-list rather than add/remove calls, so a
 // retried request lands in the same state and two tabs cannot interleave half an edit.
 //

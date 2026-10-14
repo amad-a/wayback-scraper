@@ -604,14 +604,115 @@ export function watchFrame() {
 // generated from src/build-index.js, which already walks /sites.
 export function onAddressInput(query) {}
 
-// Paints `results` into .dropdown-content. The old implementation emitted
-// `<li onclick="setFrame(...)">` markup, which is why setFrame has to stay a
-// global (see main.js). Attaching listeners here instead would let it stop
-// being one.
-export function render(results) {}
+// The ▼ at the end of the address bar: the pages tagged "entry", as the list a browser
+// of the era kept of addresses typed before. Fetched on every open, so a page tagged a
+// moment ago is already there.
+const dropdownContent = dropdown?.querySelector('.dropdown-content');
+const dropdownButton = document.getElementById('address-dropdown-button');
 
-// Called from the dropdown markup render() emits. Navigates the iframe.
-export function setFrame(url) {}
+dropdownContent?.setAttribute('role', 'listbox');
+dropdownContent?.setAttribute('aria-label', 'Entry pages');
+
+// Paints the entry pages into the dropdown. Rows look and behave like the Favorites and
+// History panels' -- the same class, so markCurrent lights up the page you are on -- and
+// carry their own listeners, which is what lets setFrame stop being a global.
+export function render(entries) {
+	if (!dropdownContent) return;
+	dropdownContent.replaceChildren();
+
+	for (const entry of entries) {
+		const row = document.createElement('div');
+		row.className = 'bookmark-list-entry';
+		row.dataset.path = entry.local_path;
+		row.setAttribute('role', 'option');
+		row.tabIndex = -1;
+		const address = entry.display_url || entry.local_path;
+		row.textContent = entry.display_title ? `${address} - ${entry.display_title}` : address;
+		row.title = row.textContent;
+		row.addEventListener('click', () => setFrame(entry.local_path));
+		dropdownContent.appendChild(row);
+	}
+
+	if (!entries.length) {
+		const empty = document.createElement('div');
+		empty.className = 'dropdown-empty';
+		empty.textContent = 'No pages tagged "entry" yet.';
+		dropdownContent.appendChild(empty);
+	}
+
+	markCurrent();
+}
+
+// Opens a page from the dropdown in the frame, and closes the dropdown.
+export function setFrame(path) {
+	hideAddressDropdown();
+	openPath(path);
+}
+
+// Set while the entries for an open are being fetched, so a second click on the button
+// in that moment cancels the open rather than starting another.
+let dropdownLoading = null;
+
+export async function toggleAddressDropdown() {
+	if (!dropdown) return;
+	if (!dropdown.classList.contains('hidden') || dropdownLoading) {
+		dropdownLoading = null;
+		hideAddressDropdown();
+		return;
+	}
+
+	// Fetched before showing, so the slide-open animation runs on the finished list
+	// rather than on an empty box that then jumps to full height.
+	const loading = (dropdownLoading = {});
+	let entries = [];
+	try {
+		const res = await fetch('/api/entries');
+		if (res.ok) entries = await res.json();
+	} catch {
+		// server not running: an empty list says so better than a stale one
+	}
+	if (dropdownLoading !== loading) return; // cancelled while loading
+	dropdownLoading = null;
+	render(entries);
+
+	// The panels share this corner of the window, so only one is open at a time.
+	favoritesPanel?.classList.add('hidden');
+	historyPanel?.classList.add('hidden');
+	dropdown.classList.remove('hidden');
+	dropdownButton?.setAttribute('aria-expanded', 'true');
+
+	// Focus goes in with the list, on the page you are on if it is an entry, so the
+	// arrows start from somewhere.
+	(dropdownContent?.querySelector('.bookmark-list-entry.current')
+		|| dropdownContent?.querySelector('.bookmark-list-entry'))?.focus();
+}
+
+export function hideAddressDropdown() {
+	dropdownLoading = null;
+	if (!dropdown || dropdown.classList.contains('hidden')) return;
+	const hadFocus = dropdown.contains(document.activeElement);
+	dropdown.classList.add('hidden');
+	dropdownButton?.setAttribute('aria-expanded', 'false');
+	// Back to the button, rather than stranding a keyboard user at the top of the page.
+	if (hadFocus) dropdownButton?.focus();
+}
+
+bindPanelKeys(dropdownContent, {
+	rows: '.bookmark-list-entry',
+	activate: (row) => setFrame(row.dataset.path),
+	close: hideAddressDropdown,
+});
+
+// A click anywhere outside the dropdown and its button closes it, as a menu would.
+// Clicks inside the archived page land in the frame's document and never reach this
+// one, so leaving the frame focused closes it too.
+document.addEventListener('mousedown', (event) => {
+	if (dropdown?.contains(event.target) || dropdownButton?.contains(event.target)) return;
+	hideAddressDropdown();
+});
+window.addEventListener('blur', () => {
+	if (document.activeElement === iframe) hideAddressDropdown();
+});
 
 // --- toolbar ---------------------------------------------------------------
 

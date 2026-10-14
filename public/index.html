@@ -409,8 +409,10 @@
                 </button>
                 <!-- TODO: functional dropdown, autocompleting file/folder paths -->
               </div>
-              <div id="dropdown" class="dropdown inset-deep hidden">
-                <div class="dropdown-content"></div>
+              <!-- The outer box only clips; the list inside carries the sunken border and
+                   is what slides open (see #dropdown in explorer.css). -->
+              <div id="dropdown" class="dropdown hidden">
+                <div class="dropdown-content inset-deep"></div>
               </div>
             </div>
           </div>
@@ -462,13 +464,13 @@
         ></iframe>
       </div>
       <div id="status-bar">
-        <div
-          id="status-bar-left"
         <!-- Shown only on pages that link to restored audio; see app/webamp.js. -->
         <button id="status-bar-audio" type="button" hidden>
           <img src="./assets/icons/loudspeaker-rays-16x16.png" width="16" height="16" alt="" />
           <span id="status-bar-audio-label"></span>
         </button>
+        <div
+          id="status-bar-left"
           class="inset-shallow"
           style="display: block"
         >

@@ -12,9 +12,8 @@ import {
   openRandomPage,
   openWaybackSource,
   printIframe,
-  render,
-  setFrame,
   sharePage,
+  toggleAddressDropdown,
   toggleFavorites,
   toggleHistory,
   watchFrame,
@@ -26,6 +25,10 @@ watchFrame();
 addressBar.addEventListener('input', (e) =>
   onAddressInput(e.target.value.trim()),
 );
+
+document
+  .getElementById('address-dropdown-button')
+  .addEventListener('click', () => toggleAddressDropdown());
 
 document
   .getElementById('source')
@@ -72,12 +75,3 @@ document
 document
   .querySelector('.print-button')
   .addEventListener('click', () => printIframe());
-
-// render() builds dropdown rows with inline onclick="setFrame(...)", so this
-// has to be reachable from global scope. Assigned explicitly rather than left
-// to happen by accident -- drop this line once render() attaches its own
-// listeners.
-window.setFrame = setFrame;
-
-// Initial paint. No-op until render() and a page source exist.
-render([]);

@@ -141,6 +141,7 @@ body {
 	margin-right: 4px;
 	margin-left: 1px;
 	align-self: center;
+	image-rendering: pixelated;
 }
 
 #address-input {
@@ -324,10 +325,10 @@ button {
    events. */
 #status-bar #status-bar-audio {
 	flex: 0 0 auto;
-	box-sizing: border-box;
 	display: inline-flex;
 	align-items: center;
 	gap: 4px;
+	box-sizing: border-box;
 	min-width: 0;
 	min-height: 0;
 	height: 20px;
@@ -341,7 +342,6 @@ button {
 	cursor: pointer;
 }
 
-#status-bar #status-bar-audio[hidden] {
 #status-bar-audio img {
 	width: 16px;
 	height: 16px;
@@ -354,6 +354,7 @@ button {
 	image-rendering: pixelated;
 }
 
+#status-bar #status-bar-audio[hidden] {
 	display: none;
 }
 
@@ -390,8 +391,8 @@ button {
 	flex-basis: fit-content;
 	/* estimated */
 	display: flex;
-	gap: 0px;
 	align-items: center;
+	gap: 0px;
 }
 
 #status-bar-simple {
@@ -499,11 +500,12 @@ button:not(.lightweight):focus::before {
 	flex-direction: column;
 }
 
+/* A fixed window onto the list, which never moves itself: it only clips, so the list can
+   slide out from under the address field without showing above it. */
 #dropdown {
 	position: fixed;
 	width: -webkit-fill-available;
 	max-width: 830px;
-	background: var(--Window);
 	color: var(--WindowText);
 	/* flex: 1; */
 	/* display: flex; */
@@ -511,8 +513,7 @@ button:not(.lightweight):focus::before {
 	margin-bottom: 1px;
 	z-index: 1;
 	margin-right: 5px;
-	height: 500px;
-	max-height: calc(100vh - 140px);
+	overflow: hidden;
 }
 
 #favorite-star {
@@ -559,11 +560,87 @@ button:not(.lightweight):focus::before {
 	content: "https:";
 }
 
+/* As tall as its entries, up to the old fixed 500px (or the window), then it scrolls.
+   Carries the sunken border and white ground that #dropdown used to, since it is the part
+   that moves. */
 .dropdown-content {
-	height: 100%;
-	overflow-y: scroll;
+	background: var(--Window);
+	max-height: min(500px, calc(100vh - 140px));
+	overflow-y: auto;
 	display: flex;
 	flex-direction: column;
+}
+
+/* Opens the way a Windows 98 combo box did (AnimateWindow with AW_SLIDE, top to
+   bottom): the list slides down out from under the address field, its bottom edge
+   first, at an even 200ms. Closing is instant, as it was.
+
+   Only transform is animated, and #dropdown around it does the clipping without moving.
+   That keeps the whole slide on the compositor: an earlier version animated clip-path
+   too, which Chrome can only do on the main thread, repainting the full list every frame
+   while the shell's frame polling and the archived page competed for the same thread --
+   and it stuttered. */
+@keyframes dropdown-slide {
+	from {
+		transform: translateY(-100%);
+	}
+	to {
+		transform: none;
+	}
+}
+
+#dropdown:not(.hidden) .dropdown-content {
+	animation: dropdown-slide 200ms linear;
+	will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	#dropdown:not(.hidden) .dropdown-content {
+		animation: none;
+	}
+}
+
+/* Full-height rows that scroll, rather than 79 entries squeezed into 500px. */
+.dropdown-content > * {
+	flex: none;
+}
+
+/* Each entry laid out like the address field above it, so the list reads as more of the
+   same field: the dropdown's border lines up with the field's, so 1px in, the same 16px
+   page icon, 4px, then the URL in the field's Arial at 10pt, on a 21px row. The panels'
+   hover and current rows add padding and wrap; here every row keeps the field's shape. */
+#dropdown .bookmark-list-entry,
+#dropdown .bookmark-list-entry:hover,
+#dropdown .bookmark-list-entry:focus-visible,
+#dropdown .bookmark-list-entry.current {
+	height: 21px;
+	padding: 0 5px 0 1px;
+	line-height: 21px;
+	white-space: nowrap;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	-webkit-font-smoothing: auto;
+}
+
+/* Drawn as a background rather than content: url(), so image-rendering reliably applies
+   and it can be placed exactly -- 3px down, as the field's icon sits in its 21px box. */
+#dropdown .bookmark-list-entry::before {
+	content: "";
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	vertical-align: top;
+	margin-top: 3px;
+	padding: 0;
+	position: static;
+	background: url('../assets/icons/page-16x16.png') no-repeat;
+	image-rendering: pixelated;
+}
+
+.dropdown-empty {
+	padding: 4px 6px;
+	color: var(--GrayText, grey);
 }
 
 ::-webkit-scrollbar,
