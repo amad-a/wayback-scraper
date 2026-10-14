@@ -275,11 +275,16 @@ button {
 	align-items: center;
 	margin-top: 2px;
 	gap: 2px;
-	height: 18px;
+	/* 22px, not the original 18, so the Play audio button can hold a 16px icon inside its
+	   bevel. The panels below leave this much room at the bottom of the window. */
+	height: 22px;
 }
 
 #status-bar>* {
-	height: 16px;
+	box-sizing: border-box;
+	height: 20px;
+	/* The 1px inset border leaves 18px inside, so this centres a line of text. */
+	line-height: 18px;
 	white-space: nowrap;
 	overflow: hidden;
 	pointer-events: none;
@@ -308,24 +313,28 @@ button {
 	padding: 2px 3px;
 	font-family: sans-serif;
 	font-size: 11px;
-	line-height: 12px;
+	line-height: 16px;
 	color: #222;
 	-webkit-font-smoothing: auto;
 }
 
-/* Play audio: only on pages with recordings. Compact, to sit in the 16px row, in the
-   same type as the capture date beside it. The only thing in the status bar that takes
-   clicks, so it opts back into pointer events. */
+/* Play audio: only on pages with recordings, at the left end of the status bar. The
+   speaker icon and a label in the same type as the capture date, filling the 20px row.
+   The only thing in the status bar that takes clicks, so it opts back into pointer
+   events. */
 #status-bar #status-bar-audio {
 	flex: 0 0 auto;
 	box-sizing: border-box;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
 	min-width: 0;
 	min-height: 0;
-	height: 16px;
-	padding: 0 8px;
+	height: 20px;
+	padding: 0 6px 0 4px;
 	font-family: sans-serif;
 	font-size: 11px;
-	line-height: 14px;
+	line-height: 1;
 	color: #222;
 	-webkit-font-smoothing: auto;
 	pointer-events: auto;
@@ -333,6 +342,18 @@ button {
 }
 
 #status-bar #status-bar-audio[hidden] {
+#status-bar-audio img {
+	width: 16px;
+	height: 16px;
+	image-rendering: pixelated;
+	pointer-events: none;
+}
+
+/* The Internet-zone icon: 16px pixel art, kept crisp when the page is scaled. */
+#status-bar-right-icon {
+	image-rendering: pixelated;
+}
+
 	display: none;
 }
 
@@ -370,6 +391,7 @@ button {
 	/* estimated */
 	display: flex;
 	gap: 0px;
+	align-items: center;
 }
 
 #status-bar-simple {
@@ -558,7 +580,8 @@ button:not(.lightweight):focus::before {
 	background-color: silver;
 	z-index: 1000000;
 	top: 100px;
-	height: calc(100% - 122px);
+	/* 100px of toolbars above, 26px below for the status bar and its gap. */
+	height: calc(100% - 126px);
 	box-shadow: 0px 0px 0 rgb(255, 255, 255) inset, -1px 0px 0 rgb(128, 128, 128) inset;
 
 	resize: horizontal;

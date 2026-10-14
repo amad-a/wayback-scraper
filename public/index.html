@@ -464,6 +464,11 @@
       <div id="status-bar">
         <div
           id="status-bar-left"
+        <!-- Shown only on pages that link to restored audio; see app/webamp.js. -->
+        <button id="status-bar-audio" type="button" hidden>
+          <img src="./assets/icons/loudspeaker-rays-16x16.png" width="16" height="16" alt="" />
+          <span id="status-bar-audio-label"></span>
+        </button>
           class="inset-shallow"
           style="display: block"
         >
@@ -477,8 +482,6 @@
           />
           <span id="status-bar-left-text"></span>
         </div>
-        <!-- Shown only on pages that link to restored audio; see app/webamp.js. -->
-        <button id="status-bar-audio" type="button" hidden></button>
         <div
           id="status-bar-middle"
           class="inset-shallow"

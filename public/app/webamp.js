@@ -32,8 +32,9 @@ const MAIN_HEIGHT = 116;
 const PLAYLIST_EXTRA_ROWS = 4;
 
 const button = document.getElementById('status-bar-audio');
+const label = document.getElementById('status-bar-audio-label');
 
-let player = null; // { webamp, queueKey, open } once built; kept for the session
+let player = null; // { webamp, queueKey, open, layout } once built; kept for the session
 let opening = null; // the in-flight first load, so a double click builds one player
 let durations = null; // href -> seconds, from /api/media, fetched once
 let currentTracks = []; // the page in the frame's recordings
@@ -102,7 +103,7 @@ export function updateAudio(win, key) {
 	currentTracks = PHONE.matches ? [] : [...collect(win).values()];
 	if (!button) return;
 	button.hidden = currentTracks.length === 0;
-	button.textContent = `▶ Play audio (${currentTracks.length})`;
+	label.textContent = `Play audio (${currentTracks.length})`;
 }
 
 button?.addEventListener('click', () => play(currentTracks, currentKey, 0));
@@ -223,6 +224,59 @@ async function open(tracks) {
 	return webamp;
 }
 
+// --- the starting layout ------------------------------------------------------------
+
+// Webamp's windows can be dragged apart, closed, shaded, resized or doubled, and since the
+// instance is kept for the session that would all carry over to the next Play. So the
+// layout it first rendered with is recorded, and put back on every reopen. These are
+// Webamp's own store actions -- the same ones its window menus dispatch -- since its
+// public API has no "reset layout".
+function snapshotLayout(webamp) {
+	const { windows, display } = webamp.store.getState();
+	return {
+		anchor: anchor().getBoundingClientRect(),
+		doubled: display.doubled,
+		windows: Object.fromEntries(
+			Object.entries(windows.genWindows).map(([id, w]) => [
+				id,
+				{ open: w.open, shade: w.shade, size: [...w.size], position: { ...w.position } },
+			]),
+		),
+	};
+}
+
+function restoreLayout(webamp, layout) {
+	const { dispatch } = webamp.store;
+	const now = () => webamp.store.getState();
+
+	if (now().display.doubled !== layout.doubled) dispatch({ type: 'TOGGLE_DOUBLESIZE_MODE' });
+
+	for (const [id, saved] of Object.entries(layout.windows)) {
+		const current = now().windows.genWindows[id];
+		if (!current) continue;
+		if (current.open !== saved.open) dispatch({ type: 'TOGGLE_WINDOW', windowId: id });
+		if (current.canShade && current.shade !== saved.shade) {
+			dispatch({ type: 'TOGGLE_WINDOW_SHADE_MODE', windowId: id });
+		}
+		if (current.canResize && String(current.size) !== String(saved.size)) {
+			dispatch({ type: 'WINDOW_SIZE_CHANGED', windowId: id, size: saved.size });
+		}
+	}
+
+	// The same arrangement, moved by however far the anchor has moved since -- a resized
+	// browser window -- so it still opens at the middle left.
+	const here = anchor().getBoundingClientRect();
+	const dx = here.left - layout.anchor.left;
+	const dy = here.top + here.height / 2 - (layout.anchor.top + layout.anchor.height / 2);
+	const positions = Object.fromEntries(
+		Object.entries(layout.windows).map(([id, w]) => [
+			id,
+			{ x: Math.round(w.position.x + dx), y: Math.max(0, Math.round(w.position.y + dy)) },
+		]),
+	);
+	dispatch({ type: 'UPDATE_WINDOW_POSITIONS', positions, absolute: true });
+}
+
 async function play(tracks, key, index) {
 	if (!tracks.length) return;
 
@@ -230,7 +284,7 @@ async function play(tracks, key, index) {
 	if (!player) {
 		opening ||= open(tracks)
 			.then((webamp) => {
-				if (webamp) player = { webamp, queueKey: key, open: true };
+				if (webamp) player = { webamp, queueKey: key, open: true, layout: snapshotLayout(webamp) };
 				return webamp;
 			})
 			.finally(() => {
@@ -252,6 +306,7 @@ async function play(tracks, key, index) {
 			player.queueKey = key;
 		}
 		if (!player.open) {
+			restoreLayout(player.webamp, player.layout);
 			player.webamp.reopen();
 			player.open = true;
 		}
