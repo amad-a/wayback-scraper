@@ -25,6 +25,7 @@ import {
   readCrawl,
   replayUrl,
 } from './page-index.js';
+import { parseCsv } from './tags-csv.js';
 
 function parseArgs(argv) {
   const outFlag = argv.indexOf('--out');
@@ -944,6 +945,16 @@ async function main() {
     process.exit(1);
   }
 
+  // Corrected titles from tags.csv -- mostly Arabic that the original site's Windows-1256
+  // was decoded as Western European, which no amount of re-reading the file will fix. The
+  // database applies the same column as display_title; this keeps the index agreeing.
+  const overrides = new Map();
+  if (existsSync('tags.csv')) {
+    for (const row of parseCsv(await fs.readFile('tags.csv', 'utf8'))) {
+      if (row.title_override) overrides.set(row.local_path, row.title_override);
+    }
+  }
+
   const crawls = [];
   let linked = 0;
   let missing = 0;
@@ -954,6 +965,7 @@ async function main() {
     if (!crawl || !crawl.pages.length) continue;
     crawls.push(crawl);
     for (const page of crawl.pages) {
+      if (overrides.has(page.localPath)) page.title = overrides.get(page.localPath);
       if (page.exists) linked += 1;
       else missing += 1;
       if (page.title) titled += 1;
