@@ -88,6 +88,9 @@ function renderCrawl(crawl) {
 
       return (
         `<li><a href="${escapeHtml(pageHref(page.localPath))}"` +
+        // The unencoded path is what ?p= carries, so the page can find this row from the
+        // address bar without having to agree with the browser on how to decode an href.
+        ` data-path="${escapeHtml(page.localPath)}"` +
         ` title="${escapeHtml(tooltip)}"` +
         (wayback ? ` data-wayback="${escapeHtml(wayback)}"` : '') +
         `>` +
@@ -97,8 +100,8 @@ function renderCrawl(crawl) {
     .join('\n');
 
   return (
-    `<details>\n<summary>${escapeHtml(crawl.root)} <span class="count">${crawl.pages.length}</span></summary>\n` +
-    `<ul>\n${rows}\n</ul>\n</details>`
+    `<li><details data-root="${escapeHtml(crawl.root)}">\n<summary>${escapeHtml(crawl.root)} <span class="count">${crawl.pages.length}</span></summary>\n` +
+    `<ul>\n${rows}\n</ul>\n</details></li>`
   );
 }
 
@@ -110,54 +113,257 @@ function renderPage(crawls, stats) {
 <head>
 <meta charset="utf-8">
 <title>Wayback archive index</title>
+<!-- 98.css, vendored under public/vendor/98.css (MIT). The layout follows its own docs
+     page: a fixed tree-view down the left, the content beside it. -->
+<link rel="stylesheet" href="/vendor/98.css/98.css">
 <style>
-  body { margin: 0; font-family: sans-serif; font-size: 13px; }
-  .wrap { display: flex; align-items: flex-start; gap: 1rem; }
-  /* The tree scrolls on its own so the frame stays put on long lists. */
-  nav { width: 22rem; flex: none; height: 100vh; overflow-y: auto; padding: .5rem; box-sizing: border-box; border-right: 1px solid #ccc; }
-  nav h1 { font-size: 14px; margin: .25rem 0 .5rem; }
-  nav p { margin: 0 0 .75rem; color: #555; }
-  summary { cursor: pointer; padding: 2px 0; }
-  .count { color: #777; font-weight: normal; }
-  ul { list-style: none; margin: 0 0 .5rem; padding-left: 1rem; }
-  li { padding: 1px 0; }
-  a { text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  a.active { font-weight: bold; }
+  body { margin: 0; background: silver; }
+
+  /* 98.css for the chrome, but not its pixel font: the same elements it sets the font on,
+     back to the default sans-serif and normal anti-aliasing. */
+  body, .title-bar, .window, button, input, label, legend, option, select, table, textarea, ul.tree-view {
+    font-family: sans-serif;
+    -webkit-font-smoothing: auto;
+  }
+
+  /* The sidebar is fixed and the tree inside it scrolls on its own, so the search stays
+     on screen however far down the list you are, and the frame never moves. */
+  nav { position: fixed; top: 0; bottom: 0; left: 0; width: 340px; box-sizing: border-box; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+  #search { width: 100%; box-sizing: border-box; }
+  .nav-tools { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .nav-tools p { margin: 0; }
+  .nav-tools span { display: flex; gap: 4px; }
+  #tree { flex: 1; min-height: 0; overflow-y: auto; }
+  .count { color: grey; }
+
   /* Filename stays the anchor of the row; the title is secondary and wraps under it. */
-  .f { word-break: break-all; }
-  .t { color: #555; }
-  .missing { color: #999; }
-  main { padding: .5rem; }
-  /* 4:3 at 800x600. width/height rather than an aspect-ratio box: the archived pages
-     are fixed-width 2001-era layouts, so a viewport that matches the era is the point. */
-  iframe { width: 800px; height: 600px; border: 1px solid #ccc; background: #fff; }
-  #frame-label { margin: 0 0 .5rem; color: #555; height: 1.2em; }
-  /* The source line is itself the link to the snapshot. With no page selected -- or a
-     page whose log entry carried no timestamp -- the anchor keeps its text but loses
-     its href, so it reads as plain caption rather than a link that goes nowhere. */
-  #frame-label a:not([href]) { color: #555; cursor: default; text-decoration: none; }
+  #tree .f { word-break: break-all; }
+  #tree .t { color: grey; }
+  #tree .missing { color: grey; }
+  /* The page in the frame, marked the way the tree view marks a focused row. */
+  #tree a.active, #tree a.active .t { background: navy; color: #fff; }
+
+  /* Top padding matches the sidebar's, so the window lines up with the search box. */
+  main { margin-left: 356px; padding: 8px 16px 24px 0; }
+
+  /* Capped at the frame's full width (800px, plus the well's 2px border and the window
+     body's 8px margins) and otherwise as wide as the space beside the tree, so it narrows
+     with the browser window. Never sized to its content, which would let a long title in
+     the title bar stretch the window past the frame. */
+  .viewer { max-width: 820px; }
+  /* The page title, as plain text in the title bar; cut to the window's width, with the
+     full text in its tooltip. */
+  .title-bar-text { min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .title-bar-text.untitled { font-weight: normal; font-style: italic; }
+
+  /* The original address, in a sunken field like a browser's address bar. It links to
+     the snapshot. A page whose log entry carried no timestamp -- or one the logs never
+     listed -- keeps the address and loses the href, so it reads as plain text rather
+     than a link that goes nowhere. */
+  .address { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  #wayback-link { flex: 1; min-width: 0; height: 21px; line-height: 15px; box-sizing: border-box; padding: 3px 4px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #wayback-link:not([href]) { color: #222; cursor: default; }
+
+  /* 800x600 at most: the archived pages are fixed-width 2001-era layouts, so a viewport
+     that matches the era is the point. Narrower when the browser window is, with the
+     height kept at 600 rather than scaled down -- a wide page scrolls sideways inside the
+     frame either way, and a shorter frame would only show less of it.
+     The frame sits in the same sunken border as the tree view. */
+  .frame-well { padding: 2px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; }
+  iframe { display: block; width: 100%; max-width: 800px; height: 600px; border: 0; background: #fff; }
+  .status-bar-field { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #frame-captured { flex: 0 0 150px; }
 </style>
 </head>
 <body>
-<div class="wrap">
   <nav>
-    <h1>Wayback archive index</h1>
-    <p>${stats.crawls} crawls, ${stats.linked} pages${stats.missing ? ` (${stats.missing} not on disk)` : ''}</p>
+    <input id="search" type="search" placeholder="Filter by site, file, title or address  ( / )" aria-label="Filter pages" autocomplete="off" spellcheck="false">
+    <div class="nav-tools">
+      <p id="search-status" aria-live="polite">${stats.crawls} crawls, ${stats.linked} pages${stats.missing ? ` (${stats.missing} not on disk)` : ''}</p>
+      <span>
+        <button type="button" id="expand-all">Expand all</button>
+        <button type="button" id="collapse-all">Collapse all</button>
+      </span>
+    </div>
+    <ul class="tree-view" id="tree">
 ${tree}
+    </ul>
   </nav>
   <main>
-    <p id="frame-label"><a id="wayback-link" target="_blank" rel="noopener">Select a page from the tree.</a></p>
-    <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
+    <div class="window viewer">
+      <div class="title-bar">
+        <div class="title-bar-text untitled" id="frame-title">Select a page from the tree.</div>
+      </div>
+      <div class="window-body">
+        <div class="address">
+          <span>Address</span>
+          <a id="wayback-link" target="_blank" rel="noopener"></a>
+        </div>
+        <div class="frame-well">
+          <iframe id="frame" name="archive-frame" title="Archived page"></iframe>
+        </div>
+      </div>
+      <div class="status-bar">
+        <p class="status-bar-field" id="frame-path">No page open</p>
+        <p class="status-bar-field" id="frame-captured">&nbsp;</p>
+      </div>
+    </div>
   </main>
-</div>
 <script>
-  // Anchors keep real hrefs so middle-click and "open in new tab" still work; only a
-  // plain left click is redirected into the frame.
   var frame = document.getElementById('frame');
+  var frameTitle = document.getElementById('frame-title');
   var waybackLink = document.getElementById('wayback-link');
+  var framePathField = document.getElementById('frame-path');
+  var capturedField = document.getElementById('frame-captured');
+  var search = document.getElementById('search');
+  var searchStatus = document.getElementById('search-status');
+  var defaultStatus = searchStatus.textContent;
   var active = null;
 
+  // --- the tree, read once ----------------------------------------------------
+
+  // Each row's searchable text is built up front: the crawl it belongs to, the filename,
+  // and the tooltip, which holds the full title and the archived address. Lowercased
+  // here so a keystroke only has to do substring checks across ~11k rows.
+  var crawls = [];
+  var byPath = {};
+
+  Array.prototype.forEach.call(document.querySelectorAll('#tree details'), function (details) {
+    var root = (details.getAttribute('data-root') || '').toLowerCase();
+    var rows = [];
+
+    Array.prototype.forEach.call(details.querySelectorAll('li'), function (li) {
+      var link = li.querySelector('a');
+      var text = root + ' ' + li.textContent + ' ' + (link ? link.getAttribute('title') || '' : '');
+      rows.push({ li: li, text: text.toLowerCase() });
+      if (link) byPath[link.getAttribute('data-path')] = link;
+    });
+
+    crawls.push({
+      details: details,
+      item: details.parentElement,
+      rows: rows,
+      count: details.querySelector('.count'),
+    });
+  });
+
+  // --- the address bar ----------------------------------------------------------
+
+  // ?p= is the page in the frame and ?q= is the filter, the same p that index.html uses,
+  // so a path can be carried between the two by changing nothing but the pathname.
+  var currentPath = '';
+  var currentQuery = '';
+
+  function sitesUrl(path) {
+    return '/sites/' + path.split('/').map(encodeURIComponent).join('/');
+  }
+
+  // Parsed by hand to match index.html and serve.js exactly: URLSearchParams would read
+  // a '+' in a 2001-era filename as a space.
+  function sharedPath() {
+    var match = /[?&]p=([^&]*)/.exec(location.search);
+    if (!match) return '';
+
+    var path;
+    try {
+      path = decodeURIComponent(match[1]);
+    } catch (err) {
+      return ''; // malformed escape
+    }
+
+    // The value becomes a URL under /sites, so it must not climb out of it.
+    if (!path || path.charAt(0) === '/' || path.split('/').indexOf('..') !== -1) return '';
+    return path;
+  }
+
+  // replaceState, never pushState: navigating the frame already adds a history entry,
+  // which is what makes Back work, so this relabels that entry rather than adding a
+  // second one per page. The path is encoded per segment so its slashes stay readable.
+  function syncUrl() {
+    var others = new URLSearchParams(location.search);
+    others.delete('p');
+    others.delete('q');
+
+    var parts = [];
+    if (currentPath) parts.push('p=' + currentPath.split('/').map(encodeURIComponent).join('/'));
+    if (currentQuery) parts.push('q=' + encodeURIComponent(currentQuery));
+    var rest = others.toString();
+    if (rest) parts.push(rest);
+
+    var url = location.pathname + (parts.length ? '?' + parts.join('&') : '') + location.hash;
+    if (url !== location.pathname + location.search + location.hash) {
+      history.replaceState(history.state, '', url);
+    }
+  }
+
+  // --- what the frame is showing -------------------------------------------------
+
+  // Points the tree, the source line and the address bar at one page. Called for a click
+  // in the tree, a shared link, and any navigation inside the frame -- a link in an
+  // archived page, or Back and Forward -- so all three always describe the same thing.
+  function describe(path, reveal) {
+    currentPath = path;
+    var link = byPath[path] || null;
+
+    if (active !== link) {
+      if (active) active.classList.remove('active');
+      if (link) link.classList.add('active');
+      active = link;
+    }
+
+    if (link) {
+      // The row's tooltip is the full title and the original address on the line below
+      // it, or the address alone for an untitled page. Read back from there rather than
+      // carried as attributes of their own, which would add both to every one of ~11k rows.
+      var tooltip = link.getAttribute('title') || '';
+      var cut = tooltip.lastIndexOf('\\n');
+      setLabel(cut === -1 ? '' : tooltip.slice(0, cut), tooltip.slice(cut + 1));
+
+      // The address links to the snapshot. A row whose log entry carried no timestamp
+      // keeps the address and drops the href, so the line stays put and simply stops
+      // being clickable.
+      var wayback = link.getAttribute('data-wayback');
+      if (wayback) waybackLink.href = wayback;
+      else waybackLink.removeAttribute('href');
+      capturedField.textContent = captured(wayback);
+
+      if (reveal) {
+        link.closest('details').open = true;
+        link.scrollIntoView({ block: 'nearest' });
+      }
+    } else {
+      // Somewhere the crawl logs never listed -- an image, or a page reached by a link
+      // the scraper rewrote but did not seed. The path is all there is to say about it.
+      setLabel('', path);
+      waybackLink.removeAttribute('href');
+      capturedField.textContent = captured('');
+    }
+
+    framePathField.textContent = path;
+    framePathField.title = path;
+
+    syncUrl();
+  }
+
+  var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // The snapshot URL carries its capture time as /web/YYYYMMDDhhmmss/.
+  function captured(wayback) {
+    var match = /\\/web\\/(\\d{4})(\\d{2})(\\d{2})/.exec(wayback || '');
+    if (!match) return 'No snapshot';
+    return 'Captured ' + Number(match[3]) + ' ' + MONTHS[Number(match[2]) - 1] + ' ' + match[1];
+  }
+
+  function setLabel(title, address) {
+    frameTitle.textContent = title || 'Untitled';
+    frameTitle.title = title;
+    frameTitle.classList.toggle('untitled', !title);
+    waybackLink.textContent = address;
+    waybackLink.title = address;
+  }
+
+  // Anchors keep real hrefs so middle-click and "open in new tab" still work; only a
+  // plain left click is redirected into the frame.
   document.querySelector('nav').addEventListener('click', function (event) {
     var link = event.target.closest('a');
     if (!link) return;
@@ -165,20 +371,187 @@ ${tree}
 
     event.preventDefault();
     frame.src = link.getAttribute('href');
-
-    // The source line is the link: its text names the page, its href points at the
-    // snapshot. A row whose log entry carried no timestamp keeps the text and drops
-    // the href, so the line stays put and simply stops being clickable.
-    waybackLink.textContent = link.getAttribute('title') || link.textContent;
-
-    var wayback = link.getAttribute('data-wayback');
-    if (wayback) waybackLink.href = wayback;
-    else waybackLink.removeAttribute('href');
-
-    if (active) active.classList.remove('active');
-    link.classList.add('active');
-    active = link;
+    // Described now rather than when the frame gets there, so the row and the source line
+    // answer the click at once. The row is already on screen, so no scrolling.
+    describe(link.getAttribute('data-path'), false);
   });
+
+  // The frame's own location, as a path under /sites, or '' for anything else.
+  function framePath() {
+    var pathname;
+    try {
+      pathname = frame.contentWindow.location.pathname;
+    } catch (err) {
+      return ''; // navigated off-origin
+    }
+    if (pathname.indexOf('/sites/') !== 0) return '';
+    try {
+      return decodeURIComponent(pathname.slice('/sites/'.length));
+    } catch (err) {
+      return '';
+    }
+  }
+
+  // Polled rather than waiting for load, for the same reason index.html polls: load waits
+  // on every image from a host that died twenty years ago, and the location is known long
+  // before. Compared against the frame's last location rather than currentPath, so a
+  // tree click that has not reached the frame yet is not mistaken for a navigation back.
+  var lastFramePath = '';
+  setInterval(function () {
+    var path = framePath();
+    if (!path || path === lastFramePath) return;
+    lastFramePath = path;
+    if (path !== currentPath) describe(path, true);
+  }, 100);
+
+  // --- the filter -----------------------------------------------------------------
+
+  // Which crawls were open before the filter took over, put back when it is cleared so
+  // searching does not leave the whole tree expanded.
+  var openBeforeFilter = null;
+
+  // Every word must appear somewhere in the row, in any order, so "addameer jericho"
+  // finds the Jericho pages of that one crawl.
+  function applyFilter(query) {
+    var words = query.toLowerCase().split(/\\s+/).filter(Boolean);
+    var filtering = words.length > 0;
+
+    if (filtering && !openBeforeFilter) {
+      openBeforeFilter = crawls.map(function (c) { return c.details.open; });
+    }
+
+    var pages = 0;
+    var sites = 0;
+
+    crawls.forEach(function (crawl, i) {
+      var matches = 0;
+      crawl.rows.forEach(function (row) {
+        var hit = words.every(function (w) { return row.text.indexOf(w) !== -1; });
+        // Only touched when it changes: writing 11k attributes per keystroke is what
+        // would make this lag, not the substring checks.
+        if (row.li.hidden === hit) row.li.hidden = !hit;
+        if (hit) matches += 1;
+      });
+
+      crawl.item.hidden = matches === 0;
+      crawl.count.textContent = filtering ? matches + ' / ' + crawl.rows.length : crawl.rows.length;
+
+      if (filtering) crawl.details.open = matches > 0;
+      else if (openBeforeFilter) crawl.details.open = openBeforeFilter[i];
+
+      pages += matches;
+      if (matches) sites += 1;
+    });
+
+    if (!filtering) {
+      openBeforeFilter = null;
+      // Whatever is on screen stays findable once the filter is gone.
+      if (active) active.closest('details').open = true;
+    }
+
+    searchStatus.textContent = !filtering
+      ? defaultStatus
+      : pages
+        ? pages + (pages === 1 ? ' page' : ' pages') + ' in ' + sites + (sites === 1 ? ' crawl' : ' crawls')
+        : 'No matches';
+  }
+
+  // Filtered on a short delay so a fast typist pays for the last keystroke only.
+  var filterTimer = 0;
+
+  function runFilter() {
+    clearTimeout(filterTimer);
+    var query = search.value.trim();
+    if (query === currentQuery) return;
+    currentQuery = query;
+    applyFilter(currentQuery);
+    syncUrl();
+  }
+
+  search.addEventListener('input', function () {
+    clearTimeout(filterTimer);
+    filterTimer = setTimeout(runFilter, 80);
+  });
+
+  search.addEventListener('keydown', function (event) {
+    if (event.key === 'Escape' && search.value) {
+      event.preventDefault();
+      search.value = '';
+      search.dispatchEvent(new Event('input'));
+    } else if (event.key === 'Enter' && search.value.trim()) {
+      // Opens the first match, so a precise enough search is a way to navigate. The
+      // filter is brought up to date first, since Enter can land inside its delay.
+      event.preventDefault();
+      runFilter();
+      var first = document.querySelector('#tree > li:not([hidden]) li:not([hidden]) a');
+      if (first) first.click();
+    }
+  });
+
+  // Applies to the crawls on screen, so while filtering it opens or closes only the
+  // matches. It also replaces what the filter would restore on clearing, since "collapse
+  // all" should still mean collapsed once the filter is gone.
+  function setAllOpen(open) {
+    crawls.forEach(function (crawl, i) {
+      if (!crawl.item.hidden) crawl.details.open = open;
+      if (openBeforeFilter) openBeforeFilter[i] = open;
+    });
+  }
+
+  document.getElementById('expand-all').addEventListener('click', function () {
+    setAllOpen(true);
+  });
+  document.getElementById('collapse-all').addEventListener('click', function () {
+    setAllOpen(false);
+  });
+
+  // "/" to search, as on most sites with one, unless you are already typing somewhere.
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== '/' || event.metaKey || event.ctrlKey || event.altKey) return;
+    var tag = (document.activeElement && document.activeElement.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+    event.preventDefault();
+    search.focus();
+    search.select();
+  });
+
+  // --- opening a shared link -------------------------------------------------------
+
+  currentQuery = (new URLSearchParams(location.search).get('q') || '').trim();
+  if (currentQuery) {
+    search.value = currentQuery;
+    applyFilter(currentQuery);
+  }
+
+  // serve.js normally puts ?p= into the frame's src before the page is sent, so the right
+  // page is already loading and this only has to describe it. Without that -- the file
+  // served by something else -- the page is checked before it is opened, so a dead link
+  // leaves an empty frame rather than a 404 inside it.
+  (function openShared() {
+    var path = sharedPath();
+    if (!path) {
+      syncUrl();
+      return;
+    }
+
+    var url = sitesUrl(path);
+    if (frame.getAttribute('src') === url) {
+      describe(path, true);
+      return;
+    }
+
+    fetch(url, { method: 'HEAD' })
+      .then(function (res) { return res.ok; }, function () { return false; })
+      .then(function (ok) {
+        if (ok) {
+          frame.src = url;
+          describe(path, true);
+        } else {
+          currentPath = '';
+          syncUrl();
+        }
+      });
+  })();
 
   // Keep archived navigation inside the frame.
   //
