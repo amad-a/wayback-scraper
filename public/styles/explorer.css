@@ -30,9 +30,9 @@ body {
 	/* Kills iOS double-tap-to-zoom, which fires on every toolbar button pressed
 	   twice in a row and leaves the shell magnified and off-centre.
 	   `user-scalable=no` in the viewport meta used to be how you asked for this;
-	   iOS has ignored it since 10 and Chrome ignores it too, both on accessibility
-	   grounds, so it was removed as dead weight. This is the supported spelling,
-	   and it is honoured precisely because it is narrower: pinch-zoom still works.
+	   iOS has ignored it since 10, so this is the spelling that works. Phones and
+	   tablets lose pinch-zoom on the shell too -- see the (pointer: coarse) block
+	   just below.
 
 	   The property is not inherited, but it does not need to be -- allowed gestures
 	   are the intersection of this element's value and its ancestors', so declaring
@@ -40,12 +40,22 @@ body {
 	   handles still wins for touches that start on them, and dragging is unaffected.
 
 	   Does not reach into #frame: touch-action does not cross a document boundary,
-	   so double-tap zoom stays alive on the archived pages, which is where it is
-	   actually wanted -- they are 800x600 layouts being read on a phone. */
+	   so zooming stays alive on the archived pages, which is where it is actually
+	   wanted -- they are 800x600 layouts being read on a phone. */
 	touch-action: manipulation;
 
 	--ActiveTitle: rgb(0, 65, 10);
 	--GradientActiveTitle: rgb(12, 145, 18);
+}
+
+/* On a touch screen, pinching the chrome does nothing either: only panning is allowed.
+   Pinching the archived page still zooms it, for the same document-boundary reason as
+   above. iOS Safari is backed up by blockShellPinch in app/api.js, which cancels the
+   pinch outright. A desktop keeps its pinch, and the browser's own zoom with it. */
+@media (pointer: coarse) {
+	body {
+		touch-action: pan-x pan-y;
+	}
 }
 
 .toolbars {

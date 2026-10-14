@@ -4,6 +4,7 @@
 import {
   addFavorite,
   addressBar,
+  blockShellPinch,
   hideBookmarksPanel,
   hideHistoryPanel,
   historyNav,
@@ -22,6 +23,9 @@ import { initWallpaper } from './wallpaper.js';
 
 // Tracks the frame: title bar, address bar, and the injected scrollbars.
 watchFrame();
+
+// On a touch screen, pinching the chrome does nothing; pinching the page zooms the page.
+blockShellPinch();
 
 // The tiled background, and clicking it for the next tile.
 initWallpaper();

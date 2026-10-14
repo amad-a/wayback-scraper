@@ -204,6 +204,28 @@ function bindZoom(doc) {
 	doc.addEventListener('gestureend', (event) => event.preventDefault(), { passive: false });
 }
 
+// On a phone or tablet the shell itself never zooms: a pinch on the toolbars, panels or
+// status bar is cancelled rather than magnifying the chrome around the page. Only touches
+// on the shell's own document land here -- a pinch over #frame goes to the archived page's
+// document, where bindZoom turns it into the frame's zoom. iOS Safari reports a pinch
+// through these gesture events, and goes on zooming whatever touch-action says.
+//
+// Touch screens only, checked per gesture: Safari on a Mac fires the same events for a
+// trackpad pinch, and on a desktop zooming the whole window is left to the browser.
+const TOUCH_SCREEN = window.matchMedia('(pointer: coarse)');
+
+export function blockShellPinch() {
+	for (const type of ['gesturestart', 'gesturechange', 'gestureend']) {
+		document.addEventListener(
+			type,
+			(event) => {
+				if (TOUCH_SCREEN.matches) event.preventDefault();
+			},
+			{ passive: false },
+		);
+	}
+}
+
 // --- link targets -----------------------------------------------------------
 
 const TARGET_BOUND = '__palestineOnlineTargetBound';
