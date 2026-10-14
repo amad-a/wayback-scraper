@@ -1,3 +1,21 @@
+/* Clicking the background steps through the wallpaper tiles (app/wallpaper.js), back on
+   the left half and forward on the right, and the cursor says which. Cursor is inherited,
+   so everything sitting over the background is put back to the default -- through :where,
+   which weighs nothing, so every cursor rule below still wins. */
+html.wallpaper-back,
+html.wallpaper-back body {
+	cursor: w-resize;
+}
+
+html.wallpaper-forward,
+html.wallpaper-forward body {
+	cursor: e-resize;
+}
+
+:where(body > *) {
+	cursor: auto;
+}
+
 body {
 	display: flex;
 	flex-direction: column;
