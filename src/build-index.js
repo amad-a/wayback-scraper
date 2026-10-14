@@ -177,8 +177,18 @@ function renderPage(crawls, stats) {
      filters the tree to it; on the admin port each also gets a remove button, and the
      add field appears. 98.css sizes buttons for dialogs (75x23 minimum), too big here. */
   .tag-bar { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 6px; margin-top: 6px; min-height: 23px; }
-  .tag-bar button { min-width: 0; min-height: 0; padding: 2px 6px; }
+  /* A list of tags -- the page's, in the tag bar, or every tag, under the search box.
+     The gap is what keeps one tag from running into the next. */
+  .tag-list { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+  .tag-bar button, .tag-list button { min-width: 0; min-height: 0; padding: 2px 6px; }
   .tag { display: inline-flex; }
+  /* A tag that is in the search box, drawn as a pressed 98 button. */
+  .tag-btn[aria-pressed="true"] { box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey; }
+  .tag-btn .count { margin-left: 4px; }
+  /* Every tag in the archive. Capped so a long vocabulary scrolls instead of pushing the
+     tree off the bottom of the sidebar. */
+  #tag-index { max-height: 5.6em; overflow-y: auto; padding: 2px 0; }
+  #tag-index[hidden] { display: none; }
   .tag .tag-remove { padding: 2px 4px; }
   .tag-empty { color: grey; }
   #tag-form { display: flex; align-items: center; gap: 4px; margin-left: auto; }
@@ -191,6 +201,7 @@ function renderPage(crawls, stats) {
 <body>
   <nav>
     <input id="search" type="search" placeholder="Filter by site, file, title, address or #tag  ( / )" aria-label="Filter pages" autocomplete="off" spellcheck="false">
+    <div id="tag-index" class="tag-list" aria-label="All tags" hidden></div>
     <div class="nav-tools">
       <p id="search-status" aria-live="polite">${stats.crawls} crawls, ${stats.linked} pages${stats.missing ? ` (${stats.missing} not on disk)` : ''}</p>
       <span>
@@ -217,7 +228,7 @@ ${tree}
         </div>
         <div class="tag-bar">
           <span>Tags</span>
-          <span id="tag-list"></span>
+          <span id="tag-list" class="tag-list"></span>
           <span id="tag-error" role="alert"></span>
           <form id="tag-form" hidden>
             <input id="tag-input" type="text" placeholder="Add tags, comma-separated" aria-label="Add tags" maxlength="200" autocomplete="off" spellcheck="false">
@@ -511,6 +522,8 @@ ${tree}
       if (active) active.closest('details').open = true;
     }
 
+    markPressedTags(terms.tags);
+
     searchStatus.textContent = !filtering
       ? defaultStatus
       : pages
@@ -606,6 +619,80 @@ ${tree}
     return '#' + (/\\s/.test(tag) ? '"' + tag + '"' : tag);
   }
 
+  // The tag a search token names, lowercased, or '' for a plain word.
+  function tokenTag(token) {
+    if (token.indexOf('#"') === 0) return token.slice(2, -1).trim().toLowerCase();
+    if (token.charAt(0) === '#' && token.length > 1) return token.slice(1).toLowerCase();
+    return '';
+  }
+
+  // Adds the tag to the search, or takes it out if it is already there, leaving the rest
+  // of what was typed alone. Tags combine: two pressed tags mean pages carrying both.
+  function toggleTag(tag) {
+    var lower = tag.toLowerCase();
+    var tokens = search.value.match(/#"[^"]*"|"[^"]*"|\\S+/g) || [];
+    var kept = tokens.filter(function (t) { return tokenTag(t) !== lower; });
+    search.value = (kept.length === tokens.length ? tokens.concat(tagTerm(tag)) : kept).join(' ');
+    runFilter();
+  }
+
+  // One tag as a button that toggles it in the search, used in both lists.
+  function tagButton(tag, count) {
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'tag-btn';
+    button.setAttribute('data-tag', tag.toLowerCase());
+    button.setAttribute('aria-pressed', 'false');
+    button.textContent = tag;
+    if (count) {
+      var n = document.createElement('span');
+      n.className = 'count';
+      n.textContent = count;
+      button.appendChild(n);
+    }
+    button.title = 'Add or remove ' + tagTerm(tag) + ' in the search';
+    button.addEventListener('click', function () { toggleTag(tag); });
+    return button;
+  }
+
+  // Presses the buttons of the tags in the search, in both lists. Reads the DOM rather
+  // than tag state, so it is safe to call from the filter before any tags have loaded.
+  function markPressedTags(tags) {
+    Array.prototype.forEach.call(document.querySelectorAll('.tag-btn'), function (button) {
+      var pressed = tags.indexOf(button.getAttribute('data-tag')) !== -1;
+      button.setAttribute('aria-pressed', String(pressed));
+    });
+  }
+
+  function currentTags() {
+    return parseQuery(currentQuery).tags;
+  }
+
+  // Every tag in the archive with how many pages carry it, most used first. Tags that
+  // differ only in case count as one, shown as first seen.
+  var tagIndex = document.getElementById('tag-index');
+
+  function renderTagIndex() {
+    var byLower = {};
+    Object.keys(tagsByPath).forEach(function (path) {
+      tagsByPath[path].forEach(function (tag) {
+        var lower = tag.toLowerCase();
+        if (!byLower[lower]) byLower[lower] = { tag: tag, n: 0 };
+        byLower[lower].n += 1;
+      });
+    });
+
+    var entries = Object.keys(byLower).map(function (k) { return byLower[k]; });
+    entries.sort(function (a, b) {
+      return b.n - a.n || a.tag.toLowerCase().localeCompare(b.tag.toLowerCase());
+    });
+
+    tagIndex.replaceChildren();
+    entries.forEach(function (e) { tagIndex.appendChild(tagButton(e.tag, e.n)); });
+    tagIndex.hidden = entries.length === 0;
+    markPressedTags(currentTags());
+  }
+
   function renderTags() {
     tagList.replaceChildren();
     tagError.textContent = '';
@@ -619,15 +706,7 @@ ${tree}
       var chip = document.createElement('span');
       chip.className = 'tag';
 
-      var name = document.createElement('button');
-      name.type = 'button';
-      name.textContent = tag;
-      name.title = 'Show pages tagged ' + tag;
-      name.addEventListener('click', function () {
-        search.value = tagTerm(tag);
-        runFilter();
-      });
-      chip.appendChild(name);
+      chip.appendChild(tagButton(tag));
 
       if (isAdmin) {
         var remove = document.createElement('button');
@@ -653,6 +732,7 @@ ${tree}
     }
 
     tagForm.hidden = !(isAdmin && indexed);
+    markPressedTags(currentTags());
   }
 
   // Sends the page's whole tag list; the server answers with what it stored, after its
@@ -676,6 +756,7 @@ ${tree}
       })
       .then(function (body) {
         setRowTags(body.local_path, body.tags);
+        renderTagIndex();
         if (path === currentPath) {
           renderTags();
           tagInput.value = '';
@@ -704,6 +785,7 @@ ${tree}
     .then(function (all) {
       Object.keys(all).forEach(function (path) { setRowTags(path, all[path]); });
       renderTags();
+      renderTagIndex();
       // A shared ?q= naming a tag could not match anything until the tags arrived.
       if (currentQuery) applyFilter(currentQuery);
     })
