@@ -4,6 +4,33 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Palestine Online</title>
 
+    <!-- The wallpaper, chosen before the first paint: the remembered tile, or a random
+         one on a first visit. Inline and ahead of the stylesheets so it runs at once;
+         left to app/wallpaper.js, the stylesheet's default tile showed for a third of
+         a second first. The server fills in the tile list. Clicking the background
+         is handled in app/wallpaper.js. -->
+    <script type="application/json" id="wallpaper-tiles">[]</script>
+    <script>
+      (function () {
+        var tiles = [];
+        var name = '';
+        try {
+          tiles = JSON.parse(document.getElementById('wallpaper-tiles').textContent);
+        } catch (e) {}
+        try {
+          name = localStorage.getItem('palestine-online:wallpaper') || '';
+        } catch (e) {}
+        if (tiles.indexOf(name) === -1) {
+          name = tiles.length ? tiles[Math.floor(Math.random() * tiles.length)] : '';
+        }
+        if (!name) return;
+        var url = '/assets/tiles/' + encodeURIComponent(name);
+        document.documentElement.setAttribute('data-wallpaper', name);
+        document.documentElement.style.setProperty('--wallpaper', "url('" + url + "')");
+        new Image().src = url; // fetched now, alongside the stylesheets
+      })();
+    </script>
+
     <link href="./styles/layout.css" rel="stylesheet" type="text/css" />
     <link
       href="./styles/windows-98.css"

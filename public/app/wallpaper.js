@@ -5,6 +5,9 @@
 // showing is remembered, so the next visit opens on it; a first visit, or one whose
 // remembered tile has since been removed, gets a random one. The stylesheet's own tile
 // stays as the fallback for when none of this runs.
+//
+// The first tile is put up by the inline script at the top of index.html, before the
+// first paint, from the list the server writes into the page. This takes over from there.
 
 const TILES_URL = '/assets/tiles/';
 const WALLPAPER_KEY = 'palestine-online:wallpaper';
@@ -12,17 +15,9 @@ const WALLPAPER_KEY = 'palestine-online:wallpaper';
 let tiles = [];
 let current = '';
 
-function readStored() {
-	try {
-		return localStorage.getItem(WALLPAPER_KEY) || '';
-	} catch {
-		return ''; // storage disabled
-	}
-}
-
 function show(name) {
 	current = name;
-	document.body.style.backgroundImage = `url('${TILES_URL}${encodeURIComponent(name)}')`;
+	document.documentElement.style.setProperty('--wallpaper', `url('${TILES_URL}${encodeURIComponent(name)}')`);
 	try {
 		localStorage.setItem(WALLPAPER_KEY, name);
 	} catch {
@@ -37,21 +32,18 @@ function show(name) {
 	}
 }
 
-export async function initWallpaper() {
-	// The remembered tile goes up straight away, before the list arrives, so a returning
-	// visitor never sees the default first.
-	const stored = readStored();
-	if (stored) document.body.style.backgroundImage = `url('${TILES_URL}${encodeURIComponent(stored)}')`;
-
+export function initWallpaper() {
 	try {
-		const res = await fetch('/api/tiles');
-		tiles = res.ok ? await res.json() : [];
+		tiles = JSON.parse(document.getElementById('wallpaper-tiles')?.textContent || '[]');
 	} catch {
 		tiles = [];
 	}
 	if (!tiles.length) return;
 
-	show(tiles.includes(stored) ? stored : tiles[Math.floor(Math.random() * tiles.length)]);
+	// Remembered here rather than by the inline script, so a first visit's random pick
+	// is the one the next visit opens on.
+	const chosen = document.documentElement.dataset.wallpaper;
+	show(tiles.includes(chosen) ? chosen : tiles[0]);
 
 	const back = (event) => event.clientX < window.innerWidth / 2;
 

@@ -20,7 +20,9 @@ body {
 	display: flex;
 	flex-direction: column;
 	background: var(--ButtonFace);
-	background-image: url('../assets/tiles/starz.jpg');
+	/* Set by the inline script in index.html, then by app/wallpaper.js; the default
+	   tile is only for when neither runs. */
+	background-image: var(--wallpaper, url('../assets/tiles/starz.jpg'));
 	color: var(--ButtonText);
 	font-family: sans-serif;
 	font-size: 10pt;
