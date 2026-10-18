@@ -405,6 +405,25 @@ button {
 	display: none !important;
 }
 
+/* 98.css styles by plain element and class names, and two of them are Webamp's too: its
+   windows carry class="window", which 98.css gives a silver background, a bevelled edge,
+   padding and its pixel font, and its sliders are range inputs, which get the pixel font
+   as well. Inside Webamp those go back to what the browser would have used -- revert
+   undoes only this page's styles, and Webamp's own rules, more specific or later, still
+   win wherever it sets something itself. */
+#webamp .window {
+	background-color: revert;
+	box-shadow: revert;
+	padding: revert;
+}
+
+#webamp .window,
+#webamp input {
+	font-family: revert;
+	font-size: revert;
+	-webkit-font-smoothing: revert;
+}
+
 /* While a Webamp drag is in progress (see app/webamp.js), the archived page must not
    swallow the mouse, or the drag ends wherever the cursor crosses into it. */
 .webamp-dragging iframe {
