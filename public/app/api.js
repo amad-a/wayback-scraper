@@ -369,7 +369,10 @@ function bindTargets(doc) {
 const framesetMaps = new Map();
 // The page last placed into a frameset, and the frame it is in: { top, frame, path }.
 let placed = null;
-// Steps waiting for #frame's next load, from openPlaced or the server's data-place.
+// Steps waiting for #frame to load the frameset they are for, from openPlaced or the
+// server's data-place: { top, steps }. Tied to the frameset because the load that fires
+// next may still be the page being replaced -- the catch-all starts the swap before a
+// slow bare page has finished loading, and that load must not use the steps up.
 let pendingSteps = null;
 
 function sitesPathOf(href) {
@@ -441,8 +444,9 @@ function paneFor(win, href) {
 export async function openPlaced(path, { replace = false } = {}) {
 	const where = await fetchJson(`/api/place?path=${encodeURIComponent(path)}`, { top: path, steps: [] });
 	const top = where.top || path;
-	pendingSteps = where.steps?.length ? where.steps : null;
-	placed = pendingSteps ? { top, frame: pendingSteps.at(-1).frame, path } : null;
+	const steps = where.steps?.length ? where.steps : null;
+	pendingSteps = steps ? { top, steps } : null;
+	placed = steps ? { top, frame: steps.at(-1).frame, path } : null;
 
 	const url = sitesUrl(top);
 	if (replace) iframe.contentWindow.location.replace(url);
@@ -804,7 +808,7 @@ async function openSharedPage() {
 			if (iframe.contentDocument?.readyState === 'complete' && localPathOf(iframe.contentWindow) === placed.top) {
 				placeFrames(steps);
 			} else {
-				pendingSteps = steps;
+				pendingSteps = { top: placed.top, steps };
 			}
 		}
 		return;
@@ -839,10 +843,12 @@ export function watchFrame() {
 		// Re-injected because pages of this era use document.write, which can replace
 		// the whole document after we styled it. Idempotent, so this is cheap.
 		prepareFrame(iframe.contentWindow);
-		const steps = pendingSteps;
-		pendingSteps = null;
-		placeFrames(steps);
-		if (steps) describePlaced();
+		if (pendingSteps && localPathOf(iframe.contentWindow) === pendingSteps.top) {
+			const { steps } = pendingSteps;
+			pendingSteps = null;
+			placeFrames(steps);
+			describePlaced();
+		}
 		if (chromeFor) updateAudio(iframe.contentWindow, chromeFor.slice('/sites/'.length));
 
 		// Only re-runs when the early pass came up empty -- it happens before <body>
