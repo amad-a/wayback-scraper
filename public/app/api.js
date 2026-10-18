@@ -1592,6 +1592,8 @@ function renderFavorites() {
 		// and the address is the half that always identifies the page.
 		const address = entry.url || entry.path;
 		row.textContent = entry.title ? `${address} - ${entry.title}` : address;
+		// The row is cut off at the panel's edge; the tooltip has all of it.
+		row.title = row.textContent;
 		row.addEventListener('click', () => openPath(entry.path));
 		favoritesEntries.appendChild(row);
 	}
@@ -1926,6 +1928,7 @@ function renderHistory() {
 			row.tabIndex = -1;
 			const address = entry.url || entry.path;
 			row.textContent = entry.title ? `${address} - ${entry.title}` : address;
+			row.title = row.textContent;
 			row.addEventListener('click', () => openPath(entry.path));
 			pages.appendChild(row);
 		}
