@@ -558,10 +558,25 @@ app.use('/sites', (req, res, next) => {
   res.redirect(302, sitesHref(real) + slash + query);
 });
 
-// The page with ?p= already in its frame, for either viewer.
-function withSharedPage(file, req) {
+// A random page tagged "entry" -- the same set the address bar dropdown lists -- as a
+// frame src, or '' if none is tagged or the drawn page is not on disk.
+function randomEntrySrc() {
+  const handle = database();
+  if (!handle) return '';
+  const entries = handle
+    .prepare(`SELECT local_path, tags FROM page_view WHERE tags <> ''`)
+    .all()
+    .filter((r) => splitTags(r.tags).some((t) => t.toLowerCase() === 'entry'));
+  if (!entries.length) return '';
+  const { local_path } = entries[Math.floor(Math.random() * entries.length)];
+  return fs.existsSync(path.join(SITES_ROOT, local_path)) ? sitesHref(local_path) : '';
+}
+
+// The page with ?p= already in its frame, for either viewer. `fallback` is the frame's
+// src when the URL names no page.
+function withSharedPage(file, req, fallback = '') {
   const html = template(file);
-  const src = sharedSrc(req.originalUrl);
+  const src = sharedSrc(req.originalUrl) || fallback;
   if (!src) return html;
 
   if (IFRAME_SRC.test(html)) return html.replace(IFRAME_SRC, `$1${src}$2`);
@@ -581,9 +596,19 @@ function withSharedPage(file, req) {
 // name can close the script element early.
 const WALLPAPER_TILES = /(<script type="application\/json" id="wallpaper-tiles">)[^<]*(<\/script>)/;
 
+//
+// A bare https://palestineonline.net/, with no query at all, opens on a random entry page
+// rather than the placeholder home.html. The shell then writes that page into the address
+// as ?p=, so a reload or a shared link keeps it. A ?p= naming nothing still gets home.html.
 app.get('/', (req, res) => {
+  const random = req.originalUrl.includes('?') ? '' : randomEntrySrc();
   const tiles = JSON.stringify(listTiles()).replace(/</g, '\\u003c');
-  const html = withSharedPage(INDEX_PATH, req).replace(WALLPAPER_TILES, (_, open, close) => open + tiles + close);
+  const html = withSharedPage(INDEX_PATH, req, random).replace(
+    WALLPAPER_TILES,
+    (_, open, close) => open + tiles + close,
+  );
+  // Never cached: each visit to the bare address is a new draw.
+  res.set('Cache-Control', 'no-store');
   res.type('html').send(html);
 });
 
