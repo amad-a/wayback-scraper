@@ -362,10 +362,10 @@ function prepareFrame(win, depth = 0) {
 
 const TITLE_SUFFIX = 'Palestine Online';
 
-// The status bar's middle pane: when the page in the frame was captured, read off its
-// Wayback timestamp. Blank for anything without one -- a page the database has never
-// heard of and the scraper never stamped -- rather than a guess.
-const capturedText = document.getElementById('status-bar-middle-text');
+// The status bar's right pane, beside the Internet-zone icon: when the page in the frame
+// was captured, read off its Wayback timestamp. Blank for anything without one -- a page
+// the database has never heard of and the scraper never stamped -- rather than a guess.
+const capturedText = document.getElementById('status-bar-right-text');
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function setCaptured(timestamp) {

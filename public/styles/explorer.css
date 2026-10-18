@@ -322,22 +322,22 @@ button {
 	user-select: none;
 }
 
-/* Takes the spare width, so the capture date sits in a fixed field at the right as it
-   does in the archive index's status bar. */
+/* Takes the spare width, so the zone icon and capture date sit in a fixed field at the
+   right as the date does in the archive index's status bar. */
 #status-bar-left {
 	flex: 1;
 	min-width: 0;
 }
 
-#status-bar-middle {
-	flex: 1;
-}
-
-/* The capture date, drawn like the archive index's status bar fields (98.css's
-   .status-bar-field): sans-serif at 11px rather than the pixel font, and a 1px sunken
-   shadow in place of the inset-shallow border. Kept to the shell's 16px row. */
-#status-bar #status-bar-middle {
-	flex: 0 0 150px;
+/* The Internet-zone icon and the capture date to its right, in a field drawn like the
+   archive index's status bar fields (98.css's .status-bar-field): sans-serif at 11px
+   rather than the pixel font, and a 1px sunken shadow in place of the inset-shallow
+   border. 150px for the date plus the icon. Kept to the shell's 16px row. */
+#status-bar #status-bar-right {
+	flex: 0 0 170px;
+	display: flex;
+	align-items: center;
+	gap: 4px;
 	box-sizing: border-box;
 	border: none;
 	box-shadow: inset -1px -1px #dfdfdf, inset 1px 1px #808080;
@@ -415,14 +415,6 @@ button {
 #webamp #playlist-misc-menu,
 #webamp #playlist-list-menu {
 	pointer-events: none !important;
-}
-
-#status-bar-right {
-	flex-basis: fit-content;
-	/* estimated */
-	display: flex;
-	align-items: center;
-	gap: 0px;
 }
 
 #status-bar-simple {
