@@ -407,24 +407,17 @@
                 <div id="favorite-star"></div>
 
                 <button id="address-dropdown-button">
+                  <!-- The arrow from 98.css's scrollbar down button, pixel for pixel and
+                       in the same place, so it matches the list's scrollbar below it. -->
                   <svg
                     width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
+                    height="17"
+                    viewBox="0 0 16 17"
                     xmlns="http://www.w3.org/2000/svg"
-                    style="
-                      fill: currentColor;
-                      display: inline-block;
-                      vertical-align: middle;
-                    "
+                    shape-rendering="crispEdges"
+                    aria-hidden="true"
                   >
-                    <path
-                      style="
-                        transform: rotate(90deg);
-                        transform-origin: center;
-                      "
-                      d="m5 6 4 4-4 4z"
-                    ></path>
+                    <path d="M11 6H4v1h1v1h1v1h1v1h1V9h1V8h1V7h1V6z"></path>
                   </svg>
                 </button>
                 <!-- TODO: functional dropdown, autocompleting file/folder paths -->

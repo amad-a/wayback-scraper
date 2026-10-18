@@ -582,10 +582,13 @@ label[for="address"] {
 	text-shadow: none;
 }
 
-/* The arrow sits a pixel right of and below the middle, as on a Windows 98 combo box:
-   the raised edge is heavier at the bottom right, and dead centre reads as off. */
+/* 98.css's scrollbar arrow, drawn where 98.css draws it in a 16x17 button; the button is
+   19px tall, so the drawing is centred with a pixel above and below. */
 #address-dropdown-button svg {
-	transform: translate(1px, 1px);
+	display: block;
+	margin: 1px 0;
+	fill: currentColor;
+	image-rendering: pixelated;
 }
 
 /* IE's flat toolbar buttons: no edge until the pointer is over one, then a 1px raised
