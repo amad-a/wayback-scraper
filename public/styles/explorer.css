@@ -193,8 +193,10 @@ body {
 	/* this is weird to have to write; but this is needed to prevent minimum width and thus overflow */
 }
 
+/* As wide as a scrollbar, as on a Windows combo box: the list's scrollbar sits directly
+   below it (see fitDropdown in app/api.js). */
 #address-dropdown-button {
-	width: 17px;
+	width: 16px;
 	height: 19px;
 	padding: 0;
 }
@@ -633,8 +635,8 @@ button:disabled {
    slide out from under the address field without showing above it. */
 #dropdown {
 	position: fixed;
+	/* Until fitDropdown sets the field's exact width on opening. */
 	width: -webkit-fill-available;
-	max-width: 830px;
 	color: var(--WindowText);
 	/* flex: 1; */
 	/* display: flex; */
@@ -765,12 +767,6 @@ button:disabled {
 	position: static;
 	background: url('../assets/icons/page-16x16.png') no-repeat;
 	image-rendering: pixelated;
-}
-
-::-webkit-scrollbar,
-::-webkit-scrollbar-thumb,
-::-webkit-scrollbar-button {
-	zoom: 1.3;
 }
 
 .favorites,

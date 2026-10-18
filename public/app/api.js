@@ -1180,9 +1180,25 @@ function showDropdown() {
 	// The panels share this corner of the window, so only one is open at a time.
 	favoritesPanel?.classList.add('hidden');
 	historyPanel?.classList.add('hidden');
+	fitDropdown();
 	dropdown.classList.remove('hidden');
 	dropdownButton?.setAttribute('aria-expanded', 'true');
 }
+
+// The list hangs from the address field and is exactly as wide, as a Windows combo box's
+// was -- so its scrollbar sits directly under the ▼ button, the same 16px wide. The list
+// is fixed-position, so CSS alone could only guess the field's width; it is measured here
+// each time it opens, and again if the window is resized while it is open.
+const addressField = document.getElementById('address-compound-input');
+
+function fitDropdown() {
+	if (!dropdown || !addressField) return;
+	dropdown.style.width = `${addressField.getBoundingClientRect().width}px`;
+}
+
+window.addEventListener('resize', () => {
+	if (dropdown && !dropdown.classList.contains('hidden')) fitDropdown();
+});
 
 // Each open or search takes a ticket; a response is only used if its ticket is still the
 // latest. That drops a slow search for "bir" arriving after the one for "birzeit", and a
