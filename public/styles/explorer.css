@@ -145,8 +145,7 @@ body {
 
 #address-bar,
 #standard-buttons,
-#internet-buttons,
-.menus {
+#internet-buttons {
 	flex: 0 0 auto;
 	display: flex;
 	flex-direction: row;
@@ -181,6 +180,14 @@ body {
 	border: 0;
 	outline: 0;
 	padding: 0;
+	/* 98.css gives text inputs their own sunken edge and height; this one sits inside
+	   #address-compound-input, which has the edge. */
+	box-shadow: none;
+	height: auto;
+	line-height: normal;
+	/* and the type the address bar has always had: 10pt Arial, as in its list, rather
+	   than 98.css's pixel font for inputs or the toolbar's around it */
+	font: 10pt Arial, Helvetica, sans-serif;
 	min-width: 0;
 	width: 0;
 	/* this is weird to have to write; but this is needed to prevent minimum width and thus overflow */
@@ -490,31 +497,106 @@ button {
 	max-width: 900px;
 }
 
-.os-window .window-title {
-	/* font-family: "Pixelated MS Sans Serif";
-	-webkit-font-smoothing: none; */
-	left: 3px;
-	top: 1px;
+/* 98.css's title bar (accent from theme.css), with the shell's title type: a plain
+   sans-serif rather than the pixel font, cut off with an ellipsis instead of pushing the
+   window buttons out. */
+.window-container > .title-bar {
+	flex-shrink: 0;
 }
 
-.os-window .window-titlebar,
-body>.window-titlebar {
-	/* background: rgb(0, 0, 128); */
-	/* background: var(--ActiveTitle); */
-	/* background: linear-gradient(to right, rgb(0, 0, 128) 0%, rgb(16, 132, 208) 100%); */
-	background: linear-gradient(to right, var(--ActiveTitle) 0%, var(--GradientActiveTitle) 100%);
-	color: rgb(255, 255, 255);
-	color: var(--TitleText);
+.window-container > .title-bar .title-bar-text {
+	min-width: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-family: var(--font-ui);
+	font-size: 12px;
+	-webkit-font-smoothing: auto;
+}
 
-	background-image:
+.panel-close {
+	margin-left: auto;
+}
+
+/* 98.css's own window buttons keep their size: the reset below is for the shell's. */
+.toolbars .panel-close button {
+	min-width: 16px;
+	min-height: 14px;
+}
+
+/* 98.css turns font smoothing off for everything inside a window, to keep its pixel font
+   crisp. The shell sets its pixel-font parts (toolbars, status bar) to none itself, so
+   the rest -- the panels' sans-serif, the title -- goes back to smooth. */
+.window-container {
+	-webkit-font-smoothing: auto;
+}
+
+/* 98.css sizes every <label> at 11px in its pixel font; the address bar's label stays
+   the toolbar's size. */
+label[for="address"] {
+	font-size: inherit;
+}
+
+/* --- buttons on top of 98.css ----------------------------------------------
+
+   98.css styles every <button> as a dialog button: at least 75x23, raised. The shell's
+   buttons are smaller things -- the toolbar's flat buttons, the address list's arrow,
+   the status bar's Play audio -- so they start from nothing and take only what they
+   need. */
+.toolbars button,
+#status-bar button,
+#address-dropdown-button {
+	min-width: 0;
+	min-height: 0;
+	text-shadow: none;
+	color: var(--ButtonText);
+}
+
+/* 98.css draws button text as a shadow of transparent text, and shifts that shadow a
+   pixel while the button is held -- on the shell's buttons, whose text is real, that
+   showed as a ghost of the label. */
+.toolbars button:not(:disabled):active,
+#status-bar button:not(:disabled):active,
+#address-dropdown-button:not(:disabled):active {
+	text-shadow: none;
+}
+
+/* The arrow sits a pixel right of and below the middle, as on a Windows 98 combo box:
+   the raised edge is heavier at the bottom right, and dead centre reads as off. */
+#address-dropdown-button svg {
+	transform: translate(1px, 1px);
+}
+
+/* IE's flat toolbar buttons: no edge until the pointer is over one, then a 1px raised
+   edge, pressed in while held. 98.css has nothing like them. */
+button.lightweight {
+	background: transparent;
+	box-shadow: none;
+	border: 1px solid transparent;
+	outline: none;
+}
+
+button.lightweight:enabled:hover {
+	border-color: var(--ButtonHilight) var(--ButtonShadow) var(--ButtonShadow) var(--ButtonHilight);
+}
+
+button.lightweight:enabled:hover:active,
+button.lightweight.pressing,
+button.lightweight.pressed {
+	border-color: var(--ButtonShadow) var(--ButtonHilight) var(--ButtonHilight) var(--ButtonShadow);
+	box-shadow: none;
+}
+
+button.lightweight:focus {
+	outline: none;
+}
+
+button:disabled {
+	color: var(--GrayText);
 }
 
 .hidden {
 	display: none;
-}
-
-button:not(.lightweight):focus::before {
-	border: 0px;
 }
 
 #address-dropdown {

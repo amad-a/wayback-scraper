@@ -6,13 +6,15 @@
 <!-- 98.css, vendored under public/vendor/98.css (MIT). The layout follows its own docs
      page: a fixed tree-view down the left, the content beside it. -->
 <link rel="stylesheet" href="/vendor/98.css/98.css">
+<!-- The site's colours, edges and type on top of 98.css, shared with the shell. -->
+<link rel="stylesheet" href="/styles/theme.css">
 <style>
-  body { margin: 0; background: silver; }
+  body { margin: 0; background: var(--ButtonFace); }
 
   /* 98.css for the chrome, but not its pixel font: the same elements it sets the font on,
      back to the default sans-serif and normal anti-aliasing. */
   body, .title-bar, .window, button, input, label, legend, option, select, table, textarea, ul.tree-view {
-    font-family: sans-serif;
+    font-family: var(--font-ui);
     -webkit-font-smoothing: auto;
   }
 
@@ -31,7 +33,7 @@
   #tree .t { color: grey; }
   #tree .missing { color: grey; }
   /* The page in the frame, marked the way the tree view marks a focused row. */
-  #tree a.active, #tree a.active .t { background: navy; color: #fff; }
+  #tree a.active, #tree a.active .t { background: var(--Hilight); color: var(--HilightText); }
 
   /* Top padding matches the sidebar's, so the window lines up with the search box. */
   main { margin-left: 356px; padding: 8px 16px 24px 0; }
@@ -51,7 +53,7 @@
      listed -- keeps the address and loses the href, so it reads as plain text rather
      than a link that goes nowhere. */
   .address { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
-  #wayback-link { flex: 1; min-width: 0; height: 21px; line-height: 15px; box-sizing: border-box; padding: 3px 4px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #wayback-link { flex: 1; min-width: 0; height: 21px; line-height: 15px; box-sizing: border-box; padding: 3px 4px; background: var(--Window); box-shadow: var(--edge-field); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   #wayback-link:not([href]) { color: #222; cursor: default; }
 
   /* 800x600 at most: the archived pages are fixed-width 2001-era layouts, so a viewport
@@ -59,7 +61,7 @@
      height kept at 600 rather than scaled down -- a wide page scrolls sideways inside the
      frame either way, and a shorter frame would only show less of it.
      The frame sits in the same sunken border as the tree view. */
-  .frame-well { padding: 2px; background: #fff; box-shadow: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a; }
+  .frame-well { padding: 2px; background: var(--Window); box-shadow: var(--edge-field); }
   iframe { display: block; width: 100%; max-width: 800px; height: 600px; border: 0; background: #fff; }
   .status-bar-field { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
@@ -73,7 +75,7 @@
   .tag-bar button, .tag-list button { min-width: 0; min-height: 0; padding: 2px 6px; }
   .tag { display: inline-flex; }
   /* A tag that is in the search box, drawn as a pressed 98 button. */
-  .tag-btn[aria-pressed="true"] { box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey; }
+  .tag-btn[aria-pressed="true"] { box-shadow: var(--edge-pressed); }
   .tag-btn .count { margin-left: 4px; }
   /* Every tag in the archive. Capped so a long vocabulary scrolls instead of pushing the
      tree off the bottom of the sidebar. */

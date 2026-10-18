@@ -1,0 +1,80 @@
+/* The site's theme, on top of 98.css (public/vendor/98.css).
+
+   98.css draws Windows 98 with fixed colours and no variables, so everything the site
+   changes about it, and every value its own stylesheets share, is named here: the shell
+   (index.html) and the archive index (src/build-index.js) both load this after 98.css.
+
+   Colours keep Windows' own names for them -- the names the shell's stylesheets were
+   written against -- with the site's green standing in for Windows 98's navy accent.
+   Edges are 98.css's own box-shadow bevels, named, so a field or a status pane looks the
+   same wherever it is drawn. */
+
+:root {
+	/* Windows 98 system colours, at 98.css's values. */
+	--ButtonFace: #c0c0c0;
+	--ButtonLight: #dfdfdf;
+	--ButtonHilight: #ffffff;
+	--ButtonShadow: #808080;
+	--ButtonDkShadow: #0a0a0a;
+	--ButtonText: #222222;
+	--GrayText: #808080;
+	--Window: #ffffff;
+	--WindowText: #000000;
+	--TitleText: #ffffff;
+	--InactiveTitle: #808080;
+	--GradientInactiveTitle: #b5b5b5;
+	--InactiveTitleText: #c0c0c0;
+
+	/* The accent: the site's green where Windows 98 had navy. */
+	--ActiveTitle: rgb(0, 65, 10);
+	--GradientActiveTitle: rgb(12, 145, 18);
+	--Hilight: var(--ActiveTitle);
+	--HilightText: #ffffff;
+
+	/* Edges, as 98.css draws them. */
+	--edge-raised: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+	--edge-pressed: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey;
+	--edge-field: inset -1px -1px #fff, inset 1px 1px grey, inset -2px -2px #dfdfdf, inset 2px 2px #0a0a0a;
+	--edge-sunken-image: url("data:image/svg+xml;charset=utf-8,%3Csvg width='5' height='5' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='gray' d='M0 0h4v1H0z'/%3E%3Cpath fill='gray' d='M0 0h1v4H0z'/%3E%3Cpath fill='%230a0a0a' d='M1 1h2v1H1z'/%3E%3Cpath fill='%230a0a0a' d='M1 1h1v2H1z'/%3E%3Cpath fill='%23fff' d='M0 4h5v1H0z'/%3E%3Cpath fill='%23fff' d='M4 0h1v5H4z'/%3E%3Cpath fill='%23dfdfdf' d='M3 1h1v3H3z'/%3E%3Cpath fill='%23dfdfdf' d='M1 3h3v1H1z'/%3E%3C/svg%3E");
+
+	/* Type. The pixel font is 98.css's own, from its folder. */
+	--font-ui: sans-serif;
+	--font-pixel: "Pixelated MS Sans Serif", Arial, sans-serif;
+}
+
+/* 98.css's title bar, in the accent. */
+.title-bar {
+	background: linear-gradient(90deg, var(--ActiveTitle), var(--GradientActiveTitle));
+}
+
+::selection {
+	background-color: var(--Hilight);
+	color: var(--HilightText);
+}
+
+/* The two insets the shell's markup is written with, drawn as 98.css draws them: the
+   deep one is its sunken panel's 2px edge, the shallow one a 1px border, grey above and
+   white below, as Windows 98 drew its status bar panes. */
+.inset-deep {
+	border: 2px groove transparent;
+	border-image: var(--edge-sunken-image) 2;
+	background-color: var(--ButtonFace);
+	color: var(--ButtonText);
+}
+
+.inset-shallow {
+	border: 1px solid;
+	border-color: var(--ButtonShadow) var(--ButtonHilight) var(--ButtonHilight) var(--ButtonShadow);
+	background-color: var(--ButtonFace);
+	color: var(--ButtonText);
+}
+
+/* 98.css styles the scrollbar's arrow buttons, and Chrome then draws all four kinds --
+   the up arrow and down arrow at both ends -- which doubled them. Windows had one at
+   each end. */
+::-webkit-scrollbar-button:vertical:start:increment,
+::-webkit-scrollbar-button:vertical:end:decrement,
+::-webkit-scrollbar-button:horizontal:start:increment,
+::-webkit-scrollbar-button:horizontal:end:decrement {
+	display: none;
+}

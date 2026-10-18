@@ -31,12 +31,12 @@
       })();
     </script>
 
+    <!-- 98.css draws the Windows 98 parts; theme.css is the site's colours, edges and
+         type on top of it, shared with the archive index; layout.css and explorer.css
+         are the shell itself. -->
+    <link href="./vendor/98.css/98.css" rel="stylesheet" type="text/css" />
+    <link href="./styles/theme.css" rel="stylesheet" type="text/css" />
     <link href="./styles/layout.css" rel="stylesheet" type="text/css" />
-    <link
-      href="./styles/windows-98.css"
-      rel="stylesheet"
-      type="text/css"
-    />
     <link href="./styles/explorer.css" rel="stylesheet" type="text/css" />
 
     <link
@@ -66,27 +66,14 @@
     <script type="module" src="./app/main.js"></script>
   </head>
   <body class="">
-    <div class="window-container window os-window focused">
-      <div class="window-titlebar" style="touch-action: none">
-        <div class="window-title-area">
-          <span class="window-title"></span>
+    <div class="window-container window">
+      <div class="title-bar" style="touch-action: none">
+        <div class="title-bar-text window-title"></div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
         </div>
-        <button
-          class="window-minimize-button window-action-minimize window-button"
-          aria-label="Minimize window"
-        >
-          <span class="window-button-icon"></span></button
-        ><button
-          class="window-maximize-button window-action-maximize window-button"
-          aria-label="Maximize or restore window"
-        >
-          <span class="window-button-icon"></span></button
-        ><button
-          class="window-close-button window-action-close window-button"
-          aria-label="Close window"
-        >
-          <span class="window-button-icon"></span>
-        </button>
       </div>
 
       <div class="toolbars">
@@ -455,14 +442,9 @@
         <div class="favorites-list inset-deep">
           <div class="favorites-toolbar toolbars">
             <div class="toolbar">Favorites</div>
-            <button
-              id="favorites-exit"
-              style="margin-left: auto; height: 16px"
-              class="window-close-button window-action-close window-button"
-              aria-label="Close window"
-            >
-              <span class="window-button-icon"></span>
-            </button>
+            <div class="title-bar-controls panel-close">
+              <button id="favorites-exit" aria-label="Close"></button>
+            </div>
           </div>
           <div class="favorites-entries"></div>
         </div>
@@ -471,14 +453,9 @@
         <div class="history-list inset-deep">
           <div class="history-toolbar toolbars">
             <div class="toolbar">History</div>
-            <button
-              id="history-exit"
-              style="margin-left: auto; height: 16px"
-              class="window-close-button window-action-close window-button"
-              aria-label="Close window"
-            >
-              <span class="window-button-icon"></span>
-            </button>
+            <div class="title-bar-controls panel-close">
+              <button id="history-exit" aria-label="Close"></button>
+            </div>
           </div>
           <div class="history-entries"></div>
         </div>

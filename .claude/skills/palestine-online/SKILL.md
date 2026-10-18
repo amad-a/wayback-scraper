@@ -121,7 +121,21 @@ const b = await chromium.launch({ channel: 'chrome', headless: true });
 
 ## Shell UI conventions
 
-- Win98 look: 98.css chrome, pixelated 16px icons (`image-rendering: pixelated`), sans-serif text.
+- **98.css is the base for everything** (vendored in `public/vendor/98.css`). Stylesheets load in this order: 98.css → `public/styles/theme.css` → `layout.css` → `explorer.css`. The archive index loads 98.css → `theme.css`.
+- `theme.css` is the single source for:
+  - colours, under Windows' own names (`--ButtonFace`, `--ActiveTitle`, …), with green in place of navy;
+  - edges: `--edge-raised`, `--edge-pressed`, `--edge-field`, `--edge-sunken-image`;
+  - fonts: `--font-ui`, `--font-pixel`;
+  - `.inset-deep` and `.inset-shallow`.
+  Use these tokens; don't hard-code `#dfdfdf`, navy and the like.
+- **98.css side effects the shell undoes:**
+  - every `<button>` is a 75×23 dialog button with a shadow-text trick, so shell buttons reset `min-width`, `min-height` and `text-shadow`, including the `:active` state;
+  - `.window` turns font smoothing off;
+  - `<label>` and `<input>` get the 11px pixel font.
+  IE's flat toolbar buttons (`button.lightweight`) are the shell's own.
+- `.window-container` needs `contain: layout`: it is the containing block for the fixed-position panels.
+- `iframe-scrollbars.css` holds 98.css's scrollbar rules, copied verbatim for archived pages. Re-copy them when 98.css is upgraded.
+- Pixelated 16px icons (`image-rendering: pixelated`); sans-serif text.
 - The status bar is hidden on phones (max-width 480px), and should stay hidden.
 - Webamp is desktop-only and closes when the page changes.
 - The wallpaper is chosen before first paint by an inline script, from the tile list the server writes into the page. Left half of the background goes back a tile, right half forward. Tiles are cached for a day.
