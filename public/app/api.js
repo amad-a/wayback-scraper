@@ -301,11 +301,20 @@ function onArchiveClick(event) {
 	).toLowerCase();
 
 	// .href rather than the attribute: the DOM has resolved it against the document and
-	// its <base href> already, so relative links come out right. Schemes that do not
-	// navigate are left to the page -- the scraper rewrites mailto: to '#', but not every
-	// page went through it.
+	// its <base href> already, so relative links come out right. javascript: links are
+	// the page's own business.
 	const { href } = link;
-	if (!href || /^(javascript|mailto):/i.test(href)) return;
+	if (!href || /^javascript:/i.test(href)) return;
+
+	// Anything that would leave the archive goes nowhere: mail, news and ftp links that
+	// would hand off to another app, and links to the live web. The scraper marks almost
+	// all of these dead already (dead-links.js cancels those); this catches the 223 it
+	// missed -- 188 live-web links, mostly malformed markup like `http://host</A`, and 35
+	// mailto:s.
+	if (!sitesPathOf(href) && !isSamePageAnchor(href, doc)) {
+		event.preventDefault();
+		return;
+	}
 
 	// A link that names no window, clicked in a pane, goes to the pane its page belongs
 	// in -- which is how the nav frame's links reach "main" again (see paneFor).
@@ -320,7 +329,13 @@ function onArchiveClick(event) {
 		}
 	}
 
-	const win = name ? targetWindow(here, name) : here === root ? root : null;
+	// A new window -- _blank, _new, or a name no frame has, which a browser opens a window
+	// for -- becomes the whole frame instead: 86 pages open links that way, and a new tab
+	// would be a page outside the shell.
+	let win;
+	if (!name || name === '_self') win = here === root ? root : null;
+	else if (NEW_WINDOW.has(name)) win = root;
+	else win = targetWindow(here, name) || root;
 	if (!win) return;
 
 	// Whatever replaces the whole frame goes through openPlaced, so a page that belongs
@@ -336,6 +351,20 @@ function onArchiveClick(event) {
 
 	event.preventDefault();
 	win.location.href = href;
+}
+
+const NEW_WINDOW = new Set(['_blank', '_new', '_newtab']);
+
+// A link to a spot on the page it is on, like href="#top": same document, so not a
+// navigation the archive needs to have anything to say about.
+function isSamePageAnchor(href, doc) {
+	try {
+		const to = new URL(href);
+		const here = new URL(doc.URL);
+		return to.hash !== '' && to.origin === here.origin && to.pathname === here.pathname && to.search === here.search;
+	} catch {
+		return false;
+	}
 }
 
 function bindTargets(doc) {
@@ -469,6 +498,26 @@ function noteActive(event) {
 	activeDoc = event.currentTarget;
 }
 
+// How many history entries this visit has added behind the page now showing -- so a
+// page's own Back link can go back through them and no further. Counted from growth in
+// history.length on each load; Back taken through stepBack takes from it. The browser's
+// own Back button is not seen, so this can only overcount, never strand the reader.
+let entriesBehind = 0;
+let lastHistoryLength = window.history.length;
+
+function countEntries() {
+	const length = window.history.length;
+	if (length > lastHistoryLength) entriesBehind += length - lastHistoryLength;
+	lastHistoryLength = length;
+}
+
+function stepBack(n) {
+	const steps = Math.min(n, entriesBehind);
+	if (steps <= 0) return;
+	entriesBehind -= steps;
+	window.history.go(-steps);
+}
+
 // Navigates `win` to `url` from shell code. The whole frame goes through openPlaced, so a
 // page that belongs in a frameset still arrives inside it.
 function navigateFrom(win, url, { base = activeDoc, replace = false } = {}) {
@@ -478,6 +527,8 @@ function navigateFrom(win, url, { base = activeDoc, replace = false } = {}) {
 	} catch {
 		return;
 	}
+	// Never off the archive: a script pointing a frame at the live web goes nowhere.
+	if (!sitesPathOf(href)) return;
 	if (win === iframe.contentWindow) {
 		const path = sitesPathOf(href);
 		if (path) {
@@ -498,7 +549,11 @@ function shellOpen(win) {
 		if (!name || name === '_self') to = win;
 		else if (name === '_top') to = root;
 		else if (name === '_parent') to = win === root ? root : win.parent;
-		else if (!['_blank', '_new', '_newtab'].includes(name)) to = findFrameNamed(root, name);
+		else if (!NEW_WINDOW.has(name)) to = findFrameNamed(root, name);
+		// A new window, asked for by a click, becomes the whole frame. Asked for by a page
+		// on its own -- the welcome popups and ad windows of the period -- it is refused, as
+		// the scraper's guard script already refused it.
+		if (!to && win.navigator?.userActivation?.isActive) to = root;
 		if (!to) return null;
 		navigateFrom(to, url, { base: win.document });
 		return to;
@@ -577,6 +632,47 @@ function bindNavigation(win) {
 		win.open = shellOpen(win);
 	} catch {
 		// read-only in some odd document; leave the guard's version
+	}
+
+	// No dialogs: the scraper's guard already silences alert, confirm and prompt, but
+	// three files never went through it, and nothing stopped a page asking "are you sure
+	// you want to leave?" -- 22 set onbeforeunload or onunload. allow-modals stays on the
+	// sandbox only because the toolbar's Print button needs it.
+	try {
+		win.alert = () => {};
+		win.confirm = () => false;
+		win.prompt = () => null;
+		Object.defineProperty(win, 'onbeforeunload', { configurable: true, get: () => null, set() {} });
+		const add = win.addEventListener.bind(win);
+		win.addEventListener = (type, ...rest) => {
+			if (String(type).toLowerCase() === 'beforeunload') return;
+			add(type, ...rest);
+		};
+	} catch {
+		// leave the page's own
+	}
+
+	// A page sending itself to the live web -- 18 meta refreshes and 12 scripts do -- is
+	// stopped before it starts, where the browser offers a way to: the frame stays on the
+	// page. Elsewhere the archive's Content-Security-Policy (serve.js) still blocks it, at
+	// the cost of the browser's own blocked-page notice in the frame.
+	try {
+		win.navigation?.addEventListener('navigate', (event) => {
+			if (event.cancelable && !sitesPathOf(event.destination.url)) event.preventDefault();
+		});
+	} catch {
+		// no Navigation API here
+	}
+
+	// The page's Back links walk the shell's history only as far back as this visit
+	// went: 19 pages have a javascript:history.back(), and from the first page of a visit
+	// that would leave the site.
+	try {
+		win.history.back = () => stepBack(1);
+		win.history.go = (n = 0) => (n < 0 ? stepBack(-n) : n > 0 ? window.history.go(n) : win.location.reload());
+		win.history.forward = () => window.history.forward();
+	} catch {
+		// leave the page's own
 	}
 
 	const builtIn = (key) =>
@@ -705,6 +801,7 @@ function prepareFrame(win, depth = 0) {
 		if (pane[PANE_BOUND]) continue;
 		pane[PANE_BOUND] = true;
 		pane.addEventListener('load', () => {
+			countEntries();
 			try {
 				prepareFrame(pane.contentWindow, depth + 1);
 				onPaneLoad(pane.contentWindow);
@@ -998,6 +1095,7 @@ export function watchFrame() {
 	setInterval(() => syncChrome(), 50);
 
 	iframe.addEventListener('load', () => {
+		countEntries();
 		// Re-injected because pages of this era use document.write, which can replace
 		// the whole document after we styled it. Idempotent, so this is cheap.
 		prepareFrame(iframe.contentWindow);

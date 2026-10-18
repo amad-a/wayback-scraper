@@ -9,6 +9,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
+import mime from 'mime-types';
 
 import { ensureUpdatedAt, selectTagged, toCsv } from './tags-csv.js';
 
@@ -504,14 +505,12 @@ function isArchivedPage(localPath) {
   return pagePaths.has(localPath.toLowerCase());
 }
 
-function typeArchivedFile(res, file) {
+// The type an archived file should go out as, or '' to leave it to its extension.
+function archivedType(file) {
   const localPath = path.relative(SITES_ROOT, file).split(path.sep).join('/');
-  if (/\.s?html?$/i.test(localPath)) return;
-  if (isArchivedPage(localPath)) {
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    return;
-  }
-  if (!SERVER_SIDE.test(localPath)) return;
+  if (/\.s?html?$/i.test(localPath)) return '';
+  if (isArchivedPage(localPath)) return 'text/html; charset=utf-8';
+  if (!SERVER_SIDE.test(localPath)) return '';
   let head = '';
   try {
     const fd = fs.openSync(file, 'r');
@@ -520,11 +519,99 @@ function typeArchivedFile(res, file) {
     fs.closeSync(fd);
     head = buf.subarray(0, n).toString('latin1');
   } catch {
-    return;
+    return '';
   }
-  const match = SNIFF.find(([re]) => re.test(head));
-  if (match) res.setHeader('Content-Type', match[1]);
+  return SNIFF.find(([re]) => re.test(head))?.[1] || '';
 }
+
+function typeArchivedFile(res, file) {
+  const type = archivedType(file);
+  if (type) res.setHeader('Content-Type', type);
+}
+
+// --- keeping the archive inside the frame -------------------------------------
+
+// Everything an archived page could do to get out of the shell's frame, and what stops
+// it, is listed where each piece lives. The server's part:
+//
+//   A /sites page opened on its own -- a middle-click, a search engine, a bookmark --
+//   is redirected to the shell with ?p=, so it is never shown bare in a tab. Told apart
+//   from the shell's own frame by Sec-Fetch-Dest: 'document' for a tab, 'iframe' or
+//   'frame' inside one.
+//
+//   A navigation to a file a browser cannot show -- 540 links reach .zip, .exe, .doc,
+//   RealAudio and the like -- gets a page saying so instead of a download.
+//
+//   Every archived file goes out with a Content-Security-Policy that keeps it to this
+//   site: no frames, form posts, scripts, images or plugins from the live web. 806 pages
+//   still ask live hosts for counters and banners, five load live scripts (Angelfire's
+//   ad code among them), and 29 frame live sites -- domains that may belong to anyone
+//   today. Inline scripts and eval stay allowed: the pages are made of them.
+const ARCHIVE_CSP = [
+  "default-src 'self' data: blob: 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'",
+  "frame-src 'self'",
+  "form-action 'self'",
+  "base-uri 'self'",
+].join('; ');
+// The shell's own frame may only ever show this site.
+const SHELL_CSP = "frame-src 'self'";
+
+// What a browser shows in a frame rather than handing to a download.
+const VIEWABLE = /^(text\/(html|plain)|image\/(gif|jpeg|png|bmp|webp|svg\+xml|x-icon|vnd\.microsoft\.icon)|audio\/(mpeg|wave?|x-wav|ogg)|video\/(mp4|webm|ogg)|application\/pdf)\b/;
+
+function escapeHtml(text) {
+  return String(text).replace(/[&<>"']/g, (c) => `&#${c.charCodeAt(0)};`);
+}
+
+function downloadNotice(file, type, size) {
+  const name = path.basename(file);
+  const kb = size < 1024 ? `${size} bytes` : `${Math.round(size / 1024)} KB`;
+  return `<!doctype html>
+<html><head><meta charset="utf-8"><title>${escapeHtml(name)}</title></head>
+<body style="font: 13px Arial, sans-serif; margin: 32px; color: #000; background: #fff">
+<h3 style="font-size: 15px">This file can't be opened here</h3>
+<p><b>${escapeHtml(name)}</b> (${escapeHtml(type || 'unknown type')}, ${kb}) was saved with this site,
+but it is a download, and the archive doesn't hand out downloads.</p>
+<p><a href="javascript:history.back()">Back</a></p>
+</body></html>`;
+}
+
+app.use('/sites', (req, res, next) => {
+  res.setHeader('Content-Security-Policy', ARCHIVE_CSP);
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+
+  const dest = req.get('sec-fetch-dest');
+  if (dest !== 'document' && dest !== 'iframe' && dest !== 'frame') return next();
+
+  let localPath;
+  try {
+    localPath = decodeURIComponent(req.path).replace(/^\/+/, '');
+  } catch {
+    return next();
+  }
+  if (localPath.split('/').includes('..')) return next();
+  if (!localPath || req.path.endsWith('/')) localPath = path.posix.join(localPath, 'index.html');
+  const file = path.join(SITES_ROOT, localPath);
+  let stat;
+  try {
+    stat = fs.statSync(file);
+  } catch {
+    return next(); // missing, or under other capitals: the redirect handler below decides
+  }
+  if (!stat.isFile()) return next();
+
+  const type = archivedType(file) || mime.lookup(file) || '';
+  const viewable = VIEWABLE.test(type);
+
+  if (dest === 'document' && /^text\/html/.test(type)) {
+    return res.redirect(302, `/?p=${localPath.split('/').map(encodeURIComponent).join('/')}`);
+  }
+  if (!viewable) {
+    res.setHeader('Cache-Control', 'no-store');
+    return res.type('html').send(downloadNotice(file, type, stat.size));
+  }
+  next();
+});
 
 app.use('/sites', express.static(path.join(ROOT, 'sites'), { setHeaders: typeArchivedFile }));
 
@@ -735,6 +822,7 @@ app.get('/', (req, res) => {
   );
   // Never cached: each visit to the bare address is a new draw.
   res.set('Cache-Control', 'no-store');
+  res.set('Content-Security-Policy', SHELL_CSP);
   res.type('html').send(html);
 });
 
@@ -745,6 +833,7 @@ app.get('/archive-index.html', (req, res) => {
     res.status(404).type('text').send('archive-index.html not built yet; run `npm run index`.');
     return;
   }
+  res.set('Content-Security-Policy', SHELL_CSP);
   res.type('html').send(withSharedPage(ARCHIVE_INDEX_PATH, req));
 });
 
