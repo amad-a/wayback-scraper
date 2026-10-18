@@ -290,6 +290,7 @@ function findFrame(win, name, depth = 0) {
 function onArchiveClick(event) {
 	const link = event.target?.closest?.('a[href], area[href]');
 	if (!link) return;
+	if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
 	const doc = link.ownerDocument;
 	// <base target> sets the default for a whole document; two pages rely on it.
@@ -299,15 +300,39 @@ function onArchiveClick(event) {
 		''
 	).toLowerCase();
 
-	const win = targetWindow(doc.defaultView, name);
-	if (!win) return;
-
 	// .href rather than the attribute: the DOM has resolved it against the document and
 	// its <base href> already, so relative links come out right. Schemes that do not
 	// navigate are left to the page -- the scraper rewrites mailto: to '#', but not every
 	// page went through it.
 	const { href } = link;
 	if (!href || /^(javascript|mailto):/i.test(href)) return;
+
+	// A link that names no window, clicked in a pane, goes to the pane its page belongs
+	// in -- which is how the nav frame's links reach "main" again (see paneFor).
+	const here = doc.defaultView;
+	const root = iframe.contentWindow;
+	if (!name && here !== root) {
+		const pane = paneFor(here, href);
+		if (pane) {
+			event.preventDefault();
+			pane.location.href = href;
+			return;
+		}
+	}
+
+	const win = name ? targetWindow(here, name) : here === root ? root : null;
+	if (!win) return;
+
+	// Whatever replaces the whole frame goes through openPlaced, so a page that belongs
+	// in a frameset arrives inside it rather than bare.
+	if (win === root) {
+		const path = sitesPathOf(href);
+		if (path) {
+			event.preventDefault();
+			openPlaced(path);
+			return;
+		}
+	}
 
 	event.preventDefault();
 	win.location.href = href;
@@ -318,6 +343,167 @@ function bindTargets(doc) {
 	doc[TARGET_BOUND] = true;
 
 	doc.addEventListener('click', onArchiveClick, true);
+}
+
+// --- framesets ---------------------------------------------------------------
+
+// Pages that belong inside a frameset are never shown bare. `npm run db` works out, for
+// each page that was only ever seen inside a frame, the frameset and frame it opened in
+// (frame_home and frame_slot). Three things here act on that:
+//
+//   openPlaced     every way of opening a page in #frame -- the address bar, search,
+//                  favorites, history, Random, a link that replaces the whole frame --
+//                  asks /api/place first, loads the outermost frameset, and then fills
+//                  each frame on the way down to the page.
+//   paneFor        a link clicked in one pane that names no window goes to the pane its
+//                  page belongs in. The scraper stripped <base target="main"> from the
+//                  nav frames, so without this their links open inside the nav.
+//   the catch-all  a page that still arrives bare in #frame -- Back into an old entry,
+//                  a link we could not see -- is swapped for its frameset in place.
+//
+// The address bar and ?p= name the page that was asked for, not the frameset around it,
+// and follow it as it changes in its frame, so a shared link reopens what you were
+// reading.
+
+// Which frame of each frameset its pages go in: frameset path -> { page path: slot }.
+const framesetMaps = new Map();
+// The page last placed into a frameset, and the frame it is in: { top, frame, path }.
+let placed = null;
+// Steps waiting for #frame's next load, from openPlaced or the server's data-place.
+let pendingSteps = null;
+
+function sitesPathOf(href) {
+	try {
+		const url = new URL(href, location.href);
+		if (url.origin !== location.origin || !url.pathname.startsWith('/sites/')) return '';
+		return decodeURIComponent(url.pathname.slice('/sites/'.length));
+	} catch {
+		return '';
+	}
+}
+
+function localPathOf(win) {
+	try {
+		return sitesPathOf(win.location.href);
+	} catch {
+		return '';
+	}
+}
+
+// A frame's name as the database knows it: lowercased, or '#2' for the third, unnamed.
+function slotOf(win) {
+	try {
+		const panes = [...win.parent.document.querySelectorAll('frame, iframe')];
+		const at = panes.findIndex((el) => el.contentWindow === win);
+		return (panes[at]?.getAttribute('name') || '').trim().toLowerCase() || `#${at}`;
+	} catch {
+		return '';
+	}
+}
+
+function paneElement(win, slot) {
+	try {
+		const panes = [...win.document.querySelectorAll('frame, iframe')];
+		if (slot.startsWith('#')) return panes[Number(slot.slice(1))] || null;
+		return panes.find((el) => (el.getAttribute('name') || '').trim().toLowerCase() === slot) || null;
+	} catch {
+		return null;
+	}
+}
+
+function loadFrameset(win) {
+	const path = localPathOf(win);
+	if (!path || framesetMaps.has(path)) return;
+	framesetMaps.set(path, {}); // in flight; a click before it lands just goes untouched
+	fetchJson(`/api/frameset?path=${encodeURIComponent(path)}`, {}).then((map) => {
+		framesetMaps.set(path, map);
+	});
+}
+
+// The pane a link should open in, when that is not the one it was clicked in.
+function paneFor(win, href) {
+	const page = sitesPathOf(href).toLowerCase();
+	if (!page) return null;
+	let frameset;
+	try {
+		frameset = win.parent;
+	} catch {
+		return null;
+	}
+	const slot = framesetMaps.get(localPathOf(frameset))?.[page];
+	if (!slot || slot === slotOf(win)) return null;
+	return paneElement(frameset, slot)?.contentWindow || null;
+}
+
+// Opens a page in #frame, inside its frameset if it belongs in one. `replace` swaps the
+// current history entry instead of adding one: the catch-all uses it, so Back does not
+// land on the bare page again and bounce straight back.
+export async function openPlaced(path, { replace = false } = {}) {
+	const where = await fetchJson(`/api/place?path=${encodeURIComponent(path)}`, { top: path, steps: [] });
+	const top = where.top || path;
+	pendingSteps = where.steps?.length ? where.steps : null;
+	placed = pendingSteps ? { top, frame: pendingSteps.at(-1).frame, path } : null;
+
+	const url = sitesUrl(top);
+	if (replace) iframe.contentWindow.location.replace(url);
+	else iframe.src = url;
+}
+
+// Fills the frames on the way down to the placed page, one level at a time: a nested
+// frameset's panes only exist once it has loaded.
+function placeFrames(steps, win = iframe.contentWindow) {
+	if (!steps?.length) return;
+	const [step, ...rest] = steps;
+	const pane = paneElement(win, step.frame);
+	if (!pane) return;
+	const next = () => placeFrames(rest, pane.contentWindow);
+	if (localPathOf(pane.contentWindow).toLowerCase() === step.page.toLowerCase()) {
+		next();
+		return;
+	}
+	if (rest.length) pane.addEventListener('load', next, { once: true });
+	pane.contentWindow.location.replace(sitesUrl(step.page));
+}
+
+// A pane finished loading. The address bar and ?p= follow whichever pane was last sent
+// somewhere new, since that is the page being read: a nav link that loads a report into
+// "main" makes the report the address. A pane going back to the page its frameset starts
+// it on gives the address back to the frameset.
+function onPaneLoad(pane) {
+	const top = localPathOf(iframe.contentWindow);
+	const path = localPathOf(pane);
+	if (!top || !path) return;
+
+	let start = '';
+	try {
+		const el = [...pane.parent.document.querySelectorAll('frame, iframe')].find((f) => f.contentWindow === pane);
+		start = sitesPathOf(el?.getAttribute('src') || '');
+	} catch {
+		return;
+	}
+	const slot = slotOf(pane);
+
+	if (path.toLowerCase() === start.toLowerCase()) {
+		if (placed?.top === top && placed.frame === slot) {
+			placed = null;
+			syncChrome(true);
+		}
+		return;
+	}
+	if (placed?.top === top && placed.frame === slot && placed.path === path) return;
+	placed = { top, frame: slot, path };
+	describePlaced();
+}
+
+// Puts the placed page into the address bar and ?p=, under the frameset's title.
+async function describePlaced() {
+	if (!placed) return;
+	const { path, top } = placed;
+	syncShareUrl(path);
+	const page = await fetchJson(`/api/page?path=${encodeURIComponent(path)}`, null);
+	if (!page || placed?.path !== path || localPathOf(iframe.contentWindow) !== top) return;
+	setChrome({ title: document.querySelector('.window-title').textContent, url: page.display_url });
+	setCaptured(page.timestamp);
 }
 
 // --- applying both to a frame ----------------------------------------------
@@ -343,20 +529,31 @@ function prepareFrame(win, depth = 0) {
 		return; // a cross-origin child: nothing we can or should do
 	}
 
-	// Indexed rather than for...of: window.frames is a WindowProxy with a length and
-	// numeric keys, not an iterable, and iterating it throws.
-	for (let i = 0; i < win.frames.length; i++) {
+	// Listening on the <frame> elements rather than their windows: a pane's window is
+	// replaced each time it navigates, taking its listeners with it, while the element
+	// stays -- so every later page in the pane is prepared too, not just the first.
+	const panes = win.document.querySelectorAll('frame, iframe');
+	if (panes.length) loadFrameset(win);
+	for (const pane of panes) {
 		try {
-			const child = win.frames[i];
-			prepareFrame(child, depth + 1);
-			child.addEventListener('load', () => prepareFrame(child, depth + 1), {
-				once: true,
-			});
+			prepareFrame(pane.contentWindow, depth + 1);
 		} catch {
 			// cross-origin; skip it and carry on with its siblings
 		}
+		if (pane[PANE_BOUND]) continue;
+		pane[PANE_BOUND] = true;
+		pane.addEventListener('load', () => {
+			try {
+				prepareFrame(pane.contentWindow, depth + 1);
+				onPaneLoad(pane.contentWindow);
+			} catch {
+				// cross-origin
+			}
+		});
 	}
 }
+
+const PANE_BOUND = '__palestineOnlinePaneBound';
 
 // --- chrome ----------------------------------------------------------------
 
@@ -433,8 +630,15 @@ async function applyChrome() {
 	// overwrite the chrome for the page they are on now.
 	if (decodeURIComponent(iframe.contentWindow.location.pathname) !== localPath) return;
 
+	// Arrived bare, though it belongs in a frameset: swapped for the frameset in place.
+	if (page.frame_home) {
+		openPlaced(page.local_path, { replace: true });
+		return;
+	}
+
 	setChrome({ title: page.display_title, url: page.display_url });
 	setCaptured(page.timestamp);
+	if (placed && placed.top === page.local_path) describePlaced();
 
 	// Held for the favorites star, which wants the corrected title and the real address
 	// rather than what the document happens to claim about itself.
@@ -471,7 +675,9 @@ function syncChrome(force = false) {
 	// A first look, so the last page's Play button goes as soon as the frame moves on;
 	// the load handler looks again once the whole page, frames and all, is there.
 	updateAudio(iframe.contentWindow, localPath);
-	syncShareUrl(localPath);
+	// The frame moved on from the frameset a page was placed in: nothing is placed now.
+	if (placed && placed.top !== localPath) placed = null;
+	syncShareUrl(placed ? placed.path : localPath);
 	// Straight away, from the path alone: the database pass in applyChrome is a round trip
 	// away and the star should not spend it showing the last page's state.
 	syncStar(localPath);
@@ -583,6 +789,27 @@ async function openSharedPage() {
 	const path = sharedPath();
 	if (!path) return;
 
+	// The server already opened the frameset this page belongs in, and left the steps to
+	// put the page in its frame. If the frameset has loaded already, they run now.
+	if (iframe.dataset.place) {
+		let steps = null;
+		try {
+			steps = JSON.parse(iframe.dataset.place);
+		} catch {
+			// malformed: leave the frameset as it is
+		}
+		delete iframe.dataset.place;
+		if (steps?.length) {
+			placed = { top: sitesPathOf(iframe.src), frame: steps.at(-1).frame, path };
+			if (iframe.contentDocument?.readyState === 'complete' && localPathOf(iframe.contentWindow) === placed.top) {
+				placeFrames(steps);
+			} else {
+				pendingSteps = steps;
+			}
+		}
+		return;
+	}
+
 	const url = sitesUrl(path);
 	const current = new URL(iframe.src, location.href).pathname;
 	if (current === new URL(url, location.href).pathname) return;
@@ -612,6 +839,10 @@ export function watchFrame() {
 		// Re-injected because pages of this era use document.write, which can replace
 		// the whole document after we styled it. Idempotent, so this is cheap.
 		prepareFrame(iframe.contentWindow);
+		const steps = pendingSteps;
+		pendingSteps = null;
+		placeFrames(steps);
+		if (steps) describePlaced();
 		if (chromeFor) updateAudio(iframe.contentWindow, chromeFor.slice('/sites/'.length));
 
 		// Only re-runs when the early pass came up empty -- it happens before <body>
@@ -955,7 +1186,7 @@ export async function openRandomPage() {
 	}
 	if (!path) return;
 
-	iframe.src = sitesUrl(path);
+	openPlaced(path);
 }
 
 // Iframe navigations land in the parent's joint session history, so the shell's
@@ -1078,7 +1309,7 @@ favoritesEntries?.setAttribute('aria-label', 'Favorites');
 // Both panels open a page the same way, and assigning src rather than replacing the
 // location leaves a history entry so Back walks the trail you actually took.
 function openPath(path) {
-	iframe.src = sitesUrl(path);
+	openPlaced(path);
 }
 
 function renderFavorites() {

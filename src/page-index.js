@@ -13,6 +13,7 @@
 import fs from 'fs/promises';
 import { existsSync } from 'fs';
 import path from 'path';
+import { inflateSync } from 'zlib';
 import * as cheerio from 'cheerio';
 
 export const DEST_PATH = 'sites';
@@ -99,6 +100,172 @@ function framesFrom($) {
     .get()
     .filter((src) => src.startsWith(`/${DEST_PATH}/`))
     .map((src) => src.slice(DEST_PATH.length + 2).split('#')[0].split('?')[0].toLowerCase());
+}
+
+// A rewritten `/sites/...` reference as the local path of the page it opens, or '' for
+// anything else. Same normalisation as toLocalPath: lowercased, query and fragment
+// dropped, and a directory meaning its index.html.
+function localTarget(ref) {
+  if (!ref.startsWith(`/${DEST_PATH}/`)) return '';
+  let target = ref.slice(DEST_PATH.length + 2).split('#')[0].split('?')[0];
+  try {
+    target = decodeURIComponent(target);
+  } catch {
+    // Leave malformed escapes as-is, same as toLocalPath.
+  }
+  target = target.toLowerCase();
+  if (!target || target.endsWith('/') || !target.includes('/')) {
+    target = path.posix.join(target, 'index.html');
+  }
+  return target;
+}
+
+// The panes a document is made of: each <frame> and <iframe> with the page it starts on
+// and the name links use to aim at it. A pane with no name is called by its position,
+// '#0', '#1' and so on, in document order -- nothing can target it, but a plain link
+// inside it still opens in it.
+//
+// `size` is how much of its frameset a <frame> gets, for guessing which one is the
+// content pane (see frameHomes in build-db.js), measured against a 1000px window: pixels
+// as given, percentages of the 1000, and '*' sharing whatever is left -- most of it in
+// "120,*,50", a sliver in "93%,*". 0 for an <iframe>, which is never the guess.
+function slotsFrom($) {
+  return $('frame, iframe')
+    .map((i, el) => ({
+      child: localTarget($(el).attr('src') || ''),
+      name: ($(el).attr('name') || '').trim().toLowerCase() || `#${i}`,
+      size: frameSize($, el),
+      // Not standard HTML: FrontPage wrote it on each <frame> to mirror the
+      // <base target> it put in the page loaded there.
+      target: ($(el).attr('target') || '').trim().toLowerCase(),
+    }))
+    .get();
+}
+
+const FRAME_WINDOW = 1000;
+
+function frameSize($, el) {
+  const parent = $(el).parent('frameset');
+  if (!parent.length) return 0;
+  const count = parent.children('frame, frameset').length;
+  const spec = (parent.attr('cols') || parent.attr('rows') || '').split(',').map((p) => p.trim());
+  const parts = Array.from({ length: count }, (_, i) => spec[i] || '*');
+
+  const fixed = (p) => (p.endsWith('%') ? (FRAME_WINDOW * (Number.parseFloat(p) || 0)) / 100 : Number.parseFloat(p) || 0);
+  const weight = (p) => Number.parseFloat(p) || 1;
+  const stars = parts.filter((p) => p.endsWith('*'));
+  const left = Math.max(0, FRAME_WINDOW - parts.filter((p) => !p.endsWith('*')).reduce((n, p) => n + fixed(p), 0));
+  const starWeight = stars.reduce((n, p) => n + weight(p), 0);
+
+  const part = parts[parent.children('frame, frameset').index(el)];
+  return part.endsWith('*') ? (left * weight(part)) / starWeight : fixed(part);
+}
+
+// Where each link on the page goes and which window it opens in: its own target, else
+// the page's <base target>, else the frame it was clicked in ('_self'). `implicit` marks
+// a link that named no target at all, which is what frameHomes may have to guess about.
+//
+// An <a> with nothing inside it is skipped: there is nothing to click. Dreamweaver wrote
+// rows of them beside a Flash movie -- "URL's used in the movie" -- so the movie's links
+// would be crawled, and they say nothing about where those links open. The movie does;
+// see flashLinks. An <area> is always empty and always clickable, so it stays.
+function linksFrom($) {
+  const base = ($('base[target]').first().attr('target') || '').trim().toLowerCase();
+  return $('a[href], area[href]')
+    .filter((_, el) => el.tagName === 'area' || $(el).text().trim() !== '' || $(el).children().length > 0)
+    .map((_, el) => {
+      const own = ($(el).attr('target') || '').trim().toLowerCase();
+      return {
+        to: localTarget(($(el).attr('href') || '').trim()),
+        target: own || base || '_self',
+        implicit: !own && !base,
+      };
+    })
+    .get()
+    .filter((link) => link.to);
+}
+
+// The Flash movies a page embeds, as local paths. The scraper rewrites <embed src> and
+// <object data> to /sites/...; a <param name="movie"> it may leave relative, so that is
+// resolved against the page's own folder.
+function moviesFrom($, localPath) {
+  const dir = path.posix.dirname(localPath);
+  const refs = [
+    ...$('embed[src], object[data]').map((_, el) => $(el).attr('src') || $(el).attr('data')).get(),
+    ...$('param')
+      .filter((_, el) => /^(movie|src)$/i.test($(el).attr('name') || ''))
+      .map((_, el) => $(el).attr('value') || '')
+      .get(),
+  ];
+  const movies = new Set();
+  for (const ref of refs.map((r) => (r || '').trim())) {
+    if (!/\.swf([?#]|$)/i.test(ref)) continue;
+    const local = ref.startsWith('/') ? localTarget(ref) : relativeTarget(dir, ref);
+    if (local) movies.add(local);
+  }
+  return [...movies];
+}
+
+// A reference written relative to a page in `dir` -- or absolute, to the live web -- as
+// a local path, the way the browser would have resolved it.
+//
+// Segments go through sanitizeSegment as the crawler's did, so Kirdan's Flash gallery,
+// which asks for `mis\w1.htm` in Windows style, finds the mis_w1.htm it was saved as.
+function relativeTarget(dir, ref) {
+  if (/^https?:\/\//i.test(ref)) return toLocalPath(ref);
+  if (/^[a-z]+:/i.test(ref) || ref.startsWith('#')) return '';
+  const joined = path.posix.normalize(path.posix.join(dir, ref));
+  return localTarget(`/${DEST_PATH}/${joined.split('/').map(sanitizeSegment).join('/')}`);
+}
+
+// The links inside a Flash movie, read straight out of its bytecode: each ActionGetURL
+// (0x83) carries its URL and target window as two strings. Relative URLs resolve against
+// the page that embeds the movie, which is how Flash of this period behaved. getURL2,
+// which builds its URL at runtime, cannot be read this way and is not tried.
+//
+// Bethlehem 2000's header is one of these: its nine buttons all open in "_bottom", the
+// content frame, which the empty <a> tags beside it could never have said.
+export async function flashLinks(movie, pageDir) {
+  let buf;
+  try {
+    buf = await fs.readFile(path.join(destDir, movie));
+  } catch {
+    return [];
+  }
+  const kind = buf.subarray(0, 3).toString('latin1');
+  if (kind === 'CWS') {
+    try {
+      buf = Buffer.concat([buf.subarray(0, 8), inflateSync(buf.subarray(8))]);
+    } catch {
+      return [];
+    }
+  } else if (kind !== 'FWS') {
+    return [];
+  }
+
+  const links = [];
+  for (let i = 8; i < buf.length - 4; i++) {
+    if (buf[i] !== 0x83) continue;
+    const len = buf.readUInt16LE(i + 1);
+    if (len < 2 || i + 3 + len > buf.length) continue;
+    const body = buf.subarray(i + 3, i + 3 + len);
+    const mid = body.indexOf(0);
+    if (mid <= 0 || body[len - 1] !== 0) continue;
+    const url = body.subarray(0, mid).toString('latin1');
+    const target = body.subarray(mid + 1, len - 1).toString('latin1');
+    if (/[\x00-\x1f]/.test(url + target)) continue;
+    const to = relativeTarget(pageDir, url);
+    if (to) links.push({ to, target: target.trim().toLowerCase() || '_self', implicit: false });
+  }
+  return links;
+}
+
+// The scraper strips href and target from every <base> it saves (cdx-scraper.js), leaving
+// an empty tag behind. Which of those had a target is lost; that they had a <base> at all
+// is not, and it is the hint frameHomes guesses from.
+function baseStrippedFrom($) {
+  const base = $('base');
+  return base.length > 0 && base.toArray().every((el) => Object.keys(el.attribs || {}).length === 0);
 }
 
 // ---------------------------------------------------------------------------
@@ -196,7 +363,7 @@ function referencesFrom($, resolves) {
 // Three separate helpers would each pay their own cheerio.load, and across 11,000 files
 // that parse is most of the build -- two passes already cost 13s. titleFromHtml stays
 // exported for build-index.js, which wants nothing else.
-export function inspectPage(html, resolves) {
+export function inspectPage(html, resolves, localPath = '') {
   let $;
   try {
     $ = cheerio.load(html);
@@ -204,11 +371,23 @@ export function inspectPage(html, resolves) {
     return {
       title: '',
       frames: [],
+      slots: [],
+      links: [],
+      movies: [],
+      baseStripped: false,
       refs: { linksTotal: 0, linksDead: 0, imagesTotal: 0, imagesBroken: 0 },
     };
   }
 
-  return { title: titleFrom($), frames: framesFrom($), refs: referencesFrom($, resolves) };
+  return {
+    title: titleFrom($),
+    frames: framesFrom($),
+    slots: slotsFrom($),
+    links: linksFrom($),
+    movies: moviesFrom($, localPath),
+    baseStripped: baseStrippedFrom($),
+    refs: referencesFrom($, resolves),
+  };
 }
 
 export async function readTitle(localPath) {

@@ -67,13 +67,65 @@ app.get('/api/page', (req, res) => {
   const row = handle
     .prepare(
       `SELECT local_path, host, display_url, replay_url, captured_at, timestamp,
-              display_title, tags, notes, capture_count, frame_parent
+              display_title, tags, notes, capture_count, frame_parent, frame_home, frame_slot
        FROM page_view WHERE local_path = ?`,
     )
     .get(localPath);
 
   if (!row) return res.status(404).json({ error: 'not indexed', local_path: localPath });
   res.json(row);
+});
+
+// --- frames -------------------------------------------------------------------
+
+// Where a page has to be opened so it is never shown bare: the outermost frameset it
+// belongs in, then each frame to fill on the way down to it. A page that stands on its
+// own comes back as its own top with no steps.
+//
+// frame_home and frame_slot come from `npm run db` (see frameHomes in build-db.js). A
+// database built before those columns existed has neither, and every page stands alone.
+function placement(handle, localPath) {
+  const steps = [];
+  let page = localPath;
+  const seen = new Set([page]);
+  const home = handle.prepare('SELECT frame_home, frame_slot FROM pages WHERE local_path = ?');
+  for (let depth = 0; depth < 4; depth++) {
+    let row;
+    try {
+      row = home.get(page);
+    } catch {
+      break; // no frame_home column yet
+    }
+    if (!row?.frame_home || seen.has(row.frame_home)) break;
+    steps.unshift({ frame: row.frame_slot, page });
+    page = row.frame_home;
+    seen.add(page);
+  }
+  return { top: page, steps };
+}
+
+app.get('/api/place', (req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  const localPath = decodeURIComponent(String(req.query.path || '')).replace(/^\/?sites\//, '');
+  if (!localPath) return res.status(400).json({ error: 'path required' });
+  res.json(placement(handle, localPath));
+});
+
+// Which frame of a frameset each of its pages belongs in, for the shell to send a link
+// clicked in one pane to the pane it was written for. Mostly that undoes the scraper
+// having stripped <base target> -- a nav frame's links otherwise open inside the nav.
+app.get('/api/frameset', (req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  const localPath = decodeURIComponent(String(req.query.path || '')).replace(/^\/?sites\//, '');
+  let rows = [];
+  try {
+    rows = handle.prepare('SELECT local_path, frame_slot FROM pages WHERE frame_home = ?').all(localPath);
+  } catch {
+    // no frame_home column yet
+  }
+  res.json(Object.fromEntries(rows.map((r) => [r.local_path, r.frame_slot])));
 });
 
 // One page at random, for the toolbar's Random button.
@@ -281,20 +333,27 @@ function bareUrl(url) {
 
 function searchIndex(handle) {
   if (searchHandle !== handle) {
-    // Frames are left out, as the random pool leaves them out: a pane of a frameset on
-    // its own is a nav strip or a body with no way out, not somewhere to go.
+    // Every page, frames included: the shell opens a frame's page inside its frameset
+    // (see /api/place), so finding one by its own title or address is no longer a way to
+    // land on a bare nav strip.
     searchRows = handle
-      .prepare(
-        `SELECT local_path, display_url, display_title FROM page_view WHERE frame_parent IS NULL`,
-      )
+      .prepare(`SELECT local_path, display_url, display_title FROM page_view`)
       .all()
-      .map((r) => ({ ...r, url: bareUrl(r.display_url), title: (r.display_title || '').toLowerCase() }));
+      .map((r) => ({
+        ...r,
+        url: bareUrl(r.display_url),
+        // The address of the folder an index page stands for, so typing that folder
+        // finds its index first.
+        folder: bareUrl(r.display_url).replace(/(^|\/)(index|default)\.[a-z]+$/, '$1'),
+        title: (r.display_title || '').toLowerCase(),
+      }));
     searchHandle = handle;
   }
   return searchRows;
 }
 
-// Every word must appear somewhere in the address or title. Ranked: addresses that start
+// Every word must appear somewhere in the address or title. Ranked: the page at exactly
+// the address typed -- a folder's index page for the folder -- then addresses that start
 // with what was typed, then addresses containing it whole, then by how many of the words
 // are in the address itself -- so "birzeit news" puts birzeit.edu/bzunews/ above the bare
 // home page whose title happens to mention news -- then shorter addresses first.
@@ -309,7 +368,8 @@ app.get('/api/search', (req, res) => {
   const scored = [];
   for (const row of searchIndex(handle)) {
     if (!words.every((w) => row.url.includes(w) || row.title.includes(w))) continue;
-    const rank = row.url.startsWith(query) ? 0 : row.url.includes(query) ? 1 : 2;
+    const exact = row.url === query || row.folder === query || row.folder === `${query}/`;
+    const rank = exact ? -1 : row.url.startsWith(query) ? 0 : row.url.includes(query) ? 1 : 2;
     const inUrl = words.filter((w) => row.url.includes(w)).length;
     scored.push({ rank, inUrl, row });
   }
@@ -574,10 +634,24 @@ function randomEntrySrc() {
 
 // The page with ?p= already in its frame, for either viewer. `fallback` is the frame's
 // src when the URL names no page.
+//
+// A page that belongs inside a frameset is opened as that frameset, with the steps to put
+// it in its frame written onto the iframe as data-place -- so the bare frame is never
+// what loads, not even for a moment. The shell carries the steps out (see placeFrames).
 function withSharedPage(file, req, fallback = '') {
-  const html = template(file);
-  const src = sharedSrc(req.originalUrl) || fallback;
+  let html = template(file);
+  let src = sharedSrc(req.originalUrl) || fallback;
   if (!src) return html;
+
+  const handle = database();
+  if (handle) {
+    const { top, steps } = placement(handle, decodeURIComponent(src.replace(/^\/sites\//, '')));
+    if (steps.length) {
+      src = sitesHref(top);
+      const attr = JSON.stringify(steps).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+      html = html.replace(IFRAME_ID, `$1 data-place="${attr}"`);
+    }
+  }
 
   if (IFRAME_SRC.test(html)) return html.replace(IFRAME_SRC, `$1${src}$2`);
   if (IFRAME_ID.test(html)) return html.replace(IFRAME_ID, `$1 src="${src}"`);
