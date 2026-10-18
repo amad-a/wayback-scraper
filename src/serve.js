@@ -474,7 +474,59 @@ app.get('/api/tags.csv', adminOnly, (_req, res) => {
 
 // The archived pages are 2001-era and full of odd filenames; serve them as-is
 // rather than letting express guess at extensions.
-app.use('/sites', express.static(path.join(ROOT, 'sites')));
+//
+// Except for the type. What the scraper saved from barghouti.com/folklore/abusami.asp is
+// the HTML that page produced, but express types files by extension, so it went out as
+// application/octet-stream -- .php as application/x-httpd-php, .pl as application/x-perl
+// -- and the browser treated 131 archived pages as downloads, which the frame's sandbox
+// then silently refused: they showed up in search and never opened. So a file the
+// database lists as a page is served as HTML whatever it is called (two robots.txt and a
+// .jpe among them are saved pages too). Other files with a server-side extension -- hit
+// counters that are really GIFs, track.dll, a Lycos script saved as .js.php -- are typed
+// by their first bytes. Anything else keeps the type its extension gives it.
+const SERVER_SIDE = /\.(asp|aspx|php\d?|phtml|cgi|pl|jsp|cfm|dll)$/i;
+const SNIFF = [
+  [/^GIF8/, 'image/gif'],
+  [/^\xff\xd8\xff/, 'image/jpeg'],
+  [/^\x89PNG/, 'image/png'],
+  [/^\s*(<!--|<!doctype|<html|<head|<body|<title|<table|<script|<meta|<p\b|<br|<center|<font|<frameset)/i, 'text/html; charset=utf-8'],
+];
+let pagePaths = null;
+let pagePathsHandle = null;
+
+function isArchivedPage(localPath) {
+  const handle = database();
+  if (!handle) return false;
+  if (pagePathsHandle !== handle) {
+    pagePaths = new Set(handle.prepare('SELECT local_path FROM pages').all().map((r) => r.local_path));
+    pagePathsHandle = handle;
+  }
+  return pagePaths.has(localPath.toLowerCase());
+}
+
+function typeArchivedFile(res, file) {
+  const localPath = path.relative(SITES_ROOT, file).split(path.sep).join('/');
+  if (/\.s?html?$/i.test(localPath)) return;
+  if (isArchivedPage(localPath)) {
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    return;
+  }
+  if (!SERVER_SIDE.test(localPath)) return;
+  let head = '';
+  try {
+    const fd = fs.openSync(file, 'r');
+    const buf = Buffer.alloc(256);
+    const n = fs.readSync(fd, buf, 0, 256, 0);
+    fs.closeSync(fd);
+    head = buf.subarray(0, n).toString('latin1');
+  } catch {
+    return;
+  }
+  const match = SNIFF.find(([re]) => re.test(head));
+  if (match) res.setHeader('Content-Type', match[1]);
+}
+
+app.use('/sites', express.static(path.join(ROOT, 'sites'), { setHeaders: typeArchivedFile }));
 
 // --- shareable links --------------------------------------------------------
 //
