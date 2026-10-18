@@ -438,6 +438,163 @@ function paneFor(win, href) {
 	return paneElement(frameset, slot)?.contentWindow || null;
 }
 
+// --- scripted navigation --------------------------------------------------------
+
+// Scripts in the archived pages navigate frames too, and the sandbox refuses them the same
+// way it refuses a link: a pane may navigate only itself and what it contains, so
+// Dreamweaver's `parent.main.location = 'pages/purpose.html'` (Deir Yassin's menu),
+// `parent.frames['dwn'].location = ...` (omayya.com), `window.open(url, 'main')` (492
+// pages) and every Flash button -- Ruffle opens getURL targets with window.open -- all
+// fail. The shell is not sandboxed, and a navigation counts as coming from whoever's code
+// performs it, so each of those routes is handed to shell code:
+//
+//   window.open    replaced in every archived document with the shell's own: a named
+//                  frame is navigated by name, _top goes through openPlaced, and _blank
+//                  stays refused, as the scraper's guard script already refused it.
+//   frame names    a frameset's window gets a stand-in for each named frame, so
+//                  `parent.main` and `parent.frames['main']` return an object that reads
+//                  through to the real frame but navigates through the shell when its
+//                  location is set.
+//
+// Not covered: `top.<name>` and `top.location` -- 24 pages between them. In the shell,
+// top is the Explorer window rather than the frameset the page was written for.
+
+const NAV_BOUND = '__palestineOnlineNavBound';
+// The document a click or key last happened in. A relative URL given to location is
+// resolved against the page whose script set it, and that is almost always the one the
+// reader just clicked in.
+let activeDoc = null;
+
+function noteActive(event) {
+	activeDoc = event.currentTarget;
+}
+
+// Navigates `win` to `url` from shell code. The whole frame goes through openPlaced, so a
+// page that belongs in a frameset still arrives inside it.
+function navigateFrom(win, url, { base = activeDoc, replace = false } = {}) {
+	let href;
+	try {
+		href = new URL(String(url), base?.baseURI || win.document.baseURI).href;
+	} catch {
+		return;
+	}
+	if (win === iframe.contentWindow) {
+		const path = sitesPathOf(href);
+		if (path) {
+			openPlaced(path, { replace });
+			return;
+		}
+	}
+	if (replace) win.location.replace(href);
+	else win.location.href = href;
+}
+
+function shellOpen(win) {
+	return (url, target) => {
+		if (!url) return null;
+		const name = String(target || '').trim().toLowerCase();
+		const root = iframe.contentWindow;
+		let to = null;
+		if (!name || name === '_self') to = win;
+		else if (name === '_top') to = root;
+		else if (name === '_parent') to = win === root ? root : win.parent;
+		else if (!['_blank', '_new', '_newtab'].includes(name)) to = findFrameNamed(root, name);
+		if (!to) return null;
+		navigateFrom(to, url, { base: win.document });
+		return to;
+	};
+}
+
+// findFrame, but ignoring case: these pages' scripts and markup rarely agree on it.
+function findFrameNamed(win, name, depth = 0) {
+	if (!win || depth > 3) return null;
+	for (let i = 0; i < win.frames.length; i++) {
+		try {
+			const child = win.frames[i];
+			if ((child.name || '').toLowerCase() === name) return child;
+			const found = findFrameNamed(child, name, depth + 1);
+			if (found) return found;
+		} catch {
+			// cross-origin
+		}
+	}
+	return null;
+}
+
+// What `parent.main` returns: the frame, read through as it is, except that setting its
+// location -- or href, or calling assign or replace on it -- navigates through the shell.
+function framePortal(pane) {
+	const real = () => pane.contentWindow;
+	const location = new Proxy({}, {
+		get(_, key) {
+			const loc = real().location;
+			if (key === 'assign' || key === 'replace') {
+				return (url) => navigateFrom(real(), url, { replace: key === 'replace' });
+			}
+			if (key === 'toString' || key === Symbol.toPrimitive || key === 'valueOf') return () => loc.href;
+			const value = loc[key];
+			return typeof value === 'function' ? value.bind(loc) : value;
+		},
+		set(_, key, value) {
+			if (key === 'href') {
+				navigateFrom(real(), value);
+			} else {
+				const next = new URL(real().location.href);
+				next[key] = value;
+				navigateFrom(real(), next.href);
+			}
+			return true;
+		},
+	});
+	return new Proxy({}, {
+		get(_, key) {
+			if (key === 'location') return location;
+			const win = real();
+			const value = Reflect.get(win, key, win);
+			return typeof value === 'function' && !/^[A-Z]/.test(String(key)) ? value.bind(win) : value;
+		},
+		set(_, key, value) {
+			if (key === 'location') navigateFrom(real(), value);
+			else real()[key] = value;
+			return true;
+		},
+		has(_, key) {
+			return key in real();
+		},
+	});
+}
+
+// Installs both on one archived document's window. Frame names that would shadow
+// something a window already has -- `top`, `status`, `name` -- are left alone.
+function bindNavigation(win) {
+	const doc = win.document;
+	if (doc[NAV_BOUND]) return;
+	doc[NAV_BOUND] = true;
+
+	for (const type of ['mousedown', 'click', 'keydown']) doc.addEventListener(type, noteActive, true);
+
+	try {
+		win.open = shellOpen(win);
+	} catch {
+		// read-only in some odd document; leave the guard's version
+	}
+
+	const builtIn = (key) =>
+		Object.prototype.hasOwnProperty.call(win, key) ||
+		[win.Window?.prototype, win.EventTarget?.prototype, win.Object?.prototype].some(
+			(proto) => proto && Object.prototype.hasOwnProperty.call(proto, key),
+		);
+	for (const pane of doc.querySelectorAll('frame[name], iframe[name]')) {
+		const name = pane.getAttribute('name');
+		if (!name || builtIn(name)) continue;
+		try {
+			Object.defineProperty(win, name, { configurable: true, get: () => framePortal(pane) });
+		} catch {
+			// not definable here; scripts fall back to the real frame
+		}
+	}
+}
+
 // Opens a page in #frame, inside its frameset if it belongs in one. `replace` swaps the
 // current history entry instead of adding one: the catch-all uses it, so Back does not
 // land on the bare page again and bounce straight back.
@@ -528,6 +685,7 @@ function prepareFrame(win, depth = 0) {
 		// player rather than send a pane to the raw file.
 		bindAudioLinks(win.document);
 		bindTargets(win.document);
+		bindNavigation(win);
 		setScale(win.document);
 	} catch {
 		return; // a cross-origin child: nothing we can or should do
