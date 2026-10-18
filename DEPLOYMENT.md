@@ -21,6 +21,8 @@ node src/serve.js ..... PM2 process "wayback"
 | | |
 |---|---|
 | Host | `ssh deploy@167.233.141.19` (Hetzner, Ubuntu 26.04, 4GB) |
+| Addresses | `167.233.141.19` and `2a01:4f8:c015:150f::1`; DNS (A + AAAA, apex + www) in Hetzner DNS |
+| Firewall | ufw: 22, 80 and 443 open, IPv4 and IPv6 |
 | Checkout | `/home/deploy/wayback-scraper`, tracking `origin/main` |
 | Process manager | PM2, process name `wayback`, running `npm run serve` |
 | App port | `127.0.0.1:8080` (`PORT` / `HOST` env override) |
@@ -121,6 +123,7 @@ safe, but verify rather than assume after any certbot activity:
 ```bash
 grep -c '^server {' /etc/nginx/sites-available/archive   # expect 2
 grep proxy_pass /etc/nginx/sites-available/archive       # expect 127.0.0.1:8080
+grep -c 'listen \[::\]' /etc/nginx/sites-available/archive # expect 2 (IPv6 on 80 and 443)
 curl -s https://palestineonline.net/ | grep -o '<title>.*</title>'
 ```
 
@@ -190,3 +193,16 @@ the file is replaced, so a rebuilt DB needs no restart.
 
 **Nothing resolves** — check DNS (`dig +short palestineonline.net`, expect
 `167.233.141.19`) before touching the server.
+
+**Slow for some visitors, or hangs in scripts and `curl -6`** — IPv6 is broken while
+IPv4 works. Browsers quietly fall back to IPv4 after a delay; Python waited 10 seconds
+per request. Until October 2026 the AAAA records pointed at `…150f::` instead of the
+server's `…150f::1`, nginx listened on IPv4 only, and ufw dropped 80/443 over IPv6.
+All three have to be right:
+
+```bash
+dig +short AAAA palestineonline.net               # expect 2a01:4f8:c015:150f::1 (www too)
+ss -ltn | grep -E '\[::\]:(80|443)'                # nginx listening on IPv6
+sudo ufw status | grep -E '(80|443).*\(v6\)'       # firewall open on IPv6
+curl -6 -sI https://palestineonline.net/ | head -1  # end to end, from an IPv6 network
+```
