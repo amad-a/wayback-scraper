@@ -184,7 +184,8 @@ const destDir = path.join(process.cwd(), opts.destPath);
 // every URL it maps, so the root has to be normalized the same way -- otherwise
 // `www.foo.com` is passed on the command line, pages land in `foo.com/`, and the
 // rewrite pass walks an empty directory.
-const siteDir = normalizeSitePath(opts.webPath || '');
+// Reassigned in page mode (see fetchSinglePage) to the crawl the page joins.
+let siteDir = normalizeSitePath(opts.webPath || '');
 
 // A webPath may carry a path prefix after the host. The whole thing is lowercased, not
 // just the host, because `toLocalPath` lowercases every path it writes and every link it
@@ -358,6 +359,64 @@ function guessLegacyCharset(buffer) {
 // ---------------------------------------------------------------------------
 // CDX
 // ---------------------------------------------------------------------------
+
+// A webPath naming one page -- `birzeit.edu/web/history.html` rather than a site or a
+// folder -- fetches just that page, and its assets, from the given years.
+//
+// The site crawl asks the CDX API for `<webPath>/*`, which for a page matches nothing,
+// and would write its log to `<page>/log.json`, a folder named after the page. Here the
+// page is looked up by its exact URL instead, and joins the nearest crawl above it that
+// already has a log.json -- birzeit.edu for the page above, where the rest of
+// birzeit.edu/web/ already lives -- so build-db files it with its neighbours, and its
+// third-party assets land in that crawl's _external folder like theirs. With no crawl
+// above it, the host becomes the crawl. The earliest capture in range is used, as the
+// site crawl does; --overwrite refetches a page already in the log.
+function isPagePath(webPath) {
+  const parts = normalizeSitePath(webPath).split('/');
+  return parts.length > 1 && HTML_EXTENSIONS.test(parts.at(-1));
+}
+
+async function fetchSinglePage() {
+  const pagePath = normalizeSitePath(opts.webPath);
+  const segments = pagePath.split('/');
+  let root = segments[0];
+  for (let i = segments.length - 1; i >= 1; i--) {
+    const candidate = segments.slice(0, i).join('/');
+    if (await fsExists(path.join(destDir, candidate, 'log.json'))) {
+      root = candidate;
+      break;
+    }
+  }
+  siteDir = root;
+  const logPath = path.join(destDir, siteDir, 'log.json');
+  console.log(`Single page ${pagePath}, joining the crawl at ${siteDir}/`);
+
+  const filters = ['statuscode:200'].map((f) => `&filter=${f}`).join('');
+  const requestUrl =
+    `https://web.archive.org/cdx/search/cdx?url=${opts.webPath}` +
+    `&output=json&from=${opts.fromBound}&to=${opts.toBound}${filters}`;
+  console.log('REQUEST URL:', requestUrl);
+
+  const response = await fetch(requestUrl);
+  if (!response.ok) throw new Error(`CDX request failed: HTTP ${response.status}`);
+  const rows = (await response.json()).slice(1);
+  console.log(`Captures in range: ${rows.length}.`);
+  if (!rows.length) return [];
+
+  const [urlKey, timestamp, originalUrl, mimetype, statusCode, digest, length] = rows[0];
+  const seed = { urlKey, timestamp, originalUrl, mimetype, statusCode, digest, length };
+
+  const log = (await fsExists(logPath)) ? JSON.parse(await fs.readFile(logPath, 'utf-8')) : [];
+  const at = log.findIndex((e) => toLocalPath(e.originalUrl) === toLocalPath(originalUrl));
+  if (at === -1) log.push(seed);
+  else if (opts.overwrite) log[at] = seed;
+  else console.log(`Already in ${siteDir}/log.json (captured ${log[at].timestamp}); --overwrite to replace.`);
+
+  await fs.mkdir(path.join(destDir, siteDir), { recursive: true });
+  await fs.writeFile(logPath, JSON.stringify(log));
+  console.log(`Using the capture from ${timestamp}.`);
+  return [at === -1 || opts.overwrite ? seed : log[at]];
+}
 
 async function fetchCdxList() {
   const logPath = path.join(destDir, siteDir, 'log.json');
@@ -1068,6 +1127,12 @@ async function rewriteSavedPages(seeds) {
   // Outward `http://` links (never localized) and missing internal pages both fail
   // this, so both get disabled -- nothing is left pointing at the live web or archive.
   const linkPrefix = `/${opts.destPath}/`;
+  //
+  // RealAudio is the exception: no browser plays it. `npm run media` points every link to
+  // a recording it could restore at the converted .mp3, so a link still aimed at a .ram,
+  // .rm or .ra was not restorable and stays dead, even though the pointer file it names
+  // is on disk -- media downloads those to follow them, and without this rule the next
+  // crawl's rewrite revived 39 such links into downloads.
   function localTargetExists(href) {
     if (!href.startsWith(linkPrefix)) return false;
     let target = href.slice(linkPrefix.length).split('#')[0].split('?')[0];
@@ -1076,6 +1141,7 @@ async function rewriteSavedPages(seeds) {
     } catch {
       // Leave malformed escapes as-is, same as toLocalPath.
     }
+    if (/\.(ram|rpm|rm|ra)$/i.test(target)) return false;
     return fileSet.has(target.toLowerCase());
   }
 
@@ -1301,8 +1367,12 @@ async function rewriteSavedPages(seeds) {
       }
     });
 
+    // Stamped once, when the page is downloaded, and filled in later for a page that has
+    // none. Never replaced: the stamp records the capture the file actually came from,
+    // and a log listing the URL more than once could otherwise swap it for another on a
+    // rewrite -- the capture that would be named is just the last entry for that path.
     const source = byPath.get(localPath);
-    if (source) {
+    if (source && !$('body').attr('data-wayback-url')) {
       $('body').attr('data-wayback-url', waybackUrl(source.timestamp, source.originalUrl));
     }
 
@@ -1454,7 +1524,8 @@ async function seedsFromSheet() {
 async function main() {
   if (!opts.webPath) {
     console.error(
-      'Usage: node src/cdx-scraper.js <webPath> <fromBound> [toBound] [--overwrite] [--sheets] [--rewrite-only]'
+      'Usage: node src/cdx-scraper.js <webPath> <fromBound> [toBound] [--overwrite] [--sheets] [--rewrite-only]\n' +
+        '  webPath is a site or folder (birzeit.edu, birzeit.edu/aff), or one page (birzeit.edu/web/history.html)'
     );
     process.exit(1);
   }
@@ -1467,7 +1538,11 @@ async function main() {
     process.exit(1);
   }
 
-  const seeds = opts.sheets ? await seedsFromSheet() : await fetchCdxList();
+  const seeds = opts.sheets
+    ? await seedsFromSheet()
+    : isPagePath(opts.webPath) && !opts.rewriteOnly
+      ? await fetchSinglePage()
+      : await fetchCdxList();
 
   // Nothing to crawl is fatal for a download run but fine for a rewrite: seeds only
   // supply the data-wayback-url annotation there, and the pass walks the disk anyway.
