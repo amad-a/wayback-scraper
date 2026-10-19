@@ -33,7 +33,11 @@ The `deploy` user has no passwordless sudo. nginx, ufw and DNS changes (Hetzner 
 ## Scraping (`src/cdx-scraper.js`)
 
 - Whole site or folder: `npm run scrape -- birzeit.edu/aff 2000 2001`. Writes `<root>/log.json`, downloads pages and assets, then runs the rewrite pass over the **whole** corpus.
-- **One page**: `npm run scrape -- birzeit.edu/web/history.html 1997`. Uses the exact URL, takes the earliest capture in range, and adds an entry to the nearest crawl above it that has a `log.json`. Add `--overwrite` to replace an existing entry.
+- **One page**: `npm run scrape -- birzeit.edu/web/history.html 1997`. Uses the exact URL, takes the earliest capture in range, and adds an entry to the nearest crawl above it that has a `log.json`. If there isn't one, the page's own folder becomes the crawl, e.g. `maxpages.com/rudy`. Add `--overwrite` to replace an existing entry.
+  - An address without a file extension, or a folder's index, needs `--page`: `npm run scrape -- maxpages.com/rudy/Home 20011124163705 --page`, or `geocities.com/imadhajjo/ … --page`.
+  - To take one particular capture, pass its timestamp as the bound, e.g. from a `web.archive.org/web/<timestamp>/<url>` link.
+  - A frameset's frames are added to the log with it, so `npm run db` knows them.
+- `<base href>` is honoured: relative references resolve against it, both when downloading and when rewriting. MaxPages members' pages point at `http://maxpages.com/`.
 - Relink only, no network: `node src/cdx-scraper.js <root> --rewrite-only`.
 - After any scrape: review `git status -- sites` before committing. The rewrite pass touches every page, so check that the diff contains only what was intended:
   - `data-wayback-url` is only ever **added** to pages missing it, never replaced. Adding it is fine.

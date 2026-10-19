@@ -51,6 +51,8 @@ const HTML_EXTENSIONS = /\.(htm|html|shtml|shtm|php|asp|aspx|jsp|cfm|cgi|pl)$/i;
 // a subresource the page needs, not a page to walk into: photo galleries commonly
 // link a caption or thumbnail directly to the full-size jpg with no inline <img>.
 const IMAGE_EXTENSIONS = /\.(gif|jpe?g|png|bmp|ico|svg|tiff?|webp)(\?|#|$)/i;
+// Files that are never a web page, whatever a server sends back for them.
+const MEDIA_NOT_HTML = /\.(gif|jpe?g|png|bmp|ico|tiff?|webp|mid|midi|wav|mp3|au|aiff?|ra|rm|ram|swf|avi|mpe?g|mov|zip|exe|pdf|css|js)$/i;
 
 // Assets worth pulling down alongside a page. Deliberately wider than the CDX
 // filter, which excludes css/js entirely and so loses page styling.
@@ -173,6 +175,9 @@ function parseArgs(argv) {
     // is currently on disk -- the way to pick up cross-site links after the sites they
     // point at have been crawled, with no network traffic.
     rewriteOnly: flags.has('--rewrite-only'),
+    // Treat webPath as one page even without a file extension: `maxpages.com/rudy/Home`,
+    // or a folder's own index, `geocities.com/imadhajjo/`. See fetchSinglePage.
+    page: flags.has('--page'),
     destPath: 'sites',
   };
 }
@@ -360,6 +365,30 @@ function guessLegacyCharset(buffer) {
 // CDX
 // ---------------------------------------------------------------------------
 
+// The CDX API, asked again when it is having a bad moment. It answers 503 or 504, or
+// drops the connection mid-list, for minutes at a time while the archive recovers from an
+// outage -- and a crawl that gives up on the first try has downloaded nothing. Waits
+// 30s, 60s, 120s and 240s between attempts; a 4xx other than 429 is a real answer.
+async function fetchCdx(requestUrl) {
+  const waits = [30, 60, 120, 240];
+  for (let attempt = 0; ; attempt++) {
+    let response;
+    let problem;
+    try {
+      response = await fetch(requestUrl);
+      if (response.ok) return response;
+      problem = `HTTP ${response.status}`;
+      if (response.status < 500 && response.status !== 429) throw new Error(`CDX request failed: ${problem}`);
+    } catch (error) {
+      if (/CDX request failed/.test(error.message)) throw error;
+      problem = error.message;
+    }
+    if (attempt >= waits.length) throw new Error(`CDX request failed after ${attempt + 1} tries: ${problem}`);
+    console.log(`⏸️  CDX ${problem} -- trying again in ${waits[attempt]}s`);
+    await new Promise((r) => setTimeout(r, waits[attempt] * 1000));
+  }
+}
+
 // A webPath naming one page -- `birzeit.edu/web/history.html` rather than a site or a
 // folder -- fetches just that page, and its assets, from the given years.
 //
@@ -369,9 +398,13 @@ function guessLegacyCharset(buffer) {
 // already has a log.json -- birzeit.edu for the page above, where the rest of
 // birzeit.edu/web/ already lives -- so build-db files it with its neighbours, and its
 // third-party assets land in that crawl's _external folder like theirs. With no crawl
-// above it, the host becomes the crawl. The earliest capture in range is used, as the
-// site crawl does; --overwrite refetches a page already in the log.
+// above it, the page's own folder becomes the crawl -- on a shared host that is the
+// member's site, maxpages.com/rudy or geocities.com/imadhajjo, not the whole host. The
+// earliest capture in range is used, as the site crawl does: pass one exact timestamp as
+// both bounds to take a particular capture. --overwrite refetches a page already in the
+// log.
 function isPagePath(webPath) {
+  if (opts.page) return true;
   const parts = normalizeSitePath(webPath).split('/');
   return parts.length > 1 && HTML_EXTENSIONS.test(parts.at(-1));
 }
@@ -379,7 +412,9 @@ function isPagePath(webPath) {
 async function fetchSinglePage() {
   const pagePath = normalizeSitePath(opts.webPath);
   const segments = pagePath.split('/');
-  let root = segments[0];
+  // The folder the page sits in, as addressed: everything before the last segment, or
+  // the whole path for a folder's own index (a trailing slash).
+  let root = pagePath.endsWith('/') ? pagePath.replace(/\/+$/, '') : segments.slice(0, -1).join('/') || segments[0];
   for (let i = segments.length - 1; i >= 1; i--) {
     const candidate = segments.slice(0, i).join('/');
     if (await fsExists(path.join(destDir, candidate, 'log.json'))) {
@@ -397,8 +432,7 @@ async function fetchSinglePage() {
     `&output=json&from=${opts.fromBound}&to=${opts.toBound}${filters}`;
   console.log('REQUEST URL:', requestUrl);
 
-  const response = await fetch(requestUrl);
-  if (!response.ok) throw new Error(`CDX request failed: HTTP ${response.status}`);
+  const response = await fetchCdx(requestUrl);
   const rows = (await response.json()).slice(1);
   console.log(`Captures in range: ${rows.length}.`);
   if (!rows.length) return [];
@@ -440,10 +474,7 @@ async function fetchCdxList() {
 
   console.log('REQUEST URL:', requestUrl);
 
-  const response = await fetch(requestUrl);
-  if (!response.ok) {
-    throw new Error(`CDX request failed: HTTP ${response.status}`);
-  }
+  const response = await fetchCdx(requestUrl);
 
   const rows = (await response.json()).slice(1);
   console.log(`Page list fetched from CDX API (${rows.length} rows).`);
@@ -495,6 +526,9 @@ class Queue {
     // downloaded by a shared worker pool, not synchronously per page, so completion
     // is counted back to the parent here rather than inline in handleItem.
     this.pageProgress = new Map();
+    // HTML documents this run handled, downloaded or already on disk -- for page mode,
+    // which logs a frameset's frames along with it (see logFramesOf).
+    this.documents = [];
   }
 
   // All of a page's assets are enqueued in one synchronous `enqueueAssets` pass, so
@@ -618,6 +652,7 @@ async function handleItem(item, queue) {
       return;
     }
 
+    if (item.isDocument !== false && !item.external) queue.documents.push(item);
     const buffer = await fs.readFile(resolveDest(savedPath));
     const { html } = decodeHtml(buffer, '', savedPath);
     const found =
@@ -648,6 +683,19 @@ async function handleItem(item, queue) {
 
   const contentType = response.headers.get('content-type') || '';
   const buffer = Buffer.from(await response.arrayBuffer());
+
+  // An image or a sound that comes back as a web page is the host's error page, captured
+  // at that address -- FortuneCity answered missing files with its own "FortuneCity >
+  // Error" page, and the archive kept those under names like haggan.mid. Saved, it is an
+  // HTML file posing as media, and crawled, it pulls in the host's whole error-page
+  // furniture. So it counts as a failed download, as a 404 would.
+  if (contentType.includes('text/html') && MEDIA_NOT_HTML.test(localPath)) {
+    console.log(`❌ error page instead of ${localPath}`);
+    queue.stats.failed += 1;
+    queue.recordAssetResult(item.parent, false);
+    return;
+  }
+
   const isHtml =
     contentType.includes('text/html') || HTML_EXTENSIONS.test(localPath);
 
@@ -673,6 +721,7 @@ async function handleItem(item, queue) {
     const { html, charset } = decodeHtml(buffer, contentType, localPath);
     await fs.writeFile(fullPath, html, 'utf8');
     queue.stats.pages += 1;
+    if (item.isDocument !== false && !item.external) queue.documents.push(item);
 
     // Off-host pages get their subresources fetched too, or the rewrite pass points
     // at `_external` copies that were never downloaded. This stays bounded because
@@ -716,6 +765,9 @@ async function savedAssetPath(localPath) {
 function enqueueAssets(html, page, queue) {
   const $ = cheerio.load(html);
   const refs = [];
+  // Relative references resolve against the page's <base href> when it has one -- as
+  // the browser resolved them. See documentBase.
+  const resolveFrom = documentBase($) || page.originalUrl;
 
   for (const [selector, attr, meta = {}] of ASSET_SELECTORS) {
     $(selector).each((_, el) => {
@@ -767,7 +819,7 @@ function enqueueAssets(html, page, queue) {
 
   let added = 0;
   for (const { ref, isDocument } of refs) {
-    const resolved = toAbsolute(ref, page.originalUrl);
+    const resolved = toAbsolute(ref, resolveFrom);
     if (!resolved) continue;
     if (
       queue.add({
@@ -790,6 +842,53 @@ function enqueueAssets(html, page, queue) {
   }
 
   return added;
+}
+
+// The absolute URL a page's <base href> names, or '' when it has none (or only a
+// relative one, which is left to resolve as before).
+//
+// A <base href> moves where every relative reference on the page points. MaxPages put
+// `<base href="http://maxpages.com/">` on its members' pages, so maxpages.com/rudy/Home's
+// `images/animations/animals/doggie.gif` meant maxpages.com/images/..., the host's shared
+// library -- resolved against the page instead, 18 of its 21 images 404'd.
+function documentBase($) {
+  const href = ($('base[href]').first().attr('href') || '').trim();
+  if (!/^https?:\/\//i.test(href)) return '';
+  try {
+    return new URL(href).href;
+  } catch {
+    return '';
+  }
+}
+
+// Rewrites a page's relative references as absolute URLs against its <base href>, so
+// the rest of the rewrite -- which resolves against the page's own address, and strips
+// <base> -- localises them where the browser would have looked. Runs once, while the
+// saved page still has its <base>; afterwards every reference is a /sites/ path and the
+// <base> is gone.
+function absolutizeAgainstBase($, base) {
+  const linkPrefix = `/${opts.destPath}/`;
+  const fix = (value) => {
+    const raw = (value || '').trim();
+    if (!raw || raw.startsWith('#') || raw.startsWith(linkPrefix) || NON_NAVIGATIONAL.test(raw)) return null;
+    if (/^[a-z][a-z0-9+.-]*:/i.test(raw) || raw.startsWith('//')) return null;
+    try {
+      return new URL(raw, base).href;
+    } catch {
+      return null;
+    }
+  };
+  for (const [selector, spec] of Object.entries(LINK_ATTRS)) {
+    $(selector).each((_, el) => {
+      const next = fix($(el).attr(spec.attr));
+      if (next) $(el).attr(spec.attr, next);
+    });
+  }
+  $('param[value]').each((_, el) => {
+    if (!isMovieParam($, el)) return;
+    const next = fix($(el).attr('value'));
+    if (next) $(el).attr('value', next);
+  });
 }
 
 // Resolve a page-relative reference against the page's archived URL. Returns
@@ -1178,6 +1277,8 @@ async function rewriteSavedPages(seeds) {
     const $ = cheerio.load(html);
 
     $('html').removeAttr('style');
+    const base = documentBase($);
+    if (base) absolutizeAgainstBase($, base);
     $('head base').removeAttr('href').removeAttr('target');
 
     // Content was decoded from its original codepage and saved as UTF-8, with the
@@ -1525,7 +1626,8 @@ async function main() {
   if (!opts.webPath) {
     console.error(
       'Usage: node src/cdx-scraper.js <webPath> <fromBound> [toBound] [--overwrite] [--sheets] [--rewrite-only]\n' +
-        '  webPath is a site or folder (birzeit.edu, birzeit.edu/aff), or one page (birzeit.edu/web/history.html)'
+        '  webPath is a site or folder (birzeit.edu, birzeit.edu/aff), or one page (birzeit.edu/web/history.html);\n' +
+        '  --page makes an extensionless address or a folder one page (maxpages.com/rudy/Home --page)'
     );
     process.exit(1);
   }
@@ -1576,7 +1678,32 @@ async function main() {
   );
   console.log(`Skipped ${skipped} existing, ${failed} failed, ${refusals} cooldowns.`);
 
+  if (isPagePath(opts.webPath) && !opts.sheets) await logFramesOf(queue);
+
   await rewriteSavedPages(seeds);
+}
+
+// In page mode, the pages a frameset loads into its frames are part of the page, so they
+// join the crawl log beside it -- npm run db only knows pages a log lists, and a frame
+// missing from it is missing from search and from frameset handling. Only HTML documents
+// on the crawl's own site; nothing already listed is touched.
+async function logFramesOf(queue) {
+  const logPath = path.join(destDir, siteDir, 'log.json');
+  const log = (await fsExists(logPath)) ? JSON.parse(await fs.readFile(logPath, 'utf-8')) : [];
+  const listed = new Set(log.map((e) => toLocalPath(e.originalUrl)));
+  let added = 0;
+  for (const item of queue.documents) {
+    const local = toLocalPath(item.originalUrl);
+    if (listed.has(local) || !local.startsWith(`${siteDir}/`)) continue;
+    // Queued URLs can lack a scheme; the log's, like the CDX API's, always have one.
+    const originalUrl = /^https?:\/\//i.test(item.originalUrl) ? item.originalUrl : `http://${item.originalUrl}`;
+    log.push({ urlKey: '', timestamp: item.timestamp, originalUrl, mimetype: 'text/html', statusCode: '200', digest: '', length: '' });
+    listed.add(local);
+    added += 1;
+  }
+  if (!added) return;
+  await fs.writeFile(logPath, JSON.stringify(log));
+  console.log(`Logged ${added} frame page(s) with it in ${siteDir}/log.json.`);
 }
 
 await main();
