@@ -425,6 +425,34 @@ button {
 	-webkit-font-smoothing: revert;
 }
 
+/* And its sliders -- seek, volume, balance. Webamp draws each from the skin as the
+   input's own background and its thumb, but sets nothing on Chrome's slider track or on
+   a thumb's transform. 98.css's track -- black, bevelled, 2px tall -- painted over the
+   skin, and the thumbs, placed against that 2px track and lifted 8px, sat out of line.
+   Chrome's track goes back entirely to the browser's own, as Webamp expects; Firefox's
+   keeps the border and background Webamp gives it and loses the rest of 98.css's. */
+#webamp input[type="range"]::-webkit-slider-runnable-track {
+	all: revert;
+}
+
+#webamp input[type="range"]::-moz-range-track {
+	box-shadow: revert;
+	box-sizing: revert;
+	height: revert;
+	width: revert;
+}
+
+/* Separate rules: a browser drops a whole rule over a pseudo-element it does not know. */
+#webamp input[type="range"]::-webkit-slider-thumb {
+	transform: none;
+	box-shadow: none;
+}
+
+#webamp input[type="range"]::-moz-range-thumb {
+	transform: none;
+	box-shadow: none;
+}
+
 /* While a Webamp drag is in progress (see app/webamp.js), the archived page must not
    swallow the mouse, or the drag ends wherever the cursor crosses into it. */
 .webamp-dragging iframe {
