@@ -290,6 +290,14 @@ function findFrame(win, name, depth = 0) {
 function onArchiveClick(event) {
 	const link = event.target?.closest?.('a[href], area[href]');
 	if (!link) return;
+	// A link the scraper marked dead goes nowhere. dead-links.js cancels the click, but it
+	// listens on the same document, so its stopPropagation does not stop this handler --
+	// which then opened the missing file anyway, through openPlaced, and showed a 404.
+	// Any click the page itself already cancelled is left alone the same way.
+	if (event.defaultPrevented || link.classList.contains('dead')) {
+		event.preventDefault();
+		return;
+	}
 	if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
 
 	const doc = link.ownerDocument;

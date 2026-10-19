@@ -812,7 +812,7 @@ function withSharedPage(file, req, fallback = '') {
 const SITE_URL = (process.env.SITE_URL || 'https://palestineonline.net').replace(/\/$/, '');
 const SITE_SUMMARY =
   'From Palestine Online, a curated archive of websites created by Palestinians or about ' +
-  'Palestine in the late 90s to early-mid 2000s, sourced from the Internet Archive’s Wayback Machine.';
+  'Palestine in the late 90s to early-mid 2000s.';
 const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 // The shell's own link to a page: /?p=host/path, each segment encoded and the slashes kept.
