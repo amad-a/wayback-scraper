@@ -144,7 +144,6 @@ body {
 }
 
 #address-bar,
-#standard-buttons,
 #internet-buttons {
 	flex: 0 0 auto;
 	display: flex;

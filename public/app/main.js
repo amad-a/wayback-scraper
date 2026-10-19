@@ -70,14 +70,12 @@ document
   .getElementById('favorite-star')
   .addEventListener('click', () => addFavorite());
 
-// Index [1] because #standard-buttons and #internet-buttons each carry a
-// back/forward pair; only the internet set is visible.
 document
-  .querySelectorAll('.back-button')[1]
+  .querySelector('#internet-buttons .back-button')
   .addEventListener('click', () => historyNav(window));
 
 document
-  .querySelectorAll('.forward-button')[1]
+  .querySelector('#internet-buttons .forward-button')
   .addEventListener('click', () => historyNav(window, 'forward'));
 
 document

@@ -580,9 +580,6 @@ app.use('/sites', (req, res, next) => {
   res.setHeader('Content-Security-Policy', ARCHIVE_CSP);
   if (req.method !== 'GET' && req.method !== 'HEAD') return next();
 
-  const dest = req.get('sec-fetch-dest');
-  if (dest !== 'document' && dest !== 'iframe' && dest !== 'frame') return next();
-
   let localPath;
   try {
     localPath = decodeURIComponent(req.path).replace(/^\/+/, '');
@@ -603,8 +600,16 @@ app.use('/sites', (req, res, next) => {
   const type = archivedType(file) || mime.lookup(file) || '';
   const viewable = VIEWABLE.test(type);
 
+  // A search engine fetches /sites pages bare -- it sends no Sec-Fetch-Dest, so the
+  // redirect below never reaches it. The canonical link tells it the page's real address
+  // is the shell's ?p= link, so that is what it lists, not the page outside the shell.
+  if (/^text\/html/.test(type)) res.setHeader('Link', `<${SITE_URL}${shareLink(localPath)}>; rel="canonical"`);
+
+  const dest = req.get('sec-fetch-dest');
+  if (dest !== 'document' && dest !== 'iframe' && dest !== 'frame') return next();
+
   if (dest === 'document' && /^text\/html/.test(type)) {
-    return res.redirect(302, `/?p=${localPath.split('/').map(encodeURIComponent).join('/')}`);
+    return res.redirect(302, shareLink(localPath));
   }
   if (!viewable) {
     res.setHeader('Cache-Control', 'no-store');
@@ -800,6 +805,84 @@ function withSharedPage(file, req, fallback = '') {
   return html;
 }
 
+// --- search engines ---------------------------------------------------------------
+
+// The public address. The shell's links, the canonical links and the sitemap all name
+// pages by it, whichever host a request came in on.
+const SITE_URL = (process.env.SITE_URL || 'https://palestineonline.net').replace(/\/$/, '');
+const SITE_SUMMARY =
+  'From Palestine Online, a curated archive of websites created by Palestinians or about ' +
+  'Palestine in the late 90s to early-mid 2000s, sourced from the Internet Archive’s Wayback Machine.';
+const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// The shell's own link to a page: /?p=host/path, each segment encoded and the slashes kept.
+function shareLink(localPath) {
+  return `/?p=${localPath.split('/').map(encodeURIComponent).join('/')}`;
+}
+
+function escapeAttr(text) {
+  return String(text).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+// What a search result and a link preview say about one archived page: its own title, its
+// original address and when it was captured, then a line on the archive it belongs to.
+function pageMeta(localPath) {
+  const handle = database();
+  const row = handle
+    ?.prepare('SELECT local_path, display_url, display_title, timestamp FROM page_view WHERE local_path = ?')
+    .get(localPath.toLowerCase());
+  if (!row) return null;
+  const [, y, m, d] = /^(\d{4})(\d{2})(\d{2})/.exec(row.timestamp || '') || [];
+  const captured = y ? `, captured ${Number(d)} ${MONTH_NAMES[Number(m) - 1]} ${y}` : '';
+  const address = row.display_url.replace(/^https?:\/\//, '');
+  const name = (row.display_title || '').trim();
+  return {
+    title: `${name || address} — Palestine Online`,
+    description: `${name ? `${name} — ` : ''}${address}${captured}. ${SITE_SUMMARY}`,
+    url: `${SITE_URL}${shareLink(row.local_path)}`,
+  };
+}
+
+// Writes a page's metadata into the shell: <title>, the description, the canonical link
+// and the og: tags. Without a page -- the bare address, or a ?p= naming nothing -- the
+// archive's own, as written in index.html, stand.
+function withPageMeta(html, localPath) {
+  const meta = localPath && pageMeta(localPath);
+  if (!meta) return html;
+  const title = escapeAttr(meta.title);
+  const description = escapeAttr(meta.description);
+  const url = escapeAttr(meta.url);
+  return html
+    .replace(/<title>[^<]*<\/title>/, `<title>${title}</title>`)
+    .replace(/(<meta name="description" content=")[^"]*(")/, `$1${description}$2`)
+    .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${url}$2`)
+    .replace(/(<meta property="og:title" content=")[^"]*(")/, `$1${title}$2`)
+    .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${description}$2`)
+    .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`);
+}
+
+// Crawl everything but the API; point crawlers at the sitemap.
+app.get('/robots.txt', (_req, res) => {
+  res.type('text/plain').send(`User-agent: *\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+});
+
+// Every archived page by its ?p= link, so each can be found under its own name. Framed
+// pages are listed too: their link opens them inside their frameset. The panes a frameset
+// starts on -- nav strips, title bars -- are left out; their frameset is listed instead.
+// Built from the database on request; at ~11k URLs it is well inside one sitemap's limit.
+app.get('/sitemap.xml', (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).type('text/plain').send('no archive.db -- run: npm run db');
+  const rows = handle.prepare('SELECT local_path FROM pages WHERE frame_parent IS NULL ORDER BY local_path').all();
+  const xmlEscape = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const urls = [`${SITE_URL}/`, ...rows.map((r) => `${SITE_URL}${shareLink(r.local_path)}`)];
+  res.type('application/xml').send(
+    '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+      urls.map((u) => `  <url><loc>${xmlEscape(u)}</loc></url>`).join('\n') +
+      '\n</urlset>\n',
+  );
+});
+
 // Ahead of the static middleware, which would otherwise serve index.html for '/'
 // untouched.
 //
@@ -816,9 +899,10 @@ const WALLPAPER_TILES = /(<script type="application\/json" id="wallpaper-tiles">
 app.get('/', (req, res) => {
   const random = req.originalUrl.includes('?') ? '' : randomEntrySrc();
   const tiles = JSON.stringify(listTiles()).replace(/</g, '\\u003c');
-  const html = withSharedPage(INDEX_PATH, req, random).replace(
-    WALLPAPER_TILES,
-    (_, open, close) => open + tiles + close,
+  const shared = sharedSrc(req.originalUrl);
+  const html = withPageMeta(
+    withSharedPage(INDEX_PATH, req, random).replace(WALLPAPER_TILES, (_, open, close) => open + tiles + close),
+    shared ? decodeURIComponent(shared.replace(/^\/sites\//, '')) : '',
   );
   // Never cached: each visit to the bare address is a new draw.
   res.set('Cache-Control', 'no-store');

@@ -1,8 +1,22 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Palestine Online</title>
+    <!-- What search engines and link previews show. For a ?p= link the server rewrites
+         the title, description, canonical address and og: tags for that archived page
+         (see pageMeta in src/serve.js); these are the archive's own. -->
+    <meta name="description" content="Palestine Online is a curated archive of websites created by Palestinians or about Palestine in the late 90s to early-mid 2000s, sourced from the Internet Archive’s Wayback Machine. The project traces how the world wide web has played a role in Palestinian self advocacy and culture preservation, and is an attempt to create a free, interactive archive that revitalizes and makes newly visible the digital contributions and culture of oppressed peoples." />
+    <link rel="canonical" href="https://palestineonline.net/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Palestine Online" />
+    <meta property="og:title" content="Palestine Online" />
+    <meta property="og:description" content="Palestine Online is a curated archive of websites created by Palestinians or about Palestine in the late 90s to early-mid 2000s, sourced from the Internet Archive’s Wayback Machine. The project traces how the world wide web has played a role in Palestinian self advocacy and culture preservation, and is an attempt to create a free, interactive archive that revitalizes and makes newly visible the digital contributions and culture of oppressed peoples." />
+    <meta property="og:url" content="https://palestineonline.net/" />
+    <meta property="og:image" content="https://palestineonline.net/assets/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <!-- The wallpaper, chosen before the first paint: the remembered tile, or a random
          one on a first visit. Inline and ahead of the stylesheets so it runs at once;
@@ -66,7 +80,9 @@
     <script type="module" src="./app/main.js"></script>
   </head>
   <body class="">
-    <div class="window-container window">
+    <!-- data-nosnippet: the window's chrome -- toolbar labels, panels, status bar -- is
+         never quoted as a search result's summary; the description above is. -->
+    <div class="window-container window" data-nosnippet>
       <div class="title-bar" style="touch-action: none">
         <div class="title-bar-text window-title"></div>
         <div class="title-bar-controls">
@@ -82,169 +98,6 @@
         </div>
         <div class="toolbar" id="standard-buttons-toolbar">
           <div class="toolbar-drag-handle"></div>
-          <div id="standard-buttons" style="display: none">
-            <div class="toolbar-compound-button-wrapper">
-              <button
-                id="nav-back"
-                class="toolbar-button lightweight back-button"
-                disabled="disabled"
-              >
-                <span class="label-text">Back</span>
-                <div
-                  class="icon"
-                  style="background-position: 0px 0px"
-                ></div>
-              </button>
-              <button
-                class="toolbar-dropdown-button lightweight back-dropdown-button"
-                disabled="disabled"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="
-                    fill: currentColor;
-                    display: inline-block;
-                    vertical-align: middle;
-                  "
-                >
-                  <path
-                    style="
-                      transform: rotate(90deg);
-                      transform-origin: center;
-                    "
-                    d="m6 4 4 4-4 4z"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            <div class="toolbar-compound-button-wrapper">
-              <button
-                id="nav-forward"
-                class="toolbar-button lightweight forward-button"
-              >
-                <span class="label-text">Forward</span>
-                <div
-                  class="icon"
-                  style="background-position: -20px 0px"
-                ></div>
-              </button>
-              <button
-                class="toolbar-dropdown-button lightweight forward-dropdown-button"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="
-                    fill: currentColor;
-                    display: inline-block;
-                    vertical-align: middle;
-                  "
-                >
-                  <path
-                    style="
-                      transform: rotate(90deg);
-                      transform-origin: center;
-                    "
-                    d="m6 4 4 4-4 4z"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            <button class="toolbar-button lightweight up-button">
-              <span class="label-text">Up</span>
-              <div
-                class="icon"
-                style="background-position: -880px 0px"
-              ></div>
-            </button>
-            <hr aria-orientation="vertical" />
-            <button class="toolbar-button lightweight cut-button">
-              <span class="label-text">Cut</span>
-              <div
-                class="icon"
-                style="background-position: -420px 0px"
-              ></div>
-            </button>
-            <button class="toolbar-button lightweight copy-button">
-              <span class="label-text">Copy</span>
-              <div
-                class="icon"
-                style="background-position: -440px 0px"
-              ></div>
-            </button>
-            <button class="toolbar-button lightweight paste-button">
-              <span class="label-text">Paste</span>
-              <div
-                class="icon"
-                style="background-position: -460px 0px"
-              ></div>
-            </button>
-            <hr aria-orientation="vertical" />
-            <button class="toolbar-button lightweight undo-button">
-              <span class="label-text">Undo</span>
-              <div
-                class="icon"
-                style="background-position: -480px 0px"
-              ></div>
-            </button>
-            <hr aria-orientation="vertical" />
-            <button class="toolbar-button lightweight delete-button">
-              <span class="label-text">Delete</span>
-              <div
-                class="icon"
-                style="background-position: -520px 0px"
-              ></div>
-            </button>
-            <button
-              class="toolbar-button lightweight properties-button"
-            >
-              <span class="label-text">Properties</span>
-              <div
-                class="icon"
-                style="background-position: -620px 0px"
-              ></div>
-            </button>
-            <hr aria-orientation="vertical" />
-            <div class="toolbar-compound-button-wrapper">
-              <button
-                class="toolbar-button lightweight cycle-view-mode-button"
-              >
-                <span class="label-text">Views</span>
-                <div
-                  class="icon"
-                  style="background-position: -760px 0px"
-                ></div>
-              </button>
-              <button
-                class="toolbar-dropdown-button lightweight views-dropdown-button"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 16 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  style="
-                    fill: currentColor;
-                    display: inline-block;
-                    vertical-align: middle;
-                  "
-                >
-                  <path
-                    style="
-                      transform: rotate(90deg);
-                      transform-origin: center;
-                    "
-                    d="m6 4 4 4-4 4z"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </div>
           <div id="internet-buttons" style="">
             <div class="toolbar-compound-button-wrapper">
               <button class="toolbar-button lightweight back-button">
