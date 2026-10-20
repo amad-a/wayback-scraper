@@ -1,0 +1,374 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+<title>Links.page</title>
+<style type="text/css">
+ <!--
+  BODY { background: url(http://www.Palestine4Ever.net/waterfall.jpg) fixed }
+  -->
+ </style>
+<meta name="generator" content="Created Using Yahoo! PageBuilder 2.61.69">
+<style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+<body background="/sites/palestine4ever.net/waterfall.jpg" bgcolor="#FFFFFF" link="#000000" vlink="#000000" text="#000000" onload="window.onresize=new Function('if (navigator.appVersion==\'Netscape\') history.go(0);');" data-wayback-url="https://web.archive.org/web/20021110213700id_/http://www.palestine4ever.net:80/Links.html">
+<div id="root" style="position:absolute;top:0;left:0;width:598px;height:870px">
+<div style="position:absolute;left:8;top:56;width:370;height:269;">
+<table width="370" height="269" border="0" cellpadding="0" cellspacing="0"><tbody><tr valign="top">
+	<td><!-- javascript -->
+
+
+<style type="text/css">
+#divCont {position:absolute; z-index:1; left:50px; top:70px; height:400px; width:500px; visibility:hidden;}
+.clTop   {position:absolute; z-index:1; width:500px; line-height:17px;}
+.clSub   {position:absolute; z-index:1; left:0px; top:20px; width:170px; line-height:14px;}
+
+/*** This sets the style for the links inside the menu. ***/
+#divCont .clTop a {color:#FFFFFF; font-family:verdana,arial,helvetica,sans-serif; font-size:18px; font-weight:bold; text-decoration:none;}
+#divCont .clTop a:hover {color:#FFFFFF; text-decoration:none;}
+#divCont .clTop .clSub a {color:#FFFFFF; font-family:verdana,arial,helvetica,sans-serif; font-size:14px; font-weight:bold; text-decoration:none;}
+#divCont .clTop .clSub a:hover {color:#CC6600; text-decoration:none;} 
+</style>
+
+
+<script language="JavaScript" type="text/javascript">
+/**********************************************************************************   
+FoldoutMenu 
+*   Copyright (C) 2001 Thomas Brattli
+*   This script was released at DHTMLCentral.com
+*   Visit for more great scripts!
+*   This may be used and changed freely as long as this msg is intact!
+*   We will also appreciate any links you could give us.
+*
+*   Made by Thomas Brattli
+*
+*   Script date: 09/04/2001 (keep this date to check versions) 
+*********************************************************************************/
+function lib_bwcheck(){ //Browsercheck (needed)
+	this.ver=navigator.appVersion
+	this.agent=navigator.userAgent
+	this.dom=document.getElementById?1:0
+	this.opera5=(navigator.userAgent.indexOf("Opera")>-1 && document.getElementById)?1:0
+	this.ie5=(this.ver.indexOf("MSIE 5")>-1 && this.dom && !this.opera5)?1:0; 
+	this.ie6=(this.ver.indexOf("MSIE 6")>-1 && this.dom && !this.opera5)?1:0;
+	this.ie4=(document.all && !this.dom && !this.opera5)?1:0;
+	this.ie=this.ie4||this.ie5||this.ie6
+	this.mac=this.agent.indexOf("Mac")>-1
+	this.ns6=(this.dom && parseInt(this.ver) >= 5) ?1:0; 
+	this.ns4=(document.layers && !this.dom)?1:0;
+	this.bw=(this.ie6 || this.ie5 || this.ie4 || this.ns4 || this.ns6 || this.opera5)
+	return this
+}
+var bw=lib_bwcheck()
+
+/*** variables you can configure ***/
+
+FoldNumber = 11				//How many toplinks do you have?
+var stayFolded = false			//Stay open when you click a new toplink?
+foldImg = 1						//Do you want images (if not set to 0 and remove the images from the body)?
+mainOffsetY = 0			//Vertical space adjustment between the main items, in pixels.
+
+//This is the default image.
+//Remember to change the actual images in the page as well, but remember to keep the name of the image.
+var unImg=new Image();
+unImg.src='foldoutmenu_arrow.gif'
+
+var exImg=new Image();					//Making an image variable...
+exImg.src='foldoutmenu_arrow_open.gif'	//...this is the source of the image that it changes to when the menu expands.
+
+// NOTE: if you change the position of divCont from absolute to relative, you can put the foldoutmenu in a table.
+// HOWEVER it will no longer work in netscape 4. If you wish to support netscape 4, you have to use absolute positioning.
+
+/*** There should be no need to change anything beyond this. ***/
+
+// A unit of measure that will be added when setting the position of a layer.
+var px = bw.ns4||window.opera?"":"px";
+
+if(navigator.userAgent.indexOf('Opera')>-1 && document.getElementById){ //Opera 5 resize fix.
+	scrX= innerWidth; scrY= innerHeight;
+	document.onmousemove= function(){
+		if(scrX<innerWidth-10 || scrY<innerHeight-10 || scrX>innerWidth+10 || scrY>innerHeight+10){
+			scrX = innerWidth;
+			scrY = innerHeight;
+			initFoldout();
+		}
+	};
+}
+
+//object constructor...
+function makeMenu(obj,nest){
+	nest= (!nest)?"":'document.'+nest+'.';
+	this.el= bw.ie4?document.all[obj]:bw.ns4?eval(nest+'document.'+obj):document.getElementById(obj);	
+   	this.css= bw.ns4?this.el:this.el.style;
+	this.ref= bw.ns4?this.el.document:document;		
+	this.x= (bw.ns4||bw.opera5)?this.css.left:this.el.offsetLeft;
+	this.y= (bw.ns4||bw.opera5)?this.css.top:this.el.offsetTop;
+	this.h= (bw.ie||bw.ns6)?this.el.offsetHeight:bw.ns4?this.ref.height:bw.opera5?this.css.pixelHeight:0;
+    this.vis= b_vis;
+	this.hideIt= b_hideIt;
+    this.showIt= b_showIt;
+    this.moveIt= b_moveIt;
+	return this
+}
+//object methods...
+function b_showIt(){this.css.visibility='visible'}
+function b_hideIt(){this.css.visibility='hidden'}
+function b_vis(){if(this.css.visibility=='hidden' || this.css.visibility=='HIDDEN' || this.css.visibility=='hide') return true;}
+function b_moveIt(x,y){this.x=x; this.y=y; this.css.left=this.x+px; this.css.top=this.y+px}
+
+/************************************************************************************
+This is the function that changes the sub menus to folded or unfolded state.
+************************************************************************************/
+function menu(num){
+	if(bw.bw){
+		if (!stayFolded){
+			for (var i=0; i<oSub.length; i++){
+				if (i!=num){
+					oSub[i].hideIt()
+					if (foldImg)oTop[i].ref["imgA"+i].src = unImg.src
+				}
+			}
+			for(var i=1; i<oTop.length; i++){
+				oTop[i].moveIt(0,oTop[i-1].y+oTop[i-1].h)
+			}
+		}
+		if (oSub[num].vis()){
+			oSub[num].showIt()
+			if (foldImg)oTop[num].ref["imgA"+num].src = exImg.src
+		}else{
+			oSub[num].hideIt()
+			if(foldImg)oTop[num].ref["imgA"+num].src = unImg.src
+		}
+		for(var i=1; i<oTop.length; i++){ 
+			if (!oSub[i-1].vis()) oTop[i].moveIt(0,oTop[i-1].y+oTop[i-1].h+oSub[i-1].h+mainOffsetY) 
+			else oTop[i].moveIt(0,oTop[i-1].y+oTop[i-1].h+mainOffsetY)
+		}
+	}
+}
+
+/*********************************************************************
+The init function... there should be no need to change anything here.
+*********************************************************************/
+function initFoldout(){
+	//Fixing the browsercheck for opera... this can be removed if the browsercheck has been updated!!
+	bw.opera5 = (navigator.userAgent.indexOf("Opera")>-1 && document.getElementById)?true:false
+	if (bw.opera5) bw.ns6 = 0
+
+	oTop = new Array()
+	oSub = new Array()
+	//Making the objects and hiding the subs...
+	for (var i=0; i<FoldNumber; i++){
+		oTop[i] = new makeMenu('divTop'+i,'divCont')
+		oSub[i] = new makeMenu('divSub'+i,'divCont.document.divTop'+i)
+		oSub[i].hideIt()
+	}
+	
+	//Positioning the top objects...
+	oTop[0].moveIt(0,0)
+	for (var i=1; i<oTop.length; i++){
+		oTop[i].moveIt(0, oTop[i-1].y+oTop[i-1].h+mainOffsetY)
+	}
+	
+	//Making the containing menu object and showing it...
+	oCont = new makeMenu('divCont')
+	oCont.showIt()
+}
+
+// If the browser is ok, the script is started onload...
+if(bw.bw) onload = initFoldout;
+</script>
+ 
+<div id="divCont"> <!-- These are the contents of the foldoutmenu. -->
+
+<div id="divTop0" class="clTop"><a href="#" onclick="menu(0); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA0" width="12" height="12" alt="" border="0"> [Personal Web Pages]</a><br>
+<div id="divSub0" class="clSub">
+	<a href="http://www.geocities.com/arabvoice/" class="dead" aria-disabled="true">http://www.geocities.com/arabvoice/</a><br>
+	<a href="http://www.zighari.com/" class="dead" aria-disabled="true">http://www.zighari.com/</a><br>
+	<a href="http://www.geocities.com/palestine4ever1948/" class="dead" aria-disabled="true">http://www.geocities.com/palestine4ever1948/</a><br>
+	<a href="http://www.uni_kassel.de/~abuleil/" class="dead" aria-disabled="true">http://www.uni_kassel.de/~abuleil/</a><br>
+        <a href="http://www.cactus48.com/index.html" class="dead" aria-disabled="true">http://www.cactus48.com/index.html</a><br>
+        <a href="http://a7la_3alam.20m.com/photo4.html" class="dead" aria-disabled="true">http://a7la_3alam.20m.com/photo4.html</a><br>
+        <a href="http://www.geocities.com/Tokyo/Spa/7220/quds.html" class="dead" aria-disabled="true">http://www.geocities.com/Tokyo/Spa/7220/quds.html</a><br>
+        <a href="http://www.angelfire.com/ok4/itsNotLikeUthink/TakeAlook.html" class="dead" aria-disabled="true">http://www.angelfire.com/ok4/itsNotLikeUthink/TakeAlook.html</a><br>
+        <a href="http://www.geocities.com/SouthBeach/Lagoon/8522/palestinians.html" class="dead" aria-disabled="true">http://www.geocities.com/SouthBeach/Lagoon/8522/palestinians.html</a><br>
+        <a href="http://www.geocities.com/touta4u/falesteen.html" class="dead" aria-disabled="true">http://www.geocities.com/touta4u/falesteen.html</a><br>
+        <a href="http://www.free_palestine.8k.com/" class="dead" aria-disabled="true">http://www.free_palestine.8k.com/</a><br>
+        <a href="http://www.geocities.com/wu_renegade1948/showcase.html" class="dead" aria-disabled="true">http://www.geocities.com/wu_renegade1948/showcase.html</a><br>
+        <a href="http://www.bintfalasteen.5u.com/custom2.html" class="dead" aria-disabled="true">http://www.bintfalasteen.5u.com/custom2.html</a><br>
+        <a href="http://plaza.powersurfr.com/nobodycares/" class="dead" aria-disabled="true">http://plaza.powersurfr.com/nobodycares/</a><br>
+        <a href="http://www.aydi.co.uk/" class="dead" aria-disabled="true">http://www.aydi.co.uk/</a><br>
+        <a href="http://www.uni-kassel.de/~abuleil/" class="dead" aria-disabled="true">http://www.uni_kassel.de/~abuleil/</a><br>
+        <a href="http://a7la-3alam.20m.com/photo4.html" class="dead" aria-disabled="true">http://a7la_3alam.20m.com/photo4.html</a><br>
+        <a href="http://free-palestine.8k.com/" class="dead" aria-disabled="true">http://free_palestine.8k.com/</a><br>
+
+</div><br>
+</div>
+
+<div id="divTop1" class="clTop"><a href="#" onclick="menu(1); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA1" width="12" height="12" alt="" border="0"> [Poetry Pages]</a><br>
+<div id="divSub1" class="clSub">
+	<a href="http://members.aol.com/UmAhmad/index2.html" class="dead" aria-disabled="true">http://members.aol.com/UmAhmad/index2.html</a><br>
+	<a href="/sites/barghouti.com/poets/index.html">http://www.barghouti.com/poets/</a><br>
+	<a href="http://www.geocities.com/athens/delphi/2549/darwish.html" class="dead" aria-disabled="true">http://www.geocities.com/athens/delphi/2549/darwish.html</a><br>
+ 
+</div><br>
+</div>
+
+<div id="divTop2" class="clTop"><a href="#" onclick="menu(2); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA2" width="12" height="12" alt="" border="0"> [Islamic Pages]</a><br>
+<div id="divSub2" class="clSub">
+	<a href="http://www.iap.org/" class="dead" aria-disabled="true">http://www.iap.org/</a><br>
+	
+</div><br>
+</div>
+
+<div id="divTop3" class="clTop"><a href="#" onclick="menu(3); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA3" width="12" height="12" alt="" border="0"> [Other Great Pages]</a><br>
+<div id="divSub3" class="clSub">
+	<a href="http://www.westlazer.com/search.htm" class="dead" aria-disabled="true">http://www.westlazer.com/search.htm</a><br>
+	<a href="http://www.docjazz.nl/index.htm" class="dead" aria-disabled="true">http://www.docjazz.nl/index.htm</a><br>
+	<a href="/sites/geocities.com/ahlulbayt14/lions.html">http://www.geocities.com:0080/ahlulbayt14/lions.html</a><br>
+        <a href="http://www.liberationgraphics.com/palestine.html" class="dead" aria-disabled="true">http://www.liberationgraphics.com/palestine.html</a><br>
+	<a href="http://www.palestinedatabank.net/" class="dead" aria-disabled="true">http://www.palestinedatabank.net/</a><br>
+	<a href="http://www.solidaritydesign.com/hosting.htm" class="dead" aria-disabled="true">http://www.solidaritydesign.com/hosting.htm</a><br>
+        <a href="http://community.webshots.com/user/shadya4" class="dead" aria-disabled="true">http://community.webshots.com/user/shadya4</a><br>
+        <a href="http://free_iraqi.tripod.com/index.htm" class="dead" aria-disabled="true">http://free_iraqi.tripod.com/index.htm</a><br>
+        <a href="http://www.damascus-online.com/stonethrowers/index.htm" class="dead" aria-disabled="true">http://www.damascus_online.com/stonethrowers/index.htm</a><br>
+	
+</div><br>
+</div>
+
+<div id="divTop4" class="clTop"><a href="#" onclick="menu(4); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA4" width="12" height="12" alt="" border="0"> [Pal Organizations]</a><br>
+<div id="divSub4" class="clSub">
+	<a href="http://www.passia.org/" class="dead" aria-disabled="true">http://www.passia.org/</a><br>
+	<a href="http://www.jerusalemites.org/" class="dead" aria-disabled="true">http://www.jerusalemites.org/</a><br>
+	<a href="http://www.afrp.org/" class="dead" aria-disabled="true">http://www.afrp.org/</a><br>
+	<a href="http://www.palestinemonitor.org/" class="dead" aria-disabled="true">http://www.palestinemonitor.org/</a><br>
+	<a href="http://www.infopal.org/" class="dead" aria-disabled="true">http://www.infopal.org/</a><br>
+        <a href="http://www.palestinercs.org/" class="dead" aria-disabled="true">http://www.palestinercs.org/</a><br>
+	<a href="http://www.mecaforpeace.org/" class="dead" aria-disabled="true">http://www.mecaforpeace.org/</a><br>
+	<a href="http://www.palestineaffairscouncil.org/" class="dead" aria-disabled="true">http://www.palestineaffairscouncil.org/</a><br>
+	<a href="http://www.lawsociety.org/index.html" class="dead" aria-disabled="true">http://www.lawsociety.org/index.html</a><br>
+	<a href="http://www.palestinerefugees.org/index.htm" class="dead" aria-disabled="true">http://www.palestinerefugees.org/index.htm</a><br>
+        <a href="http://www.virtualpalestine.org/" class="dead" aria-disabled="true">http://www.virtualpalestine.org/</a><br>
+        <a href="http://www.al-bushra.org/" class="dead" aria-disabled="true">http://www.al_bushra.org/</a><br>
+        <a href="http://al-awda.org/" class="dead" aria-disabled="true">http://alawda.org/</a><br>
+        <a href="http://www.palestine-info.org/" class="dead" aria-disabled="true">http://www.palestine_info.org/</a><br>
+	
+</div><br>
+</div>
+
+<div id="divTop5" class="clTop"><a href="#" onclick="menu(5); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA5" width="12" height="12" alt="" border="0"> [Music Pages]</a><br>
+<div id="divSub5" class="clSub">
+	<a href="http://ahmad.al-arabi.net" class="dead" aria-disabled="true">http://ahmad.alarabi.net/</a><br>
+	<a href="http://www.kubbar.com" class="dead" aria-disabled="true">http://www.kubbar.com</a><br>
+        <a href="http://mazika.com" class="dead" aria-disabled="true">http://mazika.com</a><br>
+	<a href="http://demna.com" class="dead" aria-disabled="true">http://demna.com</a><br>
+        <a href="http://6arab.com" class="dead" aria-disabled="true">http://6arab.com</a><br>
+
+</div><br>
+</div>
+  
+<div id="divTop6" class="clTop"><a href="#" onclick="menu(6); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA6" width="12" height="12" alt="" border="0"> [Intifada Pages]</a><br>
+<div id="divSub6" class="clSub">
+	<a href="http://members.aol.com/bierouie/index.html" class="dead" aria-disabled="true">http://members.aol.com/bierouie/index.html</a><br>
+	<a href="http://www.intifawda.com/" class="dead" aria-disabled="true">http://www.intifawda.com/</a><br>
+        <a href="http://quds.8k.com/E_Index.htm" class="dead" aria-disabled="true">http://quds.8k.com/E_Index.htm</a><br>
+	<a href="http://albargothy.50g.com/dorra.htm" class="dead" aria-disabled="true">http://albargothy.50g.com/dorra.htm</a><br>
+        <a href="http://home.dal.net/rami/intifada.html" class="dead" aria-disabled="true">http://home.dal.net/rami/intifada.html</a><br>
+	<a href="http://plaza.powersurfr.com/nobodycares/" class="dead" aria-disabled="true">http://plaza.powersurfr.com/nobodycares/</a><br>
+        <a href="http://electronicintifada.net/chronology/index.html" class="dead" aria-disabled="true">http://electronicintifada.net/chronology/index.html</a><br>
+	<a href="http://www.cyberus.ca/~baker/pal4cc.htm" class="dead" aria-disabled="true">http://www.cyberus.ca/~baker/pal4cc.htm</a><br>
+        <a href="http://www.fateh.net/" class="dead" aria-disabled="true">http://www.fateh.net/</a><br>
+	<a href="http://www.fateh.org/" class="dead" aria-disabled="true">http://www.fateh.org/</a><br>
+</div><br>
+</div>
+
+<div id="divTop7" class="clTop"><a href="#" onclick="menu(7); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA7" width="12" height="12" alt="" border="0"> [Arab Pages]</a><br>
+<div id="divSub7" class="clSub">
+	<a href="http://www.arabia.com/ie5/arabic/" class="dead" aria-disabled="true">http://www.arabia.com/ie5/arabic/</a><br>
+	<a href="http://www.arabbay.com/" class="dead" aria-disabled="true">http://www.arabbay.com/</a><br>
+        <a href="http://www.arabwideweb.com/arabic/" class="dead" aria-disabled="true">http://www.arabwideweb.com/arabic/</a><br>
+	<a href="http://www.alburaq.net/" class="dead" aria-disabled="true">http://www.alburaq.net/</a><br>
+        <a href="http://www.4arabs.com/" class="dead" aria-disabled="true">http://www.4arabs.com/</a><br>
+	<a href="http://www.al-bab.com/Default.htm" class="dead" aria-disabled="true">http://www.al_bab.com/Default.htm</a><br>
+        <a href="http://anashid.com/rank/topsites.html" class="dead" aria-disabled="true">http://anashid.com/rank/topsites.html</a><br>
+
+</div><br>
+</div>
+
+<div id="divTop8" class="clTop"><a href="#" onclick="menu(8); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA8" width="12" height="12" alt="" border="0"> [Media Pages]</a><br>
+<div id="divSub8" class="clSub">
+	 <a href="http://english.ajeeb.com/" class="dead" aria-disabled="true">http://english.ajeeb.com/</a><br>
+         <a href="http://www.reuters.com/" class="dead" aria-disabled="true">http://www.reuters.com/</a><br>
+         <a href="http://www.alquds2.com/" class="dead" aria-disabled="true">http://www.alquds2.com/</a><br>
+	 <a href="http://middleeastwire.com/palestine/" class="dead" aria-disabled="true">http://middleeastwire.com/palestine/</a><br>
+         <a href="http://www.palestinechronicle.com/" class="dead" aria-disabled="true">http://www.palestinechronicle.com/</a><br>
+         <a href="http://www.neravt.com/left/palestine.htm" class="dead" aria-disabled="true">http://www.neravt.com/left/palestine.htm</a><br>
+
+</div><br>
+</div>
+
+<div id="divTop9" class="clTop"><a href="#" onclick="menu(9); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA9" width="12" height="12" alt="" border="0"> [Pal Web Pages]</a><br>
+<div id="divSub9" class="clSub">
+	<a href="http://www.pallinks.com/palestinians/" class="dead" aria-disabled="true">http://www.pallinks.com/palestinians/</a><br>
+	<a href="/sites/palestine-oasis.tripod.com/index.html">http://palestine_oasis.tripod.com/</a><br>
+        <a href="http://www.attil.net/" class="dead" aria-disabled="true">http://www.attil.net/</a><br>
+	<a href="http://www.ramallahonline.com/" class="dead" aria-disabled="true">http://www.ramallahonline.com/</a><br>
+        <a href="/sites/pal-soft.com/palestine/index.html">http://www.pal_soft.com/palestine/index.html</a><br>
+        <a href="http://www.palestine4me.cjb.net/" class="dead" aria-disabled="true">http://www.palestine4me.cjb.net/</a><br>
+	<a href="http://www.alhewar.com/" class="dead" aria-disabled="true">http://www.alhewar.com/</a><br>
+        <a href="/sites/ojerusalem.com/index.html">http://www.ojerusalem.com/</a><br>
+	<a href="http://leb.net/~bcome/palestine/" class="dead" aria-disabled="true">http://leb.net/~bcome/palestine/</a><br>
+        <a href="/sites/palestine-net.com/index.html">http://www.palestine_net.com/</a><br>
+        <a href="http://www.aldiar.com/israel/" class="dead" aria-disabled="true">http://www.aldiar.com/israel/</a><br>
+        <a href="http://www.geocities.com/CapitolHill/4693/pallink.html" class="dead" aria-disabled="true">http://www.geocities.com/CapitolHill/4693/pallink.html</a><br>
+	<a href="/sites/palestinehistory.com/index.html">http://www.palestinehistory.com/</a><br>
+        <a href="http://www.hebron.com/" class="dead" aria-disabled="true">http://www.hebron.com/</a><br>
+        <a href="http://www.Pal4Ever.com/" class="dead" aria-disabled="true">http://www.Pal4Ever.com/</a><br>
+</div><br>
+</div>
+ 
+<div id="divTop10" class="clTop"><a href="#" onclick="menu(10); return false" onfocus="this.blur()"><img src="/sites/palestine4ever.net/foldoutmenu_arrow.gif" name="imgA10" width="12" height="12" alt="" border="0"> [Pal Political Cartoons]</a><br>
+<div id="divSub10" class="clSub">
+	<a href="/sites/baha-cartoon.net/index.html">http://www.baha_cartoon.net/index1.htm</a><br>
+	<a href="/sites/omayya.com/intefada/main.htm">http://www.omayya.com/intefada/main.htm</a><br>
+                
+
+</div><br>
+</div>
+</div> <!-- Here ends the foldoutmenu. -->
+		
+
+
+
+
+</td>
+</tr></tbody></table></div>
+<div id="layer1" style="position:absolute;left:194;top:16;width:351;height:62;">
+<table width="351" height="62" border="0" cellpadding="0" cellspacing="0"><tbody><tr valign="top">
+	<td align="center"><font size="+3"><span style="font-size:36"> </span></font><font color="#FFCC66" size="+3"><span style="font-size:36"> </span></font><b><font color="#151515" size="+4"><span style="font-size:48">Palestine Links</span></font></b></td>
+</tr></tbody></table></div>
+
+
+
+</div>
+<div id="layer1" style="position:absolute;left:194;top:16;width:351;height:62;">
+<table width="351" height="62" border="0" cellpadding="0" cellspacing="0"><tbody><tr valign="top">
+	<td align="center"><font size="+3"><span style="font-size:36"> </span></font><font color="#FFCC66" size="+3"><span style="font-size:36"> </span></font><b><font color="#151515" size="+4"><span style="font-size:48">Palestine Links</span></font></b></td>
+</tr></tbody></table></div>
+
+
+<script language="JavaScript" src="/sites/palestine4ever.net/_external/us.geocities.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.geocities.com/visit.gif?1013606815" border=0 width=1 height=1></noscript>
+<img src="/sites/palestine4ever.net/_external/geo.yahoo.com/serv" alt="1" width="1" height="1">
+<!-- text below generated by server. PLEASE REMOVE --><!-- Counter/Statistics available at http://geocities.yahoo.com --><script language="JavaScript" src="/sites/palestine4ever.net/_external/us.geocities.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.geocities.com/visit.gif?1013635988" border=0 width=1 height=1></noscript>
+<img src="/sites/palestine4ever.net/_external/geo.yahoo.com/serv" alt="1" width="1" height="1">
+
+
+<div style="position:absolute;left:493;top:719;width:93;height:26;">
+<table width="93" height="26" border="0" cellpadding="0" cellspacing="0"><tbody><tr valign="top">
+	<td bgcolor="#FFDF79" align="center"><a href="/sites/palestine4ever.net/index.html"><b><u><font size="+2"><span style="font-size:24">Back</span></font></u></b></a></td>
+</tr></tbody></table></div>
+<div style="position:absolute;left:318;top:857;width:1;height:1;">
+<table width="1" height="1" border="0" cellpadding="0" cellspacing="0"><tbody><tr valign="top">
+	<td style="font-size: 0;"><img height="1" width="1" src="/sites/palestine4ever.net/flagball.gif" border="0"></td>
+</tr></tbody></table></div>
+
+
+
+<script language="JavaScript" src="/sites/palestine4ever.net/_external/domainpending.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.webhosting.yahoo.com/visit.gif?us1036964220" border=0 width=1 height=1></noscript>
+<img src="/sites/palestine4ever.net/_external/geo.yahoo.com/serv" alt="1" width="1" height="1">
+</body></html><!-- text below generated by server. PLEASE REMOVE --><!-- Counter/Statistics available at http://geocities.yahoo.com --><!-- text below generated by server. PLEASE REMOVE --><!-- Counter/Statistics data collection code -->
