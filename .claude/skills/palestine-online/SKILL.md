@@ -43,7 +43,10 @@ The `deploy` user has no passwordless sudo. nginx, ufw and DNS changes (Hetzner 
   - `data-wayback-url` is only ever **added** to pages missing it, never replaced. Adding it is fine.
   - Links to `.ram`, `.rm` and `.ra` files always stay dead. `npm run media` points restorable links at `.mp3` instead.
   - `geocities.com/zuhairhm/...` and other badly nested pages can reshuffle on every pass. Restore them with `git checkout HEAD -- <file>` if they show up in the diff for no reason.
+  - A Flash `<object>`/`<embed>` whose `.swf` was never saved gets `class="dead-flash"` (hidden, keeping its space), and a page with no playable movie left loses its Ruffle tags. Both are recomputed each pass, like dead links.
 - Then run `npm run db`, and `npm run index` if the archive index should change.
+- A site's capture list is fetched from CDX in pages (`showNumPages`, then `&page=N`), each saved to `<site>/cdx-pages.json` as it arrives, so a stopped crawl resumes. The page count covers every year of the site, so most pages come back empty. Don't commit `cdx-pages.json`.
+- GeoCities pages captured as 302 (the member moved away) are filtered out by `statuscode:200`. If a year yields almost nothing, list all years with `collapse=urlkey` to see where the 200s are.
 - The Wayback Machine rate-limits by IP and returns 429 with no `Retry-After`. The scraper pauses all 8 workers for 90s. If you get blocked for a long time, email info@archive.org; don't move scraping to another IP.
 
 ## Removing archived pages

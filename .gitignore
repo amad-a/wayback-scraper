@@ -16,3 +16,7 @@ archive.db-shm
 
 # Output of the sheets export; regenerated, not source.
 sheets-output/
+
+# A crawl's capture list while it is still being fetched from CDX, page by page;
+# removed once the list is complete.
+cdx-pages.json

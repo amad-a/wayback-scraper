@@ -367,26 +367,71 @@ function guessLegacyCharset(buffer) {
 
 // The CDX API, asked again when it is having a bad moment. It answers 503 or 504, or
 // drops the connection mid-list, for minutes at a time while the archive recovers from an
-// outage -- and a crawl that gives up on the first try has downloaded nothing. Waits
-// 30s, 60s, 120s and 240s between attempts; a 4xx other than 429 is a real answer.
-async function fetchCdx(requestUrl) {
-  const waits = [30, 60, 120, 240];
+// outage -- and a crawl that gives up on the first try has downloaded nothing. The body
+// is read inside the retry, so a list cut off halfway is asked for again too. Waits 30s,
+// 60s, 120s and 240s between attempts; a 4xx other than 429 is a real answer. A list in
+// pages passes longer waits, since giving up there throws away only the wait.
+async function fetchCdx(requestUrl, waits = [30, 60, 120, 240]) {
   for (let attempt = 0; ; attempt++) {
-    let response;
     let problem;
     try {
-      response = await fetch(requestUrl);
-      if (response.ok) return response;
+      const response = await fetch(requestUrl);
+      if (response.ok) return await response.text();
       problem = `HTTP ${response.status}`;
       if (response.status < 500 && response.status !== 429) throw new Error(`CDX request failed: ${problem}`);
     } catch (error) {
       if (/CDX request failed/.test(error.message)) throw error;
-      problem = error.message;
+      problem = error.cause?.message ? `${error.message} (${error.cause.message})` : error.message;
     }
     if (attempt >= waits.length) throw new Error(`CDX request failed after ${attempt + 1} tries: ${problem}`);
     console.log(`⏸️  CDX ${problem} -- trying again in ${waits[attempt]}s`);
     await new Promise((r) => setTimeout(r, waits[attempt] * 1000));
   }
+}
+
+// The rows of a CDX JSON answer, without its header row. An empty answer is no rows.
+function cdxRows(body) {
+  const text = body.trim();
+  return text ? JSON.parse(text).slice(1) : [];
+}
+
+// A site's whole capture list, asked for one page at a time. One request for all of it
+// is what the CDX API fails on when it is struggling -- palsolidarity.org's 2002 list
+// timed out on every try while small requests went through -- and a list in pages loses
+// only the page that failed. Each page is kept in `<site>/cdx-pages.json` as it arrives,
+// so a crawl stopped partway picks up where it was on the next run; the file goes once
+// the list is complete. The pages follow one another in the same order as the single
+// list would. A page is tried for about an hour before the crawl stops, as the archive
+// goes through refusing spells that long.
+const PAGE_WAITS = [30, 60, 120, 240, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300];
+
+async function fetchCdxPaged(requestUrl) {
+  const partialPath = path.join(destDir, siteDir, 'cdx-pages.json');
+  let partial = { requestUrl, pages: {} };
+  if (await fsExists(partialPath)) {
+    const saved = JSON.parse(await fs.readFile(partialPath, 'utf-8'));
+    if (saved.requestUrl === requestUrl) partial = saved;
+  }
+
+  // A bare number, or [["numpages"],["16"]] when output=json.
+  const counted = (await fetchCdx(`${requestUrl}&showNumPages=true`)).trim();
+  const numPages = parseInt(counted.startsWith('[') ? JSON.parse(counted).at(-1)[0] : counted, 10);
+  if (!Number.isFinite(numPages)) throw new Error('CDX did not say how many pages the list has');
+  const done = Object.keys(partial.pages).length;
+  console.log(`The list is ${numPages} pages${done ? `, ${done} of them fetched before` : ''}.`);
+
+  await fs.mkdir(path.join(destDir, siteDir), { recursive: true });
+  for (let page = 0; page < numPages; page++) {
+    if (partial.pages[page]) continue;
+    partial.pages[page] = cdxRows(await fetchCdx(`${requestUrl}&page=${page}`, PAGE_WAITS));
+    await fs.writeFile(partialPath, JSON.stringify(partial));
+    if ((page + 1) % 10 === 0 || page + 1 === numPages) console.log(`  page ${page + 1} of ${numPages}`);
+  }
+
+  const rows = [];
+  for (let page = 0; page < numPages; page++) rows.push(...partial.pages[page]);
+  await fs.rm(partialPath, { force: true });
+  return rows;
 }
 
 // A webPath naming one page -- `birzeit.edu/web/history.html` rather than a site or a
@@ -432,8 +477,7 @@ async function fetchSinglePage() {
     `&output=json&from=${opts.fromBound}&to=${opts.toBound}${filters}`;
   console.log('REQUEST URL:', requestUrl);
 
-  const response = await fetchCdx(requestUrl);
-  const rows = (await response.json()).slice(1);
+  const rows = cdxRows(await fetchCdx(requestUrl));
   console.log(`Captures in range: ${rows.length}.`);
   if (!rows.length) return [];
 
@@ -474,9 +518,7 @@ async function fetchCdxList() {
 
   console.log('REQUEST URL:', requestUrl);
 
-  const response = await fetchCdx(requestUrl);
-
-  const rows = (await response.json()).slice(1);
+  const rows = await fetchCdxPaged(requestUrl);
   console.log(`Page list fetched from CDX API (${rows.length} rows).`);
 
   const pages = rows.map((row) => ({
@@ -1139,6 +1181,25 @@ function externalContext(localPath) {
 }
 
 // True when a loaded page embeds a Flash movie, by any of the three spellings.
+// The movie addresses one Flash element names: an <object>'s data, its movie/src
+// <param>s and any <embed> nested inside it as the fallback, or an <embed>'s src.
+function flashMovies($, el) {
+  const $el = $(el);
+  const refs = $el.is('embed') ? [$el.attr('src')] : [$el.attr('data')];
+  if ($el.is('embed')) return refs.filter((ref) => ref && /\.swf(\?|#|$)/i.test(ref));
+  $el.find('param[value]').each((_, param) => {
+    if (isMovieParam($, param)) refs.push($(param).attr('value'));
+  });
+  $el.find('embed[src]').each((_, embed) => refs.push($(embed).attr('src')));
+  return refs.filter((ref) => ref && /\.swf(\?|#|$)/i.test(ref));
+}
+
+// An <object> or <embed> that plays Flash: by its type, or by naming a .swf.
+function isFlashElement($, el) {
+  const type = ($(el).attr('type') || '').toLowerCase();
+  return type === 'application/x-shockwave-flash' || flashMovies($, el).length > 0;
+}
+
 function hasFlash($) {
   if ($('object[data$=".swf" i], embed[src$=".swf" i]').length) return true;
   if ($('object[type="application/x-shockwave-flash" i]').length) return true;
@@ -1258,7 +1319,9 @@ async function rewriteSavedPages(seeds) {
       // Image maps stay unclickable via the JS handler below, but the archived
       // link is usually one region of a larger sliced image -- a not-allowed
       // cursor over the whole graphic reads wrong when most of it is still live.
-      'a.dead-img-map{cursor:auto}\n'
+      'a.dead-img-map{cursor:auto}\n' +
+      // A Flash movie that was never saved; see the Flash section of the rewrite pass.
+      '.dead-flash{visibility:hidden}\n'
   );
   await fs.writeFile(
     path.join(waybackDir, 'dead-links.js'),
@@ -1511,7 +1574,27 @@ async function rewriteSavedPages(seeds) {
     // gesture, so every Flash page opened to a play button instead of the animation.
     // `unmuteOverlay: "hidden"` drops the speaker icon that would otherwise sit on top
     // of the movie; Ruffle still unmutes on the first click into the player either way.
-    if (ruffleReady && hasFlash($)) {
+    //
+    // A Flash element whose movie was never saved is hidden instead, by the `dead-flash`
+    // class in dead-links.css: Ruffle would only draw its error box there, and with no
+    // Ruffle the browser draws an empty plugin frame. Hidden with visibility rather than
+    // display, so the table the movie sat in keeps its shape. Ruffle copies every
+    // attribute onto the player it swaps in, so the class hides that too. Recomputed
+    // from the current files on each run, like dead links: a movie a later crawl saves
+    // shows again. A page with no playable movie left does not load Ruffle at all.
+    $('.dead-flash').removeClass('dead-flash');
+    const flashElements = $('object, embed').filter((_, el) => {
+      const $el = $(el);
+      return !($el.is('embed') && $el.parents('object').length) && isFlashElement($, el);
+    });
+    let playable = 0;
+    flashElements.each((_, el) => {
+      if (flashMovies($, el).some((ref) => localTargetExists(ref))) playable += 1;
+      else $(el).addClass('dead-flash');
+    });
+    if (flashElements.length && !playable) $('#ruffle-config, #ruffle-js').remove();
+
+    if (ruffleReady && hasFlash($) && (playable || !flashElements.length)) {
       // Ruffle reads window.RufflePlayer.config at load time, so on a page that already
       // carries the loader from an earlier run the config has to be spliced in ahead of
       // it rather than appended after.
