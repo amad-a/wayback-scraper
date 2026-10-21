@@ -609,6 +609,20 @@ button {
 	min-height: 14px;
 }
 
+/* IE5's Favorites and History close buttons are flat until pointed at, like the
+   toolbar's: raised on hover, pressed while held. */
+.toolbars .panel-close button {
+	box-shadow: none;
+}
+
+.toolbars .panel-close button:hover {
+	box-shadow: var(--edge-raised);
+}
+
+.toolbars .panel-close button:hover:active {
+	box-shadow: var(--edge-pressed);
+}
+
 /* 98.css turns font smoothing off for everything inside a window, to keep its pixel font
    crisp. The shell sets its pixel-font parts (toolbars, status bar) to none itself, so
    the rest -- the panels' sans-serif, the title -- goes back to smooth. */
@@ -883,13 +897,6 @@ button:disabled {
 	display: flex;
 	flex-direction: row;
 	margin: 0px;
-}
-
-.favorites-toolbar.toolbars::before {
-	content: url('../assets/icons/directory_closed-1.png');
-	position: relative;
-	bottom: -2px;
-	padding-right: 2px;
 }
 
 .favorites-entries,
