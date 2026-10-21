@@ -338,7 +338,7 @@ function searchIndex(handle) {
     // (see /api/place), so finding one by its own title or address is no longer a way to
     // land on a bare nav strip.
     searchRows = handle
-      .prepare(`SELECT local_path, display_url, display_title FROM page_view`)
+      .prepare(`SELECT local_path, crawl_root, display_url, display_title FROM page_view`)
       .all()
       .map((r) => ({
         ...r,
@@ -357,7 +357,10 @@ function searchIndex(handle) {
 // the address typed -- a folder's index page for the folder -- then addresses that start
 // with what was typed, then addresses containing it whole, then by how many of the words
 // are in the address itself -- so "birzeit news" puts birzeit.edu/bzunews/ above the bare
-// home page whose title happens to mention news -- then shorter addresses first.
+// home page whose title happens to mention news -- then shorter addresses first. Within a
+// tier the sites then take turns, each one's best page before any one's second, so a
+// query that matches many sites ("geocities") isn't filled by whichever has the shortest
+// addresses.
 app.get('/api/search', (req, res) => {
   const handle = database();
   if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
@@ -374,13 +377,19 @@ app.get('/api/search', (req, res) => {
     const inUrl = words.filter((w) => row.url.includes(w)).length;
     scored.push({ rank, inUrl, row });
   }
-  scored.sort(
-    (a, b) =>
-      a.rank - b.rank
-      || b.inUrl - a.inUrl
-      || a.row.url.length - b.row.url.length
-      || a.row.url.localeCompare(b.row.url),
-  );
+  const byScore = (a, b) =>
+    a.rank - b.rank
+    || b.inUrl - a.inUrl
+    || a.row.url.length - b.row.url.length
+    || a.row.url.localeCompare(b.row.url);
+  scored.sort(byScore);
+  const perSite = new Map();
+  for (const s of scored) {
+    const key = `${s.rank}|${s.row.crawl_root}`;
+    s.nth = perSite.get(key) || 0;
+    perSite.set(key, s.nth + 1);
+  }
+  scored.sort((a, b) => a.rank - b.rank || a.nth - b.nth || byScore(a, b));
 
   res.json({
     query,
