@@ -345,6 +345,9 @@ function onArchiveClick(event) {
 	else if (NEW_WINDOW.has(name)) win = root;
 	else win = targetWindow(here, name) || root;
 	if (!win) return;
+	// A jump to a spot on this same page is left to the browser, which scrolls there;
+	// openPlaced would drop the #fragment and reload the page from the top.
+	if (win === here && isSamePageAnchor(href, doc)) return;
 
 	// Whatever replaces the whole frame goes through openPlaced, so a page that belongs
 	// in a frameset arrives inside it rather than bare.
