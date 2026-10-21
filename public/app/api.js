@@ -666,8 +666,13 @@ function bindNavigation(win) {
 	// the cost of the browser's own blocked-page notice in the frame.
 	try {
 		win.navigation?.addEventListener('navigate', (event) => {
-			if (event.cancelable && !sitesPathOf(event.destination.url)) event.preventDefault();
+			const path = sitesPathOf(event.destination.url);
+			if (event.cancelable && !path) event.preventDefault();
+			else if (path && !event.hashChange && event.downloadRequest === null) showOpening(win, path);
 		});
+		// Stopped before it loaded -- by the shell routing a link to another frame, say --
+		// so no load will come to clear the message.
+		win.navigation?.addEventListener('navigateerror', () => clearStatus());
 	} catch {
 		// no Navigation API here
 	}
@@ -703,7 +708,9 @@ function bindNavigation(win) {
 // current history entry instead of adding one: the catch-all uses it, so Back does not
 // land on the bare page again and bounce straight back.
 export async function openPlaced(path, { replace = false } = {}) {
-	const where = await fetchJson(`/api/place?path=${encodeURIComponent(path)}`, { top: path, steps: [] });
+	// At once, not when the frame starts navigating: /api/place comes first.
+	showOpening(iframe.contentWindow, path);
+	const where =await fetchJson(`/api/place?path=${encodeURIComponent(path)}`, { top: path, steps: [] });
 	const top = where.top || path;
 	const steps = where.steps?.length ? where.steps : null;
 	pendingSteps = steps ? { top, steps } : null;
@@ -1002,13 +1009,36 @@ function sharedPath() {
 const statusText = document.getElementById('status-bar-left-text');
 let statusTimer = 0;
 
-function flashStatus(message) {
+function flashStatus(message, ms = 2500) {
 	if (!statusText) return;
 	statusText.textContent = message;
 	clearTimeout(statusTimer);
 	statusTimer = setTimeout(() => {
 		statusText.textContent = '';
-	}, 2500);
+	}, ms);
+}
+
+function clearStatus() {
+	if (!statusText) return;
+	clearTimeout(statusTimer);
+	statusText.textContent = '';
+}
+
+// IE's own wording while a page loads, with the address as it was on the web: "Opening
+// page http://birzeit.edu/aff/slide2.html..." until the frame (or the pane of a frameset
+// it's loading in) fires load, then "Done" for a moment. Load waits on every image, dead
+// hosts included, as it did in IE; the timer only stops a load that never comes from
+// leaving the message up for good.
+function showOpening(win, path) {
+	if (!statusText) return;
+	clearTimeout(statusTimer);
+	statusText.textContent = `Opening page http://${path.replace(/(^|\/)index\.html?$/i, '$1')}...`;
+	statusTimer = setTimeout(clearStatus, 30000);
+	try {
+		win.frameElement?.addEventListener('load', () => flashStatus('Done', 1500), { once: true });
+	} catch {
+		// no reaching the frame element; the timer clears it
+	}
 }
 
 // Hands the current page's link to the OS share sheet, or copies it if there isn't one.
