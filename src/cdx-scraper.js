@@ -496,6 +496,67 @@ async function fetchSinglePage() {
   return [at === -1 || opts.overwrite ? seed : log[at]];
 }
 
+// The larger of two captures by CDX length; the earlier one when they are the same size.
+function largerCapture(a, b) {
+  const [la, lb] = [Number(a.length) || 0, Number(b.length) || 0];
+  return lb > la || (lb === la && b.timestamp < a.timestamp) ? b : a;
+}
+
+// A page that only stands in for another: an instant redirect, a server's directory
+// listing, or a "this has moved" notice. Birzeit's folders had all three saved over
+// their real index pages.
+const PLACEHOLDER_TEXT =
+  /no longer available|has moved|have moved|site is moved|moved to a diff|redirecting\.\.\./i;
+
+function captureScore(html) {
+  const text = html
+    .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|<!--[\s\S]*?-->/gi, ' ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const placeholder =
+    /<meta[^>]+http-equiv\s*=\s*["']?refresh/i.test(html) ||
+    /<title>\s*Index of \//i.test(html) ||
+    PLACEHOLDER_TEXT.test(text);
+  return { placeholder, textLength: text.length };
+}
+
+// Reads each capture of a page that several URLs save to, and keeps the real page:
+// anything but a placeholder, then the most visible text, then the largest capture.
+// Text rather than bytes, because a redirect page can outweigh the page it replaced
+// (photoarc's "no longer available" is 1040 bytes, its 1997 homepage 809).
+async function pickCapture(file, captures) {
+  const scored = [];
+  for (const capture of captures) {
+    let score = { placeholder: true, textLength: -1 };
+    for (const wait of [30, 90, 180, null]) {
+      try {
+        const response = await fetch(waybackUrl(capture.timestamp, capture.originalUrl), { redirect: 'follow' });
+        const buffer = Buffer.from(await response.arrayBuffer());
+        if (response.status === 429 || response.status === 503) throw new RateLimitError(response.status);
+        if (response.ok) score = captureScore(buffer.toString('latin1'));
+        break;
+      } catch (error) {
+        if (wait === null || !isBackoff(error)) break;
+        console.log(`⏸️  ${error.message} reading ${file} -- trying again in ${wait}s`);
+        await new Promise((r) => setTimeout(r, wait * 1000));
+      }
+    }
+    scored.push({ capture, ...score });
+  }
+  scored.sort(
+    (a, b) =>
+      a.placeholder - b.placeholder ||
+      b.textLength - a.textLength ||
+      (largerCapture(a.capture, b.capture) === a.capture ? -1 : 1)
+  );
+  const [best, ...rest] = scored;
+  const describe = (s) => `${s.capture.timestamp}${s.placeholder ? ' placeholder' : ''} ${s.textLength} chars`;
+  console.log(`🔀 ${file}: kept ${describe(best)} over ${rest.map(describe).join(', ')}`);
+  return best.capture;
+}
+
 async function fetchCdxList() {
   const logPath = path.join(destDir, siteDir, 'log.json');
 
@@ -535,7 +596,30 @@ async function fetchCdxList() {
   // snapshot of each URL is the one kept.
   pages.reverse();
 
-  const unique = [...new Map(pages.map((p) => [p.urlKey, p])).values()];
+  const byKey = [...new Map(pages.map((p) => [p.urlKey, p])).values()];
+
+  // Different URLs can save to the same file -- `folder/` and `folder/index.html`,
+  // or two spellings of one path -- and the last one written won, often a redirect
+  // or a directory listing over the real page. Keep one capture per file: for pages,
+  // the one pickCapture prefers after reading them; otherwise the largest.
+  const byFile = new Map();
+  for (const p of byKey) {
+    const file = toLocalPath(p.originalUrl);
+    byFile.set(file, [...(byFile.get(file) || []), p]);
+  }
+  const unique = [];
+  let collisions = 0;
+  for (const [file, captures] of byFile) {
+    if (captures.length === 1) {
+      unique.push(captures[0]);
+      continue;
+    }
+    collisions += 1;
+    const pages = captures.filter((p) => p.mimetype === 'text/html' || HTML_EXTENSIONS.test(p.originalUrl));
+    if (pages.length > 1) unique.push(await pickCapture(file, pages));
+    else unique.push(pages[0] || captures.reduce(largerCapture));
+  }
+  if (collisions) console.log(`${collisions} files had more than one capture; kept one of each.`);
 
   // Seed with pages only; assets are discovered from the pages themselves, which
   // catches css/js the CDX filters above would never return.
