@@ -148,6 +148,32 @@ sudo certbot delete --cert-name <name>
 Check nothing in `/etc/nginx` references a certificate before deleting it; nginx
 refuses to start with a missing `ssl_certificate` file.
 
+## Compression
+
+nginx gzips responses; the app doesn't. The site's own `gzip_types` in
+`sites-available/archive` replaces the one in `nginx.conf` for this site, so it is the
+one that counts, and it must name `text/javascript` — the type Express sends `.js` as.
+Without it the shell's scripts go out uncompressed (`api.js`: 77 KB instead of 30 KB),
+as they did until October 2026:
+
+```nginx
+gzip             on;
+gzip_proxied     any;
+gzip_min_length  1024;
+gzip_types       text/plain text/css text/html application/javascript text/javascript application/json image/svg+xml;
+```
+
+Check from anywhere; each line should say `gzip`:
+
+```bash
+for u in /app/api.js /styles/explorer.css /; do
+  curl -s -H 'Accept-Encoding: gzip' -o /dev/null -w "$u %header{content-encoding}\n" "https://palestineonline.net$u"
+done
+```
+
+`sites-enabled/archive` is a symlink, so `grep -r` over `sites-enabled/` skips it; grep
+`sites-available/` or use `sudo nginx -T` to see the config nginx is actually running.
+
 ## Monitoring
 
 `.github/workflows/uptime.yml` probes the live site every ~5 minutes from GitHub's
