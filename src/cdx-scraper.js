@@ -1328,7 +1328,28 @@ async function rewriteSavedPages(seeds) {
     "document.addEventListener('click',function(e){" +
       "var el=e.target.closest&&e.target.closest('a.dead,area.dead');" +
       'if(el){e.preventDefault();e.stopPropagation();}' +
-      '},true);\n'
+      '},true);\n' +
+      // Links a script writes at runtime (webring navbars, counters' document.write)
+      // never pass through the rewrite pass, so they'd look live. Marked here by the
+      // same rules, minus the on-disk check: only off-site and mailto links qualify.
+      '(function(){' +
+      'function mark(a){' +
+      "if(a.classList.contains('dead'))return;" +
+      "var h=(a.getAttribute('href')||'').trim();" +
+      "if(!/^(https?:|mailto:|\\/\\/)/i.test(h))return;" +
+      "if(!/^mailto:/i.test(h)&&a.origin===location.origin)return;" +
+      "a.classList.add('dead');a.setAttribute('aria-disabled','true');" +
+      "if(a.tagName==='A'&&a.querySelector('img')&&!a.textContent.trim()){" +
+      "a.classList.add('dead-img');if(h.toLowerCase().indexOf('map')>-1)a.classList.add('dead-img-map');}" +
+      '}' +
+      "function scan(n){if(n.nodeType!==1)return;if(n.matches('a[href],area[href]'))mark(n);" +
+      "var l=n.querySelectorAll('a[href],area[href]');for(var i=0;i<l.length;i++)mark(l[i]);}" +
+      "document.addEventListener('DOMContentLoaded',function(){scan(document.documentElement);" +
+      'if(window.MutationObserver)new MutationObserver(function(ms){' +
+      'for(var i=0;i<ms.length;i++)for(var j=0;j<ms[i].addedNodes.length;j++)scan(ms[i].addedNodes[j]);' +
+      '}).observe(document.documentElement,{childList:true,subtree:true});' +
+      '});' +
+      '})();\n'
   );
   const assetBase = `${linkPrefix}_wayback`;
   const ruffleReady = await vendorRuffle(waybackDir);
