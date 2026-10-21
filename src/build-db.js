@@ -235,7 +235,7 @@ async function collectPages() {
     if (row.frame_parent) framed++;
   }
 
-  const homes = frameHomes(rows, navigation);
+  const homes = frameHomes(rows.filter((r) => !NO_FRAME_HOMES.has(r.crawl_root)), navigation);
   for (const row of rows) {
     const home = homes.get(row.local_path);
     if (!home) continue;
@@ -297,6 +297,11 @@ async function collectPages() {
 // A page reachable from several framesets gets the nearest. Ties go to the most likely
 // front door: an index page over index-2.html, a shallower path over a deeper one.
 const WHOLE_WINDOW = new Set(['_top', '_blank', '_new', '_parent', '_search', '_media']);
+
+// Crawls whose pages always open on their own. geocities.com/siliconvalley/lab/1832 is
+// an HTML tutorial: its framesets are demos in examples/, and following their links put
+// the tutorial's own chapters (htmintro.html, thissite.html) inside them.
+const NO_FRAME_HOMES = new Set(['geocities.com/siliconvalley/lab/1832']);
 
 function frameHomes(rows, navigation) {
   const pages = new Set(rows.map((r) => r.local_path));
