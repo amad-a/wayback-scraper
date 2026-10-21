@@ -399,6 +399,8 @@ ${tree}
   function captured(wayback) {
     var match = /\\/web\\/(\\d{4})(\\d{2})(\\d{2})/.exec(wayback || '');
     if (!match) return 'No snapshot';
+    // A few Wayback stamps have month 00 (20000008180456): show the year alone.
+    if (!MONTHS[Number(match[2]) - 1] || Number(match[3]) < 1 || Number(match[3]) > 31) return 'Captured ' + match[1];
     return 'Captured ' + Number(match[3]) + ' ' + MONTHS[Number(match[2]) - 1] + ' ' + match[1];
   }
 

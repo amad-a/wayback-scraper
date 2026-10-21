@@ -845,9 +845,15 @@ const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 function setCaptured(timestamp) {
 	if (!capturedText) return;
 	const match = /^(\d{4})(\d{2})(\d{2})/.exec(timestamp || '');
-	capturedText.textContent = match
-		? `Captured ${Number(match[3])} ${MONTHS[Number(match[2]) - 1]} ${match[1]}`
-		: '';
+	if (!match) {
+		capturedText.textContent = '';
+		return;
+	}
+	// A few Wayback stamps have month 00 (20000008180456): show the year alone.
+	const month = MONTHS[Number(match[2]) - 1];
+	const day = Number(match[3]);
+	capturedText.textContent =
+		month && day >= 1 && day <= 31 ? `Captured ${day} ${month} ${match[1]}` : `Captured ${match[1]}`;
 }
 
 function setChrome({ title, url }) {

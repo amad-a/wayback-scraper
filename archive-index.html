@@ -6248,7 +6248,7 @@ http://www.birzeit.edu/diary/abughnaim/demo2.html" data-wayback="https://web.arc
 <li><a href="/sites/birzeit.edu/diary/abughnaim/demoend.html" data-path="birzeit.edu/diary/abughnaim/demoend.html" title="Abu Ghnaim Diary: &quot;The demonstration ends&quot;
 http://www.birzeit.edu/diary/abughnaim/demoend.html" data-wayback="https://web.archive.org/web/20001021094632/http://www.birzeit.edu/diary/abughnaim/demoend.html"><span class="f">diary/abughnaim/demoend.html</span> <span class="t">Abu Ghnaim Diary: &quot;The demonstration ends&quot;</span></a></li>
 <li><a href="/sites/birzeit.edu/diary/abughnaim/hebback.html" data-path="birzeit.edu/diary/abughnaim/hebback.html" title="Abu Ghnaim Diary: &quot;Back through Wadi-Al-Nar&quot;
-http://www.birzeit.edu/diary/abughnaim/hebback.html" data-wayback="https://web.archive.org/web/19970614162051/http://www.birzeit.edu/diary/abughnaim/hebback.html"><span class="f">diary/abughnaim/hebback.html</span> <span class="t">Abu Ghnaim Diary: &quot;Back through Wadi-Al-Nar&quot;</span></a></li>
+http://www.birzeit.edu/diary/abughnaim/hebback.html" data-wayback="https://web.archive.org/web/19990202082715/http://www.birzeit.edu/diary/abughnaim/hebback.html"><span class="f">diary/abughnaim/hebback.html</span> <span class="t">Abu Ghnaim Diary: &quot;Back through Wadi-Al-Nar&quot;</span></a></li>
 <li><a href="/sites/birzeit.edu/diary/abughnaim/index.html" data-path="birzeit.edu/diary/abughnaim/index.html" title="A Personal Diary: &quot;Abu Ghnaim Diary Index&quot;
 http://www.birzeit.edu/diary/abughnaim/index.html" data-wayback="https://web.archive.org/web/20001021103723/http://www.birzeit.edu/diary/abughnaim/index.html"><span class="f">diary/abughnaim/index.html</span> <span class="t">A Personal Diary: &quot;Abu Ghnaim Diary Index&quot;</span></a></li>
 <li><a href="/sites/birzeit.edu/diary/abughnaim/joinin.html" data-path="birzeit.edu/diary/abughnaim/joinin.html" title="Abu Ghnaim Diary: &quot;Birzeit students join in&quot;, part 1
@@ -34634,6 +34634,8 @@ http://www.zmag.org/ZMag/saidkosovar.htm" data-wayback="https://web.archive.org/
   function captured(wayback) {
     var match = /\/web\/(\d{4})(\d{2})(\d{2})/.exec(wayback || '');
     if (!match) return 'No snapshot';
+    // A few Wayback stamps have month 00 (20000008180456): show the year alone.
+    if (!MONTHS[Number(match[2]) - 1] || Number(match[3]) < 1 || Number(match[3]) > 31) return 'Captured ' + match[1];
     return 'Captured ' + Number(match[3]) + ' ' + MONTHS[Number(match[2]) - 1] + ' ' + match[1];
   }
 
