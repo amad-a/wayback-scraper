@@ -2,3 +2,5 @@ a.dead,area.dead{cursor:not-allowed}
 a.dead:not(.dead-img),area.dead{opacity:.5;text-decoration:line-through}
 a.dead-img-map{cursor:auto}
 .dead-flash{visibility:hidden}
+@view-transition{navigation:auto}
+::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none}

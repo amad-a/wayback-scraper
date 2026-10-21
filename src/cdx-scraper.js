@@ -1361,7 +1361,12 @@ async function rewriteSavedPages(seeds) {
       // cursor over the whole graphic reads wrong when most of it is still live.
       'a.dead-img-map{cursor:auto}\n' +
       // A Flash movie that was never saved; see the Flash section of the rewrite pass.
-      '.dead-flash{visibility:hidden}\n'
+      '.dead-flash{visibility:hidden}\n' +
+      // Hold the previous page on screen until the next one can paint, instead of the
+      // blank white frame in between, and then swap at once -- no crossfade. Browsers
+      // without cross-document view transitions ignore both rules.
+      '@view-transition{navigation:auto}\n' +
+      '::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation:none}\n'
   );
   await fs.writeFile(
     path.join(waybackDir, 'dead-links.js'),
