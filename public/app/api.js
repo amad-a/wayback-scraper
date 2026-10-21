@@ -845,6 +845,10 @@ function setChrome({ title, url }) {
 		? `${title}`
 		: TITLE_SUFFIX;
 	if (url) addressBar.value = url;
+	// The tab follows the frame too, in the form the server writes on a fresh load
+	// (pageMeta in serve.js): the page's title, else its address, then the archive's name.
+	const name = title && title !== TITLE_SUFFIX ? title : (url || addressBar.value).replace(/^https?:\/\//, '');
+	document.title = name ? `${name} — ${TITLE_SUFFIX}` : TITLE_SUFFIX;
 	// A new page in the frame: whatever was typed before it is no longer worth restoring.
 	addressBeforeTyping = null;
 }
