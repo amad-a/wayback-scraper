@@ -357,10 +357,11 @@ function searchIndex(handle) {
 // the address typed -- a folder's index page for the folder -- then addresses that start
 // with what was typed, then addresses containing it whole, then by how many of the words
 // are in the address itself -- so "birzeit news" puts birzeit.edu/bzunews/ above the bare
-// home page whose title happens to mention news -- then shorter addresses first. Within a
-// tier the sites then take turns, each one's best page before any one's second, so a
-// query that matches many sites ("geocities") isn't filled by whichever has the shortest
-// addresses.
+// home page whose title happens to mention news -- then shorter addresses first. Below an
+// exact match the sites then take turns, each one's best page before any one's second,
+// across tiers too: otherwise the one site whose address starts with "gaza" fills the
+// list before any page that only has gaza further in, and a query matching many sites
+// ("geocities") goes to whichever has the shortest addresses.
 app.get('/api/search', (req, res) => {
   const handle = database();
   if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
@@ -385,11 +386,11 @@ app.get('/api/search', (req, res) => {
   scored.sort(byScore);
   const perSite = new Map();
   for (const s of scored) {
-    const key = `${s.rank}|${s.row.crawl_root}`;
-    s.nth = perSite.get(key) || 0;
-    perSite.set(key, s.nth + 1);
+    if (s.rank < 0) { s.nth = -1; continue; }
+    s.nth = perSite.get(s.row.crawl_root) || 0;
+    perSite.set(s.row.crawl_root, s.nth + 1);
   }
-  scored.sort((a, b) => a.rank - b.rank || a.nth - b.nth || byScore(a, b));
+  scored.sort((a, b) => a.nth - b.nth || byScore(a, b));
 
   res.json({
     query,
