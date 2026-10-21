@@ -43,7 +43,7 @@ The `deploy` user has no passwordless sudo. nginx, ufw and DNS changes (Hetzner 
 - After any scrape: review `git status -- sites` before committing. The rewrite pass touches every page, so check that the diff contains only what was intended:
   - `data-wayback-url` is only ever **added** to pages missing it, never replaced. Adding it is fine.
   - Links to `.ram`, `.rm` and `.ra` files always stay dead. `npm run media` points restorable links at `.mp3` instead.
-  - `geocities.com/zuhairhm/...` and other badly nested pages can reshuffle on every pass. Restore them with `git checkout HEAD -- <file>` if they show up in the diff for no reason.
+  - `geocities.com/zuhairhm/...` and other badly nested pages can reshuffle on every pass. Restore them with `git checkout HEAD -- <file>` if they show up in the diff for no reason -- but a change that isn't the rewrite pass's doing (a hand-added `style`, a fixed tag) may be the user's own edit: ask before reverting.
   - A Flash `<object>`/`<embed>` whose `.swf` was never saved gets `class="dead-flash"` (hidden, keeping its space), and a page with no playable movie left loses its Ruffle tags. Both are recomputed each pass, like dead links.
 - Then run `npm run db`, and `npm run index` if the archive index should change.
 - A site's capture list is fetched from CDX in pages (`showNumPages`, then `&page=N`), each saved to `<site>/cdx-pages.json` as it arrives, so a stopped crawl resumes. The page count covers every year of the site, so most pages come back empty. Don't commit `cdx-pages.json`.
