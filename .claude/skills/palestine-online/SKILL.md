@@ -38,6 +38,7 @@ The `deploy` user has no passwordless sudo. nginx, ufw and DNS changes (Hetzner 
   - To take one particular capture, pass its timestamp as the bound, e.g. from a `web.archive.org/web/<timestamp>/<url>` link.
   - A frameset's frames are added to the log with it, so `npm run db` knows them.
 - `<base href>` is honoured: relative references resolve against it, both when downloading and when rewriting. MaxPages members' pages point at `http://maxpages.com/`.
+- Assets are found in HTML attributes, inline `style`, `<style>` blocks, image-like strings in inline scripts (FrontPage `MSFPpreload` hover buttons), and stylesheets' own `url(...)`/`@import` (FrontPage `_themes/` backgrounds and bullets). Stylesheets are rescanned from disk on a rerun, so rerunning an older crawl over its existing log fills these in.
 - Relink only, no network: `node src/cdx-scraper.js <root> --rewrite-only`.
 - After any scrape: review `git status -- sites` before committing. The rewrite pass touches every page, so check that the diff contains only what was intended:
   - `data-wayback-url` is only ever **added** to pages missing it, never replaced. Adding it is fine.

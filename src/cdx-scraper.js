@@ -688,6 +688,11 @@ async function handleItem(item, queue) {
   const savedPath = await savedAssetPath(localPath, item);
   if (savedPath) {
     const pageIsHtml = HTML_EXTENSIONS.test(savedPath);
+    if (!pageIsHtml && /\.css$/i.test(savedPath) && item.depth < MAX_EXTERNAL_DEPTH) {
+      const css = await fs.readFile(resolveDest(savedPath), 'latin1');
+      const found = enqueueCssAssets(css, item, queue);
+      if (found) console.log(`♻️  ${savedPath} (cached) +${found} assets rechecked`);
+    }
     if (!pageIsHtml) {
       queue.stats.skipped += 1;
       queue.recordAssetResult(item.parent, true);
@@ -781,7 +786,13 @@ async function handleItem(item, queue) {
     // Everything else -- images, css, js -- is written byte-for-byte.
     await fs.writeFile(fullPath, buffer);
     queue.stats.assets += 1;
-    console.log(`${item.external ? '🌐' : '💾'} ${localPath} (${buffer.length}b)`);
+    const found =
+      /\.css$/i.test(localPath) && item.depth < MAX_EXTERNAL_DEPTH
+        ? enqueueCssAssets(buffer.toString('latin1'), item, queue)
+        : 0;
+    console.log(
+      `${item.external ? '🌐' : '💾'} ${localPath} (${buffer.length}b)${found ? ` +${found} assets` : ''}`
+    );
     queue.recordAssetResult(item.parent, true);
   }
 }
@@ -848,6 +859,11 @@ function enqueueAssets(html, page, queue) {
     }
   });
 
+  // <style> blocks: backgrounds, bullets and @imported stylesheets.
+  $('style').each((_, el) => {
+    for (const ref of cssRefs($(el).text() || '')) refs.push({ ref, isDocument: false });
+  });
+
   // Image URLs embedded in inline scripts. FrontPage rollover buttons preload their
   // hover image only from JS, so it never surfaces as an attribute. Match quoted
   // string literals ending in an image extension; anything that doesn't resolve to a
@@ -859,6 +875,30 @@ function enqueueAssets(html, page, queue) {
     }
   });
 
+  return enqueueRefs(refs, resolveFrom, page, queue);
+}
+
+// What a stylesheet pulls in: url(...) -- backgrounds, list bullets, fonts -- and
+// @import "file.css". A FrontPage theme names nearly all its images only here, so a
+// site's theme backgrounds and nav-bar bullets were never fetched while stylesheets
+// were saved without being read.
+const CSS_URL = /url\(\s*['"]?([^'")]+?)['"]?\s*\)/gi;
+const CSS_IMPORT = /@import\s+['"]([^'"]+)['"]/gi;
+function cssRefs(css) {
+  const refs = [];
+  for (const match of css.matchAll(CSS_URL)) refs.push(match[1].trim());
+  for (const match of css.matchAll(CSS_IMPORT)) refs.push(match[1].trim());
+  return refs.filter((ref) => ref && !/^data:/i.test(ref));
+}
+
+// Queue a stylesheet's own subresources, resolved against the stylesheet's address --
+// as the browser resolves them -- not the page that linked it.
+function enqueueCssAssets(css, sheet, queue) {
+  const refs = cssRefs(css).map((ref) => ({ ref, isDocument: false }));
+  return enqueueRefs(refs, sheet.originalUrl, sheet, queue);
+}
+
+function enqueueRefs(refs, resolveFrom, page, queue) {
   let added = 0;
   for (const { ref, isDocument } of refs) {
     const resolved = toAbsolute(ref, resolveFrom);
