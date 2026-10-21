@@ -328,7 +328,7 @@
         <div
           id="status-bar-left"
           class="inset-shallow"
-          style="display: block"
+          style="display: flex"
         >
           <img
             id="status-bar-left-icon"
@@ -339,6 +339,11 @@
             alt=""
           />
           <span id="status-bar-left-text"></span>
+          <!-- The archived page's zoom level; see setZoomText in app/api.js. -->
+          <span id="status-bar-zoom" hidden>
+            <img src="./assets/icons/magnifying-glass-16x16.png" width="16" height="16" alt="" />
+            <span id="status-bar-zoom-text">100%</span>
+          </span>
         </div>
         <div
           id="status-bar-right"

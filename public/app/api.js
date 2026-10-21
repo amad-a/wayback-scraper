@@ -54,6 +54,27 @@ function readZoom() {
 // re-pinching after every navigation would make it useless for reading a whole site.
 let zoom = readZoom();
 
+// The level as a percentage at the right of the status bar, shown while a zoom is under
+// way and gone again once it settles, like "Done" after a page loads. A pinch reaches us
+// as wheel events, which have no end, so "settled" means no step for a moment.
+const zoomBox = document.getElementById('status-bar-zoom');
+const zoomText = document.getElementById('status-bar-zoom-text');
+let zoomBoxTimer = 0;
+
+function setZoomText() {
+	if (zoomText) zoomText.textContent = `${Math.round(zoom * 100)}%`;
+}
+setZoomText();
+
+function showZoomBox() {
+	if (!zoomBox) return;
+	zoomBox.hidden = false;
+	clearTimeout(zoomBoxTimer);
+	zoomBoxTimer = setTimeout(() => {
+		zoomBox.hidden = true;
+	}, 1500);
+}
+
 // Sets the level on a document. Cleared rather than set to '1' at the default, so pages
 // that were never zoomed carry no trace of us.
 function setScale(doc) {
@@ -107,6 +128,7 @@ let persistTimer = 0;
 // which is why Safari, 45% slower to lay out, stuttered first. One frame, one layout.
 function zoomTo(next, win, clientX, clientY) {
 	targetZoom = clampZoom(next);
+	showZoomBox();
 	pendingAnchor = { win, clientX, clientY };
 
 	if (frameQueued) return;
@@ -128,6 +150,7 @@ function flushZoom() {
 
 	zoom = targetZoom;
 	applyZoom(iframe.contentWindow);
+	setZoomText();
 	win.scrollTo(anchorX * zoom - clientX, anchorY * zoom - clientY);
 
 	// Debounced: a synchronous storage write on every frame of a pinch is exactly the

@@ -340,13 +340,38 @@ button {
 /* Its messages ("Opening page ...", "Done", "Link copied") in the capture date's type,
    so the bar reads as one line of text. */
 #status-bar #status-bar-left {
+	align-items: center;
 	padding: 1px 3px;
 	font-family: sans-serif;
 	font-size: 11px;
 	line-height: 16px;
 	color: #222;
 	-webkit-font-smoothing: auto;
+}
+
+#status-bar-left-text {
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+/* The page's zoom level at the right end of the pane, in the same type: a magnifier and
+   a percentage, shown while the page is being pinched or ctrl+scrolled. */
+#status-bar-zoom {
+	flex: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding-left: 8px;
+}
+
+#status-bar-zoom[hidden] {
+	display: none;
+}
+
+#status-bar-zoom img {
+	image-rendering: pixelated;
 }
 
 /* The Internet-zone icon and the capture date to its right: sans-serif at 11px rather
