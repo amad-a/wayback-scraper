@@ -1,0 +1,164 @@
+/* Stylesheet built by Nuwan Nagahwatte */
+/* Site navigation */
+
+.nv { color: #000000; font-family: Arial, sans-serif; font-size: 12px; font-weight: normal; line-height:14px;}
+a.nv { color: #000000; font-family: Arial, sans-serif; text-decoration: none; font-size: 12px; font-weight: normal;}
+a.nv:hover { color: #000000; text-decoration: underline;}
+a.nv:visited { color: #000000;}
+
+.nvb { color: #000000; font-family: Arial, sans-serif; font-size: 12px;  font-weight: bold;}
+a.nvb { color: #000000; font-family: Arial, sans-serif; text-decoration: none; font-size: 12px;  font-weight: bold;}
+a.nvb:hover { color: #000000; text-decoration: underline;}
+a.nvb:visited { color: #000000;}
+
+.navbd { color: #000000; font-family: Arial, sans-serif; font-size: 12px;  font-weight: bold;}
+a.navbd { color: #000000; font-family: Arial, sans-serif; text-decoration: none; font-size: 12px;  font-weight: bold;}
+a.navbd:hover { color: #000000; text-decoration: underline;}
+a.navbd:visited { color: #000000;}
+
+.navibgnews { background-color: #b8d9ef;}
+.navibgenjoyment { background-color: #D9EEC4;}
+.navibgtravel { background-color: #c1e9eb;}
+.navibgargument { background-color: #FFCCCC;}
+.navibgsport { background-color: #E7D4ED;}
+.navibgeducation { background-color: #FFFFCE;}
+.navibgmoney { background-color: #DADADA;}
+.navibgpremium { background-color: #DADADA;}
+
+.hubnavibgnews { background-color: #EDEDED;}
+.hubnavibgenjoyment { background-color: #EDEDED;}
+.hubnavibgtravel { background-color: #EDEDED;}
+.hubnavibgargument { background-color: #EDEDED;}
+.hubnavibgsport { background-color: #EDEDED;}
+.hubnavibgeducation { background-color: #EDEDED;}
+.hubnavibgmoney { background-color: #EDEDED;}
+.hubnavibgpremium { background-color: #EDEDED;}
+
+.navibg { background-color: #EDEDED;}
+
+/* Strapline styling */
+
+.top { font-family: Verdana, Geneva, Arial; font-size: 12px; font-weight: bold; color: white}
+a.top { text-decoration: none;}
+a.top:hover { text-decoration:underline;}
+
+/* General styling */
+
+table { font-family: Arial;}
+tr { font-family: Arial;}
+td { font-family: Arial;}
+p { font-family: Arial; MARGIN-BOTTOM: 10px; MARGIN-TOP: 10px;}
+hr { color: #999999; height: 1px;}
+
+ul { margin-top: 0px; margin-bottom: 0px;}
+li { margin-left: -20px; margin-top: 0px; margin-bottom: 2px;}
+
+h1 { font-family: Arial;}
+h2 { font-family: Arial;}
+h3 { font-family: geneva, verdana, arial;}
+
+/* Specific styling */
+
+.date { font-family: Arial;}
+.dategrey { font-family: Arial; color: #999999;}
+.datesmall { font-family: Arial;}
+
+.head1 { font-family: Arial;}
+.head2 { font-family: Arial;}
+.head3 { font-family: geneva, verdana, arial;}
+
+.larger { font-family: geneva, verdana, arial;}
+a.larger { font-family: geneva, verdana, arial;}
+
+.smaller { font-family: verdana, arial; }
+a.smaller { font-family: verdana, arial;}
+
+.grey { color: #383838;}
+a.grey { color: #383838;}
+a.grey:hover { color: #383838;}
+a.grey:visited { color: #383838;}
+
+.red { font-family: geneva, verdana, arial;}
+a.red { color: #ca0000; font-family: geneva, verdana, arial; text-decoration: none;}
+a.red:hover { color: #ca0000;}
+a.red:visited { color: #ca0000;}
+
+.black12px { font-family: Arial; font-weight: normal; line-height:14px;}
+a.black12px { color: #000000; text-decoration: none;}
+a.black12px:hover { color: #000000; text-decoration:underline;}
+a.black12px:visited { color: #000000;}
+
+.greylabel { font-family: Arial; font-weight: normal; line-height:12px; text-transform:capitalise; text-align:left; color: #505050;}
+a.greylabel { color: #505050; text-decoration: none;}
+a.greylabel:hover { color: #505050; text-decoration:underline;}
+a.greylabel:visited { color: #505050;}
+
+.whitebg { background-color: #FFFFFF;}
+.linkbox { width: 165px; background: #f5f5f5; font-family: Arial; font-weight: normal;}
+.linkindent { font-size: 12px; margin-top:2px; margin-bottom: 2px; text-indent:-7px; padding: 4px 5px 0px 15px;}
+
+
+.obitquote {padding-left: 8px;}
+
+
+/* Styling to overide Prospero feed*/
+
+.llitem { font-family: Arial; font-weight: normal;}
+a.llitem { color: #000000; text-decoration: none;}
+a.llitem:hover { color: #000000; text-decoration:underline;}
+a.llitem:visited { color: #000000;}
+
+.thinspace { LINE-HEIGHT: 6px; COLOR: #ffffff }
+
+/* for use later with scaling  css */
+
+table { font-size: 12px;}
+tr { font-size: 12px;}
+td { font-size: 12px;}
+p { font-size: 12px;}
+
+h1 { font-size: 20px; font-weight: normal; line-height:22px;}
+h2 { font-size: 16px; font-weight: bold; line-height:18px;}
+h3 { font-size: 14px; font-weight: bold; line-height:16px;}
+
+option { font-size: 11px; line-height: 15px; color: #000000; font-family: Arial; font-weight: normal;}
+select { font-size: 11px; line-height: 15px; color: #000000; font-family: Arial; font-weight: normal;}
+
+.head1 { font-size: 20px; font-weight: normal; line-height:22px;}
+.head2 { font-size: 16px; font-weight: bold; line-height:18px;}
+.head3 { font-size: 14px; font-weight: bold; line-height:16px;}
+
+.date { font-size: 12px; font-weight: normal; line-height:14px;}
+.dategrey { font-size: 12px; font-weight: normal; line-height:14px;}
+.datesmall { font-size: 11px; text-align: right; margin-bottom: 8px;}
+
+.larger { font-size: 18px; font-weight: bold; line-height:20px;}
+a.larger { font-size: 18px; font-weight: bold; line-height:20px;}
+
+.smaller { font-size: 12px; font-weight: bold; line-height:14px;}
+a.smaller { font-size: 12px; font-weight: bold; line-height:14px;}
+
+.red { font-size: 14px; font-weight: bold; line-height:16px; color: #ca0000;}
+a.red { font-size: 14px; font-weight: bold; line-height:16px;}
+
+.black12px { font-size: 12px;}
+
+.linkbox { font-size: 12px; line-height:14px;}
+
+.greylabel { font-size: 11px;}
+
+.llitem { font-size: 12px;}
+
+.travelbox1 { background-color: #ffffff; padding: 5px;}
+.colorbox { background-color: #E3F4FF;}
+.image {margin-bottom: 8px; margin-top: 2px;}
+
+.bullet { font-size: 12px; font-family: Arial;}
+.bulletdefault { font-size: 12px; font-family: Arial;}
+
+input.red {background-color: #cc0000; font-weight: bold; font-size: 12px; color: white;}
+input.pink {background-color: #ffcccc; font-size: 10px;}
+
+a:hover { color: #006699; text-decoration:underline;}
+a:visited { color: #006699;}
+a { color: #006699; font-family: geneva, verdana, arial; font-size: 14px; font-weight: bold; line-height:16px; text-decoration: none;}

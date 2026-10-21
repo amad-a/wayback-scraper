@@ -1,0 +1,4 @@
+rtsp://columbo.realimpact.net:554//messages/badurl.rm?cloakport=80,554,7070
+
+--stop--
+pnm://columbo.realimpact.net:7070//messages/badurl.rm?cloakport=80,554,7070

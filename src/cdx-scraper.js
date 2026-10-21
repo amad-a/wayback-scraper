@@ -1308,7 +1308,7 @@ async function rewriteSavedPages(seeds) {
   // (no network) and idempotent, so each run brings the whole corpus up to date.
   const htmlFiles = await collectHtml(destDir);
   const byPath = new Map(
-    seeds.map((s) => [toLocalPath(s.originalUrl), s])
+    seeds.map((s) => [s.localPath || toLocalPath(s.originalUrl), s])
   );
 
   siteRoots = new Set(

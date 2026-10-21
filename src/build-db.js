@@ -151,7 +151,9 @@ async function collectPages() {
 
     for (const entry of entries) {
       if (!entry?.originalUrl) continue;
-      const localPath = toLocalPath(entry.originalUrl);
+      // An entry may name its own file: pages whose addresses differ only in their query
+      // string (thenation.com/doc.mhtml?i=...) would otherwise all map to one.
+      const localPath = entry.localPath || toLocalPath(entry.originalUrl);
       if (!byPath.has(localPath)) byPath.set(localPath, { crawlRoot, entries: [] });
       byPath.get(localPath).entries.push(entry);
     }

@@ -1,0 +1,90 @@
+/* version 1.1: 09/16/2000 */
+
+body {	background: #ffffff}
+hr {	color: #000000}
+p {	color: #000000}
+h3 { padding-top: 8px}
+.text  {	color: #000000}
+
+/* Everywhere */
+
+a:link	 {	color: #0033cc; text-decoration: underline}
+a:visited {	color: #0033cc; text-decoration: underline}
+a:active {	color: #0099ff; text-decoration: underline}
+a:hover	 {	color: #ff0000; text-decoration: underline}
+
+a.redbread:link	 {	color: #FF0000; vertical-align: middle; font-weight: bold; text-decoration: none}
+a.redbread:visited {	color: #FF0000; vertical-align: middle; font-weight: bold; text-decoration: none}
+a.redbread:active {	color: #FF0000; vertical-align: middle; font-weight: bold; text-decoration: none}
+a.redbread:hover {	color: #0033ff; vertical-align: middle; font-weight: bold; text-decoration: underline}
+
+td.goldbar a:link	 {	color: #0033cc; vertical-align: middle; text-decoration: none}
+td.goldbar a:visited {	color: #0033cc; vertical-align: middle; text-decoration: none}
+td.goldbar a:active {	color: #0033cc; vertical-align: middle; text-decoration: none}
+td.goldbar a:hover {	color: #ff0000; vertical-align: middle; text-decoration: underline}
+.goldbar { padding-left: 5px; padding-right: 3px; padding-bottom: 0px; margin-top: 4px; margin-bottom: 4px; font-size: 90%}
+.typeslug { color: #cc0000; font-weight: bold; text-transform: uppercase; font-size: 90% }
+.chapbar {	padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px }
+.text {	color: #000000}
+.columnbyline {	font-size: 150%; color: #cc0000}
+td.boxtitle {	font-size: small; color: #ffffff; font-weight: bold; text-transform: uppercase}
+
+/* for f00 and c00 red bar headers and footers */
+
+.bars {  color: #ffffff; white-space: nowrap}
+td.bars a:link {  color: #ffffff; text-decoration: none; white-space: nowrap}
+td.bars a:visited {  color: #ffffff; text-decoration: none; white-space: nowrap}
+td.bars a:active {  color: #cccccc; text-decoration: none; white-space: nowrap}
+td.bars a:hover	 {  color: #ffff00; text-decoration: underline; white-space: nowrap}
+
+
+/* for pink breadcrumb bar */
+
+td.crumbbar a:link	 {	font-size: small; color: #ff0000; text-decoration: none}
+td.crumbbar a:visited {	font-size: small; color: #ff0000; text-decoration: none}
+td.crumbbar a:active {	font-size: small; color: #ff3333; text-decoration: none}
+td.crumbbar a:hover	 {	font-size: small; color: #0033FF; text-decoration: underline}
+.bread {	font-weight: bold; font-size: bigger}
+td.crumbbar {	color: #ff0000}
+
+/* Homepage Stuff */
+
+.hphed, .biohed	 {	font-size: 24px; font-family: Georgia, Verdana, serif; color: #000000; font-weight: bold}
+.hpbyline {	font-size: 90%; font-weight: bold; text-transform: uppercase}
+.hpsmaller {	font-size: 90% }
+.hpbardate {	font-size: 90%; font-style: italic; color: #666666}
+.hpbarhed {	font-size: small; color: #ffffff; font-weight: bold; text-transform: uppercase; text-align: center}
+.hpcover {	margin-top: 5px; margin-bottom: 5px; font-size: 90%; text-align: center}
+.hpwhite {	font-size: small; color: #ffffff; margin: 5px}
+.hpinput {	text-align: center; background-color: #eeeeee}
+.hptoched {	color: #990000; font-weight: bold; text-transform: uppercase}
+.rnblurb { font-size: 90%; padding-left: 5px; padding-right: 3px; padding-bottom: 4px; margin-top: 0px}
+/* .hplilbyline {	font-size: 90%; text-transform: uppercase} */
+
+/* Online Subs Stuff */
+
+ a.free:link {	color: #0033cc; text-decoration: underline; font-weight: bold}
+ a.free:visited {	color: #0033cc; text-decoration: underline; font-weight: bold}
+ a.free:active {	color: #0099ff; text-decoration: underline; font-weight: bold}
+ a.free:hover {	color: #ff0000; text-decoration: underline; font-weight: bold}
+
+ a.premium:link	 {	color: #000000; text-decoration: underline; font-weight: bold}
+ a.premium:visited {	color: #000000; text-decoration: underline; font-weight: bold}
+ a.premium:active {	color: #000000; text-decoration: underline; font-weight: bold}
+ a.premium:hover {	color: #000000; text-decoration: underline; font-weight: bold}
+
+
+/* Directory Stuff */
+
+.category {	color: #000000; font-weight: bold}
+.adult {	font-weight: bold; font-size: 14px; color: #000000}
+.children {	color: #000000; padding-top: 5px}
+li.children {  list-style-type: none}
+
+.biotitle {     color: #000000; font-weight: bold; text-transform: uppercase}
+.biocredit {    color: #999999; font-size: 90%}
+
+/* Death Row Roll Call */
+
+.inmate { font-weight: bold}
+.state { color: #666666}

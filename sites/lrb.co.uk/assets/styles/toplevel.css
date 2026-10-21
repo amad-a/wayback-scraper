@@ -1,0 +1,84 @@
+.adbody {  background-color: #eeeedd; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; border-color: #666666 black black; border-style: solid; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.adhead { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; border-color: #333333 black; font-weight: bold; color: #000000; background-color: #eeeedd; border-style: solid; border-top-width: 3px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.articletitle {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 16px; font-weight: bold}
+.boxedtext {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; background-color: #FFFFFF; padding-top: 0px; padding-right: 3px; padding-bottom: 0px; padding-left: 3px; border: 1px #333333 solid}
+.breadcrumbs { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #333333}
+.BT {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; line-height: 18px; color: #000000}
+.BTsmall {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; line-height: 18px; color: #000000; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 3px; padding-right: 0px; padding-bottom: 3px; padding-left: 0px}
+.button {  font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; color: #333333; border: 1px groove; border-color: #999999 #666666 #333333 #333333}
+.contentslist {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 14px; line-height: 18px; margin-bottom: 0px; padding-bottom: 0px}
+.contrib {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; line-height: 18px; color: #333333; border-color: #999999 black black; padding-top: 10px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-style: solid; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.correspondent {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #666666; text-align: left}
+.error {  font-weight: bold; color: #CC0000}
+.flatbutton { font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; color: #333333; border: 1px groove; border-color: #999999 #666666 #333333 #333333 }
+.footer {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px; color: #666666}
+.footnotes { font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; line-height: 18px; font-weight: normal; color: #666666 ; padding-top: 4px; padding-right: 0px; padding-bottom: 4px; padding-left: 0px; border-color: #666666 black black; border-style: dashed; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.form350 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; color: #333333; background-color: #FFFFEE; width: 350px}
+.formbt {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px}
+.hilite00FFFF {  background-color: #00FFFF; color: #000000}
+.hilitedata { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; background-color: #ffdb94; padding-top: 0px; padding-right: 10px; padding-bottom: 0px; padding-left: 10px; border: 1px #CC0000 solid; font-size: 10px; line-height: 16px}
+.hiliteFFFF00 {  background-color: #FFFF00; color: #000000}
+.hmargin10 {  margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px}
+.indexruleabove { border-color: #999999 #000000 #000000; padding-top: 8px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-style: dashed; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.issuedate { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #333333 }
+.italic {  font-style: italic}
+.kicker { font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; line-height: 16px; padding-top: 0px; margin-top: 0px; margin-bottom: 0px; padding-bottom: 0px }
+.leftnav {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; font-weight: bold; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px}
+.leftsubnav { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; padding-top: 10px; line-height: 14px; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; padding-top: 4px ; padding-left: 10px}
+.loginbox { font-family: Verdana, Arial, Helvetica, sans-serif; color: #000000; padding-top: 0px; padding-right: 10px; padding-bottom: 0px; padding-left: 10px; border: 1px solid; font-size: 10px; line-height: 14px; border-color: #CCCCCC #CCCCCC #999999 #999999; background-color: #eeeeee}
+.navstrip { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px; border-color: #666666 black; color: #666666; border-style: dashed; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 1px; border-left-width: 0px}
+.pastissue {  color: #666666}
+.popupbox { font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; border: #CCCCCC none; font-size: 10px; line-height: 16px; margin-top: 4px; margin-right: 0px; margin-bottom: 4px; margin-left: 0px}
+.preregbox { font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333; padding-top: 0px; padding-right: 5px; padding-bottom: 0px; padding-left: 5px; border: 1px #999999 dashed; font-size: 10px; line-height: 14px}
+.redtext {  color: #CC0000}
+.regular {  font-style: normal}
+.revitem {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 14px; padding-top: 0px; margin-top: 0px; margin-bottom: 0px; padding-bottom: 0px}
+.rightnav { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px; font-weight: normal; margin-bottom: 10px}
+.ruleabove {  border-color: #999999 #000000 #000000; padding-top: 5px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; border-style: solid; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.smallcaps {  font-variant: small-caps}
+.standfirst { font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; line-height: 18px; color: #000000 ; margin-top: 0px; padding-top: 5px}
+.subjectlist {  font-variant: small-caps; border-color: #666666 black black; border-style: solid; border-top-width: 1px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.tablebt { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px}
+.tablehead { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px; font-weight: bold; color: #CC0000}
+.tableheadbig { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; font-weight: bold; color: #CC0000 }
+.tableheadrev { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 16px; font-weight: bold; color: #FFFFFF; background-color: #000066}
+.textbox {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #333333}
+.topdate { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #333333}
+.topnav {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; color: #666666}
+.whitecell {  background-color: #FFFFFF}
+a:link {color: #CC0000; text-decoration: none;}
+a:visited {color: #990000; text-decoration: none;}
+a:hover {color: #CC0000; text-decoration: underline; }
+a.topnav:link {color: #666666; text-decoration: none; }
+a.topnav:visited {color: #666666; text-decoration: none; }
+a.topnav:hover {color: #CC0000; text-decoration: none; ; padding-left: 0px}
+a.leftnav:link {color: #666666; text-decoration: none; }
+a.leftnav:visited {color: #333333; text-decoration: none; }
+a.leftnav:hover {color: #CC0000; text-decoration: underline; }
+a.leftnav:active {color: #CC0000; text-decoration: none; }
+a.leftsubnav:link {color: #666666; text-decoration: none; ; padding-left: 10px}
+a.leftsubnav:visited {color: #333333; text-decoration: none; ; padding-left: 10px}
+a.leftsubnav:hover {color: #CC0000; text-decoration: underline; ; padding-left: 10px}
+a.leftsubnav:active {color: #CC0000; text-decoration: none; ; padding-left: 10px}
+a.none:link {color: #444444; text-decoration: none; }
+a.none:visited {color: #444444; text-decoration: none; }
+a.none:hover {color: #444444; text-decoration: underline; }
+a.soon:link {color: #444444; text-decoration: none; }
+a.soon:visited {color: #444444; text-decoration: none; }
+a.soon:hover {color: #444444; text-decoration: underline; }
+a.full:link {color: #cc0000; text-decoration: none; }
+a.full:visited {color: #cc0000; text-decoration: none; }
+a.full:hover {color: #cc0000; text-decoration: underline; }
+a.subs:link {color: #444444; text-decoration: none; }
+a.subs:visited {color: #444444; text-decoration: none; }
+a.subs:hover {color: #444444; text-decoration: underline; }
+a.noshow:link {color: #000000; text-decoration: none; }
+a.noshow:visited {color: #000000; text-decoration: none; }
+a.noshow:hover {color: #000000; text-decoration: underline; }
+a.amznimg:link {color: #ffffff; text-decoration: none; }
+a.amznimg:visited {color: #ffffff; text-decoration: none; }
+a.amznimg:hover {text-decoration: none; ; background-color: #eeeeee}
+h1 {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 20px; color: #000066; line-height: 20px}
+h2 {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 16px; color: #333333; font-weight: bold}
+h3 {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 14px; color: #666666; font-weight: bold}
+code {  font-family: "Courier New", Courier, mono; font-size: 12px}

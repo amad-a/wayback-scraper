@@ -40,6 +40,7 @@ The `deploy` user has no passwordless sudo. nginx, ufw and DNS changes (Hetzner 
 - `<base href>` is honoured: relative references resolve against it, both when downloading and when rewriting. MaxPages members' pages point at `http://maxpages.com/`.
 - Assets are found in HTML attributes, inline `style`, `<style>` blocks, image-like strings in inline scripts (FrontPage `MSFPpreload` hover buttons), and stylesheets' own `url(...)`/`@import` (FrontPage `_themes/` backgrounds and bullets). Stylesheets are rescanned from disk on a rerun, so rerunning an older crawl over its existing log fills these in.
 - Relink only, no network: `node src/cdx-scraper.js <root> --rewrite-only`.
+- Local file names drop the query string, so `doc.mhtml?i=1` and `doc.mhtml?i=2` would collide. Give such log entries an explicit `localPath` (e.g. `thenation.com/doc.mhtml__i-20020506-s-said.html`); `build-db` and the rewrite pass use it in place of the derived path. Point the linking page's hrefs at those files by hand.
 - After any scrape: review `git status -- sites` before committing. The rewrite pass touches every page, so check that the diff contains only what was intended:
   - `data-wayback-url` is only ever **added** to pages missing it, never replaced. Adding it is fine.
   - Links to `.ram`, `.rm` and `.ra` files always stay dead. `npm run media` points restorable links at `.mp3` instead.

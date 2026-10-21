@@ -1,0 +1,19 @@
+BODY {font-family: Goudy, "Times New Roman", Times, "New York", serif ; background: white; color: black; }
+CODE {font-family: "Courier New", Courier, Monaco, monospace ; }
+PRE {font-family: "Courier New", Courier, Monaco, monospace ; }
+HR {color: gray ; }
+H1, H2, H3, H4, H5, H6 {font-family: Verdana, Helvetica, Geneva, SunSans-Regular, sans-serif ; }
+H4 {margin-bottom: 0.5em }
+H5, H6 {margin-bottom: 0.2em }
+
+P.interior-author {
+	font-weight : bold;
+}
+
+
+P.transcript {padding-left: .5em;}
+P.transcript-first-paragraph {text-indent: -.5em; padding-left: .5em;}
+P.transcript-intro {
+	font-style : italic;
+}
+SPAN.speaker {text-transform: uppercase; font-size: smaller;}

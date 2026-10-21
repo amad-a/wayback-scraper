@@ -1,0 +1,108 @@
+.sectionheading {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9px; font-style: normal; line-height: 28px; font-weight: bold; text-align: left}
+.authortitle {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 16px; font-style: normal; font-weight: normal; text-align: left; vertical-align: middle; color: #000000; text-decoration: none; line-height: 20px}
+.mainheading {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 24px; line-height: 28px; font-weight: bold; text-align: center; letter-spacing: 1px; margin-top: 12px; margin-bottom: 10px}
+.authortitlebold { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 16px; font-style: normal; font-weight: bold; text-align: center ; line-height: normal; color: #000000; text-decoration: none}
+.pgtext {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 12px; font-style: normal; line-height: 20px; font-weight: normal; text-align: justify; color: #000000; text-decoration: none; letter-spacing: 0.04em}
+.issuenumber {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-weight: bolder; text-align: center; vertical-align: top; line-height: 35px}
+.artsubhead {  font-size: 16px; font-style: normal; font-weight: bold; font-family: Verdana, Arial, Helvetica, sans-serif; line-height: 25px; letter-spacing: 0.03em}
+.artfootnotestitle {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-weight: bold; line-height: normal; letter-spacing: normal; text-align: center}
+.arti {  font-style: italic}
+.artreg {  font-style: normal}
+.artsmallcaps { font-variant: small-caps }
+.artbold { font-style: bold }
+.specialoffer {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 16px; font-weight: bold; text-align: center}
+.browseback {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; line-height: 25px; font-weight: bold; text-align: right; text-decoration: none}
+.viewbuy {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; line-height: 35px; font-weight: normal; text-align: center}
+.view {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; line-height: 35px; font-weight: normal; text-align: right}
+a:link {  text-decoration: none; color: #990000}
+.menuitem {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; font-style: normal; line-height: normal; font-weight: normal; text-decoration: none; text-align: center; vertical-align: middle; cursor: auto; color: #000000;}
+a:active {  color: #990000; text-decoration: none}
+a:visited {  color: #990000; text-decoration: none}
+a:hover {  color: #FF0000; text-decoration: none}
+.smalladdress {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: center; font-weight: bold}
+.orderformtext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; text-align: left}
+.artsecnum {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 18px; font-weight: bold; text-align: center; margin-top: 40px}
+.artbulletlist {  font-family: Verdana, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px; line-height: 18px; list-style-position: outside; list-style-type: disc; margin-right: 20px; margin-left: 20px; padding-right: 5px; padding-left: 5px}
+.contentstitle {  font-style: italic}
+.subscribetext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; text-align: right; text-decoration: none; line-height: normal; letter-spacing: normal; word-spacing: normal}
+.subscribetextitalic {  font-style: italic; text-decoration: none}
+.archivetext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: left; font-weight: bold; text-decoration: none; line-height: normal; letter-spacing: normal; word-spacing: normal}
+.buybackissuetitle {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 24px; font-weight: bold; text-align: right; line-height: 60px}
+.buybackissues {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 24px; line-height: 60px; text-align: center; font-weight: bold}
+.menuitemcentre {  text-align: center}
+.artbody {  font-family: Verdana, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px; line-height: 18px}
+.pgtextverdana {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; text-align: justify; font-weight: normal}
+.currentsubscriberform {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; text-align: center; vertical-align: bottom}
+.subscriptionpageheading {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 23px; font-weight: bold; text-align: center; line-height: 25px}
+.subscriptionpagetext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; text-align: justify}
+.subscribetabletext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; text-align: center; vertical-align: middle; border-style: none; border-top-width: thin; border-right-width: thin; border-bottom-width: thin; border-left-width: thin}
+.subscribetabletexttopline {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; text-align: center; border-style: groove; border-top-width: thin; border-right-width: 0px; border-bottom-width: thin; border-left-width: 0px}
+.subscribetabletextcontents {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; text-align: center}
+.subscribetablebottomline {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-weight: normal; text-align: center; border-style: groove; border-top-width: 0px; border-right-width: 0px; border-bottom-width: thin; border-left-width: 0px}
+.subscribeblurb {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; text-align: justify}
+.arttitle {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 24px; font-style: normal; line-height: 40px; letter-spacing: 2px; text-align: center; font-weight: bold}
+.artauthor {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 14px; font-style: normal; line-height: 35px; letter-spacing: 1px; text-align: center; font-weight: bold}
+.artabstract {  font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold; text-align: justify; margin-right: 40px; margin-left: 40px; font-size: 12px; line-height: 16px; color: #990000}
+a:link.menu {  text-decoration:none; color: #000000}
+a:active.menu {  text-decoration:none; color: #000000}
+a:visited.menu {  text-decoration:none; color: #000000}
+a:hover.menu {  text-decoration:none; font-weight:bold; color: #000000; font-size:110%; text-align: center}
+.artfootnote {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; margin-right: 30px; margin-left: 30px}
+.bookreviewheading {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 18px; line-height: 40px; font-weight: bold; text-align: center; letter-spacing: 1px}
+.registernewuserform {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; text-align: right; padding-right: 10px}
+.rememberdetails {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: center; padding-right: 33px}
+.registersubscriber {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: center; padding-right: 14px}
+.registerformborder {  border: groove; border-width: 0px auto 0px 0px; border-color: black #CCCCCC black black}
+.bkform {  text-align: center}
+.cktoprow {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: bold; text-align: center; vertical-align: middle; border-style: ridge; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+.ckrows {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; font-weight: normal; text-align: center; vertical-align: middle; border-style: none; border-top-width: 0px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.resultsgeneral {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: justify; padding-right: 10px; padding-left: 10px}
+.resultsnotes {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 13px}
+.resultsfirstword {  line-height: 18px}
+.resultsauthor {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 16px}
+.resultstitle {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; line-height: 18px; font-weight: bold}
+.reusltspara {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: justify; padding-top: 10px; border-style: groove; border-top-width: 2px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.resultslast {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: center; padding-top: 10px; border-style: groove; border-top-width: 2px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px}
+.artquote {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; margin-right: 30px; margin-left: 30px}
+.artsubtitle {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 18px; line-height: 40px; letter-spacing: 0.03em; text-align: center}
+.artquestion {  font-family: Verdana, Arial, Helvetica, sans-serif; font-style: italic}
+.artquestionhi {  font-family: Verdana, Arial, Helvetica, sans-serif; font-style: normal}
+.bkaddress {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; text-align: right; line-height: normal; letter-spacing: normal; word-spacing: normal}
+.bktelephone {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; text-align: left; line-height: normal; letter-spacing: normal; word-spacing: normal}
+.subsorderform {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; vertical-align: middle; line-height: 18px}
+.authortitlefree {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 16px; line-height: normal; font-weight: bold; color: #000000; text-decoration: underline; text-align: center}
+.firstseriescontents {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: normal; text-align: center}
+.firstseriestitle {  font-weight: bold}
+.artnumberedlist {  font-family: Verdana, Arial, Helvetica, sans-serif; text-align: justify; font-size: 12px; line-height: 18px; list-style-position: outside; list-style-type: decimal; margin-right: 20px; margin-left: 20px; padding-right: 5px; padding-left: 5px}
+.pagetext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; text-align: justify}
+.centerNet {  text-align: center}
+.alignright {  text-align: right}
+.alignleft {  text-align: left}
+.bold {  font-weight: bold}
+.pagetextcenter {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; text-align: center; vertical-align: middle}
+.archiveform {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; text-align: left}
+.formbox {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: normal; letter-spacing: normal; word-spacing: normal}
+.linksheading {  font-family: Georgia, "Times New Roman", Times, serif; font-size: 18px; line-height: 30px; font-weight: bold; text-align: center}
+.linkstext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; font-weight: normal; text-decoration: none; text-align: center}
+.bkordered {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px}
+.artquotequote {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; margin-right: 50px; margin-left: 50px}
+.artlink {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 14px; font-style: normal; font-weight: bold; line-height: normal; letter-spacing: normal; text-align: center}
+.artpoetry {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; margin-right: 50px; margin-left: 50px}
+.artfirstfootnote {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; margin-right: 30px; margin-left: 30px; margin-top: 40px}
+.artfirstfootnote {  padding-top: 40px; border-style: groove; border-top-width: 2px; border-right-width: 0px; border-bottom-width: 0px; border-left-width: 0px !
+important}.versus {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 16px; font-style: italic; font-weight: bold}
+.versobooks {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; font-weight: normal; text-align: left}
+.otherarticleslist {  font-family: Verdana, Arial, Helvetica, sans-serif; text-align: left; list-style-position: outside; list-style-type: disc; margin-left: 150px}
+.versobookstitle {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 16px; line-height: 24px; font-weight: bold}
+.accountlist {  font-family: Verdana, Arial, Helvetica, sans-serif; text-align: left; margin-left: 200px; list-style-position: outside; list-style-type: decimal}
+.iptableform {  text-align: center; vertical-align: middle}
+.iptableform {  font-family: Verdana, Arial, Helvetica, sans-serif}
+.ipaddressform {  font-family: Verdana, Arial, Helvetica, sans-serif; text-align: left; vertical-align: middle; font-size: 12px; line-height: 18px}
+.ipaddressformright {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; text-align: right; vertical-align: middle}
+.artbold {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: 18px; font-weight: bold; font-style: normal}
+.fg  {border: 2px outset #FFFFFF; background-color:#FFFFCC; }
+.bg  {border: 2px outset #00BBBB; background-color:#005555; }
+.otherarticleslist2 { font-family: Verdana, Arial, Helvetica, sans-serif; text-align: left; list-style-position: outside; list-style-type: disc; margin-left: 200px}
+.artquoteright {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; line-height: 16px; text-align: right; margin-right: 30px; margin-left: 30px}
+.introtext {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: normal; font-weight: normal; text-align: center; font-style: normal; letter-spacing: normal; vertical-align: middle; word-spacing: normal}
+.bkformbox {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 12px; line-height: normal; letter-spacing: normal; word-spacing: normal}

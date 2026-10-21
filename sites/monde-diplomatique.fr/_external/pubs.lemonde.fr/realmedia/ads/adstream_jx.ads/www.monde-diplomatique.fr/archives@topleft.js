@@ -1,0 +1,1 @@
+document.write ('<A HREF="http://pubs.lemonde.fr/RealMedia/ads/click_lx.ads/www.monde-diplomatique.fr/archives/18672/TopLeft/default/empty.gif/64316564656561343365343738396130" target="_blank"><IMG SRC="http://a1692.g.akamai.net/7/1692/2042/0/pubs.lemonde.fr/RealMedia/ads/Creatives/default/empty.gif"  WIDTH=2 HEIGHT=2 ALT="" BORDER=0 BORDER="0"></A>');
