@@ -292,6 +292,48 @@
     "bytes": 52,
     "partial": null
   },
+  "birzeit.edu/nigelparry/music/ineedyou.ram": {
+    "capture": "19980421053502/http://www.birzeit.edu:80/nigelparry/music/ineedyou.ram",
+    "bytes": 50,
+    "partial": null
+  },
+  "birzeit.edu/nigelparry/music/ineedyou.rm": {
+    "capture": "19980421053828/http://www.birzeit.edu:80/nigelparry/music/ineedyou.rm",
+    "bytes": 659966,
+    "partial": null,
+    "playable": "birzeit.edu/nigelparry/music/ineedyou.rm.mp3",
+    "seconds": 314
+  },
+  "birzeit.edu/nigelparry/music/jrs.wav": {
+    "capture": "19971113161214/http://www.birzeit.edu:80/nigelparry/music/jrs.wav",
+    "bytes": 6933290,
+    "partial": null
+  },
+  "birzeit.edu/nigelparry/music/jrs2.wav": {
+    "capture": "19970627060802/http://www.birzeit.edu:80/nigelparry/music/jrs2.wav",
+    "bytes": 3467844,
+    "partial": null
+  },
+  "birzeit.edu/nigelparry/music/outside.wav": {
+    "capture": "19970627063659/http://www.birzeit.edu:80/nigelparry/music/outside.wav",
+    "bytes": 5478090,
+    "partial": null
+  },
+  "birzeit.edu/nigelparry/music/outside2.wav": {
+    "capture": "19971113164109/http://www.birzeit.edu:80/nigelparry/music/outside2.wav",
+    "bytes": 2740244,
+    "partial": null
+  },
+  "birzeit.edu/nigelparry/music/paradis2.wav": {
+    "capture": "19971113154238/http://www.birzeit.edu:80/nigelparry/music/paradis2.wav",
+    "bytes": 4428520,
+    "partial": null
+  },
+  "birzeit.edu/nigelparry/music/paradise.wav": {
+    "capture": "19971113153036/http://www.birzeit.edu:80/nigelparry/music/paradise.wav",
+    "bytes": 8854644,
+    "partial": null
+  },
   "birzeit.edu/ourvoice/culture/oct99/gaza.wav": {
     "capture": "20000930064557/http://www.birzeit.edu:80/ourvoice/culture/oct99/gaza.wav",
     "bytes": 343088,
@@ -1303,6 +1345,51 @@
     "bytes": 36,
     "partial": null
   },
+  "edwardsaid.org/_external/ccasonline.org/events/said.ram": {
+    "capture": "20011108110602/http://www.ccasonline.org:80/events/Said.ram",
+    "bytes": 43,
+    "partial": null
+  },
+  "edwardsaid.org/_external/ccnmtl.columbia.edu/projects/broadcast/ramfiles/said.ram": {
+    "capture": "20100623124620/http://ccnmtl.columbia.edu/projects/broadcast/ramfiles/said.ram",
+    "bytes": 47,
+    "partial": null
+  },
+  "edwardsaid.org/_external/freespeech.org/ramfiles/ar_said.ram": {
+    "capture": "20011103144349/http://www.freespeech.org:80/ramfiles/ar_said.ram",
+    "bytes": 53,
+    "partial": null
+  },
+  "edwardsaid.org/_external/news.bbc.co.uk/olmedia/cta/progs/02/hardtalk/said11sep.ram": {
+    "capture": "20160809035159/http://news.bbc.co.uk/olmedia/cta/progs/02/hardtalk/said11sep.ram",
+    "bytes": 68,
+    "partial": null
+  },
+  "edwardsaid.org/_external/realaudio.rice.edu/preslect/edwardsaid/edwardsaidaud.ram": {
+    "capture": "20011107011553/http://realaudio.rice.edu:80/preslect/edwardsaid/edwardsaidaud.ram",
+    "bytes": 63,
+    "partial": null
+  },
+  "edwardsaid.org/_external/realaudio.rice.edu/preslect/edwardsaid/edwardsaidvid.ram": {
+    "capture": "20011108122551/http://realaudio.rice.edu:80/preslect/edwardsaid/edwardsaidvid.ram",
+    "bytes": 63,
+    "partial": null
+  },
+  "edwardsaid.org/_external/roland-collection.com/rolandcollection/preview/w028.ram": {
+    "capture": "20050718014851/http://www.roland-collection.com/rolandcollection/preview/W028.ram",
+    "bytes": 48,
+    "partial": null
+  },
+  "edwardsaid.org/_external/stream.realimpact.org/rihurl.ram": {
+    "capture": "20021113040053/http://stream.realimpact.org:80/rihurl.ram",
+    "bytes": 162,
+    "partial": null
+  },
+  "edwardsaid.org/_external/webactive.com/rihurl.ram": {
+    "capture": "20030717120755/http://www.webactive.com:80/rihurl.ram",
+    "bytes": 1976,
+    "partial": null
+  },
   "geocities.com/ahlulbayt14/_external/inminds.co.uk/ra/deedat.ra": {
     "capture": "20210211161648/http://www.inminds.co.uk/ra/deedat.ra",
     "bytes": 5460798,
@@ -1385,6 +1472,203 @@
     },
     "playable": "jerusalemiloveyou.com/_external/sham.6arab.com/songs/shami/fairooz/fairooz..zahrat-elmada'en.rm.mp3",
     "seconds": 397
+  },
+  "moqawama.org/gallery/clip/agg/ansarya.mpg": {
+    "capture": "20000919131756/http://www.moqawama.org:80/gallery/clip/agg/ansarya.mpg",
+    "bytes": 978944,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/ansarya.mpg.mp4",
+    "seconds": 61
+  },
+  "moqawama.org/gallery/clip/agg/attack1.mpg": {
+    "capture": "20010612080456/http://www.moqawama.org:80/gallery/clip/agg/attack1.mpg",
+    "bytes": 362500,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack1.mpg.mp4",
+    "seconds": 22
+  },
+  "moqawama.org/gallery/clip/agg/attack2.mpg": {
+    "capture": "20010612075114/http://www.moqawama.org:80/gallery/clip/agg/attack2.mpg",
+    "bytes": 337924,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack2.mpg.mp4",
+    "seconds": 20
+  },
+  "moqawama.org/gallery/clip/agg/attack3.mpg": {
+    "capture": "20000919131822/http://www.moqawama.org:80/gallery/clip/agg/attack3.mpg",
+    "bytes": 176132,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack3.mpg.mp4",
+    "seconds": 10
+  },
+  "moqawama.org/gallery/clip/agg/attack4.mpg": {
+    "capture": "20010612074913/http://www.moqawama.org:80/gallery/clip/agg/attack4.mpg",
+    "bytes": 176132,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack4.mpg.mp4",
+    "seconds": 10
+  },
+  "moqawama.org/gallery/clip/agg/attack5.mpg": {
+    "capture": "20000919131842/http://www.moqawama.org:80/gallery/clip/agg/attack5.mpg",
+    "bytes": 522244,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack5.mpg.mp4",
+    "seconds": 32
+  },
+  "moqawama.org/gallery/clip/agg/attack6.mpg": {
+    "capture": "20000919131851/http://www.moqawama.org:80/gallery/clip/agg/attack6.mpg",
+    "bytes": 475140,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack6.mpg.mp4",
+    "seconds": 29
+  },
+  "moqawama.org/gallery/clip/agg/attack7.mpg": {
+    "capture": "20000919131902/http://www.moqawama.org:80/gallery/clip/agg/attack7.mpg",
+    "bytes": 169988,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack7.mpg.mp4",
+    "seconds": 10
+  },
+  "moqawama.org/gallery/clip/agg/attack8.mpg": {
+    "capture": "20010612082125/http://www.moqawama.org:80/gallery/clip/agg/attack8.mpg",
+    "bytes": 370692,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/attack8.mpg.mp4",
+    "seconds": 23
+  },
+  "moqawama.org/gallery/clip/agg/bekaa.mpg": {
+    "capture": "20010604234236/http://www.moqawama.org:80/gallery/clip/agg/bekaa.mpg",
+    "bytes": 999428,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/bekaa.mpg.mp4",
+    "seconds": 62
+  },
+  "moqawama.org/gallery/clip/agg/jamhour.mpg": {
+    "capture": "20000919131630/http://www.moqawama.org:80/gallery/clip/agg/jamhour.mpg",
+    "bytes": 1048270,
+    "partial": {
+      "bytes": 1048270,
+      "of": 2588676
+    },
+    "playable": "moqawama.org/gallery/clip/agg/jamhour.mpg.mp4",
+    "seconds": 65
+  },
+  "moqawama.org/gallery/clip/agg/janta.mpg": {
+    "capture": "20010612082849/http://www.moqawama.org:80/gallery/clip/agg/janta.mpg",
+    "bytes": 2080772,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/janta.mpg.mp4",
+    "seconds": 129
+  },
+  "moqawama.org/gallery/clip/agg/janta2.mpg": {
+    "capture": "20010612081521/http://www.moqawama.org:80/gallery/clip/agg/janta2.mpg",
+    "bytes": 1894404,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/janta2.mpg.mp4",
+    "seconds": 118
+  },
+  "moqawama.org/gallery/clip/agg/jiyyeh.mpg": {
+    "capture": "20010612075431/http://www.moqawama.org:80/gallery/clip/agg/jiyyeh.mpg",
+    "bytes": 378884,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/jiyyeh.mpg.mp4",
+    "seconds": 23
+  },
+  "moqawama.org/gallery/clip/agg/majdal.mpg": {
+    "capture": "20010612081714/http://www.moqawama.org:80/gallery/clip/agg/majdal.mpg",
+    "bytes": 479232,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/majdal.mpg.mp4",
+    "seconds": 29
+  },
+  "moqawama.org/gallery/clip/agg/mansouri.mpg": {
+    "capture": "20010605002449/http://www.moqawama.org:80/gallery/clip/agg/mansouri.mpg",
+    "bytes": 1345540,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/mansouri.mpg.mp4",
+    "seconds": 83
+  },
+  "moqawama.org/gallery/clip/agg/nazi4.mpg": {
+    "capture": "20010603032637/http://www.moqawama.org:80/gallery/clip/agg/nazi4.mpg",
+    "bytes": 999428,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/nazi4.mpg.mp4",
+    "seconds": 62
+  },
+  "moqawama.org/gallery/clip/agg/quana1.mpg": {
+    "capture": "20010612082052/http://www.moqawama.org:80/gallery/clip/agg/quana1.mpg",
+    "bytes": 176132,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/quana1.mpg.mp4",
+    "seconds": 10
+  },
+  "moqawama.org/gallery/clip/agg/quana2.mpg": {
+    "capture": "20010612075212/http://www.moqawama.org:80/gallery/clip/agg/quana2.mpg",
+    "bytes": 137220,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/quana2.mpg.mp4",
+    "seconds": 8
+  },
+  "moqawama.org/gallery/clip/agg/quana3.mpg": {
+    "capture": "20010604232647/http://www.moqawama.org:80/gallery/clip/agg/quana3.mpg",
+    "bytes": 1114116,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/quana3.mpg.mp4",
+    "seconds": 69
+  },
+  "moqawama.org/gallery/clip/agg/quana4.mpg": {
+    "capture": "20010612081602/http://www.moqawama.org:80/gallery/clip/agg/quana4.mpg",
+    "bytes": 247812,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/agg/quana4.mpg.mp4",
+    "seconds": 15
+  },
+  "moqawama.org/gallery/clip/mis/sayed7.rm": {
+    "capture": "20010706002335/http://www.moqawama.org:80/gallery/clip/mis/sayed7.rm",
+    "bytes": 344635,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/mis/sayed7.rm.mp4",
+    "seconds": 59
+  },
+  "moqawama.org/gallery/clip/mis/sayed9.rm": {
+    "capture": "20010706004246/http://www.moqawama.org:80/gallery/clip/mis/sayed9.rm",
+    "bytes": 452480,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/mis/sayed9.rm.mp4",
+    "seconds": 76
+  },
+  "moqawama.org/gallery/clip/opp/240699.rm": {
+    "capture": "20011118003724/http://www.moqawama.org:80/gallery/clip/opp/240699.rm",
+    "bytes": 694095,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/opp/240699.rm.mp4",
+    "seconds": 121
+  },
+  "moqawama.org/gallery/clip/opp/shibaa.rm": {
+    "capture": "20011117234659/http://www.moqawama.org:80/gallery/clip/opp/shibaa.rm",
+    "bytes": 1051418,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/opp/shibaa.rm.mp4",
+    "seconds": 183
+  },
+  "moqawama.org/gallery/clip/opp/tlatin.rm": {
+    "capture": "20010705233621/http://www.moqawama.org:80/gallery/clip/opp/tlatin.rm",
+    "bytes": 112314,
+    "partial": null,
+    "playable": "moqawama.org/gallery/clip/opp/tlatin.rm.mp4",
+    "seconds": 21
+  },
+  "oriononline.org/pages/oo/millennium/said/edward_said_one_288.mov": {
+    "playable": "oriononline.org/pages/oo/millennium/said/edward_said_one_288.mov.mp4",
+    "seconds": 245
+  },
+  "oriononline.org/pages/oo/millennium/said/edward_said_one_56k.mov": {
+    "playable": "oriononline.org/pages/oo/millennium/said/edward_said_one_56k.mov.mp4",
+    "seconds": 245
+  },
+  "oriononline.org/pages/oo/millennium/said/edward_said_two_56k.mov": {
+    "playable": "oriononline.org/pages/oo/millennium/said/edward_said_two_56k.mov.mp4",
+    "seconds": 248
   },
   "pal-soft.com/aldorra.rm": {
     "capture": "20070131190033/http://www.pal-soft.com/aldorra.rm",
