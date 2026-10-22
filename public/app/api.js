@@ -802,6 +802,7 @@ async function describePlaced() {
 	if (!page || placed?.path !== path || localPathOf(iframe.contentWindow) !== top) return;
 	setChrome({ title: document.querySelector('.window-title').textContent, url: page.display_url });
 	setCaptured(page.timestamp);
+	if (page.replay_url) sourceUrl = page.replay_url;
 }
 
 // --- applying both to a frame ----------------------------------------------
@@ -922,6 +923,7 @@ async function applyChrome() {
 	// The stamp carries the capture time too, so the date shows before the database
 	// answers -- and, for a page it has never heard of, instead of it.
 	setCaptured(/\/web\/(\d{8,14})/.exec(stamped || '')?.[1]);
+	sourceUrl = stamped ? waybackSourceUrl(stamped) : '';
 
 	// Filed from the DOM first, so a page the database has never heard of still lands in
 	// history. The database pass below files it again with better labels.
@@ -948,6 +950,9 @@ async function applyChrome() {
 
 	setChrome({ title: page.display_title, url: page.display_url });
 	setCaptured(page.timestamp);
+	// A frameset carries no stamp of its own -- its <body> is the <frameset> -- so this is
+	// where Source gets one for it.
+	if (page.replay_url) sourceUrl = page.replay_url;
 	if (placed && placed.top === page.local_path) describePlaced();
 
 	// Held for the favorites star, which wants the corrected title and the real address
@@ -1444,13 +1449,18 @@ export function waybackSourceUrl(raw) {
 		.replace(/(\/\/[^/]+):80(?=\/|$)/g, '$1');
 }
 
-// Opens that snapshot in a new tab. Pages the scraper didn't stamp -- anything
-// hand-added to /sites -- simply do nothing rather than opening a broken tab.
-export function openWaybackSource() {
-	const raw = iframe.contentDocument?.body?.dataset.waybackUrl;
-	if (!raw) return;
+// The snapshot of the page the address bar shows, kept up to date with it by applyChrome
+// and describePlaced: in a frameset, the page placed in a pane, else the frameset itself.
+// Worked out ahead of the click, because window.open after an await loses the click and
+// the popup blocker stops it.
+let sourceUrl = '';
 
-	window.open(waybackSourceUrl(raw), '_blank', 'noopener');
+// Opens that snapshot in a new tab. Pages with neither a stamp nor a database row --
+// anything hand-added to /sites -- simply do nothing rather than opening a broken tab.
+export function openWaybackSource() {
+	if (!sourceUrl) return;
+
+	window.open(sourceUrl, '_blank', 'noopener');
 }
 
 // The shuffled pool, dealt one page per Random click so a session never repeats.
