@@ -477,6 +477,7 @@ export async function readCrawl(logPath, { all = false } = {}) {
       title: exists ? await readTitle(localPath) : '',
       timestamp: entry.timestamp || '',
       originalUrl: entry.originalUrl,
+      sourceUrl: entry.sourceUrl,
       // Label relative to the crawl root, so a deep crawl reads as `poets/darwish.html`
       // rather than repeating the host on every row.
       label:

@@ -85,7 +85,7 @@ function renderCrawl(crawl) {
 
       // Carried on the row so the click handler can surface it above the frame without
       // needing a lookup table of every page in the archive.
-      const wayback = replayUrl(page.timestamp, page.originalUrl);
+      const wayback = replayUrl(page.timestamp, page.sourceUrl || page.originalUrl);
 
       return (
         `<li><a href="${escapeHtml(pageHref(page.localPath))}"` +

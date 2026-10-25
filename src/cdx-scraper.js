@@ -1685,9 +1685,16 @@ async function rewriteSavedPages(seeds) {
     // none. Never replaced: the stamp records the capture the file actually came from,
     // and a log listing the URL more than once could otherwise swap it for another on a
     // rewrite -- the capture that would be named is just the last entry for that path.
+    //
+    // A page recovered from a mirror (a log entry with `sourceUrl`) is stamped with the
+    // mirror's capture, and also carries the address it stands in for, which the shell
+    // shows instead of the mirror's.
     const source = byPath.get(localPath);
     if (source && !$('body').attr('data-wayback-url')) {
-      $('body').attr('data-wayback-url', waybackUrl(source.timestamp, source.originalUrl));
+      $('body').attr('data-wayback-url', waybackUrl(source.timestamp, source.sourceUrl || source.originalUrl));
+    }
+    if (source?.sourceUrl && !$('body').attr('data-display-url')) {
+      $('body').attr('data-display-url', source.originalUrl.replace(/(\/\/[^/]+):80(?=\/|$)/, '$1'));
     }
 
     if (!$('#print-size').length) {

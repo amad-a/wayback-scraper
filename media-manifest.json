@@ -282,10 +282,18 @@
     "bytes": 51,
     "partial": null
   },
+  "birzeit.edu/diary/diaryradio/strangew.rm": {
+    "playable": "birzeit.edu/diary/diaryradio/strangew.rm.mp3",
+    "seconds": 347
+  },
   "birzeit.edu/diary/diaryradio/whiteman.ram": {
     "capture": "19980421134344/http://www.birzeit.edu:80/diary/diaryradio/whiteman.ram",
     "bytes": 50,
     "partial": null
+  },
+  "birzeit.edu/diary/ramallah/rampol.rm": {
+    "playable": "birzeit.edu/diary/ramallah/rampol.rm.mp4",
+    "seconds": 18
   },
   "birzeit.edu/martyrs/september96/passing.ram": {
     "capture": "20000824023250/http://www.birzeit.edu:80/martyrs/september96/passing.ram",

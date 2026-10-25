@@ -212,7 +212,9 @@ async function collectPages() {
       display_url: displayUrl(chosen.originalUrl),
       timestamp,
       captured_at: toIso(timestamp),
-      replay_url: replayUrl(timestamp, chosen.originalUrl),
+      // A page recovered from a mirror lives at, and is shown as, the address it stands
+      // in for (originalUrl); Source opens the mirror's capture it actually came from.
+      replay_url: replayUrl(timestamp, chosen.sourceUrl || chosen.originalUrl),
       title,
       byte_length: Number(chosen.length) || null,
       digest: chosen.digest || null,

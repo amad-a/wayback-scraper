@@ -911,9 +911,13 @@ async function applyChrome() {
 	prepareFrame(iframe.contentWindow);
 
 	const stamped = doc?.body?.dataset.waybackUrl;
-	const stampedUrl = stamped
-		? stamped.replace(/^.*?\/web\/\d+id_\//, '').replace(/(\/\/[^/]+):80(?=\/|$)/, '$1')
-		: '';
+	// A page recovered from a mirror is stamped with the mirror's capture, and names the
+	// address it stands in for separately.
+	const stampedUrl =
+		doc?.body?.dataset.displayUrl ||
+		(stamped
+			? stamped.replace(/^.*?\/web\/\d+id_\//, '').replace(/(\/\/[^/]+):80(?=\/|$)/, '$1')
+			: '');
 	setChrome({
 		title: doc?.title || '',
 		// Strip the archive prefix back off to recover the address the page had
