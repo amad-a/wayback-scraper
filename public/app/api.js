@@ -1219,21 +1219,60 @@ dropdownContent?.setAttribute('aria-label', 'Pages');
 export function render(pages) {
 	if (!dropdownContent) return;
 	dropdownContent.replaceChildren();
+	for (const page of pages) dropdownContent.appendChild(pageRow(page));
+	markCurrent();
+}
 
+// The entries, under a heading for each of their other tags -- the biggest group first,
+// then by name -- with those that have no other tag last, under Entry. A page with two
+// tags is listed under both. The heading sticks to the top of the list while its pages
+// scroll under it.
+function renderEntries(pages) {
+	if (!dropdownContent) return;
+	dropdownContent.replaceChildren();
+
+	const groups = new Map();
 	for (const page of pages) {
-		const row = document.createElement('div');
-		row.className = 'bookmark-list-entry';
-		row.dataset.path = page.local_path;
-		row.setAttribute('role', 'option');
-		row.tabIndex = -1;
-		const address = page.display_url || page.local_path;
-		row.textContent = page.display_title ? `${address} - ${page.display_title}` : address;
-		row.title = row.textContent;
-		row.addEventListener('click', () => setFrame(page.local_path));
-		dropdownContent.appendChild(row);
+		const tags = page.tags?.length ? page.tags : [''];
+		for (const tag of tags) {
+			const key = tag.toLowerCase();
+			if (!groups.has(key)) groups.set(key, { tag, pages: [] });
+			groups.get(key).pages.push(page);
+		}
+	}
+	const ordered = [...groups.values()].sort((a, b) =>
+		(a.tag === '') - (b.tag === '') || b.pages.length - a.pages.length || a.tag.localeCompare(b.tag));
+
+	for (const [i, { tag, pages: members }] of ordered.entries()) {
+		const group = document.createElement('div');
+		group.className = 'dropdown-group';
+		group.setAttribute('role', 'group');
+		const heading = document.createElement('div');
+		heading.className = 'dropdown-group-heading';
+		heading.id = `dropdown-group-${i}`;
+		// Named as a folder would be: "Personal websites", not "#personal websites".
+		const name = tag || 'entry';
+		heading.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+		group.setAttribute('aria-labelledby', heading.id);
+		group.appendChild(heading);
+		for (const page of members) group.appendChild(pageRow(page));
+		dropdownContent.appendChild(group);
 	}
 
 	markCurrent();
+}
+
+function pageRow(page) {
+	const row = document.createElement('div');
+	row.className = 'bookmark-list-entry';
+	row.dataset.path = page.local_path;
+	row.setAttribute('role', 'option');
+	row.tabIndex = -1;
+	const address = page.display_url || page.local_path;
+	row.textContent = page.display_title ? `${address} - ${page.display_title}` : address;
+	row.title = row.textContent;
+	row.addEventListener('click', () => setFrame(page.local_path));
+	return row;
 }
 
 // Opens a page from the dropdown in the frame, and closes the dropdown.
@@ -1310,7 +1349,7 @@ async function openEntries({ focusList }) {
 	pendingOpen = false;
 	// Nothing tagged "entry" yet: nothing to show, so it stays closed.
 	if (!pages.length) return;
-	render(pages);
+	renderEntries(pages);
 	showDropdown();
 
 	if (focusList) {

@@ -417,7 +417,13 @@ app.get('/api/entries', (_req, res) => {
     )
     .all()
     .filter((r) => splitTags(r.tags).some((t) => t.toLowerCase() === 'entry'))
-    .map(({ local_path, display_url, display_title }) => ({ local_path, display_url, display_title }));
+    // Its other tags, which the ▼ list groups the entries under.
+    .map(({ local_path, display_url, display_title, tags }) => ({
+      local_path,
+      display_url,
+      display_title,
+      tags: splitTags(tags).filter((t) => t.toLowerCase() !== 'entry'),
+    }));
 
   const key = (r) => r.display_url.replace(/^https?:\/\/(www\.)?/i, '').toLowerCase();
   rows.sort((a, b) => key(a).localeCompare(key(b)));
