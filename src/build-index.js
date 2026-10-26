@@ -14,6 +14,7 @@
 // Opening it straight off disk with file:// will not work -- every link, both here and
 // inside the archived pages themselves, resolves against the server root.
 
+import { execFileSync } from 'child_process';
 import fs from 'fs/promises';
 import { existsSync } from 'fs';
 
@@ -100,8 +101,13 @@ function renderCrawl(crawl) {
     })
     .join('\n');
 
+  // When the crawl joined the archive, for the "Newest/Oldest added" sort. Shown only while
+  // sorting by it.
+  const added = crawl.added ? crawl.added.slice(0, 10) : '';
   return (
-    `<li><details data-root="${escapeHtml(crawl.root)}">\n<summary>${escapeHtml(crawl.root)} <span class="count">${crawl.pages.length}</span></summary>\n` +
+    `<li data-added="${escapeHtml(crawl.added || '')}"><details data-root="${escapeHtml(crawl.root)}">\n` +
+    `<summary${added ? ` title="Added ${added}"` : ''}>${escapeHtml(crawl.root)} <span class="count">${crawl.pages.length}</span>` +
+    `${added ? ` <span class="added">${added}</span>` : ''}</summary>\n` +
     `<ul>\n${rows}\n</ul>\n</details></li>`
   );
 }
@@ -133,11 +139,15 @@ function renderPage(crawls, stats) {
      on screen however far down the list you are, and the frame never moves. */
   nav { position: fixed; top: 0; bottom: 0; left: 0; width: 340px; box-sizing: border-box; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
   #search { width: 100%; box-sizing: border-box; }
-  .nav-tools { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-  .nav-tools p { margin: 0; }
+  .nav-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px; }
+  .nav-tools p { margin: 0; white-space: nowrap; }
+  .nav-tools button { white-space: nowrap; }
   .nav-tools span { display: flex; gap: 4px; }
   #tree { flex: 1; min-height: 0; overflow-y: auto; }
   .count { color: grey; }
+  .added { display: none; color: grey; }
+  #tree.by-added .added { display: inline; }
+  #sort { min-width: 0; }
 
   /* Filename stays the anchor of the row; the title is secondary and wraps under it. */
   #tree .f { word-break: break-all; }
@@ -208,6 +218,11 @@ function renderPage(crawls, stats) {
     <div class="nav-tools">
       <p id="search-status" aria-live="polite">${stats.crawls} crawls, ${stats.linked} pages${stats.missing ? ` (${stats.missing} not on disk)` : ''}</p>
       <span>
+        <select id="sort" aria-label="Sort crawls" title="Sort crawls by name, or by when they were added">
+          <option value="name">A–Z</option>
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
         <button type="button" id="expand-all">Expand all</button>
         <button type="button" id="collapse-all">Collapse all</button>
       </span>
@@ -292,6 +307,38 @@ ${tree}
       rows: rows,
       count: details.querySelector('.count'),
     });
+  });
+
+  // --- sorting --------------------------------------------------------------------
+
+  // The tree is rendered A-Z; the other orders are by when each crawl joined the archive
+  // (data-added). Remembered per viewer.
+  var tree = document.getElementById('tree');
+  var sortSelect = document.getElementById('sort');
+  var crawlItems = Array.prototype.slice.call(tree.children);
+
+  function applySort(order) {
+    var items = crawlItems.slice();
+    if (order !== 'name') {
+      items.sort(function (a, b) {
+        var da = a.getAttribute('data-added') || '';
+        var db = b.getAttribute('data-added') || '';
+        if (da === db) return crawlItems.indexOf(a) - crawlItems.indexOf(b);
+        return (da < db ? -1 : 1) * (order === 'newest' ? -1 : 1);
+      });
+    }
+    items.forEach(function (li) { tree.appendChild(li); });
+    tree.classList.toggle('by-added', order !== 'name');
+  }
+
+  try {
+    var savedSort = localStorage.getItem('archive-index-sort');
+    if (savedSort && sortSelect.querySelector('option[value="' + savedSort + '"]')) sortSelect.value = savedSort;
+  } catch (err) {}
+  if (sortSelect.value !== 'name') applySort(sortSelect.value);
+  sortSelect.addEventListener('change', function () {
+    applySort(sortSelect.value);
+    try { localStorage.setItem('archive-index-sort', sortSelect.value); } catch (err) {}
   });
 
   // --- the address bar ----------------------------------------------------------
@@ -943,6 +990,35 @@ ${tree}
 // Entry
 // ---------------------------------------------------------------------------
 
+// No crawl records when it was made, so the date its log.json was first committed stands
+// in: crawl root -> ISO date. Crawls committed together share a date. Empty outside a git
+// checkout.
+function crawlAddedDates() {
+  const added = new Map();
+  let out = '';
+  try {
+    out = execFileSync(
+      'git',
+      ['log', '--no-renames', '--diff-filter=A', '--format=@%aI', '--name-only', '--', `${DEST_PATH}/**/log.json`],
+      { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 }
+    );
+  } catch {
+    return added;
+  }
+  // Newest commit first, so the last date seen for a log is when it was first added.
+  let date = '';
+  for (const line of out.split('\n')) {
+    // UTC, so the dates compare as strings across daylight-saving offsets.
+    if (line.startsWith('@')) date = new Date(line.slice(1)).toISOString();
+    else if (line.endsWith('/log.json')) {
+      // Lowercased: a few crawl roots were renamed from mixed case, which would otherwise
+      // date them from the rename.
+      added.set(line.slice(DEST_PATH.length + 1, -'/log.json'.length).toLowerCase(), date);
+    }
+  }
+  return added;
+}
+
 async function main() {
   if (!existsSync(destDir)) {
     console.error(`No ${DEST_PATH}/ directory here. Run this from the repo root.`);
@@ -965,6 +1041,7 @@ async function main() {
     }
   }
 
+  const added = crawlAddedDates();
   const crawls = [];
   let linked = 0;
   let missing = 0;
@@ -973,6 +1050,8 @@ async function main() {
   for (const logPath of logs) {
     const crawl = await readCrawl(logPath, { all: opts.all });
     if (!crawl || !crawl.pages.length) continue;
+    // A crawl not yet committed is the newest of all.
+    crawl.added = added.get(crawl.root.toLowerCase()) || new Date().toISOString();
     crawls.push(crawl);
     for (const page of crawl.pages) {
       if (overrides.has(page.localPath)) page.title = overrides.get(page.localPath);
