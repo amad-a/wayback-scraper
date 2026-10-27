@@ -14,24 +14,18 @@ const IMAGE_HREF = /^\/sites\/.+\.(jpe?g|gif|png|bmp)$/i;
 const BOUND = '__palestineOnlineImagePeekBound';
 const GAP = 16; // between the cursor and the preview
 const MAX_SIDE = 320; // the preview's longest side, before the window limits it
+const LINGER = 100; // ms the preview outlives the link, to reach the next one in a list
 
 const iframe = document.getElementById('frame');
 
 let peek = null; // the floating <div>, built on first use
 let current = null; // { link, win, x, y } while hovering an image link
+let lingering = 0; // the timer that hides the preview once the cursor has left a link
 
 function build() {
 	peek = document.createElement('div');
 	peek.className = 'image-peek';
 	peek.hidden = true;
-	const img = document.createElement('img');
-	img.alt = '';
-	img.addEventListener('load', () => {
-		if (current && img.src === current.link.href) place();
-	});
-	// Never saved after all, or not an image: show nothing rather than a broken icon.
-	img.addEventListener('error', hide);
-	peek.append(img);
 	document.body.append(peek);
 }
 
@@ -66,7 +60,7 @@ function shellPoint(win, x, y) {
 // frame, so a link near the right edge or the bottom still shows its image whole.
 function place() {
 	const img = peek.firstChild;
-	if (!img.naturalWidth) return; // still loading; the load listener calls back
+	if (!current || !img) return; // nothing loaded yet; show() calls back once it is
 
 	const bounds = iframe.getBoundingClientRect();
 	const scale = Math.min(
@@ -91,18 +85,37 @@ function place() {
 	peek.style.top = `${Math.max(bounds.top, top)}px`;
 }
 
+// The new image is loaded and decoded off to the side and swapped in whole, image and
+// size together. Until then whatever is showing stays up and keeps following the cursor:
+// swapping the src in place would draw the old picture at the new spot, then jump to
+// the new one's size once it arrived.
 function show(link, win, event) {
 	if (!peek) build();
+	clearTimeout(lingering);
 	current = { link, win, x: event.clientX, y: event.clientY };
-	const img = peek.firstChild;
-	if (img.src !== link.href) {
-		peek.hidden = true; // until the new image has a size to place it by
-		img.src = link.href;
+	if (peek.firstChild?.src === link.href) {
+		place();
+		return;
 	}
-	place();
+
+	const img = new Image();
+	img.alt = '';
+	img.src = link.href;
+	img.decode().then(
+		() => {
+			if (current?.link !== link) return; // moved on while it loaded
+			peek.replaceChildren(img);
+			place();
+		},
+		// Never saved after all, or not an image: show nothing rather than a broken icon.
+		() => {
+			if (current?.link === link) hide();
+		},
+	);
 }
 
 function hide() {
+	clearTimeout(lingering);
 	current = null;
 	if (peek) peek.hidden = true;
 }
@@ -115,7 +128,11 @@ export function bindImagePeek(doc) {
 	doc.addEventListener('pointerover', (event) => {
 		if (event.pointerType !== 'mouse') return;
 		const link = imageLink(event.target);
-		if (!link || link === current?.link) return;
+		if (!link) return;
+		if (link === current?.link) {
+			clearTimeout(lingering); // back onto it before the preview went
+			return;
+		}
 		// Set as it is first hovered, rather than by a stylesheet: which links count is
 		// decided from the resolved URL, and a selector on href would miss relative ones.
 		link.style.cursor = 'zoom-in';
@@ -128,7 +145,10 @@ export function bindImagePeek(doc) {
 		place();
 	});
 	doc.addEventListener('pointerout', (event) => {
-		if (current && !current.link.contains(event.relatedTarget)) hide();
+		if (current && !current.link.contains(event.relatedTarget)) {
+			clearTimeout(lingering);
+			lingering = setTimeout(hide, LINGER);
+		}
 	});
 	// Clicking opens the image itself, and scrolling moves the link out from under it.
 	doc.addEventListener('pointerdown', hide, true);
