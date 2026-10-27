@@ -850,7 +850,7 @@ button:disabled {
 	image-rendering: pixelated;
 }
 
-/* The ▼ list's tag headings: a silver bar, bold italic, with a folder where the rows have a page,
+/* The ▼ list's tag headings: a silver bar, bold, with a folder where the rows have a page,
    sticking to the top of the list while its own pages scroll under it. */
 .dropdown-group-heading {
 	position: sticky;
@@ -865,14 +865,14 @@ button:disabled {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 10pt;
 	font-weight: bold;
-	font-style: italic;
 	-webkit-font-smoothing: auto;
 	background: var(--ButtonFace);
 	box-shadow: var(--edge-raised);
 	user-select: none;
 }
 
-.dropdown-group-heading::before {
+.dropdown-group-heading::before,
+.dropdown-empty::before {
 	content: "";
 	display: inline-block;
 	width: 16px;
@@ -882,6 +882,23 @@ button:disabled {
 	vertical-align: top;
 	background: url('../assets/icons/folder-16x16.png') no-repeat;
 	image-rendering: pixelated;
+}
+
+/* A search that found nothing: one row, laid out like a result but not one, so it neither
+   highlights nor opens anything. */
+.dropdown-empty {
+	height: 21px;
+	padding: 0 5px 0 1px;
+	line-height: 21px;
+	white-space: nowrap;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	-webkit-font-smoothing: auto;
+	cursor: default;
+}
+
+.dropdown-empty::before {
+	background-image: url('../assets/icons/msg_error-2.png');
 }
 
 .favorites,

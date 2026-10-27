@@ -1223,6 +1223,37 @@ export function render(pages) {
 	markCurrent();
 }
 
+// Search results, while the address bar's icon shows it is searching. No results is a
+// single row saying so, with an error icon.
+function renderSearch(pages) {
+	if (!dropdownContent) return;
+	if (!pages.length) {
+		dropdownContent.replaceChildren();
+		const empty = document.createElement('div');
+		empty.className = 'dropdown-empty';
+		empty.setAttribute('role', 'status');
+		empty.textContent = 'No page found.';
+		dropdownContent.appendChild(empty);
+	} else {
+		render(pages);
+	}
+	setSearching(true);
+}
+
+// The address bar's page icon turns into a search one while the list holds search
+// results, and back when it holds the entries or closes. Preloaded, so it swaps without
+// a blank frame the first time.
+const addressIcon = document.getElementById('address-icon');
+const PAGE_ICON = './assets/icons/page-16x16.png';
+const SEARCH_ICON = './assets/icons/search_file_2_cool-3.png';
+new Image().src = SEARCH_ICON;
+
+function setSearching(on) {
+	if (!addressIcon) return;
+	const src = on ? SEARCH_ICON : PAGE_ICON;
+	if (addressIcon.getAttribute('src') !== src) addressIcon.setAttribute('src', src);
+}
+
 // The entries, under a heading for each of their other tags, with those that have no
 // other tag under Entry. A page with two tags is listed under both. The groups come in
 // the order set on the archive index's admin port (`order`, lowercased tags; 'entry' is
@@ -1268,6 +1299,7 @@ function renderEntries(pages, order = []) {
 	}
 
 	markCurrent();
+	setSearching(false);
 }
 
 function pageRow(page) {
@@ -1416,12 +1448,7 @@ async function search(query) {
 	pendingOpen = false;
 	const found = await fetchJson(`/api/search?q=${encodeURIComponent(query)}`, { results: [] });
 	if (mine !== ticket) return;
-	// No matches: the dropdown closes rather than standing open and empty.
-	if (!found.results.length) {
-		hideAddressDropdown();
-		return;
-	}
-	render(found.results);
+	renderSearch(found.results);
 	showDropdown();
 }
 
@@ -1451,6 +1478,7 @@ export function hideAddressDropdown() {
 	ticket++; // anything still loading is for a dropdown that is no longer wanted
 	pendingOpen = false;
 	clearTimeout(searchTimer);
+	setSearching(false);
 	if (!dropdown || dropdown.classList.contains('hidden')) return;
 	const hadFocus = dropdown.contains(document.activeElement);
 	dropdown.classList.add('hidden');
