@@ -2,7 +2,8 @@
 //
 // Pages of this era often list their photos as plain links -- palestine-net.com/media
 // has 26 -- so seeing one meant opening it and coming back. Hovering a link to a .jpg,
-// .gif or .png under /sites now shows it next to the cursor, until the cursor leaves.
+// .gif or .png under /sites now shows it next to the cursor, until the cursor leaves,
+// and turns the cursor into a magnifier.
 //
 // The preview lives in the shell, not in the archived page: a nav pane is too narrow to
 // hold it, and nothing is added to markup the page's own scripts might walk. Mouse only,
@@ -114,7 +115,11 @@ export function bindImagePeek(doc) {
 	doc.addEventListener('pointerover', (event) => {
 		if (event.pointerType !== 'mouse') return;
 		const link = imageLink(event.target);
-		if (link && link !== current?.link) show(link, win, event);
+		if (!link || link === current?.link) return;
+		// Set as it is first hovered, rather than by a stylesheet: which links count is
+		// decided from the resolved URL, and a selector on href would miss relative ones.
+		link.style.cursor = 'zoom-in';
+		show(link, win, event);
 	});
 	doc.addEventListener('pointermove', (event) => {
 		if (!current || current.link.ownerDocument !== doc) return;
