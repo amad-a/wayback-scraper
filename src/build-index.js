@@ -209,12 +209,25 @@ function renderPage(crawls, stats) {
   #tag-input { width: 160px; }
   #tag-error { color: #a00; }
   #frame-captured { flex: 0 0 150px; }
+  /* Admin only: the order of the tag groups in the shell's address bar list. */
+  #group-order[hidden] { display: none; }
+  #group-order summary { cursor: pointer; }
+  #group-order ol { margin: 4px 0; padding: 0; list-style: none; max-height: 12em; overflow-y: auto; }
+  #group-order li { display: flex; align-items: center; gap: 4px; padding: 1px 0; }
+  #group-order li .name { flex: 1; font-weight: bold; font-style: italic; }
+  #group-order li button { min-width: 0; min-height: 0; padding: 0 5px; }
+  #group-order-error { margin: 0; color: #a00; }
 </style>
 </head>
 <body>
   <nav>
     <input id="search" type="search" placeholder="Filter by site, file, title, address or #tag  ( / )" aria-label="Filter pages" autocomplete="off" spellcheck="false">
     <div id="tag-index" class="tag-list" aria-label="All tags" hidden></div>
+    <details id="group-order" hidden>
+      <summary>Address bar groups</summary>
+      <ol id="group-order-list"></ol>
+      <p id="group-order-error" role="alert"></p>
+    </details>
     <div class="nav-tools">
       <p id="search-status" aria-live="polite">${stats.crawls} crawls, ${stats.linked} pages${stats.missing ? ` (${stats.missing} not on disk)` : ''}</p>
       <span>
@@ -815,6 +828,7 @@ ${tree}
       .then(function (body) {
         setRowTags(body.local_path, body.tags);
         renderTagIndex();
+        renderGroupOrder();
         if (path === currentPath) {
           renderTags();
           tagInput.value = '';
@@ -844,6 +858,7 @@ ${tree}
       Object.keys(all).forEach(function (path) { setRowTags(path, all[path]); });
       renderTags();
       renderTagIndex();
+      renderGroupOrder();
       // A shared ?q= naming a tag could not match anything until the tags arrived.
       if (currentQuery) applyFilter(currentQuery);
     })
@@ -855,8 +870,116 @@ ${tree}
     .then(function (res) {
       isAdmin = res.ok;
       renderTags();
+      if (!isAdmin) return;
+      return fetch('/api/tag-order')
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (order) {
+          savedOrder = order;
+          renderGroupOrder();
+        });
     })
     .catch(function () {});
+
+  // --- the address bar's groups (admin) ----------------------------------------------
+
+  // The shell's address bar list shows the pages tagged "entry" under a heading for each of
+  // their other tags (renderEntries in public/app/api.js). Here, on the admin port, those
+  // groups can be put in order; the order is saved whole on every move. 'entry' stands
+  // for the group of entries with no other tag.
+  var groupOrder = document.getElementById('group-order');
+  var groupOrderList = document.getElementById('group-order-list');
+  var groupOrderError = document.getElementById('group-order-error');
+  var savedOrder = [];
+  var orderSaving = false;
+
+  function entryGroups() {
+    var groups = {};
+    Object.keys(tagsByPath).forEach(function (path) {
+      var tags = tagsByPath[path];
+      if (!tags.some(function (t) { return t.toLowerCase() === 'entry'; })) return;
+      var others = tags.filter(function (t) { return t.toLowerCase() !== 'entry'; });
+      (others.length ? others : ['entry']).forEach(function (tag) {
+        var key = tag.toLowerCase();
+        if (!groups[key]) groups[key] = { key: key, tag: tag, n: 0 };
+        groups[key].n += 1;
+      });
+    });
+    // The same order the shell uses: saved first, then the rest biggest first, Entry last.
+    function rank(g) {
+      var i = savedOrder.indexOf(g.key);
+      return i === -1 ? savedOrder.length : i;
+    }
+    return Object.keys(groups).map(function (k) { return groups[k]; }).sort(function (a, b) {
+      return rank(a) - rank(b)
+        || (a.key === 'entry') - (b.key === 'entry')
+        || b.n - a.n
+        || a.key.localeCompare(b.key);
+    });
+  }
+
+  function renderGroupOrder() {
+    groupOrder.hidden = !isAdmin;
+    if (!isAdmin) return;
+    var groups = entryGroups();
+    groupOrderList.replaceChildren();
+    groups.forEach(function (g, i) {
+      var li = document.createElement('li');
+      var name = document.createElement('span');
+      name.className = 'name';
+      name.textContent = g.tag.charAt(0).toUpperCase() + g.tag.slice(1);
+      var n = document.createElement('span');
+      n.className = 'count';
+      n.textContent = g.n;
+      li.appendChild(name);
+      li.appendChild(n);
+      [['\u25b2', -1, 'up'], ['\u25bc', 1, 'down']].forEach(function (spec) {
+        var button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = spec[0];
+        button.title = 'Move ' + name.textContent + ' ' + spec[2];
+        button.setAttribute('aria-label', button.title);
+        button.disabled = orderSaving || !groups[i + spec[1]];
+        button.addEventListener('click', function () {
+          var keys = groups.map(function (x) { return x.key; });
+          var j = i + spec[1];
+          keys[i] = keys[j];
+          keys[j] = g.key;
+          saveGroupOrder(keys, g.key, spec[2]);
+        });
+        li.appendChild(button);
+      });
+      groupOrderList.appendChild(li);
+    });
+  }
+
+  function saveGroupOrder(keys, moved, direction) {
+    orderSaving = true;
+    groupOrderError.textContent = '';
+    renderGroupOrder();
+    fetch('/api/tag-order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ order: keys }),
+    })
+      .then(function (res) {
+        return res.json().then(function (body) {
+          if (!res.ok) throw new Error(body.error || 'HTTP ' + res.status);
+          savedOrder = body;
+        });
+      })
+      .catch(function (err) {
+        groupOrderError.textContent = 'Could not save: ' + err.message;
+      })
+      .then(function () {
+        orderSaving = false;
+        renderGroupOrder();
+        // Keep the keyboard on the group that moved, on the same arrow.
+        var index = entryGroups().map(function (g) { return g.key; }).indexOf(moved);
+        var row = groupOrderList.children[index];
+        var button = row && row.querySelector('button[title$="' + direction + '"]');
+        if (button && !button.disabled) button.focus();
+      });
+  }
 
   // --- opening a shared link -------------------------------------------------------
 

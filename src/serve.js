@@ -283,7 +283,7 @@ function sameHost(origin, host) {
 const TAG_MAX = 60;
 const TAGS_MAX = 50;
 
-function cleanTags(input) {
+function cleanTags(input, max = TAGS_MAX) {
   if (!Array.isArray(input)) return null;
   const seen = new Set();
   const tags = [];
@@ -294,7 +294,7 @@ function cleanTags(input) {
     seen.add(tag.toLowerCase());
     tags.push(tag);
   }
-  return tags.length > TAGS_MAX ? null : tags;
+  return tags.length > max ? null : tags;
 }
 
 function splitTags(value) {
@@ -479,6 +479,57 @@ app.post('/api/tags', adminOnly, express.json({ limit: '16kb' }), (req, res) => 
   } finally {
     rw.close();
   }
+});
+
+// The order of the address bar's tag groups (see renderEntries in public/app/api.js):
+// lowercased tags, first group first. Groups it does not name follow, biggest first.
+// Empty on a database built before the table existed.
+function tagOrder(handle) {
+  try {
+    return handle.prepare('SELECT tag FROM tag_order ORDER BY position').all().map((r) => r.tag);
+  } catch {
+    return [];
+  }
+}
+
+app.get('/api/tag-order', (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  res.json(tagOrder(handle));
+});
+
+// Replaces the whole order, for the same reason a page's tags are replaced whole.
+app.post('/api/tag-order', adminOnly, express.json({ limit: '16kb' }), (req, res) => {
+  // Every tag the archive has could be a group, so not held to one page's limit.
+  const order = cleanTags(req.body?.order, 1000);
+  if (!order) return res.status(400).json({ error: 'order[] required' });
+  const tags = order.map((t) => t.toLowerCase());
+
+  let rw;
+  try {
+    rw = new Database(DB_PATH, { fileMustExist: true });
+  } catch {
+    return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  }
+  try {
+    rw.exec('CREATE TABLE IF NOT EXISTS tag_order (tag TEXT PRIMARY KEY, position INTEGER NOT NULL)');
+    const put = rw.prepare('INSERT INTO tag_order (tag, position) VALUES (?, ?)');
+    rw.transaction(() => {
+      rw.prepare('DELETE FROM tag_order').run();
+      tags.forEach((t, i) => put.run(t, i));
+    })();
+    res.json(tags);
+  } finally {
+    rw.close();
+  }
+});
+
+// The order as tag-order.txt, for `npm run tags:pull`.
+app.get('/api/tag-order.txt', adminOnly, (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  const tags = tagOrder(handle);
+  res.type('text/plain').send(tags.length ? `${tags.join('\n')}\n` : '');
 });
 
 // The hand-edited columns as tags.csv, for `npm run tags:pull` to bring down and commit.

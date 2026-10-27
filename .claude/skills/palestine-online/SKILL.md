@@ -69,6 +69,7 @@ Example: keeping only five pages of `geocities.com/zuhairhm`.
 - Writes are accepted only on the admin port 8081 (loopback, never proxied by nginx). Requests must be same-origin JSON. There are no secrets in pages.
 - `tags.csv` is the committed backup. The server's DB is the latest copy; `npm run tags:pull` brings it down.
 - The `entry` tag drives the address bar ▼ list and the random start page (a bare `/` opens a random entry page).
+- The ▼ list groups entry pages under their other tags. The group order is set under "Address bar groups" on the admin port's archive index, stored in archive.db's `tag_order` table (kept across `npm run db`), and backed up to `tag-order.txt` by `npm run tags:pull`; `npm run db` restores from that file only when the table is empty.
 - `title_override` fixes mis-decoded titles, including Arabic.
 
 ## Frames and framesets

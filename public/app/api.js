@@ -1223,11 +1223,12 @@ export function render(pages) {
 	markCurrent();
 }
 
-// The entries, under a heading for each of their other tags -- the biggest group first,
-// then by name -- with those that have no other tag last, under Entry. A page with two
-// tags is listed under both. The heading sticks to the top of the list while its pages
-// scroll under it.
-function renderEntries(pages) {
+// The entries, under a heading for each of their other tags, with those that have no
+// other tag under Entry. A page with two tags is listed under both. The groups come in
+// the order set on the archive index's admin port (`order`, lowercased tags; 'entry' is
+// the Entry group), then any it does not name, biggest first, with Entry last. The
+// heading sticks to the top of the list while its pages scroll under it.
+function renderEntries(pages, order = []) {
 	if (!dropdownContent) return;
 	dropdownContent.replaceChildren();
 
@@ -1240,8 +1241,15 @@ function renderEntries(pages) {
 			groups.get(key).pages.push(page);
 		}
 	}
+	const rank = (g) => {
+		const i = order.indexOf(g.tag ? g.tag.toLowerCase() : 'entry');
+		return i === -1 ? order.length : i;
+	};
 	const ordered = [...groups.values()].sort((a, b) =>
-		(a.tag === '') - (b.tag === '') || b.pages.length - a.pages.length || a.tag.localeCompare(b.tag));
+		rank(a) - rank(b)
+		|| (a.tag === '') - (b.tag === '')
+		|| b.pages.length - a.pages.length
+		|| a.tag.localeCompare(b.tag));
 
 	for (const [i, { tag, pages: members }] of ordered.entries()) {
 		const group = document.createElement('div');
@@ -1291,7 +1299,8 @@ async function fetchJson(url, fallback) {
 }
 
 async function loadEntries() {
-	return fetchJson('/api/entries', []);
+	const [pages, order] = await Promise.all([fetchJson('/api/entries', []), fetchJson('/api/tag-order', [])]);
+	return { pages, order };
 }
 
 // Shows the dropdown, already filled in -- so the slide-open animation runs on the finished
@@ -1344,12 +1353,12 @@ let pendingOpen = false;
 async function openEntries({ focusList }) {
 	const mine = ++ticket;
 	pendingOpen = true;
-	const pages = await loadEntries();
+	const { pages, order } = await loadEntries();
 	if (mine !== ticket) return;
 	pendingOpen = false;
 	// Nothing tagged "entry" yet: nothing to show, so it stays closed.
 	if (!pages.length) return;
-	renderEntries(pages);
+	renderEntries(pages, order);
 	showDropdown();
 
 	if (focusList) {

@@ -45,6 +45,8 @@ function parseArgs(argv) {
     db: flag('--db', 'archive.db'),
     // Committed instead. This is the only data here that cannot be regenerated.
     tags: flag('--tags', 'tags.csv'),
+    // The order of the address bar's tag groups, one tag per line; committed beside it.
+    tagOrder: flag('--tag-order', 'tag-order.txt'),
   };
 }
 
@@ -102,6 +104,13 @@ CREATE TABLE IF NOT EXISTS page_meta (
   tags           TEXT NOT NULL DEFAULT '',  -- comma-separated, hand-edited
   notes          TEXT NOT NULL DEFAULT '',
   title_override TEXT NOT NULL DEFAULT ''   -- for the mangled titles
+);
+
+-- Not dropped either: the order of the address bar's tag groups, set on the admin port.
+-- Tags lowercased; position 0 first.
+CREATE TABLE IF NOT EXISTS tag_order (
+  tag      TEXT PRIMARY KEY,
+  position INTEGER NOT NULL
 );
 
 -- Read through this rather than the pages table: it resolves title_override and
@@ -484,6 +493,19 @@ async function main() {
 
   const imported = await importTags(db, opts.tags);
 
+  // tag-order.txt fills the table only when it is empty: once the order has been set on
+  // the site, the server's copy is the newer one, and tags:pull brings it down to commit.
+  let orderRestored = 0;
+  if (!db.prepare('SELECT count(*) n FROM tag_order').get().n && existsSync(opts.tagOrder)) {
+    const tags = (await fs.readFile(opts.tagOrder, 'utf8'))
+      .split('\n')
+      .map((t) => t.trim().toLowerCase())
+      .filter(Boolean);
+    const put = db.prepare('INSERT OR IGNORE INTO tag_order (tag, position) VALUES (?, ?)');
+    db.transaction(() => tags.forEach((t, i) => put.run(t, i)))();
+    orderRestored = tags.length;
+  }
+
   // Meta rows whose page has gone: kept, not deleted. A crawl re-run under a slightly
   // different path should not silently bin the tags you wrote.
   const orphanMeta = db
@@ -504,6 +526,7 @@ async function main() {
       `${rows.filter((r) => r.links_total + r.images_total === 0).length} pages reference neither.`,
   );
   if (imported) console.log(`Restored ${imported} rows from ${opts.tags} (${tagged} pages tagged).`);
+  if (orderRestored) console.log(`Restored the order of ${orderRestored} tag groups from ${opts.tagOrder}.`);
   if (orphanMeta) console.log(`${orphanMeta} meta rows have no matching page -- kept, not deleted.`);
 }
 

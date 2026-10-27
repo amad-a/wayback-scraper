@@ -8,7 +8,8 @@
 //
 // Tags edited on the live site live in the server's archive.db, which is gitignored.
 // This is the backup: it fetches /api/tags.csv over the admin port -- only reachable
-// through the tunnel -- and writes it over tags.csv. Review the diff, then commit.
+// through the tunnel -- and writes it over tags.csv, and the address bar's group order
+// over tag-order.txt. Review the diff, then commit.
 
 import fs from 'fs/promises';
 
@@ -45,3 +46,16 @@ if (!csv.startsWith('local_path,')) {
 await fs.writeFile(out, csv, 'utf8');
 const rows = csv.trim().split('\n').length - 1;
 console.log(`Wrote ${out}: ${rows} tagged ${rows === 1 ? 'page' : 'pages'}. Review with git diff, then commit.`);
+
+// The order of the address bar's tag groups, beside it. Optional: a server older than the
+// order, or one where it was never set, has nothing to give.
+const orderUrl = url.replace(/tags\.csv$/, 'tag-order.txt');
+const orderOut = flag('--order-out', 'tag-order.txt');
+const orderRes = await fetch(orderUrl).catch(() => null);
+if (orderRes?.ok && /^text\/plain/.test(orderRes.headers.get('content-type') || '')) {
+  const order = await orderRes.text();
+  if (order.trim()) {
+    await fs.writeFile(orderOut, order, 'utf8');
+    console.log(`Wrote ${orderOut}: the order of ${order.trim().split('\n').length} tag groups.`);
+  }
+}
