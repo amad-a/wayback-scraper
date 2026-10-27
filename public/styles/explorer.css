@@ -1200,3 +1200,25 @@ li:before {
 		resize: none;
 	}
 }
+
+/* The image a hovered archive link points to (app/image-peek.js): a sunken picture
+   frame floating over the page, never in the way of the cursor beneath it. */
+.image-peek {
+	position: fixed;
+	z-index: 1000;
+	padding: 4px;
+	background: var(--ButtonFace);
+	box-shadow: var(--edge-raised);
+	pointer-events: none;
+}
+
+.image-peek[hidden] {
+	display: none;
+}
+
+.image-peek img {
+	display: block;
+	border: 2px solid;
+	border-image: var(--edge-sunken-image) 2;
+	box-sizing: content-box;
+}

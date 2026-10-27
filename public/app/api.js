@@ -4,6 +4,7 @@
 //
 // Shared handles, so implementations don't each re-query the DOM.
 import { bindAudioLinks, updateAudio } from './webamp.js';
+import { bindImagePeek } from './image-peek.js';
 
 export const iframe = document.getElementById('frame');
 export const addressBar = document.getElementById('address-input');
@@ -823,6 +824,7 @@ function prepareFrame(win, depth = 0) {
 		// player rather than send a pane to the raw file.
 		bindAudioLinks(win.document);
 		bindTargets(win.document);
+		bindImagePeek(win.document);
 		bindNavigation(win);
 		setScale(win.document);
 	} catch {
