@@ -358,6 +358,15 @@ function guessLegacyCharset(buffer) {
     }
   }
 
+  // Spanish and French rarely put two accented letters together ("admisión"), so on
+  // runs alone a page of them scores next to nothing everywhere and goes to whichever
+  // script happens to edge ahead -- comunidadpalestina.org came out "admisiَn". Count
+  // their real signature too, an accented letter between two plain ones, which Arabic
+  // read as windows-1252 almost never makes; but only let it overrule a script that
+  // found less, since Arabic pages tie on runs and a few such letters would tip them.
+  const latin = (iconv.decode(buffer, 'windows-1252').match(/[A-Za-z][À-ÖØ-öø-ÿ][A-Za-z]/g) || []).length;
+  if (best !== 'windows-1252' && latin > bestScore) best = 'windows-1252';
+
   return best;
 }
 
