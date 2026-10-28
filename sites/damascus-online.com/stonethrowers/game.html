@@ -10,17 +10,80 @@
 <style>
   html, body { margin: 0; height: 100%; background: #000; overflow: hidden; }
   #dos { width: 100%; height: 100%; }
+  /* js-dos sizes the canvas from a zoomed measurement, so under the shell's page zoom
+     it came out zoomed twice and ran off the right edge. Fill the box and letterbox. */
+  #dos canvas {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+  /* A Windows 98 push button, after 98.css (public/vendor/98.css). */
+  #paused {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 75px;
+    min-height: 23px;
+    padding: 0 12px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: silver;
+    color: #222;
+    font: 12px sans-serif;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+    pointer-events: none;
+    z-index: 10;
+  }
+  #paused[hidden] { display: none; }
 </style>
 <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
 <body>
 <div id="dos"></div>
+<div id="paused" hidden>Paused - Click to resume</div>
 <script>
+  // js-dos locks the keyboard on click, which only a top-level page may do; inside
+  // the shell's frame the call throws.
+  if (navigator.keyboard) navigator.keyboard.lock = function () { return Promise.resolve(); };
+
   // Loaded from script rather than <link>/<script src>: the scraper's relinking pass
   // reads root-relative attributes as this site's own files and would rewrite them.
-  // js-dos locks the keyboard on click, which only a top-level page may do; inside
-  // the shell's frame the call throws and the game never gets its keys.
-  if (navigator.keyboard) navigator.keyboard.lock = function () { return Promise.resolve(); };
   var JS_DOS = '/vendor/js-dos/';
+
+  // The emulator keeps a whole CPU core busy for as long as it runs, whatever the cycles
+  // setting -- even at an idle DOS prompt -- and pausing it drops that to almost
+  // nothing. So it runs only while someone is playing.
+  function pauseWhenIdle(ci) {
+    var note = document.getElementById('paused');
+    var paused = false;
+    function setPaused(pause) {
+      if (pause === paused) return;
+      paused = pause;
+      if (pause) ci.pause();
+      else ci.resume();
+      note.hidden = !pause;
+    }
+    // Leaving -- the shell's toolbar, another window, another tab -- pauses it, but only
+    // once the game has been played: arriving from the site's link leaves focus in the
+    // shell, and the intro should run rather than wait behind the notice. Only a click
+    // in the game resumes it. Getting focus back is not enough: returning to the tab
+    // refocuses the game, which would resume it before the notice was ever seen.
+    var played = false;
+    window.addEventListener('blur', function () { if (played) setPaused(true); });
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) setPaused(true);
+    });
+    window.addEventListener('pointerdown', function () {
+      played = true;
+      setPaused(false);
+    }, true);
+    window.addEventListener('keydown', function () { played = true; }, true);
+  }
   var css = document.createElement('link');
   css.rel = 'stylesheet';
   css.href = JS_DOS + 'js-dos.css';
@@ -35,6 +98,9 @@
       kiosk: true,
       noCloud: true,
       noNetworking: true,
+      onEvent: function (event, ci) {
+        if (event === 'ci-ready') pauseWhenIdle(ci);
+      },
     });
   };
   document.body.appendChild(script);
