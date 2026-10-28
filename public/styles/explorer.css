@@ -280,6 +280,11 @@ button {
 	position: relative;
 }
 
+/* display: flex above would otherwise override the attribute (Translate starts hidden). */
+.toolbar-button[hidden] {
+	display: none;
+}
+
 .toolbar-button .icon {
 	width: 20px;
 	height: 20px;
