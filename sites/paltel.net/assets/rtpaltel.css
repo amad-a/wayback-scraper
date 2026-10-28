@@ -1,0 +1,124 @@
+a {
+	color : #333333;
+	text-decoration : none;
+}
+
+a:visited {
+	color : #333333;
+	text-decoration : none;
+}
+
+a:hover {
+	color : #19428E;
+	text-decoration : underline;
+}
+
+a:active {
+	color : #333333;
+	text-decoration : none;
+}
+
+body{
+	background-color : #FFFFFF;
+	color : #000000;
+	margin : 0 0 0 0;
+	scrollbar-3dlight-color : #FFFFFF;
+	scrollbar-arrow-color : #09486B;
+	scrollbar-darkshadow-color : #CCCCCC;
+	scrollbar-face-color : #D1D9E8;
+	scrollbar-highlight-color : #CCCCCC;
+	scrollbar-shadow-color : #66666;
+	scrollbar-track-color : #E8ECF4;
+}
+
+p{
+	color : #333333;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 11px;
+	font-weight : normal;
+	text-align : justify;
+	margin : 0px 2px 0px 2px;
+}
+
+td img {
+	display : block;
+}
+
+ul.arty{
+	color : #000000;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;
+	font-weight : normal;
+	list-style-image : url(bullet_square.jpg);
+	margin : 0px 0px 0px 15px;
+}
+
+ul.title{
+	color : #FF0000;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 14px;
+	font-weight : bold;
+	list-style-image : url(bullet_square.jpg);
+	margin : 5px 5px 10px 15px;
+}
+
+ul.triangle{
+	color : #000000;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;
+	font-weight : normal;
+	list-style-image : url(bullet_triangle.jpg);
+	margin : 5px 5px 5px 25px;
+	text-align : left;
+}
+
+ul.triangleLeft{
+	color : #000000;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 10px;
+	font-weight : normal;
+	list-style-image : url(bullet_triangle_blue.jpg);
+	margin : 5px 5px 5px 25px;
+	text-align : left;
+}
+
+.fieldSmall{
+	background-color : #FFFFFF;
+	border-bottom : #000000 1px groove;
+	border-left : #FFFFFF 1px groove;
+	border-right : #000000 1px groove;
+	border-top : #FFFFFF 1px groove;
+	color : #000000;
+	font-family : Verdana,Geneva,sans-serif;
+	font-size : 10px;
+	margin-bottom : 1px;
+	margin-left : 2px;
+	width : 100px;
+}
+
+.regularText{
+	color : #333333;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 11px;
+	font-weight : normal;
+	text-align : left;
+	margin : 0px 2px 0px 2px;
+}
+
+.indicatorText{
+	color : #1D91C0;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	font-size : 11px;
+	font-weight : bold;
+	text-align : left;
+	margin : 0px 2px 0px 2px;
+}
+.rtInsideHeadersBlackBig {
+	color : #000000;
+	font-family : Verdana, Arial, Helvetica, sans-serif;
+	line-height : 110%;
+	font-size : 14px;
+	font-weight : bold;
+	text-align : left;
+	direction: ltr;
+}
