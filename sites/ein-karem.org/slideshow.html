@@ -1,0 +1,176 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8"> 
+<title>Ein Karem Slideshow</title> 
+<meta name="keywords" content="Ein Karem, Ein Karim, Ein Kariem, Ein, Karem, Palestinian Village, Arab Village, Arab, Palestine, Village">
+<meta name="description" content="Ein Karem is an Arab village that is about 8 km southwest of Jerusalem....">
+
+<script language="JavaScript1.1">
+
+/*
+DHTML slideshow script- 
+© Dynamic Drive (www.dynamicdrive.com)
+For full source code, usage terms, and 100's more DHTML scripts, visit http://dynamicdrive.com
+*/
+
+var photos=new Array()
+var photoslink=new Array()
+var which=0
+
+//define images. You can have as many as you want. Images MUST be of the same dimensions (for NS's sake)
+photos[0]="./images/flag1.jpg"
+photos[1]="./images/flag2.jpg"
+photos[2]="./images/einkaremmap.gif"
+photos[3]="./images/einkarem2.jpg"
+photos[4]="./images/einkarem1930.jpg"
+photos[5]="./images/einkarembw94.gif"
+photos[6]="./images/alleyeinkarem.jpg"
+photos[7]="./images/view6.jpg"
+photos[8]="./images/einkaremhotel.gif"
+photos[9]="./images/einkaremolives.jpg"
+photos[10]="./images/einkaremroad1.jpg"
+photos[11]="./images/einkaremroad2.jpg"
+photos[12]="./images/einkaremsunset.gif"
+photos[13]="./images/einkaremview1.jpg"
+photos[14]="./images/einkaremview2.jpg"
+photos[15]="./images/einkaremview3.jpg"
+photos[16]="./images/einkaremview4.jpg"
+photos[17]="./images/einkaremview5.jpg"
+photos[18]="./images/agrterraces.jpg"
+photos[19]="./images/housebalcony.jpg"
+photos[20]="./images/housefront.jpg"
+photos[21]="./images/house2.jpg"
+photos[22]="./images/house3.jpg"
+photos[23]="./images/house4.jpg"
+photos[24]="./images/house5.jpg"
+photos[25]="./images/spring1.jpg"
+photos[26]="./images/spring2.jpg"
+photos[27]="./images/masjid1.jpg"
+photos[28]="./images/johnbapchurch.jpg"
+photos[29]="./images/johnbaptistchurch.jpg"
+photos[30]="./images/russianconvent.jpg"
+photos[31]="./images/visitationchurch1.jpg"
+photos[32]="./images/visitationchurch2.jpg"
+photos[33]="./images/visitationchurch4.jpg"
+photos[34]="./images/visitationchurch5.jpg"
+photos[35]="./images/map.gif"
+photos[36]="./images/oldhouses.jpg"
+photos[37]="./images/view1930.jpg"
+photos[38]="./images/arial1935.gif"
+photos[39]="./images/oldqrtr.jpg"
+
+
+
+//Specify whether images should be linked or not (1=linked)
+var linkornot=0
+
+//Set corresponding URLs for above images. Define ONLY if variable linkornot equals "1"
+photoslink[0]=""
+photoslink[1]=""
+photoslink[2]=""
+photoslink[3]=""
+photoslink[4]=""
+
+//do NOT edit pass this line
+
+var preloadedimages=new Array()
+for (i=0;i<photos.length;i++){
+preloadedimages[i]=new Image()
+preloadedimages[i].src=photos[i]
+}
+
+
+function applyeffect(){
+if (document.all){
+photoslider.filters.revealTrans.Transition=Math.floor(Math.random()*23)
+photoslider.filters.revealTrans.stop()
+photoslider.filters.revealTrans.apply()
+}
+}
+
+
+
+function playeffect(){
+if (document.all)
+photoslider.filters.revealTrans.play()
+}
+
+function keeptrack(){
+window.status="Image "+(which+1)+" of "+photos.length
+}
+
+
+function backward(){
+if (which>0){
+which--
+applyeffect()
+document.images.photoslider.src=photos[which]
+playeffect()
+keeptrack()
+}
+}
+
+function forward(){
+if (which<photos.length-1){
+which++
+applyeffect()
+document.images.photoslider.src=photos[which]
+playeffect()
+keeptrack()
+}
+}
+
+function transport(){
+window.location=photoslink[which]
+}
+
+</script> 
+<style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head> 
+     
+<body bgcolor="#336666" text="#00FF00" links="#0000FF" data-wayback-url="https://web.archive.org/web/20010418232847id_/http://www.ein-karem.org:80/slideshow.html">
+
+<script language="JavaScript">
+function Rnumber() {
+   today = new Date();
+   var bigNumber = today.getSeconds() * today.getTime() *
+   Math.sqrt(today.getMinutes());
+   var randomNum = (bigNumber % 5000) + 1;
+   return Math.floor(randomNum);
+}
+
+document.writeln('<A HREF="http://www.fiberia.com/cgi-bin/redirect.cgi/ad' + Rnumber() + 'num?REGION=Fiberia_Parking" TARGET=_top><IMG SRC="http://www.fiberia.com/cgi-bin/getimage.cgi/ad' + Rnumber() + 'num?REGION=Fiberia_Parking" BORDER=0 HEIGHT=60 WIDTH=468 ALIGN=BOTTOM></A>')
+
+</script>
+
+<!-- <BR>
+<IFRAME
+    WIDTH=468 HEIGHT=60 NORESIZE SCROLLING=No FRAMEBORDER=0
+    MARGINHEIGHT=0 MARGINWIDTH=0
+    SRC="http://adforce.imgis.com/?adiframe|2.0|2|128121|1|1|ADFORCE;">
+<a href="http://adforce.imgis.com/?adlink|2.0|2|128121|1|1|ADFORCE;loc=300;" target=_top>
+<img src="http://adforce.imgis.com/?adserv|2.0|2|128121|1|1|ADFORCE;loc=300;" border=0 width=468 height=60></a>
+</IFRAME> -->
+<center>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tbody><tr>
+    <td width="100%" colspan="2" height="22"><center>
+<script>
+if (linkornot==1)
+document.write('<a href="javascript:transport()">')
+document.write('<img src="'+photos[0]+'" name="photoslider" style="filter:revealTrans(duration=2,transition=23)" border=1 width=500 height=400>')
+
+
+if (linkornot==1)
+document.write('</a>')
+</script>
+</center></td>
+  </tr>
+  <tr>
+    <td width="50%" height="21"><p align="center"><a href="#" onclick="backward();return false"><br><img src="/sites/ein-karem.org/images/l_arrow.gif" border="0"><br>Previous</a></p></td>
+    <td width="50%" height="21"><p align="center"><a href="#" onclick="forward();return false"><br><img src="/sites/ein-karem.org/images/r_arrow.gif" border="0"><br>Next</a></p></td>
+  </tr>
+</tbody></table>
+<br><br>If you use IE you will see nice slide effects<br><br>
+<a href="/sites/ein-karem.org/pictures.html">BACK TO PICTURES PAGE</a>
+</center>
+ 
+ 
+</body></html>
