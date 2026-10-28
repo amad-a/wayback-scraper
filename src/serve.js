@@ -129,7 +129,8 @@ app.get('/api/frameset', (req, res) => {
   res.json(Object.fromEntries(rows.map((r) => [r.local_path, r.frame_slot])));
 });
 
-// One page at random, for the toolbar's Random button.
+// The fallback pool for the toolbar's Random button, used only when no page is tagged
+// "entry" or "random" (see randomPool below).
 //
 // Drawn from index pages only -- 569 of the 11,074 rows. Landing somewhere at random is
 // only worth doing if where you land is a place, and most of the corpus is not: nav
@@ -158,44 +159,60 @@ const RANDOM_POOL = `
         OR display_title LIKE 'Directory Listing%')
 `;
 
-// ORDER BY random() is a full scan, which would be the wrong call on a large table but
-// costs nothing at this size and keeps the draw honest -- the OFFSET tricks that avoid
-// the scan all skew towards whichever rows happen to sit early in the b-tree.
+// The pages tagged "entry" or "random", which is what Random deals from: front doors
+// picked by hand. "entry" is the set the address bar's ▼ list shows; "random" adds a
+// page to the draw without listing it there. Only if nothing is tagged either way does
+// the index-page heuristic above stand in, so the button never comes up empty.
+const RANDOM_TAGS = new Set(['entry', 'random']);
+
+function randomPool(handle) {
+  const tagged = handle
+    .prepare(`SELECT local_path, tags FROM page_view WHERE tags <> ''`)
+    .all()
+    .filter((r) => splitTags(r.tags).some((t) => RANDOM_TAGS.has(t.toLowerCase())))
+    .map((r) => r.local_path);
+  if (tagged.length) return tagged;
+  return handle
+    .prepare(`SELECT local_path FROM page_view WHERE ${RANDOM_POOL}`)
+    .all()
+    .map((r) => r.local_path);
+}
+
+function shuffle(items) {
+  for (let i = items.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+  return items;
+}
+
 app.get('/api/random', (req, res) => {
   const handle = database();
   if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
 
   // Excluding the current page, so clicking Random twice in a row always moves.
   const not = decodeURIComponent(String(req.query.not || '')).replace(/^\/?sites\//, '');
+  const pool = randomPool(handle).filter((p) => p !== not);
+  if (!pool.length) return res.status(404).json({ error: 'no pages indexed' });
 
+  const pick = pool[Math.floor(Math.random() * pool.length)];
   const row = handle
-    .prepare(
-      `SELECT local_path, display_url, display_title
-       FROM page_view WHERE ${RANDOM_POOL} AND local_path <> ? ORDER BY random() LIMIT 1`,
-    )
-    .get(not);
-
-  if (!row) return res.status(404).json({ error: 'no pages indexed' });
+    .prepare('SELECT local_path, display_url, display_title FROM page_view WHERE local_path = ?')
+    .get(pick);
   res.json(row);
 });
 
 // The whole pool in random order, dealt one page per click so a session never repeats.
 //
-// Shuffling once beats drawing one at a time and excluding what has been seen. By the
-// time 500 of the 569 are used up, a fresh draw lands on an unseen page about one time
-// in eight, so every click fires a burst of retries -- and the last page takes 569 of
-// them. Dealing from a shuffled deck is one request for the session and O(1) per click.
-//
-// Whole pool is ~20KB of JSON, which is cheaper than the handful of retries it replaces.
+// Shuffling once beats drawing one at a time and excluding what has been seen: near the
+// end of the pool a fresh draw rarely lands on an unseen page, so every click would fire
+// a burst of retries. Dealing from a shuffled deck is one request for the session and
+// O(1) per click.
 app.get('/api/random/deck', (_req, res) => {
   const handle = database();
   if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
 
-  const paths = handle
-    .prepare(`SELECT local_path FROM page_view WHERE ${RANDOM_POOL} ORDER BY random()`)
-    .all()
-    .map((r) => r.local_path);
-
+  const paths = shuffle(randomPool(handle));
   res.json({ size: paths.length, paths });
 });
 
