@@ -1012,6 +1012,42 @@ app.use('/assets/tiles', express.static(TILES_DIR, { maxAge: '1d' }));
 
 app.use(express.static(path.join(ROOT, 'public')));
 
+// Anything nothing above answered, in place of Express's bare "Cannot GET /path". Most
+// of these open inside the shell's frame -- a link to a page that was never saved, an
+// address typed into the bar -- so it is styled as a plain Windows dialog rather than a
+// site of its own, and Back is the way out. With no history to go back to (opened on its
+// own) the button goes to the start page instead. The API keeps answering in JSON.
+const NOT_FOUND_PAGE = `<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found</title>
+<style>
+  html, body { height: 100%; margin: 0; }
+  body {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 16px; padding: 16px; box-sizing: border-box; text-align: center;
+    background: silver; color: #000; font: 14px sans-serif;
+  }
+  h1 { margin: 0; }
+  p { margin: 0; font-size: 16px; }
+  button {
+    min-width: 75px; min-height: 23px; padding: 0 12px; margin-top: 8px;
+    background: silver; color: #000; font: 12px sans-serif; border: none;
+    box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff, inset -2px -2px grey, inset 2px 2px #dfdfdf;
+  }
+  button:active { box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px grey; }
+  button:focus-visible { outline: 1px dotted #000; outline-offset: -4px; }
+</style></head>
+<body>
+  <h1>404</h1>
+  <p>Page not found</p>
+  <button type="button" onclick="history.length > 1 ? history.back() : (location.href = '/')">Back</button>
+</body></html>`;
+
+app.use((req, res) => {
+  if (req.path.startsWith('/api/')) return res.status(404).json({ error: 'not found' });
+  res.status(404).type('html').send(NOT_FOUND_PAGE);
+});
+
 app.listen(PORT, HOST, () => {
   console.log(`  shell   http://localhost:${PORT}/`);
   console.log(`  index   http://localhost:${PORT}/archive-index.html`);
