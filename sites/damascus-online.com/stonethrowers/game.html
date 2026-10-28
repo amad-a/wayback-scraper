@@ -78,10 +78,28 @@
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) setPaused(true);
     });
-    window.addEventListener('pointerdown', function () {
+    // A left click is also the space bar -- the game's start key -- unless it is the
+    // click that resumes the game. Held for as long as the button is.
+    var KBD_SPACE = 32;
+    var spaceDown = false;
+    window.addEventListener('pointerdown', function (event) {
       played = true;
-      setPaused(false);
+      if (paused) {
+        setPaused(false);
+        return;
+      }
+      if (event.button !== 0) return;
+      spaceDown = true;
+      ci.sendKeyEvent(KBD_SPACE, true);
     }, true);
+    function releaseSpace() {
+      if (!spaceDown) return;
+      spaceDown = false;
+      ci.sendKeyEvent(KBD_SPACE, false);
+    }
+    window.addEventListener('pointerup', releaseSpace, true);
+    window.addEventListener('pointercancel', releaseSpace, true);
+    window.addEventListener('blur', releaseSpace);
     window.addEventListener('keydown', function () { played = true; }, true);
   }
   var css = document.createElement('link');

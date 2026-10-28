@@ -1772,7 +1772,15 @@ async function rewriteSavedPages(seeds) {
       flashPages += 1;
     }
 
-    await fs.writeFile(fullPath, $.html(), 'utf8');
+    // cheerio writes any doctype back as a bare <!DOCTYPE html>, dropping the public
+    // identifier -- and with it the rendering mode. Most of these pages declare HTML 3.2
+    // or 4.0 Transitional with no DTD URL, which puts a browser in quirks mode; the bare
+    // form switches it to standards mode, where their unitless CSS lengths and colours
+    // without a # are ignored (paltel.net's front page fell apart). Keep the original.
+    const doctype = /^\s*(<!doctype[^>]*>)/i.exec(html)?.[1];
+    let out = $.html();
+    if (doctype) out = out.replace(/^<!doctype[^>]*>/i, doctype);
+    await fs.writeFile(fullPath, out, 'utf8');
     rewritten += 1;
   }
 
