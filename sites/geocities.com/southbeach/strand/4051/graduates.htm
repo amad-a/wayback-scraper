@@ -1,0 +1,643 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+<title>New Page 1</title>
+
+<script language="JavaScript" fptype="dynamicanimation">
+<!--
+  // If you want to change this script, you must also make the following
+  // changes so that FrontPage will not overwrite your new script.
+  // In the script tag, change type="dynamicanimation" to type="mydynamicanimation"
+  // In the first script statement, change "dynamicanimation" to "mydynamicanimation"
+  // Throughout the HTML content, change dynamicanimation= to mydynamicanimation=
+  // Change function dynAnimation to function mydynAnimation
+  // In the body tag, change onload="dynAnimation()" to onload="mydynAnimation()"
+  dynamicanimAttr = "dynamicanimation"
+  animateElements = new Array()
+  currentElement = 0
+  speed = 0
+  stepsZoom = 8
+  stepsWord = 8
+  stepsFly = 12
+  stepsSpiral = 16
+  steps = stepsZoom
+  step = 0
+  outString = ""
+  function dynAnimation()
+  {
+    var ms = navigator.appVersion.indexOf("MSIE")
+    ie4 = (ms>0) && (parseInt(navigator.appVersion.substring(ms+5, ms+6)) >= 4)
+    if(!ie4)
+    {
+      if((navigator.appName == "Netscape") &&
+         (parseInt(navigator.appVersion.substring(0, 1)) >= 4))
+      {
+        for (index=document.layers.length-1; index >= 0; index--)
+        {
+            layer=document.layers[index]
+            if (layer.left==10000)
+                layer.left=0
+        }
+      }
+      return
+    }
+    for (index=document.all.length-1; index >= document.body.sourceIndex; index--)
+    {
+      el = document.all[index]
+      animation = el.getAttribute(dynamicanimAttr, false)
+      if(null != animation)
+      {
+        if(animation == "dropWord" || animation == "flyTopRightWord" || animation == "flyBottomRightWord")
+        {
+          ih = el.innerHTML
+          outString = ""
+          i1 = 0
+          iend = ih.length
+          while(true)
+          {
+            i2 = startWord(ih, i1)
+            if(i2 == -1)
+              i2 = iend
+            outWord(ih, i1, i2, false, "")
+            if(i2 == iend)
+              break
+            i1 = i2
+            i2 = endWord(ih, i1)
+            if(i2 == -1)
+              i2 = iend
+            outWord(ih, i1, i2, true, animation)
+            if(i2 == iend)
+              break
+            i1 = i2
+          }
+          document.all[index].innerHTML = outString
+          document.all[index].style.posLeft = 0
+          document.all[index].setAttribute(dynamicanimAttr, null)
+        }
+        if(animation == "zoomIn" || animation == "zoomOut")
+        {
+          ih = el.innerHTML
+          outString = "<SPAN " + dynamicanimAttr + "=\"" + animation + "\" style=\"position: relative; left: 10000;\">"
+          outString += ih
+          outString += "</SPAN>"
+          document.all[index].innerHTML = outString
+          document.all[index].style.posLeft = 0
+          document.all[index].setAttribute(dynamicanimAttr, null)
+        }
+      }
+    }
+    i = 0
+    for (index=document.body.sourceIndex; index < document.all.length; index++)
+    {
+      el = document.all[index]
+      animation = el.getAttribute(dynamicanimAttr, false)
+      if (null != animation)
+      {
+        if(animation == "flyLeft")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)-el.offsetWidth
+          el.style.posTop = 0
+        }
+        else if(animation == "flyRight")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)+document.body.offsetWidth
+          el.style.posTop = 0
+        }
+        else if(animation == "flyTop" || animation == "dropWord")
+        {
+          el.style.posLeft = 0
+          el.style.posTop = document.body.scrollTop-offsetTop(el)-el.offsetHeight
+        }
+        else if(animation == "flyBottom")
+        {
+          el.style.posLeft = 0
+          el.style.posTop = document.body.scrollTop-offsetTop(el)+document.body.offsetHeight
+        }
+        else if(animation == "flyTopLeft")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)-el.offsetWidth
+          el.style.posTop = document.body.scrollTop-offsetTop(el)-el.offsetHeight
+        }
+        else if(animation == "flyTopRight" || animation == "flyTopRightWord")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)+document.body.offsetWidth
+          el.style.posTop = document.body.scrollTop-offsetTop(el)-el.offsetHeight
+        }
+        else if(animation == "flyBottomLeft")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)-el.offsetWidth
+          el.style.posTop = document.body.scrollTop-offsetTop(el)+document.body.offsetHeight
+        }
+        else if(animation == "flyBottomRight" || animation == "flyBottomRightWord")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)+document.body.offsetWidth
+          el.style.posTop = document.body.scrollTop-offsetTop(el)+document.body.offsetHeight
+        }
+        else if(animation == "spiral")
+        {
+          el.style.posLeft = 10000-offsetLeft(el)-el.offsetWidth
+          el.style.posTop = document.body.scrollTop-offsetTop(el)-el.offsetHeight
+        }
+        else if(animation == "zoomIn")
+        {
+          el.style.posLeft = 10000
+          el.style.posTop = 0
+        }
+        else if(animation == "zoomOut")
+        {
+          el.style.posLeft = 10000
+          el.style.posTop = 0
+        }
+        else
+        {
+          el.style.posLeft = 10000-offsetLeft(el)-el.offsetWidth
+          el.style.posTop = 0
+        }
+        el.initLeft = el.style.posLeft
+        el.initTop = el.style.posTop
+        animateElements[i++] = el
+      }
+    }
+    window.setTimeout("animate();", speed)
+  }
+  function offsetLeft(el)
+  {
+    x = el.offsetLeft
+    for (e = el.offsetParent; e; e = e.offsetParent)
+      x += e.offsetLeft;
+    return x
+  } 
+  function offsetTop(el)
+  {
+    y = el.offsetTop
+    for (e = el.offsetParent; e; e = e.offsetParent)
+      y += e.offsetTop;
+    return y
+  } 
+  function startWord(ih, i)
+  {
+    for(tag = false; i < ih.length; i++)
+    {
+      c = ih.charAt(i)
+      if(c == '<')
+        tag = true
+      if(!tag)
+        return i
+      if(c == '>')
+        tag = false
+    }
+    return -1
+  }
+  function endWord(ih, i)
+  {
+    nonSpace = false
+    space = false
+    while(i < ih.length)
+    {
+      c = ih.charAt(i)
+      if(c != ' ')
+        nonSpace = true
+      if(nonSpace && c == ' ')
+        space = true
+      if(c == '<')
+        return i
+      if(space && c != ' ')
+        return i
+      i++
+    }
+    return -1
+  }
+  function outWord(ih, i1, i2, dyn, anim)
+  {
+    if(dyn)
+      outString += "<SPAN " + dynamicanimAttr + "=\"" + anim + "\" style=\"position: relative; left: 10000;\">"
+    outString += ih.substring(i1, i2)
+    if(dyn)
+      outString += "</SPAN>"
+  }
+  function animate()
+  {
+    el = animateElements[currentElement]
+    animation = el.getAttribute(dynamicanimAttr, false)
+    step++
+    if(animation == "spiral")
+    {
+      steps = stepsSpiral
+      v = step/steps
+      rf = 1.0 - v
+      t = v * 2.0*Math.PI
+      rx = Math.max(Math.abs(el.initLeft), 200)
+      ry = Math.max(Math.abs(el.initTop),  200)
+      el.style.posLeft = Math.ceil(-rf*Math.cos(t)*rx)
+      el.style.posTop  = Math.ceil(-rf*Math.sin(t)*ry)
+    }
+    else if(animation == "zoomIn")
+    {
+      steps = stepsZoom
+      el.style.fontSize = Math.ceil(50+50*step/steps) + "%"
+      el.style.posLeft = 0
+    }
+    else if(animation == "zoomOut")
+    {
+      steps = stepsZoom
+      el.style.fontSize = Math.ceil(100+200*(steps-step)/steps) + "%"
+      el.style.posLeft = 0
+    }
+    else
+    {
+      steps = stepsFly
+      if(animation == "dropWord" || animation == "flyTopRightWord" || animation == "flyBottomRightWord")
+        steps = stepsWord
+      dl = el.initLeft / steps
+      dt = el.initTop  / steps
+      el.style.posLeft = el.style.posLeft - dl
+      el.style.posTop = el.style.posTop - dt
+    }
+    if (step >= steps) 
+    {
+      el.style.posLeft = 0
+      el.style.posTop = 0
+      currentElement++
+      step = 0
+    }
+    if(currentElement < animateElements.length)
+      window.setTimeout("animate();", speed)
+  }
+//-->
+</script><meta name="Microsoft Border" content="tl, default"><style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+
+<body onload="dynAnimation()" background="/sites/geocities.com/southbeach/strand/4051/images/wb00516_.gif" data-wayback-url="https://web.archive.org/web/20010501132040id_/http://www.geocities.com:80/SouthBeach/Strand/4051/Graduates.htm"><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td>
+
+<p align="center"><font face="Algerian"><big><big><big><big><big><marquee style="border-left: 1px solid rgb(255,0,0); border-right: 1px solid rgb(0,0,0); border-top: 1px solid rgb(0,0,0); border-bottom: 1px solid rgb(0,255,0)" border="0" width="264" height="63">ATTIL</marquee></big></big></big></big></big></font></p>
+
+<p align="center">&nbsp;</p>
+</td></tr><!--msnavigation--></tbody></table><!--msnavigation--><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td valign="top" width="1%">
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Index">
+  <param name="color" value="#800080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="index.html" valuetype="ref">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Home">
+  <param name="color" value="#008000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Home.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="News">
+  <param name="color" value="#000080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="News.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Graduates">
+  <param name="color" value="#FF0000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Graduates.htm" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="They say">
+  <param name="color" value="#808080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Response.htm" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Links">
+  <param name="color" value="#FF00FF">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="link.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Photos">
+  <param name="color" value="#008080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="photo.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Telephone">
+  <param name="color" value="#000080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Telephone.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="10">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Mail">
+  <param name="color" value="#808000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="mailto:attilco@mailcity.com" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="History">
+  <param name="color" value="#FF0000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="History.htm" valuetype="ref">
+</applet>
+</p>
+
+<p align="center">
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Traditions">
+  <param name="color" value="#808000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Traditions.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+</p>
+
+<p align="center">&nbsp;</p>
+
+<p>&nbsp;</p>
+</td><td valign="top" width="24"></td><!--msnavigation--><td valign="top">
+
+<p align="center" dynamicanimation="spiral" style="position: relative !important; left: 10000 !important">&nbsp;</p>
+
+<p align="center"><font color="#FF0000"><strong><big>Graduates</big></strong></font></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center"><big><big>Please don't hesitate to send any pieces of </big></big></p>
+
+<p align="center"><big><big>news you think relevant to the page </big></big></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center"><big><font color="#FF0080"><big><big><marquee style="border-left: 4px double rgb(0,255,0); border-right: 4px double rgb(0,255,0); border-top: 4px solid rgb(0,128,0); border-bottom: 4px solid rgb(0,128,0)" border="0" width="392" height="40">Congratulations to all </marquee></big></big></font></big></p>
+
+<p align="left">&nbsp;</p>
+
+<p align="left">&nbsp;</p>
+
+<p><strong><u><font color="#FF00FF"><big>Muhieddin Najib</big></font></u></strong>&nbsp; <big>has
+been awarded the degree of PhD in electrical </big></p>
+
+<p><big>engineering from The University of Texas &nbsp; </big></p>
+
+<p><big>at Arlington-USA. His mother attended the ceremony. (May 1999)</big></p>
+
+<p align="center"><img src="/sites/geocities.com/southbeach/strand/4051/images/p8-1.jpg" alt="p8-1.jpg (18051 bytes)" width="180" height="296"></p>
+
+<p align="center"><small><strong>Muhieddin and His Mother</strong></small></p>
+<div align="center"><center>
+
+<pre dir="LTR"><strong>Biography of Muhieddin:
+</strong>		Muhieddin was born in Attil, Palestine, in 1965.</pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR"> He received his B.S. degree from Baghdad University, Iraq, </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">in 1988, his M.S. and PhD.degrees from The University of </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">Texas at Arlington in 1993 and 1999,respectively, all in electrical</pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR"> engineering. From 1988 to 1991, he was with the department of </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">Electrical Engineering, Baghdad University as an </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">Instructor in the Communications and Electronics Labs.</pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR"> In 1995, He joined Nortel Networks, Wireless Engineering</pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR"> Networks as a RF design engineer then as a technical advisor</pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR"> for the design and optimization of CDMA mobile and</pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">fixed wireless access systems. His current research </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">interest is in the area of CDMA communications for </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">mobile cellular systems. </pre>
+</center></div><div align="center"><center>
+
+<pre dir="LTR">He is a member of several IEEE societies.<big> </big>  </pre>
+</center></div>
+
+<p><font size="2">&nbsp;</font></p><font size="2">
+
+</font><p align="LEFT" dir="LTR"><font size="2"></font>&nbsp;</p>
+
+<p align="left"><big><font color="#FF00FF"><u><strong>* Dr Marwan Najib Amer</strong></u></font>
+completed his speciality in Internal medicine by acquiring the MRCP from the Royal College
+of Physicians. He currently work in the UK in his field and waiting to get a subspecialty
+job. (Nov.1998)</big></p>
+
+<p align="center"><img src="/sites/geocities.com/southbeach/strand/4051/images/degree.jpg" alt="DEGREE.jpg (39491 bytes)" width="421" height="332"></p>
+
+<p align="center"><u><strong><small><small>Marwan getting his degree from the president of
+the Royal College of Physicians</small></small></strong></u> </p>
+
+<p align="center">&nbsp;</p>
+
+<p align="left"><strong><u><big><font color="#FF00FF">* Mr Samer Zuhair Attili</font></big></u></strong>
+<big>completed his study at Jordan's University in Amman and was awarded BSc degree in
+Chemistry. He is working in the pharmaceutical industry in Jordan. (March 1998)</big></p>
+
+<p align="center"><img src="/sites/geocities.com/southbeach/strand/4051/images/samer2.jpg" width="305" height="406" alt="SAMER2.jpg (28068 bytes)"></p>
+
+<p align="center"><strong><small>Samer Attili</small></strong></p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">*****************************************************</p>
+
+<p align="left"><u><strong><font size="5" color="#FF00FF">Khalid dawoud</font><font size="5" color="#0080FF"> </font></strong></u></p>
+
+<p align="center">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DOCTOR
+KHALID LUTFI DAWOUD SALIM<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BSC IN VETERINARY MEDICIN
+&amp;SURGERY<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BAGHDAD UNIVERSITY - IRAQ<br>
+1997-199<font face="Courier New (Arabic)">8<br>
+</font><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Since graduation.Ii worked with al-
+assria dairy cattle farm ,now I have<br>
+a private clinic in al dahlil -jordan in addition of being maneger of of al<br>
+shaheen dairy cattle farm. <br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; additional&nbsp; information :<br>
+I was born in kuwait 18/11/1973 , </p>
+
+<p align="center">&nbsp;</p>
+
+<p align="center">
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Index">
+  <param name="color" value="#800080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="index.html" valuetype="ref">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Home">
+  <param name="color" value="#008000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Home.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+&nbsp; 
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="News">
+  <param name="color" value="#000080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="News.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Graduates">
+  <param name="color" value="#FF0000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Graduates.htm" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="They say">
+  <param name="color" value="#808080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Response.htm" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Links">
+  <param name="color" value="#FF00FF">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="link.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Photos">
+  <param name="color" value="#008080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="photo.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Mail">
+  <param name="color" value="#808000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="mailto:attilco@mailcity.com" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="12">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Telephone">
+  <param name="color" value="#000080">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Telephone.html" valuetype="ref">
+  <param name="font" value="Dialog">
+  <param name="fontstyle" value="regular">
+  <param name="fontsize" value="10">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="History">
+  <param name="color" value="#FF0000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="History.htm" valuetype="ref">
+</applet>
+<applet code="fphover.class" codebase="_fpclass/" width="55" height="20">
+  <param name="text" value="Traditions">
+  <param name="color" value="#808000">
+  <param name="hovercolor" value="#00FF00">
+  <param name="textcolor" value="#FFFFFF">
+  <param name="effect" value="glow">
+  <param name="url" value="Traditions.html" valuetype="ref">
+</applet>
+<!--msnavigation--></p></td></tr><!--msnavigation--></tbody></table>
+
+<script language="JavaScript" src="/sites/geocities.com/southbeach/strand/4051/_external/a372.g.a.yimg.com/f/372/27/1d/www.geocities.com/js_source/geov2.js"></script><script language="javascript">geovisit();</script><noscript><img src="http://visit.geocities.com/visit.gif" border=0 width=1 height=1></noscript>
+<img src="/sites/geocities.com/southbeach/strand/4051/_external/geo.yahoo.com/serv" alt="1" width="1" height="1">
+</body></html><!-- text below generated by server. PLEASE REMOVE -->
