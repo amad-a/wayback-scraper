@@ -344,17 +344,26 @@ function guessLegacyCharset(buffer) {
     'windows-1252': /[À-ÖØ-öø-ÿ]{2,}/g,
   };
 
-  let best = 'windows-1252';
-  let bestScore = -1;
-
+  const scores = {};
   for (const [candidate, script] of Object.entries(scripts)) {
     const decoded = iconv.decode(buffer, candidate);
     const runs = (decoded.match(script) || []).length;
     const bad = (decoded.match(/�/g) || []).length;
-    const score = runs - bad * 10;
-    if (score > bestScore) {
-      bestScore = score;
+    scores[candidate] = runs - bad * 10;
+  }
+
+  // Arabic read as windows-1252 is accented runs too, one per word, so the two score
+  // alike -- and a few windows-1256 bytes are Latin letters (é, ç), which split an
+  // Arabic run where windows-1252 keeps it whole. news.al-carma.com's archive pages
+  // came out Latin by 5,100 runs to 5,094. A real Latin page scores far below on the
+  // other scripts, so a non-Latin script within 5% of windows-1252 takes it.
+  let best = 'windows-1252';
+  let bestScore = scores[best];
+  for (const [candidate, score] of Object.entries(scores)) {
+    if (candidate === 'windows-1252') continue;
+    if (score > 0 && (score >= scores['windows-1252'] * 0.95) && (best === 'windows-1252' || score > bestScore)) {
       best = candidate;
+      bestScore = score;
     }
   }
 
