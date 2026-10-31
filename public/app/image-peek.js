@@ -8,12 +8,14 @@
 // The preview lives in the shell, not in the archived page: a nav pane is too narrow to
 // hold it, and nothing is added to markup the page's own scripts might walk. Mouse only,
 // so a tap on a phone still just opens the image. Dead links (class "dead") are skipped,
-// since their image was never saved.
+// since their image was never saved, and so is a link whose own picture on the page is
+// already as big as the preview would be -- a photo linked to itself, as on
+// nativity-church.com -- since magnifying it would show nothing new.
 
 const IMAGE_HREF = /^\/sites\/.+\.(jpe?g|gif|png|bmp)$/i;
 const BOUND = '__palestineOnlineImagePeekBound';
 const GAP = 16; // between the cursor and the preview
-const MAX_SIDE = 320; // the preview's longest side, before the window limits it
+const MAX_SIDE = 480; // the preview's longest side, before the window limits it
 const LINGER = 100; // ms the preview outlives the link, to reach the next one in a list
 
 const iframe = document.getElementById('frame');
@@ -21,6 +23,7 @@ const iframe = document.getElementById('frame');
 let peek = null; // the floating <div>, built on first use
 let current = null; // { link, win, x, y } while hovering an image link
 let lingering = 0; // the timer that hides the preview once the cursor has left a link
+const shownWhole = new WeakSet(); // links whose picture on the page is already full size
 
 function build() {
 	peek = document.createElement('div');
@@ -56,6 +59,26 @@ function shellPoint(win, x, y) {
 	return { x: x + rect.left, y: y + rect.top };
 }
 
+// The size the preview shows an image at: its own, within MAX_SIDE and the frame.
+function previewSize(img, bounds) {
+	const scale = Math.min(
+		1,
+		MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight),
+		(bounds.width - 2 * GAP) / img.naturalWidth,
+		(bounds.height - 2 * GAP) / img.naturalHeight,
+	);
+	return { width: Math.round(img.naturalWidth * scale), height: Math.round(img.naturalHeight * scale) };
+}
+
+// Whether a picture inside the link already shows as much as the preview would. A pixel
+// or two of slack, for borders and rounding.
+function alreadyShown(link, size) {
+	return [...link.querySelectorAll('img')].some((el) => {
+		const rect = el.getBoundingClientRect();
+		return rect.width + 2 >= size.width && rect.height + 2 >= size.height;
+	});
+}
+
 // Below right of the cursor, flipped to the other side wherever that would leave the
 // frame, so a link near the right edge or the bottom still shows its image whole.
 function place() {
@@ -63,14 +86,7 @@ function place() {
 	if (!current || !img) return; // nothing loaded yet; show() calls back once it is
 
 	const bounds = iframe.getBoundingClientRect();
-	const scale = Math.min(
-		1,
-		MAX_SIDE / Math.max(img.naturalWidth, img.naturalHeight),
-		(bounds.width - 2 * GAP) / img.naturalWidth,
-		(bounds.height - 2 * GAP) / img.naturalHeight,
-	);
-	const width = Math.round(img.naturalWidth * scale);
-	const height = Math.round(img.naturalHeight * scale);
+	const { width, height } = previewSize(img, bounds);
 	img.style.width = `${width}px`;
 	img.style.height = `${height}px`;
 	peek.hidden = false;
@@ -104,6 +120,12 @@ function show(link, win, event) {
 	img.decode().then(
 		() => {
 			if (current?.link !== link) return; // moved on while it loaded
+			if (alreadyShown(link, previewSize(img, iframe.getBoundingClientRect()))) {
+				shownWhole.add(link);
+				hide();
+				return;
+			}
+			link.style.cursor = 'zoom-in';
 			peek.replaceChildren(img);
 			place();
 		},
@@ -128,14 +150,14 @@ export function bindImagePeek(doc) {
 	doc.addEventListener('pointerover', (event) => {
 		if (event.pointerType !== 'mouse') return;
 		const link = imageLink(event.target);
-		if (!link) return;
+		if (!link || shownWhole.has(link)) return;
 		if (link === current?.link) {
 			clearTimeout(lingering); // back onto it before the preview went
 			return;
 		}
-		// Set as it is first hovered, rather than by a stylesheet: which links count is
-		// decided from the resolved URL, and a selector on href would miss relative ones.
-		link.style.cursor = 'zoom-in';
+		// The magnifier is set by show() once the image is in, rather than by a stylesheet:
+		// which links count is decided from the resolved URL and the image's size, and a
+		// selector on href would miss relative ones.
 		show(link, win, event);
 	});
 	doc.addEventListener('pointermove', (event) => {
