@@ -9,7 +9,8 @@
 // Tags edited on the live site live in the server's archive.db, which is gitignored.
 // This is the backup: it fetches /api/tags.csv over the admin port -- only reachable
 // through the tunnel -- and writes it over tags.csv, and the address bar's group order
-// over tag-order.txt. Review the diff, then commit.
+// over tag-order.txt, and the groups' subheadings over tag-subheadings.txt. Review the
+// diff, then commit.
 
 import fs from 'fs/promises';
 
@@ -57,5 +58,17 @@ if (orderRes?.ok && /^text\/plain/.test(orderRes.headers.get('content-type') || 
   if (order.trim()) {
     await fs.writeFile(orderOut, order, 'utf8');
     console.log(`Wrote ${orderOut}: the order of ${order.trim().split('\n').length} tag groups.`);
+  }
+}
+
+// The italic subheadings beside those groups' headings, the same way.
+const subheadingsUrl = url.replace(/tags\.csv$/, 'tag-subheadings.txt');
+const subheadingsOut = flag('--subheadings-out', 'tag-subheadings.txt');
+const subheadingsRes = await fetch(subheadingsUrl).catch(() => null);
+if (subheadingsRes?.ok && /^text\/plain/.test(subheadingsRes.headers.get('content-type') || '')) {
+  const subheadings = await subheadingsRes.text();
+  if (subheadings.trim()) {
+    await fs.writeFile(subheadingsOut, subheadings, 'utf8');
+    console.log(`Wrote ${subheadingsOut}: ${subheadings.trim().split('\n').length} group subheadings.`);
   }
 }

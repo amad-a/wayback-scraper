@@ -47,6 +47,7 @@ function parseArgs(argv) {
     tags: flag('--tags', 'tags.csv'),
     // The order of the address bar's tag groups, one tag per line; committed beside it.
     tagOrder: flag('--tag-order', 'tag-order.txt'),
+    tagSubheadings: flag('--tag-subheadings', 'tag-subheadings.txt'),
   };
 }
 
@@ -111,6 +112,13 @@ CREATE TABLE IF NOT EXISTS page_meta (
 CREATE TABLE IF NOT EXISTS tag_order (
   tag      TEXT PRIMARY KEY,
   position INTEGER NOT NULL
+);
+
+-- Not dropped either: the italic line beside a group's heading in the address bar list,
+-- set on the admin port. Tags lowercased.
+CREATE TABLE IF NOT EXISTS tag_subheading (
+  tag  TEXT PRIMARY KEY,
+  text TEXT NOT NULL
 );
 
 -- Read through this rather than the pages table: it resolves title_override and
@@ -506,6 +514,23 @@ async function main() {
     orderRestored = tags.length;
   }
 
+  // tag-subheadings.txt the same way: a tag, a tab, its text, one group a line.
+  let subheadingsRestored = 0;
+  if (!db.prepare('SELECT count(*) n FROM tag_subheading').get().n && existsSync(opts.tagSubheadings)) {
+    const put = db.prepare('INSERT OR IGNORE INTO tag_subheading (tag, text) VALUES (?, ?)');
+    const lines = (await fs.readFile(opts.tagSubheadings, 'utf8')).split('\n');
+    db.transaction(() => {
+      for (const line of lines) {
+        const at = line.indexOf('\t');
+        const tag = line.slice(0, at).trim().toLowerCase();
+        const text = line.slice(at + 1).trim();
+        if (at === -1 || !tag || !text) continue;
+        put.run(tag, text);
+        subheadingsRestored += 1;
+      }
+    })();
+  }
+
   // Meta rows whose page has gone: kept, not deleted. A crawl re-run under a slightly
   // different path should not silently bin the tags you wrote.
   const orphanMeta = db
@@ -527,6 +552,9 @@ async function main() {
   );
   if (imported) console.log(`Restored ${imported} rows from ${opts.tags} (${tagged} pages tagged).`);
   if (orderRestored) console.log(`Restored the order of ${orderRestored} tag groups from ${opts.tagOrder}.`);
+  if (subheadingsRestored) {
+    console.log(`Restored ${subheadingsRestored} group subheadings from ${opts.tagSubheadings}.`);
+  }
   if (orphanMeta) console.log(`${orphanMeta} meta rows have no matching page -- kept, not deleted.`);
 }
 

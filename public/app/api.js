@@ -1260,8 +1260,10 @@ function setSearching(on) {
 // other tag under Entry. A page with two tags is listed under both. The groups come in
 // the order set on the archive index's admin port (`order`, lowercased tags; 'entry' is
 // the Entry group), then any it does not name, biggest first, with Entry last. The
-// heading sticks to the top of the list while its pages scroll under it.
-function renderEntries(pages, order = []) {
+// heading sticks to the top of the list while its pages scroll under it, and only then
+// shows its subheading (`subheadings`, lowercased tag -> text, also set on the admin
+// port): at rest every heading has its group's pages beneath it to say what it holds.
+function renderEntries(pages, order = [], subheadings = {}) {
 	if (!dropdownContent) return;
 	dropdownContent.replaceChildren();
 
@@ -1294,6 +1296,13 @@ function renderEntries(pages, order = []) {
 		// Named as a folder would be: "Personal websites", not "#personal websites".
 		const name = tag || 'entry';
 		heading.textContent = name.charAt(0).toUpperCase() + name.slice(1);
+		const subheading = subheadings[name.toLowerCase()];
+		if (subheading) {
+			const sub = document.createElement('span');
+			sub.className = 'dropdown-group-subheading';
+			sub.textContent = subheading;
+			heading.append(' ', sub);
+		}
 		group.setAttribute('aria-labelledby', heading.id);
 		group.appendChild(heading);
 		for (const page of members) group.appendChild(pageRow(page));
@@ -1302,7 +1311,21 @@ function renderEntries(pages, order = []) {
 
 	markCurrent();
 	setSearching(false);
+	markStuck();
 }
+
+// A heading is stuck while its group's top has scrolled above the top of the list -- its
+// first pages are underneath it -- which sticky positioning itself does not report.
+function markStuck() {
+	if (!dropdownContent) return;
+	const top = dropdownContent.getBoundingClientRect().top;
+	for (const group of dropdownContent.querySelectorAll('.dropdown-group')) {
+		const stuck = group.getBoundingClientRect().top < top - 0.5;
+		group.firstElementChild?.classList.toggle('stuck', stuck);
+	}
+}
+
+dropdownContent?.addEventListener('scroll', markStuck, { passive: true });
 
 function pageRow(page) {
 	const row = document.createElement('div');
@@ -1333,8 +1356,12 @@ async function fetchJson(url, fallback) {
 }
 
 async function loadEntries() {
-	const [pages, order] = await Promise.all([fetchJson('/api/entries', []), fetchJson('/api/tag-order', [])]);
-	return { pages, order };
+	const [pages, order, subheadings] = await Promise.all([
+		fetchJson('/api/entries', []),
+		fetchJson('/api/tag-order', []),
+		fetchJson('/api/tag-subheadings', {}),
+	]);
+	return { pages, order, subheadings };
 }
 
 // Shows the dropdown, already filled in -- so the slide-open animation runs on the finished
@@ -1387,12 +1414,12 @@ let pendingOpen = false;
 async function openEntries({ focusList }) {
 	const mine = ++ticket;
 	pendingOpen = true;
-	const { pages, order } = await loadEntries();
+	const { pages, order, subheadings } = await loadEntries();
 	if (mine !== ticket) return;
 	pendingOpen = false;
 	// Nothing tagged "entry" yet: nothing to show, so it stays closed.
 	if (!pages.length) return;
-	renderEntries(pages, order);
+	renderEntries(pages, order, subheadings);
 	showDropdown();
 
 	if (focusList) {

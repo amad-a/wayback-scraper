@@ -214,7 +214,8 @@ function renderPage(crawls, stats) {
   #group-order summary { cursor: pointer; }
   #group-order ol { margin: 4px 0; padding: 0; list-style: none; max-height: 12em; overflow-y: auto; }
   #group-order li { display: flex; align-items: center; gap: 4px; padding: 1px 0; }
-  #group-order li .name { flex: 1; font-weight: bold; }
+  #group-order li .name { flex: 0 0 9em; font-weight: bold; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #group-order li .subheading { flex: 1; min-width: 0; font-style: italic; }
   #group-order li button { min-width: 0; min-height: 0; padding: 0 5px; }
   #group-order-error { margin: 0; color: #a00; }
 </style>
@@ -871,12 +872,14 @@ ${tree}
       isAdmin = res.ok;
       renderTags();
       if (!isAdmin) return;
-      return fetch('/api/tag-order')
-        .then(function (r) { return r.ok ? r.json() : []; })
-        .then(function (order) {
-          savedOrder = order;
-          renderGroupOrder();
-        });
+      return Promise.all([
+        fetch('/api/tag-order').then(function (r) { return r.ok ? r.json() : []; }),
+        fetch('/api/tag-subheadings').then(function (r) { return r.ok ? r.json() : {}; }),
+      ]).then(function (got) {
+        savedOrder = got[0];
+        savedSubheadings = got[1];
+        renderGroupOrder();
+      });
     })
     .catch(function () {});
 
@@ -885,11 +888,14 @@ ${tree}
   // The shell's address bar list shows the pages tagged "entry" under a heading for each of
   // their other tags (renderEntries in public/app/api.js). Here, on the admin port, those
   // groups can be put in order; the order is saved whole on every move. 'entry' stands
-  // for the group of entries with no other tag.
+  // for the group of entries with no other tag. Each can also have a subheading: italic
+  // text the shell shows beside the heading while it is stuck to the top of the list,
+  // saved when the box is left or Enter is pressed. Emptying the box removes it.
   var groupOrder = document.getElementById('group-order');
   var groupOrderList = document.getElementById('group-order-list');
   var groupOrderError = document.getElementById('group-order-error');
   var savedOrder = [];
+  var savedSubheadings = {};
   var orderSaving = false;
 
   function entryGroups() {
@@ -930,7 +936,21 @@ ${tree}
       var n = document.createElement('span');
       n.className = 'count';
       n.textContent = g.n;
+      var sub = document.createElement('input');
+      sub.type = 'text';
+      sub.className = 'subheading';
+      sub.maxLength = 120;
+      sub.placeholder = 'Subheading';
+      sub.value = savedSubheadings[g.key] || '';
+      sub.setAttribute('aria-label', 'Subheading for ' + name.textContent);
+      sub.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') sub.blur();
+      });
+      sub.addEventListener('change', function () {
+        saveSubheading(g.key, sub);
+      });
       li.appendChild(name);
+      li.appendChild(sub);
       li.appendChild(n);
       [['\u25b2', -1, 'up'], ['\u25bc', 1, 'down']].forEach(function (spec) {
         var button = document.createElement('button');
@@ -950,6 +970,29 @@ ${tree}
       });
       groupOrderList.appendChild(li);
     });
+  }
+
+  function saveSubheading(key, input) {
+    groupOrderError.textContent = '';
+    input.disabled = true;
+    fetch('/api/tag-subheadings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tag: key, text: input.value }),
+    })
+      .then(function (res) {
+        return res.json().then(function (body) {
+          if (!res.ok) throw new Error(body.error || 'HTTP ' + res.status);
+          savedSubheadings = body;
+          input.value = body[key] || '';
+        });
+      })
+      .catch(function (err) {
+        groupOrderError.textContent = 'Could not save: ' + err.message;
+      })
+      .then(function () {
+        input.disabled = false;
+      });
   }
 
   function saveGroupOrder(keys, moved, direction) {

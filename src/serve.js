@@ -541,6 +541,61 @@ app.post('/api/tag-order', adminOnly, express.json({ limit: '16kb' }), (req, res
   }
 });
 
+// A line of italic text beside a group's heading in the address bar list, shown while
+// the heading is stuck to the top (see renderEntries): lowercased tag -> text. Set one
+// group at a time on the admin port; empty text removes it.
+const SUBHEADING_MAX = 120;
+
+function tagSubheadings(handle) {
+  try {
+    const rows = handle.prepare('SELECT tag, text FROM tag_subheading ORDER BY tag').all();
+    return Object.fromEntries(rows.map((r) => [r.tag, r.text]));
+  } catch {
+    return {};
+  }
+}
+
+app.get('/api/tag-subheadings', (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  res.json(tagSubheadings(handle));
+});
+
+app.post('/api/tag-subheadings', adminOnly, express.json({ limit: '4kb' }), (req, res) => {
+  const tag = typeof req.body?.tag === 'string' ? req.body.tag.replace(/\s+/g, ' ').trim().toLowerCase() : '';
+  const text = typeof req.body?.text === 'string' ? req.body.text.replace(/\s+/g, ' ').trim() : null;
+  if (!tag || tag.length > TAG_MAX || text === null) return res.status(400).json({ error: 'tag and text required' });
+  if (text.length > SUBHEADING_MAX) return res.status(400).json({ error: `at most ${SUBHEADING_MAX} characters` });
+
+  let rw;
+  try {
+    rw = new Database(DB_PATH, { fileMustExist: true });
+  } catch {
+    return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  }
+  try {
+    rw.exec('CREATE TABLE IF NOT EXISTS tag_subheading (tag TEXT PRIMARY KEY, text TEXT NOT NULL)');
+    if (text) {
+      rw.prepare(
+        'INSERT INTO tag_subheading (tag, text) VALUES (?, ?) ON CONFLICT(tag) DO UPDATE SET text = excluded.text',
+      ).run(tag, text);
+    } else {
+      rw.prepare('DELETE FROM tag_subheading WHERE tag = ?').run(tag);
+    }
+    res.json(tagSubheadings(rw));
+  } finally {
+    rw.close();
+  }
+});
+
+// The subheadings as tag-subheadings.txt for `npm run tags:pull`: a tag, a tab, its text.
+app.get('/api/tag-subheadings.txt', adminOnly, (_req, res) => {
+  const handle = database();
+  if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
+  const lines = Object.entries(tagSubheadings(handle)).map(([tag, text]) => `${tag}\t${text}\n`);
+  res.type('text/plain').send(lines.join(''));
+});
+
 // The order as tag-order.txt, for `npm run tags:pull`.
 app.get('/api/tag-order.txt', adminOnly, (_req, res) => {
   const handle = database();

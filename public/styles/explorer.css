@@ -876,6 +876,18 @@ button:disabled {
 	user-select: none;
 }
 
+/* The group's subheading: beside the name, plain italic, and only while the heading is
+   stuck to the top with its pages scrolling beneath (markStuck in app/api.js). */
+.dropdown-group-subheading {
+	display: none;
+	font-weight: normal;
+	font-style: italic;
+}
+
+.dropdown-group-heading.stuck .dropdown-group-subheading {
+	display: inline;
+}
+
 .dropdown-group-heading::before,
 .dropdown-empty::before {
 	content: "";
