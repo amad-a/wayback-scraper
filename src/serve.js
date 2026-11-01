@@ -1065,6 +1065,10 @@ app.get('/archive-index.html', (req, res) => {
 // A replaced tile reaches returning visitors within a day; a new one is a new name.
 app.use('/assets/tiles', express.static(TILES_DIR, { maxAge: '1d' }));
 
+// PlantStudio is its own GPL project, kept in a clone beside this one. Pulling there
+// updates it with no restart, and without the clone /plant is an ordinary 404.
+app.use('/plant', express.static(path.join(ROOT, '..', 'plantstudio-web')));
+
 app.use(express.static(path.join(ROOT, 'public')));
 
 // Anything nothing above answered, in place of Express's bare "Cannot GET /path". Most

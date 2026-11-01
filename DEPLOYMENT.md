@@ -16,6 +16,7 @@ node src/serve.js ..... PM2 process "wayback"
    +-- public/         the Explorer shell
    +-- sites/          ~6000 archived pages
    +-- archive.db      SQLite, opened read-only
+   +-- ../plantstudio-web   served at /plant, a separate clone
 ```
 
 | | |
