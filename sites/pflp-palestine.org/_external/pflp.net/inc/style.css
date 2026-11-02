@@ -1,0 +1,69 @@
+A {
+	COLOR: #000099; TEXT-DECORATION: none
+}
+A:hover {
+	TEXT-DECORATION: underline
+}
+a            { text-decoration: none; color: #000099 }
+a:link       { color: #000099; text-decoration: none }
+a:visited    { color: #000099; text-decoration: none }
+a:active     { text-decoration: none; color: #000099 }
+a:hover      { TEXT-DECORATION: underline; color: #CA2802 }
+
+.body
+{
+    FONT-FAMILY: 'Arabic Transparent';
+    FONT-SIZE: 11pt;
+    FONT-WEIGHT: normal;
+    PADDING-RIGHT: 7px;
+    TEXT-ALIGN: justify;
+    TEXT-DECORATION: none
+}
+
+.content     {
+	font-family: tahoma, verdana, arial, sans-serif;
+	font-size: 12;
+	text-align: justify
+}
+
+.panel1      {
+	-moz-border-radius: .3em .3em .3em .3em;
+	border: 10px dotted #F7BFBF;
+	background-color: #FEF2F2;
+}
+
+.panel1      {
+	-moz-border-radius: .3em .3em .3em .3em;
+	border: 1px dotted #F7BFBF;
+	background-color: #FEF2F2;
+}
+
+body, td, tr{
+	font-family: tahoma, verdana, arial, sans-serif;
+	color:#000;
+	font-size:12;
+	font-weight:normal;
+}
+
+.banner {
+	font-family: tahoma, georgia, verdana, arial, sans-serif;
+	color:white;
+	font-size:x-large;
+	font-weight:bold;
+	border-left:1px solid #FFF;
+	border-right:1px solid #FFF;
+	border-top:1px solid #FFF;
+	background:#003366;
+	padding:7px;
+}
+
+.description{
+	font-family:tahoma, verdana, arial, sans-serif;
+	font-size:x-small;
+	font-weight:bold;
+}
+
+input, select, textarea     { font-family: Tahoma; font-size: 10px; color: #BD3131; border-style: solid;
+	border-width: 1; padding-left: 4; padding-right: 4;
+	padding-top: 1; padding-bottom: 1; background-color: #FEF2F2
+}
