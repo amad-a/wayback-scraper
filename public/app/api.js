@@ -399,7 +399,7 @@ const NEW_WINDOW = new Set(['_blank', '_new', '_newtab']);
 // The one way out of the archive: a visitor's homepage, signed into the site's own
 // guestbook (sites/palestineonline.net/guestbook.html), opens in a new tab. Not in the
 // browser's full screen, where the site runs as a kiosk with no tabs to come back from;
-// there it stays dead like every other live link, and the page shows it so.
+// there the page makes the link unclickable, and this refuses it too.
 const GUESTBOOK_PATH = 'palestineonline.net/guestbook.html';
 const FULL_SCREEN = matchMedia('(display-mode: fullscreen)');
 
