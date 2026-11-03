@@ -839,10 +839,14 @@ function guestbookDate(iso) {
   return `${parts.weekday}, ${parts.month} ${parts.day}, ${parts.year} at ${parts.hour}:${parts.minute}:${parts.second} (${parts.timeZoneName})`;
 }
 
-// One entry, exactly as guestbook.pl wrote it into the page.
+// One entry, exactly as guestbook.pl wrote it into the page. The homepage link is marked
+// `homepage`: the one kind of live link the shell lets through (see onArchiveClick in
+// public/app/api.js), and nofollow, as visitors' links on any guestbook should be.
 function guestbookEntryHtml(e) {
   const comments = escapeHtml(e.comments).replace(/\n/g, '<br>\n');
-  const name = e.url ? `<a href="${escapeHtml(e.url)}">${escapeHtml(e.name)}</a>` : escapeHtml(e.name);
+  const name = e.url
+    ? `<a href="${escapeHtml(e.url)}" class="homepage" rel="nofollow ugc noopener">${escapeHtml(e.name)}</a>`
+    : escapeHtml(e.name);
   const email = e.email ? ` &lt;${escapeHtml(e.email)}&gt;` : '';
   let place = '';
   if (e.city) place += `${escapeHtml(e.city)},`;

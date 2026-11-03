@@ -114,7 +114,7 @@ Every route out of the frame is handled. Before changing the sandbox, the CSP or
   - the shell is sent with `frame-src 'self'`;
   - pages the database lists, and server-side extensions (`.asp`, `.php`, `.cgi`, `.pl`), are typed by content, not extension.
 - **Shell**:
-  - live-web and `mailto:` links are blocked;
+  - live-web and `mailto:` links are blocked, except visitors' homepages in the guestbook (`a.homepage`), which open in a new tab unless the browser is in full screen;
   - `_blank` and unknown targets open in the frame;
   - `window.open` only works from a click, and opens into the frame;
   - live-web navigations are cancelled through each frame's `navigation`;

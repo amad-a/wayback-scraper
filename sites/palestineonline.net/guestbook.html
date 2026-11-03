@@ -41,6 +41,25 @@
 <!--begin-->
 
 <script>
+// Visitors' homepages are live links, the only ones in the archive: dead-links.js marks
+// them dead like any other, and this takes the mark back off -- except in the browser's
+// full screen (a kiosk), where they stay dead. The shell opens them in a new tab
+// (onArchiveClick in public/app/api.js). Runs after dead-links.js's own pass, which is
+// registered earlier, and again whenever full screen is entered or left.
+(function () {
+  var fullScreen = window.matchMedia('(display-mode: fullscreen)');
+  function markHomepages() {
+    var links = document.querySelectorAll('a.homepage');
+    for (var i = 0; i < links.length; i++) {
+      links[i].classList.toggle('dead', fullScreen.matches);
+      if (fullScreen.matches) links[i].setAttribute('aria-disabled', 'true');
+      else links[i].removeAttribute('aria-disabled');
+    }
+  }
+  document.addEventListener('DOMContentLoaded', markHomepages);
+  fullScreen.addEventListener('change', markHomepages);
+})();
+
 (function () {
   var form = document.getElementById('sign-form');
   var sign = document.getElementById('sign');

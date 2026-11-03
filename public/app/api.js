@@ -315,6 +315,11 @@ function findFrame(win, name, depth = 0) {
 function onArchiveClick(event) {
 	const link = event.target?.closest?.('a[href], area[href]');
 	if (!link) return;
+	if (isGuestbookHomepage(link)) {
+		event.preventDefault();
+		if (!FULL_SCREEN.matches) window.open(link.href, '_blank', 'noopener,noreferrer');
+		return;
+	}
 	// A link the scraper marked dead goes nowhere. dead-links.js cancels the click, but it
 	// listens on the same document, so its stopPropagation does not stop this handler --
 	// which then opened the missing file anyway, through openPlaced, and showed a 404.
@@ -390,6 +395,21 @@ function onArchiveClick(event) {
 }
 
 const NEW_WINDOW = new Set(['_blank', '_new', '_newtab']);
+
+// The one way out of the archive: a visitor's homepage, signed into the site's own
+// guestbook (sites/palestineonline.net/guestbook.html), opens in a new tab. Not in the
+// browser's full screen, where the site runs as a kiosk with no tabs to come back from;
+// there it stays dead like every other live link, and the page shows it so.
+const GUESTBOOK_PATH = 'palestineonline.net/guestbook.html';
+const FULL_SCREEN = matchMedia('(display-mode: fullscreen)');
+
+function isGuestbookHomepage(link) {
+	return (
+		link.matches('a.homepage') &&
+		/^https?:$/.test(link.protocol) &&
+		localPathOf(link.ownerDocument.defaultView) === GUESTBOOK_PATH
+	);
+}
 
 // A link to a spot on the page it is on, like href="#top": same document, so not a
 // navigation the archive needs to have anything to say about.
