@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Guestbook entries</title>
+<!-- Served only on the admin port (see the guestbook section of src/serve.js):
+     ssh -N -L 18081:127.0.0.1:8081 deploy@167.233.141.19, then
+     http://localhost:18081/guestbook-admin.html -->
+<link rel="stylesheet" href="/vendor/98.css/98.css">
+<link rel="stylesheet" href="/styles/theme.css">
+<style>
+  body { margin: 0; padding: 16px; background: var(--ButtonFace); }
+  body, .title-bar, .window, button, input, label {
+    font-family: var(--font-ui);
+    -webkit-font-smoothing: auto;
+  }
+  .window { max-width: 760px; margin: 0 auto 16px; }
+  .window-body { margin: 8px; }
+  .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .toolbar p { margin: 0; }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  li { display: flex; gap: 8px; align-items: flex-start; }
+  /* The entry as it will look on the page: guestbook.pl's markup on the page's tile. */
+  .entry {
+    flex: 1; min-width: 0; padding: 6px 8px; box-shadow: var(--edge-field);
+    background: #fff url('/sites/palestineonline.net/welcome.gif');
+    font-family: 'Times New Roman', serif; font-size: 16px; overflow-wrap: anywhere;
+  }
+  .entry hr { display: none; }
+  /* Visitors' homepages are live-web links; nothing to follow from here. */
+  .entry a { pointer-events: none; }
+  .entry .homepage { font: 12px var(--font-ui); color: var(--GrayText, #808080); margin-top: 4px; }
+  .actions { display: flex; flex-direction: column; gap: 4px; }
+  .empty { margin: 0; color: var(--GrayText, #808080); }
+  .status-bar { margin-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="window">
+    <div class="title-bar"><div class="title-bar-text">Guestbook &mdash; waiting for approval</div></div>
+    <div class="window-body">
+      <div class="toolbar">
+        <p id="summary">Loading&hellip;</p>
+        <span>
+          <a href="/?p=palestineonline.net/guestbook.html" target="_blank">Open the guestbook</a>
+          <button type="button" id="reload">Refresh</button>
+        </span>
+      </div>
+      <br>
+      <ul id="pending"></ul>
+    </div>
+  </div>
+
+  <div class="window">
+    <div class="title-bar"><div class="title-bar-text">Guestbook &mdash; on the page</div></div>
+    <div class="window-body">
+      <ul id="approved"></ul>
+    </div>
+  </div>
+
+  <div class="window">
+    <div class="status-bar"><p class="status-bar-field" id="status">&nbsp;</p></div>
+  </div>
+
+<script type="module">
+const lists = { pending: document.getElementById('pending'), approved: document.getElementById('approved') };
+const status = document.getElementById('status');
+
+async function call(path, body) {
+  const res = await fetch(path, body === undefined ? {} : {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `HTTP ${res.status}`);
+  return data;
+}
+
+function button(label, onClick) {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.textContent = label;
+  b.addEventListener('click', async () => {
+    b.disabled = true;
+    try {
+      await onClick();
+    } catch (err) {
+      status.textContent = err.message;
+      b.disabled = false;
+    }
+  });
+  return b;
+}
+
+function row(entry) {
+  const li = document.createElement('li');
+  const box = document.createElement('div');
+  box.className = 'entry';
+  // Built by the server from escaped fields: guestbookEntryHtml in src/serve.js.
+  box.innerHTML = entry.html;
+  if (entry.url) {
+    const homepage = document.createElement('div');
+    homepage.className = 'homepage';
+    homepage.textContent = 'Homepage: ' + entry.url;
+    box.append(homepage);
+  }
+  const actions = document.createElement('div');
+  actions.className = 'actions';
+  const approved = entry.approved_at !== null;
+  actions.append(
+    button(approved ? 'Hide' : 'Approve', async () => {
+      await call('/api/guestbook/approve', { id: entry.id, approved: !approved });
+      status.textContent = approved ? `Took entry ${entry.id} off the page.` : `Approved entry ${entry.id}.`;
+      await load();
+    }),
+    button('Delete', async () => {
+      if (!confirm(`Delete the entry from ${entry.name} for good?`)) return;
+      await call('/api/guestbook/delete', { id: entry.id });
+      status.textContent = `Deleted entry ${entry.id}.`;
+      await load();
+    }),
+  );
+  li.append(box, actions);
+  return li;
+}
+
+function fill(list, entries, emptyText) {
+  list.replaceChildren(...entries.map(row));
+  if (!entries.length) {
+    const p = document.createElement('p');
+    p.className = 'empty';
+    p.textContent = emptyText;
+    list.append(p);
+  }
+}
+
+async function load() {
+  let entries;
+  try {
+    entries = await call('/api/guestbook/entries');
+  } catch (err) {
+    document.getElementById('summary').textContent = `Couldn't load entries: ${err.message}`;
+    return;
+  }
+  const pending = entries.filter((e) => e.approved_at === null);
+  const approved = entries.filter((e) => e.approved_at !== null);
+  document.getElementById('summary').textContent =
+    `${pending.length} waiting, ${approved.length} on the page.`;
+  fill(lists.pending, pending, 'Nothing waiting.');
+  fill(lists.approved, approved, 'No entries on the page yet.');
+}
+
+document.getElementById('reload').addEventListener('click', load);
+load();
+</script>
+</body>
+</html>

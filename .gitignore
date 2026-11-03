@@ -20,3 +20,9 @@ sheets-output/
 # A crawl's capture list while it is still being fetched from CDX, page by page;
 # removed once the list is complete.
 cdx-pages.json
+
+# Guestbook entries: written on the site, so the server holds the only copy. See the
+# guestbook section of src/serve.js.
+guestbook.db
+guestbook.db-wal
+guestbook.db-shm

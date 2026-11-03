@@ -66,11 +66,19 @@ Example: keeping only five pages of `geocities.com/zuhairhm`.
 
 ## Tags and entries
 
-- Writes are accepted only on the admin port 8081 (loopback, never proxied by nginx). Requests must be same-origin JSON. There are no secrets in pages.
+- Writes are accepted only on the admin port 8081 (loopback, never proxied by nginx), apart from signing the guestbook. Requests must be same-origin JSON. There are no secrets in pages.
 - `tags.csv` is the committed backup. The server's DB is the latest copy; `npm run tags:pull` brings it down.
 - The `entry` tag drives the address bar ▼ list and the random start page (a bare `/` opens a random entry page).
 - The ▼ list groups entry pages under their other tags. The group order is set under "Address bar groups" on the admin port's archive index, stored in archive.db's `tag_order` table (kept across `npm run db`), and backed up to `tag-order.txt` by `npm run tags:pull`; `npm run db` restores from that file only when the table is empty.
 - `title_override` fixes mis-decoded titles, including Arabic.
+
+## Guestbook
+
+- `sites/palestineonline.net/guestbook.html` is the site's own page, not an archived one: barghouti.com's guestbook layout, sign form on top, entries below. No `log.json` lists it, so it isn't in `archive.db`; `data-display-url` fills the address bar.
+- `POST /api/guestbook` is the one public write: same-origin JSON, a hidden `website` honeypot, 3 signings per visitor per 10 minutes, at most 300 waiting.
+- `src/serve.js` writes approved entries in after `<!--begin-->`, newest first, in guestbook.pl's markup.
+- Approve, hide or delete at `/guestbook-admin.html` on the admin port only (`admin/guestbook.html`): through the `palindex` tunnel, `http://localhost:18081/guestbook-admin.html`.
+- Entries are in `guestbook.db` (gitignored, outside `archive.db`, so `npm run db` never touches it). The server's copy is the only one; `GUESTBOOK_DB` points a test server elsewhere.
 
 ## Frames and framesets
 

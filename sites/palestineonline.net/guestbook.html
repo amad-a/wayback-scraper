@@ -1,0 +1,100 @@
+<html><head><meta charset="utf-8">
+    <title>PALESTINEONLINE.NET - Guestbook</title>
+  <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
+  <!--
+    Not an archived page: palestineonline.net's own guestbook, laid out after
+    barghouti.com's (sites/barghouti.com/guestbook/sign.shtml and index.html), which ran
+    Matt Wright's guestbook.pl. The sign form is on top and the entries below it.
+
+    src/serve.js writes the approved entries in after the begin marker, newest first, the
+    way guestbook.pl did. Signing posts to /api/guestbook from the script at the bottom,
+    so it still works after the scraper's rewrite pass strips the form's action and adds
+    onsubmit="return false". New entries wait for approval on the admin port.
+
+    The head's print-size and dead-link tags, and the form's onsubmit, are what that pass
+    would add; they are here already so it has nothing to change. data-display-url gives
+    the address bar something to show, there being no Wayback capture to name.
+  -->
+  <body background="/sites/palestineonline.net/welcome.gif" data-display-url="http://palestineonline.net/guestbook.html">
+    <center id="sign">
+      <h1>Add to our Guestbook</h1>
+
+    Fill in the blanks below to add to our guestbook.  The only blanks that you
+    have to fill in are the comments and name section.  Thanks!<hr>
+    <form id="sign-form" onsubmit="return false">
+      <b>Your Name</b><br>
+      <input type="text" name="realname" size="30" maxlength="100" required><br>
+      <b>E-Mail Address</b><br>
+      <input type="text" name="username" size="40" maxlength="200"><br>
+      <b>URL</b> (<i>Homepage</i>)<br>
+      <input type="text" name="url" size="50" maxlength="300"><p>
+      <b>City</b> <input type="text" name="city" size="15" maxlength="60">, <b>State</b> <input type="text" name="state" size="2" maxlength="60"> <b>Country</b> <input type="text" name="country" size="15" maxlength="60"></p><p>
+      <b>Comments</b><br>
+      <textarea name="comments" cols="60" rows="4" maxlength="4000" required></textarea></p><p>
+      <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+      <input type="submit" value="Sign Guestbook"> &nbsp;&nbsp; <input type="reset" value="Cancel">
+    </p></form>
+    </center>
+
+    <center>
+      <h1><font color="blue">PALESTINEONLINE.NET - Guestbook</font></h1>
+
+    Thank you for visiting our pages.  We would love it if you would
+    <a href="#sign"><b>Add</b></a> to this guestbook we
+are keeping!
+    <hr width="50%">
+   </center>
+   <hr width="50%">
+<!--begin-->
+
+<script>
+(function () {
+  var form = document.getElementById('sign-form');
+  var sign = document.getElementById('sign');
+  var sending = false;
+
+  // Matt's script answered with a page of its own; this swaps one in where the form was.
+  function answer(heading, text) {
+    sign.innerHTML = '';
+    var h1 = document.createElement('h1');
+    h1.textContent = heading;
+    sign.appendChild(h1);
+    sign.appendChild(document.createTextNode(text));
+    sign.appendChild(document.createElement('hr'));
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    if (sending) return;
+    sending = true;
+    var data = {};
+    for (var i = 0; i < form.elements.length; i++) {
+      var el = form.elements[i];
+      if (el.name) data[el.name] = el.value;
+    }
+    fetch('/api/guestbook', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function (res) {
+      return res.json().catch(function () { return {}; }).then(function (body) {
+        if (res.ok) {
+          answer('Thank You For Signing The Guestbook',
+            'Thank you for filling in the guestbook.  Your entry will appear below once it has been approved.');
+        } else {
+          sending = false;
+          answer('Your Entry Was Not Added', (body.error || 'Something went wrong.') + '  ');
+          var again = document.createElement('a');
+          again.href = '';
+          again.textContent = 'Try again';
+          sign.insertBefore(again, sign.lastChild);
+        }
+      });
+    }, function () {
+      sending = false;
+      answer('Your Entry Was Not Added', 'The guestbook could not be reached.  Please try again later.');
+    });
+  });
+})();
+</script>
+</body></html>

@@ -757,6 +757,216 @@ app.use('/sites', (req, res, next) => {
   next();
 });
 
+// --- guestbook --------------------------------------------------------------
+//
+// sites/palestineonline.net/guestbook.html is the site's own guestbook, not an archived
+// page: barghouti.com's guestbook.pl layout, sign form on top, entries underneath.
+//
+// Anyone can sign -- the one write the public port takes -- but an entry shows only once
+// it is approved on the admin port (/guestbook-admin.html, through the same tunnel as
+// tag editing). Entries live in guestbook.db, apart from archive.db, which `npm run db`
+// rebuilds, and outside git: it is the only copy, on the server.
+const GUESTBOOK_DB_PATH = process.env.GUESTBOOK_DB || path.join(ROOT, 'guestbook.db');
+const GUESTBOOK_PAGE = path.join(ROOT, 'sites', 'palestineonline.net', 'guestbook.html');
+const GUESTBOOK_ADMIN_PAGE = path.join(ROOT, 'admin', 'guestbook.html');
+const GUESTBOOK_LIMITS = { realname: 100, username: 200, url: 300, city: 60, state: 60, country: 60, comments: 4000 };
+// Unapproved entries held at once. Past this, signing is refused until some are dealt
+// with, so a flood fills a queue rather than the disk.
+const GUESTBOOK_MAX_PENDING = 300;
+// Signings per visitor per window.
+const GUESTBOOK_RATE = { count: 3, windowMs: 10 * 60 * 1000 };
+
+let guestbookDb = null;
+function guestbook() {
+  if (!guestbookDb) {
+    guestbookDb = new Database(GUESTBOOK_DB_PATH);
+    guestbookDb.pragma('journal_mode = WAL');
+    guestbookDb.exec(`CREATE TABLE IF NOT EXISTS entries (
+      id          INTEGER PRIMARY KEY,
+      name        TEXT NOT NULL,
+      email       TEXT NOT NULL DEFAULT '',
+      url         TEXT NOT NULL DEFAULT '',
+      city        TEXT NOT NULL DEFAULT '',
+      state       TEXT NOT NULL DEFAULT '',
+      country     TEXT NOT NULL DEFAULT '',
+      comments    TEXT NOT NULL,
+      created_at  TEXT NOT NULL,
+      approved_at TEXT
+    )`);
+  }
+  return guestbookDb;
+}
+
+// One line of plain text: no control characters, runs of spaces collapsed. Comments keep
+// their line breaks.
+function guestbookField(value, max, multiline = false) {
+  let text = String(value ?? '').replace(/\r\n?/g, '\n');
+  text = multiline
+    ? text.replace(/[^\S\n]+/g, ' ').replace(/\n{3,}/g, '\n\n')
+    : text.replace(/\s+/g, ' ');
+  // eslint-disable-next-line no-control-regex
+  return text.replace(/[\u0000-\u0009\u000b-\u001f\u007f]/g, '').trim().slice(0, max);
+}
+
+// guestbook.pl took the homepage as typed; this keeps only an http(s) address, adding the
+// scheme people leave off.
+function guestbookUrl(value) {
+  let url = guestbookField(value, GUESTBOOK_LIMITS.url);
+  if (!url) return '';
+  if (!/^[a-z][a-z0-9+.-]*:/i.test(url) && /^[^\s/]+\.[^\s/]+/.test(url)) url = 'http://' + url;
+  try {
+    const parsed = new URL(url);
+    return /^https?:$/.test(parsed.protocol) ? parsed.href : '';
+  } catch {
+    return '';
+  }
+}
+
+function guestbookEmail(value) {
+  const email = guestbookField(value, GUESTBOOK_LIMITS.username);
+  return /^[^\s@<>"]+@[^\s@<>"]+\.[^\s@<>"]+$/.test(email) ? email : '';
+}
+
+// "Saturday, June 02, 2001 at 17:37:20 (CDT)", as guestbook.pl wrote it, in Palestine's
+// time.
+function guestbookDate(iso) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-US', {
+      timeZone: 'Asia/Jerusalem', weekday: 'long', month: 'long', day: '2-digit', year: 'numeric',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h23', timeZoneName: 'short',
+    }).formatToParts(new Date(iso)).map((p) => [p.type, p.value]),
+  );
+  return `${parts.weekday}, ${parts.month} ${parts.day}, ${parts.year} at ${parts.hour}:${parts.minute}:${parts.second} (${parts.timeZoneName})`;
+}
+
+// One entry, exactly as guestbook.pl wrote it into the page.
+function guestbookEntryHtml(e) {
+  const comments = escapeHtml(e.comments).replace(/\n/g, '<br>\n');
+  const name = e.url ? `<a href="${escapeHtml(e.url)}">${escapeHtml(e.name)}</a>` : escapeHtml(e.name);
+  const email = e.email ? ` &lt;${escapeHtml(e.email)}&gt;` : '';
+  let place = '';
+  if (e.city) place += `${escapeHtml(e.city)},`;
+  if (e.state) place += ` ${escapeHtml(e.state)}`;
+  if (e.country) place += ` ${escapeHtml(e.country)}`;
+  return `<b>${comments}</b><br>\n${name}${email}<br>\n${place} - ${guestbookDate(e.created_at)}<hr>\n\n`;
+}
+
+// The visitor's address for rate limiting. Behind nginx every request comes from
+// loopback, so the last X-Forwarded-For hop is the one nginx added; without the header
+// all visitors share one limit, which still caps the rate overall.
+function clientAddress(req) {
+  const remote = req.socket.remoteAddress || '';
+  const forwarded = req.get('x-forwarded-for');
+  if (forwarded && /^(127\.|::1$|::ffff:127\.)/.test(remote)) {
+    return forwarded.split(',').pop().trim();
+  }
+  return remote;
+}
+
+const guestbookSigners = new Map();
+function guestbookRateLimited(address) {
+  const now = Date.now();
+  const recent = (guestbookSigners.get(address) || []).filter((t) => now - t < GUESTBOOK_RATE.windowMs);
+  if (recent.length >= GUESTBOOK_RATE.count) {
+    guestbookSigners.set(address, recent);
+    return true;
+  }
+  recent.push(now);
+  guestbookSigners.set(address, recent);
+  // Forget visitors whose window has passed, so the map doesn't grow without end.
+  if (guestbookSigners.size > 5000) {
+    for (const [key, times] of guestbookSigners) {
+      if (!times.some((t) => now - t < GUESTBOOK_RATE.windowMs)) guestbookSigners.delete(key);
+    }
+  }
+  return false;
+}
+
+// The page with its approved entries written in after the begin marker, newest first.
+app.get('/sites/palestineonline.net/guestbook.html', (_req, res, next) => {
+  let html;
+  try {
+    html = template(GUESTBOOK_PAGE);
+  } catch {
+    return next();
+  }
+  const entries = guestbook()
+    .prepare('SELECT * FROM entries WHERE approved_at IS NOT NULL ORDER BY created_at DESC, id DESC')
+    .all();
+  res.setHeader('Cache-Control', 'no-store');
+  res.type('html').send(html.replace('<!--begin-->', () => '<!--begin-->\n' + entries.map(guestbookEntryHtml).join('')));
+});
+
+// Signing. Same-origin JSON only, like the admin writes, so another site can't sign on a
+// visitor's behalf. The hidden `website` field is left empty by people and filled by
+// bots, which are told they succeeded.
+app.post('/api/guestbook', express.json({ limit: '16kb' }), (req, res) => {
+  if (!req.is('application/json')) return res.status(415).json({ error: 'JSON only' });
+  const origin = req.get('origin');
+  if (!origin || !sameHost(origin, req.get('host'))) return res.status(403).json({ error: 'cross-origin' });
+
+  const body = req.body || {};
+  if (guestbookField(body.website, 100)) return res.json({ ok: true });
+
+  const entry = {
+    name: guestbookField(body.realname, GUESTBOOK_LIMITS.realname),
+    email: guestbookEmail(body.username),
+    url: guestbookUrl(body.url),
+    city: guestbookField(body.city, GUESTBOOK_LIMITS.city),
+    state: guestbookField(body.state, GUESTBOOK_LIMITS.state),
+    country: guestbookField(body.country, GUESTBOOK_LIMITS.country),
+    comments: guestbookField(body.comments, GUESTBOOK_LIMITS.comments, true),
+    created_at: new Date().toISOString(),
+  };
+  if (!entry.name) return res.status(400).json({ error: 'Your Name appears to be blank.' });
+  if (!entry.comments) return res.status(400).json({ error: 'Your Comments appear to be blank.' });
+
+  const db = guestbook();
+  const pending = db.prepare('SELECT COUNT(*) AS n FROM entries WHERE approved_at IS NULL').get().n;
+  if (pending >= GUESTBOOK_MAX_PENDING) {
+    return res.status(503).json({ error: 'The guestbook is not taking new entries right now.  Please try again later.' });
+  }
+  if (guestbookRateLimited(clientAddress(req))) {
+    return res.status(429).json({ error: 'You have signed the guestbook several times already.  Please try again later.' });
+  }
+
+  const { lastInsertRowid } = db.prepare(
+    `INSERT INTO entries (name, email, url, city, state, country, comments, created_at)
+     VALUES (@name, @email, @url, @city, @state, @country, @comments, @created_at)`,
+  ).run(entry);
+  res.status(201).json({ ok: true, id: Number(lastInsertRowid) });
+});
+
+// The admin page and its calls exist only on the admin port.
+app.get('/guestbook-admin.html', (req, res, next) => {
+  if (!isAdmin(req)) return next();
+  res.setHeader('Cache-Control', 'no-store');
+  res.sendFile(GUESTBOOK_ADMIN_PAGE);
+});
+
+app.get('/api/guestbook/entries', adminOnly, (_req, res) => {
+  const entries = guestbook().prepare('SELECT * FROM entries ORDER BY created_at DESC, id DESC').all();
+  res.json(entries.map((e) => ({ ...e, html: guestbookEntryHtml(e) })));
+});
+
+// approved: true shows the entry on the page, false takes it back off.
+app.post('/api/guestbook/approve', adminOnly, express.json({ limit: '1kb' }), (req, res) => {
+  const id = Number(req.body?.id);
+  const approved = req.body?.approved !== false;
+  const { changes } = guestbook()
+    .prepare('UPDATE entries SET approved_at = ? WHERE id = ?')
+    .run(approved ? new Date().toISOString() : null, id);
+  if (!changes) return res.status(404).json({ error: 'no such entry' });
+  res.json({ id, approved });
+});
+
+app.post('/api/guestbook/delete', adminOnly, express.json({ limit: '1kb' }), (req, res) => {
+  const id = Number(req.body?.id);
+  const { changes } = guestbook().prepare('DELETE FROM entries WHERE id = ?').run(id);
+  if (!changes) return res.status(404).json({ error: 'no such entry' });
+  res.json({ id, deleted: true });
+});
+
 app.use('/sites', express.static(path.join(ROOT, 'sites'), { setHeaders: typeArchivedFile }));
 
 // --- shareable links --------------------------------------------------------
