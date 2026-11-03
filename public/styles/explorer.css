@@ -12,8 +12,10 @@ html.wallpaper-forward body {
 	cursor: e-resize;
 }
 
+/* image-rendering is inherited too: the wallpaper's pixelation stops at the body. */
 :where(body > *) {
 	cursor: auto;
+	image-rendering: auto;
 }
 
 body {
@@ -21,8 +23,10 @@ body {
 	flex-direction: column;
 	background: var(--ButtonFace);
 	/* Set by the inline script in index.html, then by app/wallpaper.js; the default
-	   tile is only for when neither runs. */
-	background-image: var(--wallpaper, url('../assets/tiles/starz.jpg'));
+	   tile is only for when neither runs. Pixelated, so high-DPI screens scale the old
+	   tiles up as hard pixels rather than blurring them. */
+	background-image: var(--wallpaper, url('../assets/tiles/16-starz.jpg'));
+	image-rendering: pixelated;
 	color: var(--ButtonText);
 	font-family: sans-serif;
 	font-size: 10pt;
