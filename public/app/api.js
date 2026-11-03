@@ -5,6 +5,7 @@
 // Shared handles, so implementations don't each re-query the DOM.
 import { bindAudioLinks, updateAudio } from './webamp.js';
 import { bindImagePeek } from './image-peek.js';
+import qrcode from '/vendor/qrcode-generator/qrcode.mjs';
 
 export const iframe = document.getElementById('frame');
 export const addressBar = document.getElementById('address-input');
@@ -1668,9 +1669,49 @@ export function historyNav(win, dir = 'back') {
 }
 
 // focus() first: without it the print dialog targets the shell, not the page.
+//
+// The scraper gives every page a fixed print size (#print-size, 176mm x 240mm). The
+// Print button leaves the paper to the print dialog instead: the size is switched off,
+// in each frame of a frameset too, for as long as the dialog is open.
+//
+// Every printed sheet carries a QR code of this page's link (location.href, which ?p=
+// keeps current), in the middle of its bottom margin: an @page margin box, so it never
+// covers the page, and a frameset's sheets get it too.
 export function printIframe() {
-	iframe.contentWindow.focus();
-	iframe.contentWindow.print();
+	const win = iframe.contentWindow;
+	const qr = qrcode(0, 'M');
+	qr.addData(location.href);
+	qr.make();
+	const code = 'data:image/svg+xml,' + encodeURIComponent(qr.createSvgTag({ cellSize: 1, margin: 0, scalable: true }));
+	const footer = win.document.createElement('style');
+	footer.textContent = `@page { margin-bottom: 25mm; @bottom-center { content: url("${code}"); width: 20mm; height: 20mm; } }`;
+	(win.document.head || win.document.documentElement).append(footer);
+
+	// Dead links print as the page styled them, without dead-links.css's fading and
+	// strike-through: their `dead` class is lifted while the dialog is open. The sheet
+	// itself stays on, since it also hides Flash movies that were never saved.
+	const sizes = [];
+	const dead = [];
+	const collect = (w) => {
+		try {
+			const style = w.document.getElementById('print-size');
+			if (style && !style.disabled) sizes.push(style);
+			dead.push(...w.document.querySelectorAll('a.dead, area.dead'));
+			for (let i = 0; i < w.frames.length; i++) collect(w.frames[i]);
+		} catch {
+			// a frame the shell can't reach has nothing of ours in it
+		}
+	};
+	collect(win);
+	for (const style of sizes) style.disabled = true;
+	for (const link of dead) link.classList.remove('dead');
+	win.addEventListener('afterprint', () => {
+		for (const style of sizes) style.disabled = false;
+		for (const link of dead) link.classList.add('dead');
+		footer.remove();
+	}, { once: true });
+	win.focus();
+	win.print();
 }
 
 // --- favorites -------------------------------------------------------------
