@@ -1,0 +1,279 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+    <title>Palestine Online - How To Use</title>
+  <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script>
+  <link rel="stylesheet" href="/sites/palestineonline.net/pages.css">
+  <style>
+    /* The steps run down the page, one a row: the title and text in the left two thirds,
+       the icon in the right third. */
+    /* palestine-net.com's background tile (its help and copyright pages). */
+    body { background: url(/sites/palestine-net.com/gifs/pals2.gif); }
+    #content { max-width: 800px; }
+    #steps { list-style: none; margin: 0; padding: 0; }
+    /* Room below each step, so it holds the top of the page for a while as it scrolls,
+       however tall its text makes it. A block, not padding: a sticky element only moves
+       within its parent's content box. */
+    .step::after { content: ''; display: block; height: 30vh; }
+    /* The whole step sticks to the top while its row is on screen; while it does, the part
+       of the shell it names is pointed out (the script below, and public/app/tutorial.js). */
+    .step-card { position: sticky; top: 0; display: grid; grid-template-columns: 2fr 1fr; column-gap: 16px; align-items: start; padding: 8px 4px; }
+    .step-title { margin: 0 0 8px; font-size: 20px; }
+    .step.pointing .step-title { font-style: italic; }
+    .step-text { margin: 0; }
+    .step-icon { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    /* The toolbar's own icons, from the shell's sprite, at twice the size. */
+    .sprite { display: inline-block; width: 40px; height: 40px; background: url(/sites/palestineonline.net/images/browse-ui-icons.png) no-repeat; background-size: 2520px 40px; image-rendering: pixelated; }
+    .step-icon svg { display: block; image-rendering: pixelated; }
+    .field { display: inline-flex; align-items: center; gap: 4px; padding: 3px 6px 3px 3px; background: #fff; border: 2px solid; border-color: #808080 #fff #fff #808080; box-shadow: inset 1px 1px #0a0a0a; font: 13px Arial, sans-serif; }
+    .field img { image-rendering: pixelated; }
+    /* The address bar's favorite star, as the shell draws it: a character in the title bar's green. */
+    .star { color: rgb(12, 145, 18); font-size: 40px; line-height: 1; }
+    #wallpaper-tile { display: inline-block; width: 64px; height: 64px; background: url(/sites/palestineonline.net/images/starz.jpg); image-rendering: pixelated; border: 1px solid #808080; }
+    /* After the steps, computers from around the archive, each linking to the page it was
+       found on: one centred column, well spaced. */
+    #computers { display: flex; flex-direction: column; align-items: center; gap: 128px; padding: 128px 32px 192px; }
+    .computer { display: block; max-width: min(100%, 500px); }
+    .computer img { display: block; max-width: 100%; height: auto; border: 0; }
+    #bless { display: block; max-width: 100%; height: auto; margin-bottom: 48px; }
+  </style>
+  </head>
+  <!--
+    Not an archived page: palestineonline.net's own How To Use page. It and about.html
+    share one layout (pages.css): the logo, back to the home page, over the home page's
+    links with Home first in place of Mail, the one for this page shown as plain text.
+    data-display-url gives the address bar something to show.
+
+    Below them, a step for each part of the shell, with its icon. data-part names the
+    part for public/app/tutorial.js, which points it out while the step is stuck to the
+    top of the page. The icons are copies of the shell's own, in images/
+    (browse-ui-icons.png, page-16x16.png, and starz.jpg, the default tile): the rewrite
+    pass would move a path outside /sites into this site.
+
+    At the bottom, a column of computers from around the archive, picked by hand, each
+    linking to the page it was found on. The list is computers.json, built like the home
+    page's banners.json by src/build-carousel.js (npm run computers). Then bless.gif,
+    the user's own.
+  -->
+  <body data-display-url="http://palestineonline.net/howtouse">
+    <center>
+      <a id="logo" href="/sites/palestineonline.net/home.html"><img src="/sites/p-ol.com/images/top.gif" width="227" height="35" alt="Palestine Online"></a>
+      <div id="page-nav">
+        <a href="/sites/palestineonline.net/home.html">Home</a>
+        <a href="/sites/palestineonline.net/about.html">About</a>
+        <a aria-current="page">How To Use</a>
+        <a href="/sites/palestineonline.net/guestbook.html">Guestbook</a>
+      </div>
+    </center>
+    <div id="content">
+      <ol id="steps">
+        <li class="step" data-part="dropdown">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Sitelist dropdown button</h2>
+              <p class="step-text">Press to show a dropdown list of pages to start your web surfing journey, sorted in a number of categories.</p>
+            </div>
+            <!-- The shell's dropdown button: 98.css's raised edge around its down arrow. -->
+            <div class="step-icon"><svg width="32" height="38" viewBox="0 0 16 19" shape-rendering="crispEdges" aria-hidden="true">
+              <rect width="16" height="19" fill="#0a0a0a"></rect>
+              <rect width="15" height="18" fill="#fff"></rect>
+              <rect x="1" y="1" width="14" height="17" fill="#808080"></rect>
+              <rect x="1" y="1" width="13" height="16" fill="#dfdfdf"></rect>
+              <rect x="2" y="2" width="12" height="15" fill="#c0c0c0"></rect>
+              <path transform="translate(0 1)" d="M11 6H4v1h1v1h1v1h1v1h1V9h1V8h1V7h1V6z"></path>
+            </svg></div>
+          </div>
+        </li>
+        <li class="step" data-part="address">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Search bar</h2>
+              <p class="step-text">Use to search and find any page in the archive.</p>
+            </div>
+            <div class="step-icon"><span class="field"><img src="/sites/palestineonline.net/images/page-16x16.png" width="16" height="16" alt="">http://palestineonline.net/</span></div>
+          </div>
+        </li>
+        <li class="step" data-part="favorite">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Favorite button</h2>
+              <p class="step-text"></p>
+            </div>
+            <div class="step-icon"><span class="star">☆</span></div>
+          </div>
+        </li>
+        <li class="step" data-part="back-forward">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Back + Forward</h2>
+              <p class="step-text">Go to previous or next page in browser history.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: 0 0"></span><span class="sprite" style="background-position: -40px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="home">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Home</h2>
+              <p class="step-text">Go to the Palestine Online homepage, the page that was in the browser when you first visited palestineonline.net.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -160px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="favorites">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Favorites</h2>
+              <p class="step-text">View pages you have saved using the favorite button (only stored locally on your computer).</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -240px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="history">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">History</h2>
+              <p class="step-text">View pages you have visited previously (only stored locally on your computer).</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -480px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="random">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Random</h2>
+              <p class="step-text">Takes you to a random page in the archive.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -1280px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="source">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Source</h2>
+              <p class="step-text">View the page on the Internet Archive’s Wayback Machine.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -200px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="translate">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Translate</h2>
+              <p class="step-text">(Available on Google Chrome only) Translates the page between English <span style="white-space: nowrap">&lt;-&gt;</span> Arabic using Google’s <a href="https://developer.chrome.com/docs/ai/translator-api" class="live-link dead" aria-disabled="true">Translator API</a>.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -320px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="share">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Share</h2>
+              <p class="step-text">Share the current page via email, text, or copy+paste.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -520px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="print">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Print</h2>
+              <p class="step-text">Print the page to PDF or an actual printer. Prints QR codes at the bottom of each page that contain its link on Palestine Online.</p>
+            </div>
+            <div class="step-icon"><span class="sprite" style="background-position: -280px 0"></span></div>
+          </div>
+        </li>
+        <li class="step" data-part="background">
+          <div class="step-card">
+            <div class="step-words">
+              <h2 class="step-title">Background</h2>
+              <p class="step-text">Click to change the tiled background image. Clicking the left side of the screen changes to a lighter color, the right side to a darker color.</p>
+            </div>
+            <div class="step-icon"><span id="wallpaper-tile"></span></div>
+          </div>
+        </li>
+      </ol>
+      <div id="computers"></div>
+    </div>
+    <center><img id="bless" src="/sites/palestineonline.net/images/bless.gif" width="672" height="96" alt="May Allah bless us all"></center>
+
+<script src="/sites/palestineonline.net/live-links.js"></script>
+<script>
+(function () {
+  var steps = [].slice.call(document.querySelectorAll('.step'));
+  var tile = document.getElementById('wallpaper-tile');
+  var pointing = null;
+  var queued = false;
+
+  // The shell lights up the part named (public/app/tutorial.js); null puts it back.
+  function tell(part) {
+    try { parent.postMessage({ type: 'palestine-online:point', part: part }, location.origin); } catch (e) {}
+  }
+
+  // The Background step shows whichever tile the shell has on now.
+  function showWallpaper() {
+    try {
+      var url = parent.document.documentElement.style.getPropertyValue('--wallpaper');
+      if (url) tile.style.backgroundImage = url;
+    } catch (e) {}
+  }
+
+  // The step that is stuck: its row's top has gone above the page's, and enough of the
+  // row is left below to hold the step.
+  function update() {
+    queued = false;
+    var now = null;
+    for (var i = 0; i < steps.length; i++) {
+      var box = steps[i].getBoundingClientRect();
+      if (box.top < 0 && box.bottom > steps[i].firstElementChild.offsetHeight) { now = steps[i]; break; }
+    }
+    if (now === pointing) return;
+    if (pointing) pointing.classList.remove('pointing');
+    pointing = now;
+    if (now) now.classList.add('pointing');
+    if (now && now.getAttribute('data-part') === 'background') showWallpaper();
+    tell(now ? now.getAttribute('data-part') : null);
+  }
+
+  function queue() {
+    if (!queued) { queued = true; requestAnimationFrame(update); }
+  }
+
+  showWallpaper();
+  window.addEventListener('scroll', queue, { passive: true });
+  window.addEventListener('resize', queue);
+  window.addEventListener('pagehide', function () { tell(null); });
+  update();
+})();
+
+// The computers column, from computers.json (npm run computers): each picture links to the
+// archived page it was found on, whose original address is its tooltip.
+(function () {
+  var grid = document.getElementById('computers');
+  fetch('/sites/palestineonline.net/computers.json')
+    .then(function (res) { return res.json(); })
+    .then(function (list) {
+      // Banner-shaped pictures (more than three times as wide as tall) go first.
+      function isBanner(c) { return c.width > 3 * c.height; }
+      list.filter(isBanner).concat(list.filter(function (c) { return !isBanner(c); })).forEach(function (c) {
+        grid.appendChild(cell(c));
+      });
+    });
+
+  function cell(c) {
+    var img = document.createElement('img');
+    img.src = c.src;
+    img.width = c.width;
+    img.height = c.height;
+    img.alt = '';
+    img.loading = 'lazy';
+    var box = document.createElement(c.page ? 'a' : 'span');
+    box.className = 'computer';
+    if (c.page) {
+      box.href = '/sites/' + c.page.split('/').map(encodeURIComponent).join('/');
+      box.title = c.url;
+    }
+    box.appendChild(img);
+    return box;
+  }
+})();
+</script>
+</body></html>

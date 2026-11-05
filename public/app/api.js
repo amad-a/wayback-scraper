@@ -315,9 +315,12 @@ function findFrame(win, name, depth = 0) {
 function onArchiveClick(event) {
 	const link = event.target?.closest?.('a[href], area[href]');
 	if (!link) return;
-	if (isGuestbookHomepage(link)) {
+	if (isLiveLink(link)) {
 		event.preventDefault();
-		if (!FULL_SCREEN.matches) window.open(link.href, '_blank', 'noopener,noreferrer');
+		if (FULL_SCREEN.matches) return;
+		// Mail goes to the mail app from here, the shell, leaving the page where it is.
+		if (link.protocol === 'mailto:') location.href = link.href;
+		else window.open(link.href, '_blank', 'noopener,noreferrer');
 		return;
 	}
 	// A link the scraper marked dead goes nowhere. dead-links.js cancels the click, but it
@@ -396,18 +399,23 @@ function onArchiveClick(event) {
 
 const NEW_WINDOW = new Set(['_blank', '_new', '_newtab']);
 
-// The one way out of the archive: a visitor's homepage, signed into the site's own
-// guestbook (sites/palestineonline.net/guestbook.html), opens in a new tab. Not in the
-// browser's full screen, where the site runs as a kiosk with no tabs to come back from;
-// there the page makes the link unclickable, and this refuses it too.
-const GUESTBOOK_PATH = 'palestineonline.net/guestbook.html';
+// The one way out of the archive: a link marked `live-link` on one of the site's own
+// pages -- a visitor's homepage in the guestbook, the home page's Mail link. A web link
+// opens in a new tab, a mailto: in the mail app. Not in the browser's full screen, where
+// the site runs as a kiosk with no tabs to come back from; there the page makes the link
+// unclickable (sites/palestineonline.net/live-links.js), and this refuses it too.
+const OWN_PAGES = new Set([
+	'palestineonline.net/guestbook.html',
+	'palestineonline.net/home.html',
+	'palestineonline.net/howtouse.html',
+]);
 const FULL_SCREEN = matchMedia('(display-mode: fullscreen)');
 
-function isGuestbookHomepage(link) {
+function isLiveLink(link) {
 	return (
-		link.matches('a.homepage') &&
-		/^https?:$/.test(link.protocol) &&
-		localPathOf(link.ownerDocument.defaultView) === GUESTBOOK_PATH
+		link.matches('a.live-link') &&
+		/^(https?|mailto):$/.test(link.protocol) &&
+		OWN_PAGES.has(localPathOf(link.ownerDocument.defaultView))
 	);
 }
 
@@ -823,7 +831,7 @@ async function describePlaced() {
 	const page = await fetchJson(`/api/page?path=${encodeURIComponent(path)}`, null);
 	if (!page || placed?.path !== path || localPathOf(iframe.contentWindow) !== top) return;
 	setChrome({ title: document.querySelector('.window-title').textContent, url: page.display_url });
-	setCaptured(page.timestamp);
+	setCaptured(page.timestamp, page.updated_at);
 	if (page.replay_url) sourceUrl = page.replay_url;
 }
 
@@ -886,14 +894,19 @@ const TITLE_SUFFIX = 'Palestine Online';
 // The status bar's right pane, beside the Internet-zone icon: when the page in the frame
 // was captured, read off its Wayback timestamp. Blank for anything without one -- a page
 // the database has never heard of and the scraper never stamped -- rather than a guess.
+// The site's own pages have no capture; for those it says when the site was last
+// updated (`updated`, an ISO date from /api/page).
 const capturedText = document.getElementById('status-bar-right-text');
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-function setCaptured(timestamp) {
+function setCaptured(timestamp, updated) {
 	if (!capturedText) return;
 	const match = /^(\d{4})(\d{2})(\d{2})/.exec(timestamp || '');
 	if (!match) {
-		capturedText.textContent = '';
+		// In the viewer's own time zone: the date is an instant, not a calendar day.
+		const when = updated ? new Date(updated) : null;
+		capturedText.textContent =
+			when && !isNaN(when) ? `Updated ${when.getDate()} ${MONTHS[when.getMonth()]} ${when.getFullYear()}` : '';
 		return;
 	}
 	// A few Wayback stamps have month 00 (20000008180456): show the year alone.
@@ -976,7 +989,7 @@ async function applyChrome() {
 	}
 
 	setChrome({ title: page.display_title, url: page.display_url });
-	setCaptured(page.timestamp);
+	setCaptured(page.timestamp, page.updated_at);
 	// A frameset carries no stamp of its own -- its <body> is the <frameset> -- so this is
 	// where Source gets one for it.
 	if (page.replay_url) sourceUrl = page.replay_url;
@@ -1030,6 +1043,9 @@ function syncChrome(force = false) {
 
 const PAGE_PARAM = 'p';
 
+// palestineonline.net's own home page, which the frame starts on (public/index.html).
+const HOME_PATH = 'palestineonline.net/home.html';
+
 // Puts the page you are looking at into the shell's own address, so the link in your
 // browser bar is the link you send someone.
 //
@@ -1046,10 +1062,12 @@ function syncShareUrl(localPath) {
 	others.delete(PAGE_PARAM);
 	const rest = others.toString();
 
+	// The home page is what the bare address opens anyway, so it keeps the bare address.
 	const encoded = localPath.split('/').map(encodeURIComponent).join('/');
-	const query = `?${PAGE_PARAM}=${encoded}` + (rest ? `&${rest}` : '');
+	const page = localPath === HOME_PATH ? '' : `${PAGE_PARAM}=${encoded}`;
+	const query = [page, rest].filter(Boolean).join('&');
 
-	history.replaceState(history.state, '', location.pathname + query);
+	history.replaceState(history.state, '', location.pathname + (query ? '?' + query : ''));
 }
 
 function sharedPath() {
@@ -1679,6 +1697,11 @@ export async function openRandomPage() {
 	if (!path) return;
 
 	openPlaced(path);
+}
+
+// The Home button: back to palestineonline.net's home page, as a new history entry.
+export function openHome() {
+	openPlaced(HOME_PATH);
 }
 
 // Iframe navigations land in the parent's joint session history, so the shell's

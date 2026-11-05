@@ -1,0 +1,146 @@
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
+    <title>Palestine Online</title>
+  <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script>
+  <style>
+    body { margin: 0; padding-top: 24px; background: #fff; }
+    .pixelated { image-rendering: pixelated; }
+    /* A box of fixed shape (600x200 at most, smaller as the page narrows), so the buttons
+       and the link stay put while the banners change size. */
+    #banner-box { width: 100%; max-width: 600px; aspect-ratio: 3 / 1; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+    #banner { max-width: 100%; max-height: 100%; border: 0; }
+    /* The link wraps only the picture, and the picture still sizes against the box. */
+    #banner-link { display: contents; }
+    #banner-controls { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+    #banner-count { min-width: 64px; text-align: center; }
+    #banner-site { display: block; margin-top: 8px; min-height: 1.2em; font-size: 13px; overflow-wrap: anywhere; }
+    /* The links either side of the carousel, after pal-soft.com's front page. A fixed
+       layout, so the side columns keep their width and the carousel takes what is left. */
+    #home-layout { width: 100%; max-width: 900px; table-layout: fixed; }
+    #carousel { font: 12px Arial, sans-serif; }
+    /* The arrows are pictures; the buttons around them draw nothing of their own. */
+    button.arrow { background: none; border: 0; padding: 2px; cursor: pointer; }
+    button.arrow:active { padding: 3px 1px 1px 3px; }
+    .arrow img { display: block; image-rendering: pixelated; }
+    #home-layout .side { width: 150px; vertical-align: middle; text-align: center; font: 17px 'Times New Roman', serif; }
+    .side a { display: block; margin: 16px 0; color: #00f; }
+    /* Narrower windows: slimmer side columns, so the carousel keeps its room. */
+    @media (max-width: 760px) {
+      #home-layout .side { width: 110px; font-size: 15px; }
+    }
+    /* The welcome banner over the logo: scaled down, so left smooth rather than pixelated. */
+    #welcome-to { display: block; width: 280px; max-width: 100%; height: auto; margin: 0 auto 4px; }
+    /* Phones (the shell's own breakpoint): just the links, no carousel or grapevine. */
+    @media (max-width: 480px) {
+      #carousel, #grapevine { display: none; }
+      #home-layout { table-layout: auto; }
+    }
+    /* The same height for every icon, so the labels on both sides line up. */
+    .side .icon { display: flex; height: 52px; align-items: flex-end; justify-content: center; margin-bottom: 4px; }
+    .side img { border: 0; image-rendering: pixelated; }
+  </style>
+  </head>
+  <!--
+    Not an archived page: palestineonline.net's own home page. The shell's frame opens on
+    it when the address names no page (public/index.html), and the Home button comes back
+    to it. data-display-url gives the address bar something to show, there being no
+    Wayback capture to name.
+
+    The head's print-size and dead-link tags are what the scraper's rewrite pass would add;
+    they are here already so it has nothing to change.
+
+    Under the logo, a carousel of banners from around the archive, picked by hand, in
+    alphabetical order (which groups them by site). The list is banners.json, built from
+    the picks folder by src/build-carousel.js; each entry names the archived page the
+    banner was found on, and the link under it, showing that page's original address,
+    opens it.
+
+    Either side, links in the manner of pal-soft.com's front page, each under a GIF from
+    the archive, copied into images/: about.gif is geocities.com/abu_alayyam/flag1.gif,
+    howto.gif geocities.com/amnah_samara/seminars/computerguy2.gif, guestbook.gif
+    cpnpeecp.org/img38.gif, mail.gif birzeit.edu/biology/mailbox.gif. Mail is a live
+    link: it opens the mail app, except in the browser's full screen (live-links.js).
+
+    Over the logo, welcome-to.gif (geocities.com/athens/parthenon/3078/welcomeg.gif);
+    under it, grapevine.gif (chem.metu.edu.tr/~omara/grapvine.gif), not on phones.
+  -->
+  <body data-display-url="http://palestineonline.net/home">
+    <center>
+      <img id="welcome-to" src="/sites/palestineonline.net/images/welcome-to.gif" width="567" height="151" alt="Welcome to">
+      <img class="pixelated" src="/sites/p-ol.com/images/top.gif" width="227" height="35" alt="Palestine Online">
+      <br>
+      <img id="grapevine" class="pixelated" src="/sites/palestineonline.net/images/grapevine.gif" width="507" height="24" alt="" style="max-width: 100%; height: auto; margin-top: 8px;">
+      <br><br>
+      <table id="home-layout"><tbody><tr>
+        <td class="side">
+          <a href="/sites/palestineonline.net/about.html"><span class="icon"><img src="/sites/palestineonline.net/images/about.gif" width="68" height="50" alt=""></span>About</a>
+          <a href="/sites/palestineonline.net/howtouse.html"><span class="icon"><img src="/sites/palestineonline.net/images/howto.gif" width="48" height="48" alt=""></span>How To Use</a>
+        </td>
+        <td align="center" id="carousel">
+          <div id="banner-box"><a id="banner-link"><img id="banner" class="pixelated" alt=""></a></div>
+          <div id="banner-controls">
+            <button type="button" id="banner-prev" class="arrow" aria-label="Previous banner"><img src="/sites/palestineonline.net/images/arrow-l.gif" width="30" height="18" alt=""></button>
+            <span id="banner-count"></span>
+            <button type="button" id="banner-next" class="arrow" aria-label="Next banner"><img src="/sites/palestineonline.net/images/arrow-r.gif" width="30" height="18" alt="" style="transform: scaleX(-1);"></button>
+          </div>
+          <a id="banner-site"></a>
+        </td>
+        <td class="side">
+          <a href="/sites/palestineonline.net/guestbook.html"><span class="icon"><img src="/sites/palestineonline.net/images/guestbook.gif" width="50" height="40" alt=""></span>Guestbook</a>
+          <a href="mailto:mail@palestineonline.net" class="live-link dead" aria-disabled="true"><span class="icon"><img src="/sites/palestineonline.net/images/mail.gif" width="45" height="52" alt=""></span>Mail</a>
+        </td>
+      </tr></tbody></table>
+    </center>
+
+<script src="/sites/palestineonline.net/live-links.js"></script>
+<script>
+(function () {
+  var img = document.getElementById('banner');
+  var count = document.getElementById('banner-count');
+  var site = document.getElementById('banner-site');
+  var box = document.getElementById('banner-link');
+  var KEY = 'palestine-online:home-banner';
+  var banners = [];
+  var at = 0;
+
+  function show(i) {
+    at = (i + banners.length) % banners.length;
+    var b = banners[at];
+    img.src = b.src;
+    count.textContent = (at + 1) + ' / ' + banners.length;
+    // The banner itself links to its page too, as the address under it does.
+    if (b.page) {
+      site.href = box.href = '/sites/' + b.page.split('/').map(encodeURIComponent).join('/');
+      site.textContent = b.url;
+    } else {
+      site.removeAttribute('href');
+      box.removeAttribute('href');
+      site.textContent = '';
+    }
+    // The neighbours, loaded ahead so either button shows its banner at once.
+    new Image().src = banners[(at + 1) % banners.length].src;
+    new Image().src = banners[(at - 1 + banners.length) % banners.length].src;
+    // Kept for this tab, so coming Back from a banner's page lands on the same banner.
+    try { sessionStorage.setItem(KEY, String(at)); } catch (e) {}
+  }
+
+  document.getElementById('banner-prev').addEventListener('click', function () { if (banners.length) show(at - 1); });
+  document.getElementById('banner-next').addEventListener('click', function () { if (banners.length) show(at + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (!banners.length || e.altKey || e.ctrlKey || e.metaKey) return;
+    if (e.key === 'ArrowLeft') show(at - 1);
+    else if (e.key === 'ArrowRight') show(at + 1);
+  });
+
+  fetch('/sites/palestineonline.net/banners.json')
+    .then(function (res) { return res.json(); })
+    .then(function (list) {
+      banners = list;
+      if (!banners.length) return;
+      var saved = 0;
+      try { saved = parseInt(sessionStorage.getItem(KEY), 10) || 0; } catch (e) {}
+      show(saved);
+    });
+})();
+</script>
+  
+</body></html>

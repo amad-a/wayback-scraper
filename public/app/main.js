@@ -10,6 +10,7 @@ import {
   historyNav,
   iframe,
   onAddressInput,
+  openHome,
   openRandomPage,
   openWaybackSource,
   printIframe,
@@ -20,6 +21,7 @@ import {
   watchFrame,
 } from './api.js';
 import { initTranslate } from './translate.js';
+import { initTutorial } from './tutorial.js';
 import { initWallpaper } from './wallpaper.js';
 
 // Tracks the frame: title bar, address bar, and the injected scrollbars.
@@ -33,6 +35,9 @@ initWallpaper();
 
 // Translate, in browsers that can do it on their own.
 initTranslate();
+
+// The How To Use page lighting up the part of the shell each step is about.
+initTutorial();
 
 addressBar.addEventListener('input', (e) =>
   onAddressInput(e.target.value.trim()),
@@ -49,6 +54,10 @@ document
 document
   .getElementById('favorites')
   .addEventListener('click', () => toggleFavorites());
+
+document
+  .querySelector('.home-button')
+  .addEventListener('click', () => openHome());
 
 document
   .getElementById('random')

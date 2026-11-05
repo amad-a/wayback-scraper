@@ -1,0 +1,11 @@
+/* The site's own inner pages (about.html, howtouse.html): the logo, linking back to the
+   home page, over a row of the home page's links, with Home first in place of Mail. */
+body { margin: 0; padding-top: 24px; background: #fff; font: 17px 'Times New Roman', serif; }
+#logo img { border: 0; image-rendering: pixelated; }
+#page-nav { margin: 16px 0 24px; }
+#page-nav a { margin: 0 12px; color: #00f; }
+/* Phones: closer together, so the row stays one line. */
+@media (max-width: 480px) { #page-nav a { margin: 0 5px; } }
+/* The page you are on: plain text, not a link. */
+#page-nav a[aria-current] { color: #000; text-decoration: none; cursor: default; }
+#content { max-width: 640px; margin: 0 auto; padding: 0 16px; text-align: left; }

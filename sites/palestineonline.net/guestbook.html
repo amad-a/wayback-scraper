@@ -1,4 +1,4 @@
-<html><head><meta charset="utf-8">
+<html><head><script id="wayback-guard">window.open=function(u,t){if(!u)return null;try{if(t&&t!=='_blank'&&t!=='_new'){var w=(t==='_self'||t==='_top'||t==='_parent')?window[t]:(window.parent&&window.parent.frames[t]);if(w){w.location=u;return w}}}catch(e){}return null};window.alert=function(){};window.confirm=function(){return false};window.prompt=function(){return null};</script><meta charset="utf-8">
     <title>Palestine Online Guestbook</title>
   <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script></head>
   <!--
@@ -23,14 +23,14 @@
     have to fill in are the comments and name section. Please practice online etiquette - all submissions subject to review before being posted here. Thanks!<hr>
     <form id="sign-form" onsubmit="return false">
       <b>Your Name</b><br>
-      <input type="text" name="realname" size="30" maxlength="100" required><br>
+      <input type="text" name="realname" size="30" maxlength="100" required=""><br>
       <b>E-Mail Address</b><br>
       <input type="text" name="username" size="40" maxlength="200"><br>
       <b>URL</b> (<i>Homepage</i>)<br>
       <input type="text" name="url" size="50" maxlength="300"><p>
       <b>City</b> <input type="text" name="city" size="15" maxlength="60">, <b>State</b> <input type="text" name="state" size="2" maxlength="60"> <b>Country</b> <input type="text" name="country" size="15" maxlength="60"></p><p>
       <b>Comments</b><br>
-      <textarea name="comments" cols="60" rows="4" maxlength="4000" required></textarea></p><p>
+      <textarea name="comments" cols="60" rows="4" maxlength="4000" required=""></textarea></p><p>
       <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
       <input type="submit" value="Sign Guestbook"> &nbsp;&nbsp; <input type="reset" value="Cancel">
     </p></form>
@@ -45,27 +45,8 @@
 
 <!--begin-->
 
+<script src="/sites/palestineonline.net/live-links.js"></script>
 <script>
-// Visitors' homepages are live links, the only ones in the archive: dead-links.js marks
-// them dead like any other, and this takes the mark back off. The shell opens them in a
-// new tab (onArchiveClick in public/app/api.js). In the browser's full screen (a kiosk)
-// they look the same but can't be clicked. Runs after dead-links.js's own pass, which
-// is registered earlier, and again whenever full screen is entered or left.
-(function () {
-  var fullScreen = window.matchMedia('(display-mode: fullscreen)');
-  function markHomepages() {
-    var links = document.querySelectorAll('a.homepage');
-    for (var i = 0; i < links.length; i++) {
-      links[i].classList.remove('dead');
-      links[i].style.pointerEvents = fullScreen.matches ? 'none' : '';
-      if (fullScreen.matches) links[i].setAttribute('aria-disabled', 'true');
-      else links[i].removeAttribute('aria-disabled');
-    }
-  }
-  document.addEventListener('DOMContentLoaded', markHomepages);
-  fullScreen.addEventListener('change', markHomepages);
-})();
-
 (function () {
   var form = document.getElementById('sign-form');
   var sign = document.getElementById('sign');
@@ -115,4 +96,5 @@
   });
 })();
 </script>
+
 </body></html>

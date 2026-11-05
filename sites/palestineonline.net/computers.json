@@ -1,0 +1,205 @@
+[
+ {
+  "src": "/sites/al-carma.com/photo02.jpg",
+  "width": 320,
+  "height": 240,
+  "page": "al-carma.com/see.html",
+  "url": "http://www.al-carma.com/see.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/eng/civil/facmem/graphf/ahmed.jpg",
+  "width": 320,
+  "height": 240,
+  "page": "birzeit.edu/eng/civil/facmem/ahmad.html",
+  "url": "http://www.birzeit.edu/eng/civil/facmem/ahmad.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/images/radio2.jpg",
+  "width": 150,
+  "height": 203,
+  "page": "birzeit.edu/index.html",
+  "url": "http://www2.birzeit.edu/"
+ },
+ {
+  "src": "/sites/birzeit.edu/itunit/images/bar.jpg",
+  "width": 500,
+  "height": 89,
+  "page": "birzeit.edu/itunit/it.html",
+  "url": "http://www.birzeit.edu/itunit/it.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/palnews/war/images/49-32.jpg",
+  "width": 505,
+  "height": 331,
+  "page": "birzeit.edu/palnews/war/people.html",
+  "url": "http://www.birzeit.edu/palnews/war/people.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/pr/adli.jpg",
+  "width": 200,
+  "height": 155,
+  "page": "birzeit.edu/pr/staff.html",
+  "url": "http://www.birzeit.edu/pr/staff.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/pr/hanan.jpg",
+  "width": 200,
+  "height": 184,
+  "page": "birzeit.edu/pr/staff.html",
+  "url": "http://www.birzeit.edu/pr/staff.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/pr/lubna.jpg",
+  "width": 200,
+  "height": 133,
+  "page": "birzeit.edu/pr/staff.html",
+  "url": "http://www.birzeit.edu/pr/staff.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/radiotraining/assets/images/palenew1.jpg",
+  "width": 225,
+  "height": 175,
+  "page": "birzeit.edu/radiotraining/html/how__.html",
+  "url": "http://www.birzeit.edu/radiotraining/html/how__.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/radiotraining/assets/images/palenew2.jpg",
+  "width": 225,
+  "height": 175,
+  "page": "birzeit.edu/radiotraining/html/why.html",
+  "url": "http://www.birzeit.edu/radiotraining/html/why.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/radiotraining/assets/images/palenew7.jpg",
+  "width": 225,
+  "height": 175,
+  "page": "birzeit.edu/radiotraining/html/work.html",
+  "url": "http://www.birzeit.edu/radiotraining/html/work.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/ramallah/images/nt.jpg",
+  "width": 320,
+  "height": 240,
+  "page": "birzeit.edu/ramallah/internet.html",
+  "url": "http://www.birzeit.edu/ramallah/internet.html"
+ },
+ {
+  "src": "/sites/palestine-net.com/life/images/ccc.jpg",
+  "width": 512,
+  "height": 192,
+  "page": "palestine-net.com/life/ccc.html",
+  "url": "http://palestine-net.com/life/ccc.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/bzunews/1999/july/images/comp1.jpg",
+  "width": 225,
+  "height": 239,
+  "page": "birzeit.edu/bzunews/1999/july/24.html",
+  "url": "http://www2.birzeit.edu/bzunews/1999/July/24.html"
+ },
+ {
+  "src": "/sites/birzeit.edu/bzunews/1999/july/images/comp2.jpg",
+  "width": 200,
+  "height": 144,
+  "page": "birzeit.edu/bzunews/1999/july/24.html",
+  "url": "http://www2.birzeit.edu/bzunews/1999/July/24.html"
+ },
+ {
+  "src": "/sites/jwu.org/figs/w055.jpg",
+  "width": 320,
+  "height": 312,
+  "page": "jwu.org/jwubk_13.htm",
+  "url": "http://www.jwu.org/jwubk_13.htm"
+ },
+ {
+  "src": "/sites/mogaza.org/images/holst_2.gif",
+  "width": 180,
+  "height": 127,
+  "page": "mogaza.org/centers-holstdepts.htm",
+  "url": "http://www.mogaza.org/centers-holstdepts.htm"
+ },
+ {
+  "src": "/sites/palestine-net.com/life/images/abuanas.jpg",
+  "width": 512,
+  "height": 384,
+  "page": "palestine-net.com/life/fba.html",
+  "url": "http://palestine-net.com/life/fba.html"
+ },
+ {
+  "src": "/sites/palestine-net.com/life/images/acer.jpg",
+  "width": 512,
+  "height": 384,
+  "page": "palestine-net.com/life/pcexpo.html",
+  "url": "http://palestine-net.com/life/pcexpo.html"
+ },
+ {
+  "src": "/sites/palestine-net.com/life/images/aladdin.jpg",
+  "width": 512,
+  "height": 384,
+  "page": "palestine-net.com/life/pcexpo.html",
+  "url": "http://palestine-net.com/life/pcexpo.html"
+ },
+ {
+  "src": "/sites/palestineonline.net/images/pic1.jpg",
+  "width": 163,
+  "height": 125,
+  "page": "pal-soft.com/about.htm",
+  "url": "http://www.pal-soft.com/about.htm"
+ },
+ {
+  "src": "/sites/palestineonline.net/images/pic2.jpg",
+  "width": 163,
+  "height": 128,
+  "page": "pal-soft.com/about.htm",
+  "url": "http://www.pal-soft.com/about.htm"
+ },
+ {
+  "src": "/sites/palestineonline.net/images/pic3.jpg",
+  "width": 174,
+  "height": 130,
+  "page": "pal-soft.com/about.htm",
+  "url": "http://www.pal-soft.com/about.htm"
+ },
+ {
+  "src": "/sites/pita-palestine.org/damages/pic4.jpg",
+  "width": 936,
+  "height": 496,
+  "page": "pita-palestine.org/damages/mcs.html",
+  "url": "http://www.pita-palestine.org/damages/mcs.html"
+ },
+ {
+  "src": "/sites/pita-palestine.org/gitex2002/jaffanet.jpg",
+  "width": 827,
+  "height": 623,
+  "page": "pita-palestine.org/gitex2002/photos.html",
+  "url": "http://www.pita-palestine.org/GITEX2002/photos.html"
+ },
+ {
+  "src": "/sites/pita-palestine.org/offtec/pic1.jpg",
+  "width": 1192,
+  "height": 760,
+  "page": "pita-palestine.org/offtec/offtec_photos.html",
+  "url": "http://www.pita-palestine.org/offtec/offtec_photos.html"
+ },
+ {
+  "src": "/sites/palestineonline.net/images/sabellaphoto.com-arab bank_small.jpg",
+  "width": 325,
+  "height": 175,
+  "page": "sabellaphoto.com/arab bank.htm",
+  "url": "http://sabellaphoto.com/arab%20bank.htm"
+ },
+ {
+  "src": "/sites/sabellaphoto.com/stock/p-7-01223_small.jpg",
+  "width": 474,
+  "height": 315,
+  "page": "sabellaphoto.com/business9b.htm",
+  "url": "http://www.sabellaphoto.com/business9b.htm"
+ },
+ {
+  "src": "/sites/wildlife-pal.org/images/mmedia.jpg",
+  "width": 480,
+  "height": 464,
+  "page": "wildlife-pal.org/media.htm",
+  "url": "http://www.wildlife-pal.org/Media.htm"
+ }
+]

@@ -8,12 +8,15 @@ import express from 'express';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import Database from 'better-sqlite3';
 import mime from 'mime-types';
 
 import { ensureUpdatedAt, selectTagged, toCsv } from './tags-csv.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const execFileAsync = promisify(execFile);
 const PORT = process.env.PORT || 8080;
 // Loopback by default: in production nginx is the only thing that should reach the
 // app directly, and binding 0.0.0.0 leaves it one firewall rule away from serving
@@ -57,7 +60,7 @@ function database() {
 
 // What the shell asks for on every iframe navigation: the real URL and title for the
 // page it just loaded, keyed on the path it is already sitting on.
-app.get('/api/page', (req, res) => {
+app.get('/api/page', async (req, res) => {
   const handle = database();
   if (!handle) return res.status(503).json({ error: 'no archive.db -- run: npm run db' });
 
@@ -74,8 +77,37 @@ app.get('/api/page', (req, res) => {
     .get(localPath);
 
   if (!row) return res.status(404).json({ error: 'not indexed', local_path: localPath });
+  // A page with no capture -- the site's own, like the home page and the guestbook --
+  // says when the site as a whole was last updated instead, for the status bar.
+  if (!row.timestamp) row.updated_at = await siteUpdated();
   res.json(row);
 });
+
+// When the site as a whole last changed, as an ISO date: the latest commit, which is
+// what production runs (deploys are git pulls) -- new sites, pages, shell changes, all of
+// it -- or the newest approved guestbook entry, if that is later. Asked of git at most
+// once a minute.
+let siteUpdatedCache = { at: 0, date: null };
+async function siteUpdated() {
+  if (Date.now() - siteUpdatedCache.at > 60_000) {
+    let date = null;
+    try {
+      const { stdout } = await execFileAsync('git', ['-C', ROOT, 'log', '-1', '--format=%cI']);
+      if (stdout.trim()) date = new Date(stdout.trim()).toISOString();
+    } catch {
+      // no git here: guestbook entries alone, or nothing
+    }
+    siteUpdatedCache = { at: Date.now(), date };
+  }
+  let { date } = siteUpdatedCache;
+  try {
+    const { latest } = guestbook().prepare('SELECT MAX(approved_at) AS latest FROM entries').get();
+    if (latest && (!date || latest > date)) date = latest;
+  } catch {
+    // no guestbook database yet
+  }
+  return date;
+}
 
 // --- frames -------------------------------------------------------------------
 
@@ -840,12 +872,13 @@ function guestbookDate(iso) {
 }
 
 // One entry, exactly as guestbook.pl wrote it into the page. The homepage link is marked
-// `homepage`: the one kind of live link the shell lets through (see onArchiveClick in
-// public/app/api.js), and nofollow, as visitors' links on any guestbook should be.
+// `live-link`: the kind of live link the shell lets through on the site's own pages (see
+// onArchiveClick in public/app/api.js), and nofollow, as visitors' links on any
+// guestbook should be.
 function guestbookEntryHtml(e) {
   const comments = escapeHtml(e.comments).replace(/\n/g, '<br>\n');
   const name = e.url
-    ? `<a href="${escapeHtml(e.url)}" class="homepage" rel="nofollow ugc noopener">${escapeHtml(e.name)}</a>`
+    ? `<a href="${escapeHtml(e.url)}" class="live-link" rel="nofollow ugc noopener">${escapeHtml(e.name)}</a>`
     : escapeHtml(e.name);
   const email = e.email ? ` &lt;${escapeHtml(e.email)}&gt;` : '';
   let place = '';
@@ -1115,20 +1148,6 @@ app.use('/sites', (req, res, next) => {
   res.redirect(302, sitesHref(real) + slash + query);
 });
 
-// A random page tagged "entry" -- the same set the address bar dropdown lists -- as a
-// frame src, or '' if none is tagged or the drawn page is not on disk.
-function randomEntrySrc() {
-  const handle = database();
-  if (!handle) return '';
-  const entries = handle
-    .prepare(`SELECT local_path, tags FROM page_view WHERE tags <> ''`)
-    .all()
-    .filter((r) => splitTags(r.tags).some((t) => t.toLowerCase() === 'entry'));
-  if (!entries.length) return '';
-  const { local_path } = entries[Math.floor(Math.random() * entries.length)];
-  return fs.existsSync(path.join(SITES_ROOT, local_path)) ? sitesHref(local_path) : '';
-}
-
 // The page with ?p= already in its frame, for either viewer. `fallback` is the frame's
 // src when the URL names no page.
 //
@@ -1246,18 +1265,16 @@ app.get('/sitemap.xml', (_req, res) => {
 const WALLPAPER_TILES = /(<script type="application\/json" id="wallpaper-tiles">)[^<]*(<\/script>)/;
 
 //
-// A bare https://palestineonline.net/, with no query at all, opens on a random entry page
-// rather than the placeholder home.html. The shell then writes that page into the address
-// as ?p=, so a reload or a shared link keeps it. A ?p= naming nothing still gets home.html.
+// A bare https://palestineonline.net/, or a ?p= naming nothing, opens on the home page,
+// sites/palestineonline.net/home.html: the frame's src in index.html.
 app.get('/', (req, res) => {
-  const random = req.originalUrl.includes('?') ? '' : randomEntrySrc();
   const tiles = JSON.stringify(listTiles()).replace(/</g, '\\u003c');
   const shared = sharedSrc(req.originalUrl);
   const html = withPageMeta(
-    withSharedPage(INDEX_PATH, req, random).replace(WALLPAPER_TILES, (_, open, close) => open + tiles + close),
+    withSharedPage(INDEX_PATH, req).replace(WALLPAPER_TILES, (_, open, close) => open + tiles + close),
     shared ? decodeURIComponent(shared.replace(/^\/sites\//, '')) : '',
   );
-  // Never cached: each visit to the bare address is a new draw.
+  // Never cached: the tile list and ?p= are written in fresh each time.
   res.set('Cache-Control', 'no-store');
   res.set('Content-Security-Policy', SHELL_CSP);
   res.type('html').send(html);

@@ -25,7 +25,7 @@ body {
 	/* Set by the inline script in index.html, then by app/wallpaper.js; the default
 	   tile is only for when neither runs. Pixelated, so high-DPI screens scale the old
 	   tiles up as hard pixels rather than blurring them. */
-	background-image: var(--wallpaper, url('../assets/tiles/16-starz.jpg'));
+	background-image: var(--wallpaper, url('../assets/tiles/17-starz.jpg'));
 	image-rendering: pixelated;
 	color: var(--ButtonText);
 	font-family: sans-serif;
@@ -1242,4 +1242,44 @@ li:before {
 	border: 2px solid;
 	border-image: var(--edge-sunken-image) 2;
 	box-sizing: content-box;
+}
+
+/* The part of the shell a How To Use step is about (app/tutorial.js). A toolbar button
+   shows its hovered state, raised and in colour, and the favorite star is filled. The
+   address bar turns the title bar's green with white text, and its dropdown button
+   becomes a 98.css button in that green: the same bevel, lighter and darker greens in
+   place of the greys. */
+button.lightweight.tutorial-pointed {
+	border-color: var(--ButtonHilight) var(--ButtonShadow) var(--ButtonShadow) var(--ButtonHilight);
+}
+
+.toolbar-button.tutorial-pointed .icon {
+	background-image: url("../assets/images/browse-ui-icons.png");
+}
+
+/* The favorite star, filled as when hovered. */
+#favorite-star.tutorial-pointed::before {
+	content: "★";
+}
+
+#address-input.tutorial-pointed {
+	background: rgb(12, 145, 18);
+	color: #fff;
+}
+
+#address-dropdown-button.tutorial-pointed {
+	background: rgb(12, 145, 18);
+	color: #fff;
+	box-shadow:
+		inset -1px -1px #0a0a0a,
+		inset 1px 1px rgb(140, 220, 144),
+		inset -2px -2px rgb(0, 65, 10),
+		inset 2px 2px rgb(76, 184, 80);
+}
+
+/* The wallpaper step: the green washed over the tiles. */
+html.tutorial-wallpaper body {
+	background-image:
+		linear-gradient(rgba(12, 145, 18, 0.35), rgba(12, 145, 18, 0.35)),
+		var(--wallpaper, url('../assets/tiles/17-starz.jpg'));
 }
