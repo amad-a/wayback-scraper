@@ -22,6 +22,9 @@ A Win98/IE-style browser shell (`public/`) that shows archived websites (`sites/
 | Rebuild DB | `npm run db` (keeps `page_meta`; rows edited on the site, i.e. with `updated_at` set, are not overwritten by `tags.csv`) |
 | Archive index | `npm run index` (rebuilds `archive-index.html`; edit `src/build-index.js`, not the output) |
 | Media restore | `npm run media` (RealAudio etc. → mp3/mp4; writes `media-manifest.json`) |
+| Image folders | `npm run images` (rebuilds the gitignored `image-aliases/`: hard links to every distinct image in `sites/`, by size, shape, animation, wallpaper use and subject; subjects come from macOS Vision via `scripts/image-vision.swift`, cached in `image-aliases/.cache`) |
+| Home page banners | `npm run banners` (rewrites `sites/palestineonline.net/banners.json`, the home page carousel's list, from the hand-picked `image-aliases/banners-homepage`; see README) |
+| How To Use computers grid | `npm run computers` (rewrites `sites/palestineonline.net/computers.json` from the hand-picked `image-aliases/computer-picks`; see README) |
 | Pull site tags | `npm run tags:pull` (tunnel to the server's 8081 first; see `palindex` in `~/.zshrc`) |
 | Deploy | `ssh deploy@167.233.141.19 '~/wayback-scraper/scripts/deploy.sh'` |
 | DB on server | `ssh deploy@167.233.141.19 'cd ~/wayback-scraper && npm run db'` (needed after any change to `sites/`, `log.json`, the build-db code or `tags.csv`; `deploy.sh` does not run it) |
@@ -114,7 +117,7 @@ Every route out of the frame is handled. Before changing the sandbox, the CSP or
   - the shell is sent with `frame-src 'self'`;
   - pages the database lists, and server-side extensions (`.asp`, `.php`, `.cgi`, `.pl`), are typed by content, not extension.
 - **Shell**:
-  - live-web and `mailto:` links are blocked, except visitors' homepages in the guestbook (`a.homepage`), which open in a new tab unless the browser is in full screen;
+  - live-web and `mailto:` links are blocked, except `a.live-link` on the site's own pages (`OWN_PAGES` in `api.js`: visitors' homepages in the guestbook, the home page's Mail link). Those open in a new tab, or the mail app, unless the browser is in full screen, where `sites/palestineonline.net/live-links.js` makes them unclickable;
   - `_blank` and unknown targets open in the frame;
   - `window.open` only works from a click, and opens into the frame;
   - live-web navigations are cancelled through each frame's `navigation`;

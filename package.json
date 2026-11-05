@@ -49,7 +49,10 @@
         "db": "node src/build-db.js",
         "tags:export": "node src/export-tags.js",
         "tags:pull": "node src/pull-tags.js",
-        "media": "node src/media.js"
+        "media": "node src/media.js",
+        "images": "node src/build-image-aliases.js",
+        "banners": "node src/build-carousel.js image-aliases/banners-homepage sites/palestineonline.net/banners.json",
+        "computers": "node src/build-carousel.js image-aliases/computer-picks sites/palestineonline.net/computers.json"
     },
     "author": "It's not you it's me",
     "license": "ISC"

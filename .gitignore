@@ -21,6 +21,9 @@ sheets-output/
 # removed once the list is complete.
 cdx-pages.json
 
+# Folders of symlinks to sites/'s images, sorted by size and subject; `npm run images`.
+image-aliases/
+
 # Guestbook entries: written on the site, so the server holds the only copy. See the
 # guestbook section of src/serve.js.
 guestbook.db
