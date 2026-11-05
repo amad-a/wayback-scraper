@@ -37,6 +37,10 @@
     /* The same height for every icon, so the labels on both sides line up. */
     .side .icon { display: flex; height: 52px; align-items: flex-end; justify-content: center; margin-bottom: 4px; }
     .side img { border: 0; image-rendering: pixelated; }
+    /* The page counter at the bottom, in odometer digits. */
+    #counter { margin: 32px 0 24px; font: 15px 'Times New Roman', serif; }
+    #counter-digits { display: inline-flex; margin-bottom: 6px; border: 2px solid; border-color: #808080 #fff #fff #808080; }
+    #counter-digits img { display: block; image-rendering: pixelated; }
   </style>
   </head>
   <!--
@@ -59,6 +63,10 @@
     howto.gif geocities.com/amnah_samara/seminars/computerguy2.gif, guestbook.gif
     cpnpeecp.org/img38.gif, mail.gif birzeit.edu/biology/mailbox.gif. Mail is a live
     link: it opens the mail app, except in the browser's full screen (live-links.js).
+
+    At the bottom, a counter of the pages archived: the number comes from /api/counter
+    (src/serve.js) and is shown as a row of digit images, as hit counters of the time were, in the odometer digits
+    of chem.metu.edu.tr/~omara/counter.gif, cut into images/counter/0.gif to 9.gif.
 
     Over the logo, welcome-to.gif (geocities.com/athens/parthenon/3078/welcomeg.gif);
     under it, grapevine.gif (chem.metu.edu.tr/~omara/grapvine.gif), not on phones.
@@ -89,6 +97,7 @@
           <a href="mailto:mail@palestineonline.net" class="live-link dead" aria-disabled="true"><span class="icon"><img src="/sites/palestineonline.net/images/mail.gif" width="45" height="52" alt=""></span>Mail</a>
         </td>
       </tr></tbody></table>
+      <p id="counter" hidden><span id="counter-digits"></span><br>pages archived</p>
     </center>
 
 <script src="/sites/palestineonline.net/live-links.js"></script>
@@ -150,6 +159,27 @@
       show(saved);
     });
 })();
+
+// The page counter: the number of archived pages (src/serve.js), six digits wide.
+(function () {
+  var counter = document.getElementById('counter');
+  var digits = document.getElementById('counter-digits');
+  fetch('/api/counter')
+    .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
+    .then(function (data) {
+      var text = String(data.pages);
+      while (text.length < 6) text = '0' + text;
+      for (var i = 0; i < text.length; i++) {
+        var img = document.createElement('img');
+        img.src = '/sites/palestineonline.net/images/counter/' + text[i] + '.gif';
+        img.width = 14;
+        img.height = 20;
+        img.alt = text[i];
+        digits.appendChild(img);
+      }
+      counter.hidden = false;
+    }, function () {});
+})();
 </script>
-  
+
 </body></html>

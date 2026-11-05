@@ -975,6 +975,19 @@ app.post('/api/guestbook', express.json({ limit: '16kb' }), (req, res) => {
 });
 
 // The admin page and its calls exist only on the admin port.
+// --- page counter -------------------------------------------------------------
+//
+// The home page's counter: how many archived pages there are, every page archive.db
+// lists but the site's own (home, about, how to use, the guestbook). Shown in odometer
+// digits (sites/palestineonline.net/images/counter/), as hit counters of the time were.
+app.get('/api/counter', (_req, res) => {
+  const db = database();
+  if (!db) return res.status(503).json({ error: 'no database' });
+  const { pages } = db.prepare("SELECT count(*) AS pages FROM pages WHERE host <> 'palestineonline.net'").get();
+  res.set('Cache-Control', 'no-cache');
+  res.json({ pages });
+});
+
 app.get('/guestbook-admin.html', (req, res, next) => {
   if (!isAdmin(req)) return next();
   res.setHeader('Cache-Control', 'no-store');
