@@ -44,7 +44,7 @@
 
     Below them, a step for each part of the shell, with its icon. data-part names the
     part for public/app/tutorial.js, which points it out while the step is stuck to the
-    top of the page. The icons are copies of the shell's own, in images/
+    top of the page, and says which parts aren't showing, so their steps are skipped. The icons are copies of the shell's own, in images/
     (browse-ui-icons.png, page-16x16.png, and starz.jpg, the default tile): the rewrite
     pass would move a path outside /sites into this site.
 
@@ -236,6 +236,28 @@
   function queue() {
     if (!queued) { queued = true; requestAnimationFrame(update); }
   }
+
+  // Steps for parts the shell isn't showing (on a phone, in full screen, Translate in
+  // most browsers) are skipped. The shell answers when asked, and again on any change.
+  // This page can load before the shell's own scripts are listening, so it asks every
+  // half second until it hears back (for 10s; outside the shell nothing answers).
+  var answered = false;
+  window.addEventListener('message', function (event) {
+    // (Not event.source === parent: the shell stands its own object in for parent.)
+    if (event.origin !== location.origin) return;
+    if (!event.data || event.data.type !== 'palestine-online:parts') return;
+    answered = true;
+    for (var i = 0; i < steps.length; i++) {
+      steps[i].hidden = event.data.available[steps[i].getAttribute('data-part')] === false;
+    }
+    queue();
+  });
+  var asks = 0;
+  (function ask() {
+    if (answered || asks++ >= 20) return;
+    try { parent.postMessage({ type: 'palestine-online:parts?' }, location.origin); } catch (e) {}
+    setTimeout(ask, 500);
+  })();
 
   showWallpaper();
   window.addEventListener('scroll', queue, { passive: true });
