@@ -1283,3 +1283,50 @@ html.tutorial-wallpaper body {
 		linear-gradient(rgba(12, 145, 18, 0.35), rgba(12, 145, 18, 0.35)),
 		var(--wallpaper, url('../assets/tiles/17-starz.jpg'));
 }
+
+/* Demo mode's card (app/demo.js): the logo, in the bottom left of the page while the
+   shell tours the archive by itself, on a soft white glow rather than a box, which the
+   logo's ends may reach past. Clicks go through it to the page, and any input
+   ends the tour and takes it away. */
+#content {
+	position: relative;
+}
+
+.demo-overlay {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 2000;
+	pointer-events: none;
+}
+
+.demo-overlay[hidden] {
+	display: none;
+}
+
+.demo-card {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px 40px;
+	background: radial-gradient(closest-side, #fff 0%, #fff 55%, rgba(255, 255, 255, 0.85) 75%, rgba(255, 255, 255, 0) 100%);
+}
+
+/* Phones: smaller, so it fits the page's width. */
+@media (max-width: 480px) {
+	.demo-card {
+		transform: scale(0.75);
+		transform-origin: bottom left;
+	}
+}
+
+.demo-card img {
+	display: block;
+	image-rendering: pixelated;
+}
+
+/* About one and a half times its own size (227px wide in the file). */
+.demo-logo {
+	width: 355px;
+	height: auto;
+}

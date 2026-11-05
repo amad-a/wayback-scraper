@@ -20,8 +20,9 @@ import {
   toggleHistory,
   watchFrame,
 } from './api.js';
-import { initTranslate } from './translate.js';
+import { initDemo } from './demo.js';
 import { initReveal } from './reveal.js';
+import { initTranslate } from './translate.js';
 import { initTutorial } from './tutorial.js';
 import { initWallpaper } from './wallpaper.js';
 
@@ -42,6 +43,9 @@ initTutorial();
 
 // Links from the site's own pages to where a picture was found scroll to the picture.
 initReveal();
+
+// After five idle minutes, a tour of the entry pages until someone touches something.
+initDemo();
 
 addressBar.addEventListener('input', (e) =>
   onAddressInput(e.target.value.trim()),

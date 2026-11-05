@@ -6,6 +6,7 @@
 import { bindAudioLinks, updateAudio } from './webamp.js';
 import { bindImagePeek } from './image-peek.js';
 import { revealPending } from './reveal.js';
+import { watchActivity } from './demo.js';
 import qrcode from '/vendor/qrcode-generator/qrcode.mjs';
 
 export const iframe = document.getElementById('frame');
@@ -858,6 +859,7 @@ function prepareFrame(win, depth = 0) {
 		bindNavigation(win);
 		setScale(win.document);
 		revealPending(win);
+		watchActivity(win.document);
 	} catch {
 		return; // a cross-origin child: nothing we can or should do
 	}
@@ -1304,10 +1306,9 @@ function setSearching(on) {
 // heading sticks to the top of the list while its pages scroll under it, and only then
 // shows its subheading (`subheadings`, lowercased tag -> text, also set on the admin
 // port): at rest every heading has its group's pages beneath it to say what it holds.
-function renderEntries(pages, order = [], subheadings = {}) {
-	if (!dropdownContent) return;
-	dropdownContent.replaceChildren();
-
+// The entry pages grouped under their other tags, groups in the order set on the admin
+// port's archive index, then the untagged, then the biggest first.
+function groupEntries(pages, order = []) {
 	const groups = new Map();
 	for (const page of pages) {
 		const tags = page.tags?.length ? page.tags : [''];
@@ -1321,13 +1322,34 @@ function renderEntries(pages, order = [], subheadings = {}) {
 		const i = order.indexOf(g.tag ? g.tag.toLowerCase() : 'entry');
 		return i === -1 ? order.length : i;
 	};
-	const ordered = [...groups.values()].sort((a, b) =>
+	return [...groups.values()].sort((a, b) =>
 		rank(a) - rank(b)
 		|| (a.tag === '') - (b.tag === '')
 		|| b.pages.length - a.pages.length
 		|| a.tag.localeCompare(b.tag));
+}
 
-	for (const [i, { tag, pages: members }] of ordered.entries()) {
+// Every entry page once, in the ▼ list's order: demo mode's tour (app/demo.js) takes them
+// from here.
+export async function entryTour() {
+	const { pages, order } = await loadEntries();
+	const seen = new Set();
+	const tour = [];
+	for (const { pages: members } of groupEntries(pages, order)) {
+		for (const page of members) {
+			if (seen.has(page.local_path)) continue;
+			seen.add(page.local_path);
+			tour.push(page.local_path);
+		}
+	}
+	return tour;
+}
+
+function renderEntries(pages, order = [], subheadings = {}) {
+	if (!dropdownContent) return;
+	dropdownContent.replaceChildren();
+
+	for (const [i, { tag, pages: members }] of groupEntries(pages, order).entries()) {
 		const group = document.createElement('div');
 		group.className = 'dropdown-group';
 		group.setAttribute('role', 'group');
