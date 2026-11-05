@@ -52,7 +52,7 @@
     alphabetical order (which groups them by site). The list is banners.json, built from
     the picks folder by src/build-carousel.js; each entry names the archived page the
     banner was found on, and the link under it, showing that page's original address,
-    opens it.
+    opens it, scrolled to the banner (public/app/reveal.js).
 
     Either side, links in the manner of pal-soft.com's front page, each under a GIF from
     the archive, copied into images/: about.gif is geocities.com/abu_alayyam/flag1.gif,
@@ -122,6 +122,15 @@
     // Kept for this tab, so coming Back from a banner's page lands on the same banner.
     try { sessionStorage.setItem(KEY, String(at)); } catch (e) {}
   }
+
+  // Following either link, the shell scrolls the page it opens to the banner
+  // (public/app/reveal.js).
+  function reveal() {
+    if (!banners.length || !box.href) return;
+    try { parent.postMessage({ type: 'palestine-online:reveal', src: banners[at].src, page: box.href }, location.origin); } catch (e) {}
+  }
+  box.addEventListener('click', reveal);
+  site.addEventListener('click', reveal);
 
   document.getElementById('banner-prev').addEventListener('click', function () { if (banners.length) show(at - 1); });
   document.getElementById('banner-next').addEventListener('click', function () { if (banners.length) show(at + 1); });

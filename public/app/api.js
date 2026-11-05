@@ -5,6 +5,7 @@
 // Shared handles, so implementations don't each re-query the DOM.
 import { bindAudioLinks, updateAudio } from './webamp.js';
 import { bindImagePeek } from './image-peek.js';
+import { revealPending } from './reveal.js';
 import qrcode from '/vendor/qrcode-generator/qrcode.mjs';
 
 export const iframe = document.getElementById('frame');
@@ -856,6 +857,7 @@ function prepareFrame(win, depth = 0) {
 		bindImagePeek(win.document);
 		bindNavigation(win);
 		setScale(win.document);
+		revealPending(win);
 	} catch {
 		return; // a cross-origin child: nothing we can or should do
 	}

@@ -292,6 +292,10 @@
     if (c.page) {
       box.href = '/sites/' + c.page.split('/').map(encodeURIComponent).join('/');
       box.title = c.url;
+      // The shell scrolls the page it opens to the picture (public/app/reveal.js).
+      box.addEventListener('click', function () {
+        try { parent.postMessage({ type: 'palestine-online:reveal', src: c.src, page: box.href }, location.origin); } catch (e) {}
+      });
     }
     box.appendChild(img);
     return box;

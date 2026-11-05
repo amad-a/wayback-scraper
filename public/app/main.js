@@ -21,6 +21,7 @@ import {
   watchFrame,
 } from './api.js';
 import { initTranslate } from './translate.js';
+import { initReveal } from './reveal.js';
 import { initTutorial } from './tutorial.js';
 import { initWallpaper } from './wallpaper.js';
 
@@ -38,6 +39,9 @@ initTranslate();
 
 // The How To Use page lighting up the part of the shell each step is about.
 initTutorial();
+
+// Links from the site's own pages to where a picture was found scroll to the picture.
+initReveal();
 
 addressBar.addEventListener('input', (e) =>
   onAddressInput(e.target.value.trim()),
