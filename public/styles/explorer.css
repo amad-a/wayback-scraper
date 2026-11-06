@@ -859,6 +859,10 @@ button:disabled {
 	image-rendering: pixelated;
 }
 
+#dropdown .bookmark-list-entry.own-page::before {
+	background-image: url('../assets/icons/palestineonline-16x16.png');
+}
+
 /* The ▼ list's tag headings: a silver bar, bold, with a folder where the rows have a page,
    sticking to the top of the list while its own pages scroll under it. */
 .dropdown-group-heading {

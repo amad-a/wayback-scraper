@@ -949,6 +949,7 @@ async function applyChrome() {
 	// Before anything awaits, so the scrollbars are styled on first paint rather than
 	// flicking from the browser default a moment later.
 	prepareFrame(iframe.contentWindow);
+	setPageIcon(localPath);
 
 	const stamped = doc?.body?.dataset.waybackUrl;
 	// A page recovered from a mirror is stamped with the mirror's capture, and names the
@@ -1291,12 +1292,24 @@ function renderSearch(pages) {
 const addressIcon = document.getElementById('address-icon');
 const PAGE_ICON = './assets/icons/page-16x16.png';
 const SEARCH_ICON = './assets/icons/search_file_2_cool-3.png';
+// palestineonline.net's own pages -- home, about, how to use -- have a house of their own,
+// here and on their rows in the list.
+const OWN_ICON = './assets/icons/palestineonline-16x16.png';
+const OWN_PAGE = /^(\/sites\/)?palestineonline\.net\//;
 new Image().src = SEARCH_ICON;
+new Image().src = OWN_ICON;
+let pageIcon = PAGE_ICON;
 
 function setSearching(on) {
 	if (!addressIcon) return;
-	const src = on ? SEARCH_ICON : PAGE_ICON;
+	const src = on ? SEARCH_ICON : pageIcon;
 	if (addressIcon.getAttribute('src') !== src) addressIcon.setAttribute('src', src);
+}
+
+// The icon for the page in the frame, shown unless the list is holding search results.
+function setPageIcon(localPath) {
+	pageIcon = OWN_PAGE.test(localPath) ? OWN_ICON : PAGE_ICON;
+	if (addressIcon && addressIcon.getAttribute('src') !== SEARCH_ICON) addressIcon.setAttribute('src', pageIcon);
 }
 
 // The entries, under a heading for each of their other tags, with those that have no
@@ -1393,6 +1406,7 @@ dropdownContent?.addEventListener('scroll', markStuck, { passive: true });
 function pageRow(page) {
 	const row = document.createElement('div');
 	row.className = 'bookmark-list-entry';
+	if (OWN_PAGE.test(page.local_path)) row.classList.add('own-page');
 	row.dataset.path = page.local_path;
 	row.setAttribute('role', 'option');
 	row.tabIndex = -1;
