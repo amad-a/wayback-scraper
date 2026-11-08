@@ -1017,6 +1017,19 @@ app.post('/api/guestbook/delete', adminOnly, express.json({ limit: '1kb' }), (re
   res.json({ id, deleted: true });
 });
 
+// The site's own code with its comments taken out, which src/build-shell.js writes to
+// dist/ on deploy at the same paths as the originals. Each file is sent from there when the
+// build made one and from where it lives otherwise -- always, locally, where there is no
+// dist/ unless you run `npm run build` (and `rm -r dist` after, or edits will not show).
+const DIST = path.join(ROOT, 'dist');
+function builtCopy(file) {
+  const copy = path.join(DIST, path.relative(ROOT, file));
+  return fs.existsSync(copy) ? copy : file;
+}
+
+app.use('/sites', express.static(path.join(DIST, 'sites'), {
+  setHeaders: (res, file) => typeArchivedFile(res, path.join(SITES_ROOT, path.relative(path.join(DIST, 'sites'), file))),
+}));
 app.use('/sites', express.static(path.join(ROOT, 'sites'), { setHeaders: typeArchivedFile }));
 
 // --- shareable links --------------------------------------------------------
@@ -1044,9 +1057,10 @@ const IFRAME_SRC = /(<iframe[^>]*\bid="frame"[^>]*\bsrc=")[^"]*(")/;
 const IFRAME_ID = /(<iframe[^>]*\bid="frame")/;
 
 // Reread when the file changes, so editing the shell or rebuilding the index does not
-// need a restart.
+// need a restart. Read from dist/ where the build left a copy (see builtCopy).
 const templates = new Map();
 function template(file) {
+  file = builtCopy(file);
   const stat = fs.statSync(file);
   const key = `${stat.mtimeMs}:${stat.size}`;
   const cached = templates.get(file);
@@ -1309,6 +1323,7 @@ app.get('/archive-index.html', (req, res) => {
 // A replaced tile reaches returning visitors within a day; a new one is a new name.
 app.use('/assets/tiles', express.static(TILES_DIR, { maxAge: '1d' }));
 
+app.use(express.static(path.join(DIST, 'public')));
 app.use(express.static(path.join(ROOT, 'public')));
 
 // Anything nothing above answered, in place of Express's bare "Cannot GET /path". Most

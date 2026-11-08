@@ -24,6 +24,14 @@ if ! git diff --quiet "$BEFORE" "$AFTER" -- package-lock.json; then
   npm ci
 fi
 
+# The shell and the site's own pages without their comments, into dist/ for serve.js to
+# send (src/build-shell.js). If the build fails, dist/ goes rather than staying a version
+# behind the code just pulled: the files are then served as written.
+if ! node src/build-shell.js; then
+  echo "BUILD FAILED -- serving the files with their comments"
+  rm -rf dist
+fi
+
 pm2 restart wayback --update-env
 
 # A restart can "succeed" into a crash loop, so ask the app itself.

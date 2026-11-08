@@ -5,6 +5,7 @@
 .env
 .env.*
 dist/
+dist.building/
 node_modules
 storage/
 
