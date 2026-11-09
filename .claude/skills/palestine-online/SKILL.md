@@ -25,6 +25,7 @@ A Win98/IE-style browser shell (`public/`) that shows archived websites (`sites/
 | Image folders | `npm run images` (rebuilds the gitignored `image-aliases/`: hard links to every distinct image in `sites/`, by size, shape, animation, wallpaper use and subject; subjects come from macOS Vision via `scripts/image-vision.swift`, cached in `image-aliases/.cache`) |
 | Home page banners | `npm run banners` (rewrites `sites/palestineonline.net/banners.json`, the home page carousel's list, from the hand-picked `image-aliases/banners-homepage`; see README) |
 | How To Use computers grid | `npm run computers` (rewrites `sites/palestineonline.net/computers.json` from the hand-picked `image-aliases/computer-picks`; see README) |
+| Page title | `npm run title -- <page> "New title"` (`""` clears; no title shows the current one; `--file x.tsv` for many). Writes `tags.csv` and the local DB; publish with commit, deploy, then `npm run db` on the server |
 | Pull site tags | `npm run tags:pull` (tunnel to the server's 8081 first; see `palindex` in `~/.zshrc`) |
 | Deploy | `ssh deploy@167.233.141.19 '~/wayback-scraper/scripts/deploy.sh'` |
 | DB on server | `ssh deploy@167.233.141.19 'cd ~/wayback-scraper && npm run db'` (needed after any change to `sites/`, `log.json`, the build-db code or `tags.csv`; `deploy.sh` does not run it) |
@@ -73,7 +74,7 @@ Example: keeping only five pages of `geocities.com/zuhairhm`.
 - `tags.csv` is the committed backup. The server's DB is the latest copy; `npm run tags:pull` brings it down.
 - The `entry` tag drives the address bar ▼ list and the random start page (a bare `/` opens a random entry page).
 - The ▼ list groups entry pages under their other tags. The group order is set under "Address bar groups" on the admin port's archive index, stored in archive.db's `tag_order` table (kept across `npm run db`), and backed up to `tag-order.txt` by `npm run tags:pull`; `npm run db` restores from that file only when the table is empty.
-- `title_override` fixes mis-decoded titles, including Arabic.
+- `title_override` fixes mis-decoded titles (including Arabic) and adds headlines. Set it with `npm run title`. Titles and notes always come from `tags.csv` on `npm run db`; only tags edited on the site (`updated_at`) are kept over the CSV.
 
 ## Guestbook
 

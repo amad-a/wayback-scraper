@@ -87,11 +87,14 @@ export function ensureUpdatedAt(db) {
   }
 }
 
-// tags.csv is a backup of page_meta, so it fills rows in but never overwrites one edited
-// through the site (updated_at set). On the server those edits are newer than any
-// committed tags.csv until the next `npm run tags:pull`, and a rebuild in between must
-// not put the old tags back. Rows never touched that way take the CSV as before, so
+// tags.csv is a backup of page_meta, so it fills rows in but never overwrites the tags of
+// one edited through the site (updated_at set). On the server those edits are newer than
+// any committed tags.csv until the next `npm run tags:pull`, and a rebuild in between must
+// not put the old tags back. Rows never touched that way take the CSV's tags as before, so
 // editing tags.csv by hand still works for them.
+//
+// Notes and titles always come from the CSV: the site only edits tags, so tags.csv (or
+// `npm run title`, which writes it) is the one place they are changed.
 export async function importTags(db, file) {
   ensureUpdatedAt(db);
   if (!existsSync(file)) return 0;
@@ -101,8 +104,8 @@ export async function importTags(db, file) {
     `INSERT INTO page_meta (local_path, tags, notes, title_override)
      VALUES (@local_path, @tags, @notes, @title_override)
      ON CONFLICT(local_path) DO UPDATE SET
-       tags = excluded.tags, notes = excluded.notes, title_override = excluded.title_override
-     WHERE page_meta.updated_at = ''`,
+       tags = CASE WHEN page_meta.updated_at = '' THEN excluded.tags ELSE page_meta.tags END,
+       notes = excluded.notes, title_override = excluded.title_override`,
   );
 
   db.transaction((rs) => {

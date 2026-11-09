@@ -54,7 +54,8 @@
         "media": "node src/media.js",
         "images": "node src/build-image-aliases.js",
         "banners": "node src/build-carousel.js image-aliases/banners-homepage sites/palestineonline.net/banners.json",
-        "computers": "node src/build-carousel.js image-aliases/computer-picks sites/palestineonline.net/computers.json"
+        "computers": "node src/build-carousel.js image-aliases/computer-picks sites/palestineonline.net/computers.json",
+        "title": "node src/set-title.js"
     },
     "author": "It's not you it's me",
     "license": "ISC"
