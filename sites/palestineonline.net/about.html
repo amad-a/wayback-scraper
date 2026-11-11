@@ -3,15 +3,17 @@
   <style id="print-size">@media print { @page { size: 176mm 240mm; } }</style><link id="dead-links-css" rel="stylesheet" href="/sites/_wayback/dead-links.css"><script id="dead-links-js" src="/sites/_wayback/dead-links.js"></script>
   <link rel="stylesheet" href="/sites/palestineonline.net/pages.css">
   <style>
-    /* The text centred, across and down, in the window below the logo and links. */
-    body { display: flex; flex-direction: column; min-height: 100vh; box-sizing: border-box; }
-    #content { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; padding-bottom: 24px; }
-    #content p { margin: 0; line-height: 1.5; }
+    #content { padding-bottom: 32px; line-height: 1.5; }
+    #content p, #content ul { margin: 0 0 1em; }
+    #content ul { padding-left: 1.5em; }
+    /* The venues and supporters: plain lines under their heading, no bullets. */
+    #content ul.names { list-style: none; padding-left: 0; }
   </style>
   </head>
   <!--
     Not an archived page: palestineonline.net's own About page, laid out as
-    howtouse.html is (pages.css).
+    howtouse.html is (pages.css). Its links out are live links
+    (live-links.js), as on home.html.
   -->
   <body data-display-url="http://palestineonline.net/about">
     <center>
@@ -24,8 +26,35 @@
       </div>
     </center>
     <div id="content">
-      <p>Palestine Online is a curated archive of websites created by Palestinians or about Palestine in the late 90s to early-mid 2000s, sourced from the Internet Archive’s Wayback Machine. The project traces how the world wide web has played a role in Palestinian self advocacy and culture preservation, and is an attempt to create a free, interactive archive that revitalizes and makes newly visible the digital contributions and culture of oppressed peoples.</p>
+      <p>Palestine Online is an archive of the early Palestinian web (with most webpages created between 1996-2004). The webpages were collected and scraped from the <a href="https://web.archive.org/" class="live-link dead" aria-disabled="true">Internet Archive’s Wayback Machine</a>, and are re-presented here with the addition of a number of enhancements to make the archive more accessible and easy to use, including:</p>
+      <ul>
+        <li>Period correct browser interface, based on <a href="https://en.wikipedia.org/wiki/Internet_Explorer_5" class="live-link dead" aria-disabled="true">Internet Explorer 5</a></li>
+        <li>Indexed, organized, and searchable webpages</li>
+        <li>Fixed text encoding where broken</li>
+        <li>Disabled links for never archived pages</li>
+        <li>Converted and playable audio files</li>
+        <li>Image previews on hover</li>
+        <li>In-page machine translation between Arabic and English (Only on Chrome)</li>
+      </ul>
+      <p>Palestine Online uses a number of open source projects to help with this, including <a href="https://jdan.github.io/98.css/" class="live-link dead" aria-disabled="true">98.css</a>, a CSS library that looks like Windows 98, <a href="https://ruffle.rs/" class="live-link dead" aria-disabled="true">Ruffle</a>, a Macromedia/Adobe Flash emulator, and <a href="https://webamp.org/" class="live-link dead" aria-disabled="true">Webamp</a>, a reimplementation of Winamp.</p>
+      <p>Palestine Online has been exhibited at</p>
+      <ul class="names">
+        <li><a href="https://pioneerworks.org/programs/software-for-artists-day-8" class="live-link dead" aria-disabled="true">Pioneer Works</a></li>
+        <li><a href="https://e-issues.globalartdaily.com/The-Future-is-Crystal-Clear" class="live-link dead" aria-disabled="true">Bayt Al Mamzar</a></li>
+        <li><a href="https://www.instagram.com/larpa.mill/" class="live-link dead" aria-disabled="true">LARPA</a></li>
+        <li><a href="https://www.sculpture-center.org/exhibitions/14450/spasial-program-by-khajistan" class="live-link dead" aria-disabled="true">SculptureCenter</a></li>
+        <li><a href="https://www.culturehub.org/re-fest-2025" class="live-link dead" aria-disabled="true">CultureHub</a></li>
+        <li><a href="https://tasmeem.qatar.vcu.edu/exhibition/" class="live-link dead" aria-disabled="true">VCU Arts Qatar</a></li>
+      </ul>
+      <p>And has received support from</p>
+      <ul class="names">
+        <li><a href="https://processingfoundation.org/programs/fellowships/2024/palestine-online/" class="live-link dead" aria-disabled="true">Processing Foundation</a></li>
+        <li><a href="https://rhizome.org/editorial/2025/feb/21/introducingthe-rhizome-microgrants-awardees/" class="live-link dead" aria-disabled="true">Rhizome</a></li>
+      </ul>
+      <p>For any questions or proposals, please email <a href="mailto:mail@palestineonline.net" class="live-link dead" aria-disabled="true">mail@palestineonline.net</a></p>
+      <p>- Amad Ansari</p>
     </div>
+<script src="/sites/palestineonline.net/live-links.js"></script>
 
   
 </body></html>

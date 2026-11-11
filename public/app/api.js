@@ -402,11 +402,13 @@ function onArchiveClick(event) {
 const NEW_WINDOW = new Set(['_blank', '_new', '_newtab']);
 
 // The one way out of the archive: a link marked `live-link` on one of the site's own
-// pages -- a visitor's homepage in the guestbook, the home page's Mail link. A web link
+// pages -- a visitor's homepage in the guestbook, the home page's Mail link, the About
+// page's credits. A web link
 // opens in a new tab, a mailto: in the mail app. Not in the browser's full screen, where
 // the site runs as a kiosk with no tabs to come back from; there the page makes the link
 // unclickable (sites/palestineonline.net/live-links.js), and this refuses it too.
 const OWN_PAGES = new Set([
+	'palestineonline.net/about.html',
 	'palestineonline.net/guestbook.html',
 	'palestineonline.net/home.html',
 	'palestineonline.net/howtouse.html',

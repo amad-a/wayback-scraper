@@ -1,4 +1,4 @@
-// The site's own pages (guestbook.html, home.html, howtouse.html) have a few live links
+// The site's own pages (about.html, guestbook.html, home.html, howtouse.html) have a few live links
 // -- visitors' homepages, the Mail link, How To Use's link to the Translator API --
 // marked `live-link`. dead-links.js marks them dead like any other link off the archive,
 // and this takes the mark back off. The shell opens them
