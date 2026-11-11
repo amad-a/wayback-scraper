@@ -5,14 +5,12 @@
   <style>
     /* The steps run down the page, one a row: the title and text in the left two thirds,
        the icon in the right third. */
-    /* palestine-net.com's background tile (its help and copyright pages). */
-    body { background: url(/sites/palestine-net.com/gifs/pals2.gif); }
     #content { max-width: 800px; }
     #steps { list-style: none; margin: 0; padding: 0; }
     /* Room below each step, so it holds the top of the page for a while as it scrolls,
        however tall its text makes it. A block, not padding: a sticky element only moves
        within its parent's content box. */
-    .step::after { content: ''; display: block; height: 30vh; }
+    .step::after { content: ''; display: block; height: 20vh; }
     /* The whole step sticks to the top while its row is on screen; while it does, the part
        of the shell it names is pointed out (the script below, and public/app/tutorial.js). */
     .step-card { position: sticky; top: 0; display: grid; grid-template-columns: 2fr 1fr; column-gap: 16px; align-items: start; padding: 8px 4px; }
@@ -95,7 +93,7 @@
           <div class="step-card">
             <div class="step-words">
               <h2 class="step-title">Favorite button</h2>
-              <p class="step-text"></p>
+              <p class="step-text">Save the current page into Favorites.</p>
             </div>
             <div class="step-icon"><span class="star">☆</span></div>
           </div>
@@ -302,4 +300,5 @@
   }
 })();
 </script>
+
 </body></html>
