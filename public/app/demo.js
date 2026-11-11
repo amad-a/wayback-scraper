@@ -5,6 +5,10 @@
 // running in a room. Any real input ends it at once, on whatever page it had reached.
 // ?mode=demo in the address starts it straight away, for a screen set up to show it.
 //
+// The five minutes count only while the site is in front of someone: its tab showing and
+// its window focused. Switching to another tab, window or app pauses the count, and ends
+// a tour already running.
+//
 // Input is watched in the shell and in every page and pane (prepareFrame in api.js calls
 // watchActivity). A mouse move counts only if the pointer really moved: Chrome sends one
 // when a page scrolls under a still cursor, which would otherwise end the tour it is
@@ -24,7 +28,8 @@ const UNSCROLLED_MS = 10000; // a page with nowhere to scroll stays this long
 const LOAD_WAIT_MS = 20000;
 const PANES_MS = 1500; // after load, for a frameset's panes to fill
 
-let lastActivity = Date.now();
+let idleFor = 0; // ms of idle time while in front of someone, since the last input
+let lastTick = Date.now();
 let lastPointer = null;
 let run = 0; // the current tour; a stopped one sees a newer number and gives up
 let touring = false;
@@ -33,8 +38,14 @@ let overlay = null;
 const watched = new WeakSet();
 
 function activity() {
-	lastActivity = Date.now();
+	idleFor = 0;
 	if (touring) stop();
+}
+
+// The tab showing and the window focused. hasFocus() is true while focus is inside one of
+// the page's frames too, so clicking into an archived page doesn't count as leaving.
+function inFront() {
+	return !document.hidden && document.hasFocus();
 }
 
 // The first move seen only sets where the pointer is: Chrome sends one as a page loads
@@ -172,7 +183,7 @@ function start() {
 
 function stop() {
 	touring = false;
-	lastActivity = Date.now(); // and the five minutes start again
+	idleFor = 0; // and the five minutes start again
 	run++;
 	showOverlay(false);
 }
@@ -180,8 +191,22 @@ function stop() {
 export function initDemo() {
 	watchActivity(document);
 	if (new URLSearchParams(location.search).get('mode') === 'demo') start();
+	// Checked each second rather than on blur: the shell's window blurs whenever focus moves
+	// into the page in the frame, which is not leaving. A background tab's timers run late,
+	// so a tick counts for at most two seconds.
 	setInterval(() => {
+		const now = Date.now();
+		const elapsed = Math.min(now - lastTick, 2000);
+		lastTick = now;
+		if (!inFront()) {
+			if (touring) stop();
+			return;
+		}
+		idleFor += elapsed;
 		const idle = window.__palestineOnlineDemoIdleMs ?? IDLE_MS;
-		if (!touring && !document.hidden && Date.now() - lastActivity >= idle) start();
+		if (!touring && idleFor >= idle) start();
 	}, 1000);
+	document.addEventListener('visibilitychange', () => {
+		if (document.hidden && touring) stop();
+	});
 }

@@ -1289,9 +1289,8 @@ html.tutorial-wallpaper body {
 }
 
 /* Demo mode's card (app/demo.js): the logo, in the bottom left of the page while the
-   shell tours the archive by itself, on a soft white glow rather than a box, which the
-   logo's ends may reach past. Clicks go through it to the page, and any input
-   ends the tour and takes it away. */
+   shell tours the archive by itself, on nothing but the page. Clicks go through it to
+   the page, and any input ends the tour and takes it away. */
 #content {
 	position: relative;
 }
@@ -1313,7 +1312,6 @@ html.tutorial-wallpaper body {
 	flex-direction: column;
 	align-items: center;
 	padding: 30px 40px;
-	background: radial-gradient(closest-side, #fff 0%, #fff 55%, rgba(255, 255, 255, 0.85) 75%, rgba(255, 255, 255, 0) 100%);
 }
 
 /* Phones: smaller, so it fits the page's width. */
