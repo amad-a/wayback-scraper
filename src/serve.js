@@ -1260,6 +1260,15 @@ function withPageMeta(html, localPath) {
     .replace(/(<meta property="og:url" content=")[^"]*(")/, `$1${url}$2`);
 }
 
+// Short addresses for pages people are pointed to by hand, e.g. palestineonline.net/diary.
+// 302 for the same reason as the /sites redirect below: a target may change later.
+const SHORT_LINKS = {
+  '/diary': 'birzeit.edu/diary/index.html',
+};
+app.get(Object.keys(SHORT_LINKS).flatMap((p) => [p, `${p}/`]), (req, res) => {
+  res.redirect(302, shareLink(SHORT_LINKS[req.path.toLowerCase().replace(/\/$/, '')]));
+});
+
 // Crawl everything but the API; point crawlers at the sitemap.
 app.get('/robots.txt', (_req, res) => {
   res.type('text/plain').send(`User-agent: *\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
