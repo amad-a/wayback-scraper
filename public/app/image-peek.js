@@ -11,12 +11,21 @@
 // since their image was never saved, and so is a link whose own picture on the page is
 // already as big as the preview would be -- a photo linked to itself, as on
 // nativity-church.com -- since magnifying it would show nothing new.
+//
+// Once a page has finished loading, the images its links point to are fetched and
+// decoded in the background, a couple at a time, so hovering shows them at once instead
+// of after a download. Only where there is a mouse to hover with and no data saver, and
+// only the first PRELOAD_MAX per page, so a page of hundreds of links doesn't pull them
+// all.
 
 const IMAGE_HREF = /^\/sites\/.+\.(jpe?g|gif|png|bmp)$/i;
 const BOUND = '__palestineOnlineImagePeekBound';
 const GAP = 16; // between the cursor and the preview
 const MAX_SIDE = 480; // the preview's longest side, before the window limits it
 const LINGER = 100; // ms the preview outlives the link, to reach the next one in a list
+const PRELOAD_MAX = 40; // image links per page fetched ahead of a hover
+const PRELOAD_PARALLEL = 2; // fetched at once, so the page's own requests aren't crowded
+const KEEP = 80; // decoded images held, oldest dropped first
 
 const iframe = document.getElementById('frame');
 
@@ -24,6 +33,55 @@ let peek = null; // the floating <div>, built on first use
 let current = null; // { link, win, x, y } while hovering an image link
 let lingering = 0; // the timer that hides the preview once the cursor has left a link
 const shownWhole = new WeakSet(); // links whose picture on the page is already full size
+const loaded = new Map(); // href -> Promise of the decoded <img>, oldest first
+
+const canPreload =
+	matchMedia('(hover: hover) and (pointer: fine)').matches && !navigator.connection?.saveData;
+
+// The decoded image for an href, fetched once and then reused, so a preloaded image or
+// one hovered before shows without waiting. A failure isn't kept: it can be retried.
+function loadImage(href) {
+	let promise = loaded.get(href);
+	if (promise) {
+		loaded.delete(href); // re-added below, as the newest
+	} else {
+		const img = new Image();
+		img.alt = '';
+		img.src = href;
+		promise = img.decode().then(() => img);
+		promise.catch(() => loaded.delete(href));
+	}
+	loaded.set(href, promise);
+	while (loaded.size > KEEP) loaded.delete(loaded.keys().next().value);
+	return promise;
+}
+
+// Fetches the images the page's links point to, in page order, PRELOAD_PARALLEL at a
+// time, after the page itself has loaded. Stops when the page goes away.
+function preload(doc) {
+	const win = doc.defaultView;
+	let gone = false;
+	win.addEventListener('pagehide', () => (gone = true), { once: true });
+
+	const start = () => {
+		const hrefs = [
+			...new Set(
+				[...doc.links]
+					.filter((link) => imageLink(link) && !shownWhole.has(link))
+					.map((link) => link.href),
+			),
+		].slice(0, PRELOAD_MAX);
+		const next = () => {
+			const href = hrefs.shift();
+			if (!href || gone) return;
+			loadImage(href).then(next, next);
+		};
+		for (let i = 0; i < PRELOAD_PARALLEL; i++) next();
+	};
+	const idle = () => (win.requestIdleCallback ?? setTimeout)(start, { timeout: 2000 });
+	if (doc.readyState === 'complete') idle();
+	else win.addEventListener('load', idle, { once: true });
+}
 
 function build() {
 	peek = document.createElement('div');
@@ -114,11 +172,8 @@ function show(link, win, event) {
 		return;
 	}
 
-	const img = new Image();
-	img.alt = '';
-	img.src = link.href;
-	img.decode().then(
-		() => {
+	loadImage(link.href).then(
+		(img) => {
 			if (current?.link !== link) return; // moved on while it loaded
 			if (alreadyShown(link, previewSize(img, iframe.getBoundingClientRect()))) {
 				shownWhole.add(link);
@@ -146,6 +201,7 @@ export function bindImagePeek(doc) {
 	if (!doc || doc[BOUND]) return;
 	doc[BOUND] = true;
 	const win = doc.defaultView;
+	if (canPreload && win) preload(doc);
 
 	doc.addEventListener('pointerover', (event) => {
 		if (event.pointerType !== 'mouse') return;
